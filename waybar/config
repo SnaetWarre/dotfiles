@@ -1,0 +1,331 @@
+{
+    // -------------------------------------------------------------------------
+    // Global configuration
+    // -------------------------------------------------------------------------
+
+    "layer": "top",
+
+    "position": "top",
+
+    "height": 42,
+
+    "margin-left": 10,
+    "margin-bottom": 0,
+    "margin-right": 10,
+    "margin-top": 8,	
+
+    "spacing": 8,
+
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "network",
+        "memory",
+        "battery",
+        "pulseaudio",
+        "custom/screenshot_t",
+        "custom/power"
+    ],
+
+    
+
+    // -------------------------------------------------------------------------
+    // Modules
+    // -------------------------------------------------------------------------
+
+    "custom/sp1": {
+        "format": " | ",
+        "tooltip": false
+    },
+    "custom/sp2": {
+        "format": " |",
+        "tooltip": false
+    },
+
+
+    "custom/rofi": {
+        "format": "",
+        "tooltip": false,
+        "on-click-right": "nwg-drawer",
+        "on-click": "wofi --show run",
+        "on-click-middle": "pkill -9 wofi"
+    },
+    "custom/screenshot_t":{
+        "format":"󰹑 ",
+        "on-click": "~/.config/hypr/scripts/screenshot_full",
+        "on-click-right":"~/.config/hypr/scripts/screenshot_area"
+    },
+
+    "clock": {
+        "format": "{:%H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "today-format": "<b>{}</b>",
+        "tooltip": true
+    },
+
+    "memory": {
+        "interval": 1,
+        "format": "󰍛 {used:.1f}G/{total:.1f}G",
+        "on-click": "alacritty -e btop"
+    },
+
+    "battery": {
+        "interval": 2,
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon}  {capacity}%",
+        "format-charging": "󰂄  {capacity}%",
+        "format-plugged": "󰚥  {capacity}%",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+    "network": {
+        "format-wifi": "󰖩 {frequency}MHz {signalStrength}%",
+        "format-ethernet": "󰈀  {ifname}: {ipaddr}/{cidr}",
+        "format-linked": "󰈀  {ifname} (No IP)",
+        "format-disconnected": "󰖪  Disconnected",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "on-click": "wl-copy $(ip address show up scope global | grep inet | head -n1 | cut -d/ -f 1 | tr -d [:space:] | cut -c5-)",
+        "on-click-right": "wl-copy $(ip address show up scope global | grep inet6 | head -n1 | cut -d/ -f 1 | tr -d [:space:] | cut -c6-)",
+        "tooltip-format": "  {bandwidthUpBits}    {bandwidthDownBits}\n{ifname}\n{ipaddr}/{cidr}\n",
+        "tooltip-format-wifi": "󰖩  {essid} {frequency}MHz\nStrength: {signaldBm}dBm ({signalStrength}%)\nIP: {ipaddr}/{cidr}\n  {bandwidthUpBits}    {bandwidthDownBits}",
+        "interval": 10
+    },
+    "custom/storage": {
+        "format": " {}",
+        "format-alt": "{percentage}% ",
+        "format-alt-click": "click-right",
+        "return-type": "json",
+        "interval": 60,
+        "exec": "~/.config/waybar/modules/storage.sh"
+    },
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{icon} {percent}%",
+        "format-alt": "{percent}% {icon}",
+        "format-alt-click": "click-right",
+        //"format-icons": ["", ""],
+        "format-icons": ["", ""],
+        "on-scroll-down": "brightnessctl s 5%-",
+        "on-scroll-up": "brightnessctl s +5%"
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        },
+        "tooltip": "true"
+    },
+    "custom/pacman": {
+        "format": "<big>􏆲</big>  {}",
+        "interval": 3600,                     // every hour
+        "exec": "checkupdates | wc -l",       // # of updates
+        "exec-if": "exit 0",                  // always run; consider advanced run conditions
+        "on-click": "alacritty -e 'paru'; pkill -SIGRTMIN+8 waybar", // update system
+        "signal": 8,
+        "max-length": 5,
+        "min-length": 3
+    },
+
+    "custom/media": {
+        "format": "{0} {1}",
+        "return-type": "json",
+        "max-length": 40,
+        "format-icons": {
+            "spotify": "",
+            "default": "🎜"
+        },
+        "escape": true,
+        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
+        // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+    },
+
+    "custom/power": {
+        "format": "⏻",
+        "tooltip": false,
+        "on-click": "wlogout"
+    },
+
+    "clock#date": {
+        "format": "{:%H:%M:%S  %e %b}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "today-format": "<b>{}</b>",
+        "on-click": "calcurse",
+        "on-click-right": "swaync-client -t -sw"
+    },
+
+    "custom/gammastep": {
+      "interval": 5,
+      "return-type": "json",
+      "exec": {
+        "pre": "if unit_status=\"$(systemctl --user is-active gammastep)\"; then\nstatus=\"$unit_status ($(journalctl --user -u gammastep.service -g 'Period: ' | tail -1 | cut -d ':' -f6 | xargs))\"\nelse\nstatus=\"$unit_status\"\nfi",
+        "alt": "${status:-inactive}",
+        "tooltip": "Gammastep is $status",
+      },
+      "format": "{icon}",
+      "format-icons": {
+        "activating": "󰁪 ",
+        "deactivating": "󰁪 ",
+        "inactive": "? ",
+        "active (Night)": " ",
+        "active (Nighttime)": " ",
+        "active (Transition (Night)": " ",
+        "active (Transition (Nighttime)": " ",
+        "active (Day)": " ",
+        "active (Daytime)": " ",
+        "active (Transition (Day)": " ",
+        "active (Transition (Daytime)": " "
+      },
+      "on-click": "systemctl --user is-active gammastep && systemctl --user stop gammastep || systemctl --user start gammastep",
+    },
+
+    "cpu": {
+        "interval": 1,
+        //"format": " {}%", // Icon: microchip
+        "format": "{max_frequency}GHz <span color=\"darkgray\">| {usage}%</span>",
+        "max-length": 13,
+        "min-length": 13
+    },
+
+    "mpd": {
+        "max-length": 25,
+        "format": "<span foreground='#bb9af7'></span> {title}",
+        "format-paused": " {title}",
+        "format-stopped": "<span foreground='#bb9af7'></span>",
+        "format-disconnected": "",
+        "on-click": "mpc --quiet toggle",
+        "on-click-right": "mpc update; mpc ls | mpc add",
+        "on-click-middle": "alacritty -e ncmpcpp",
+        "on-scroll-up": "mpc --quiet prev",
+        "on-scroll-down": "mpc --quiet next",
+        "smooth-scrolling-threshold": 5,
+        "tooltip-format": "{title} - {artist} ({elapsedTime:%M:%S}/{totalTime:%H:%M:%S})"
+    },
+
+    "custom/title": {
+        "format": "{}",
+        "interval": 0,
+        "return-type": "json",
+        "tooltip": false
+    },
+
+    "custom/title#name": {
+        "format": "{}",
+        "interval": 0,
+        "return-type": "json",
+
+        "max-length": 35,
+        "exec": "$HOME/.scripts/title"
+    },
+
+
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "1": "◉",
+            "2": "◉",
+            "3": "◉",
+            "4": "◉",
+            "5": "◉",
+            "6": "◉",
+            "7": "◉",
+            "8": "◉",
+            "9": "◉",
+            "10": "◉"
+        },
+        "on-click": "activate",
+        "all-outputs": true,
+        "show-special": false,
+        "sort-by-number": true,
+        "persistent-workspaces": {
+            "*": 5
+        }
+    },
+
+    "hyprland/window": {
+        "max-length": 100,
+        "separate-outputs": true
+    },
+
+    "pulseaudio": {
+        "format": "{icon}  {volume}%",
+        "format-bluetooth": "󰂯  {volume}%",
+        "format-muted": "󰖁  Muted",
+        "format-icons": {
+            "headphone": "󰋋",
+            "hands-free": "󰋎",
+            "headset": "󰋎",
+            "phone": "󰏲",
+            "portable": "󰏲",
+            "car": "󰄋",
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "scroll-step": 1,
+        "on-click": "pavucontrol",
+        "on-click-right": "amixer sset Master toggle"
+    },
+
+    "tray": {
+        "icon-size": 15,
+        "spacing": 5
+    },
+
+    "temperature": {
+        "format": " {temperatureC}°C",
+        "critical-threshold": 80,
+        "format-critical": " {temperatureC}°C"
+    },
+
+    "custom/weather": {
+        "format": "{}",
+        "format-alt": "{alt}: {}",
+        "format-alt-click": "click-right",
+        "interval": 1800,
+        "return-type": "json",
+        "exec": "~/.config/waybar/modules/weather.sh",
+        "exec-if": "ping wttr.in -c1"
+    },
+
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "<span foreground='#738BA5'>󰂚</span>",
+            "none": "<span foreground='#565f89'>󰂛</span>",
+            "dnd-notification": "<span foreground='#ff5555'>󰂚</span>",
+            "dnd-none": "<span foreground='#ff5555'>󰪑</span>",      
+            "inhibited-notification": "<span foreground='#e0af68'>󰂛</span>", 
+            "inhibited-none": "<span foreground='#414868'>󰂛</span>" 
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    },
+
+    "custom/clipboard": {
+        "format": "",
+        "on-click": "cliphist list | rofi -dmenu -theme ~/.config/rofi/config.rasi | cliphist decode | wl-copy",
+        "tooltip": false
+    },
+
+    "custom/perplexity": {
+        "format": "   ",
+        "on-click": "firefox https://www.perplexity.ai/",
+        "tooltip": false,
+        "spacing": 4,
+        "min-width": 20,
+        "on-click-right": "firefox https://www.perplexity.ai/"
+    }
+
+   
+}

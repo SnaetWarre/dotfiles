@@ -1,0 +1,115 @@
+* {
+  font-family: "Noto Sans CJK SC", "JetBrainsMono Nerd Font", "Font Awesome 6 Free";
+  font-size: 11pt;
+  font-weight: bold;
+}
+
+#waybar {
+    background-color: rgba(12,12,13, 0.93);
+    color: #c2c2c2;
+    transition-duration: 0.5s;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+#workspaces {
+    background-color: transparent;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 0 5px;
+}
+
+#workspaces button {
+    padding: 0;
+    color: #747474;
+    font-size: 16pt;
+    background-color: transparent;
+    border-radius: 50%;
+    min-width: 30px;
+    min-height: 30px;
+    margin: 0 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#workspaces button:hover {
+    color: #a0a0a0;
+}
+
+#workspaces button.active {
+    color: #C1A365;
+    font-size: 18pt;
+    background-color: transparent;
+    border: 1px solid rgba(193, 163, 101, 0.4);
+    min-width: 32px;
+    min-height: 32px;
+}
+
+#clock,
+#battery,
+#memory,
+#wireplumber,
+#custom-screenshot_t,
+#custom-power,
+#network,
+#custom-notification,
+#custom-clipboard,
+#pulseaudio {
+    background-color: rgba(12,12,13, 0.87);  /* 87% opacity */
+    color: #c2c2c2;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 0 10px;
+    min-width: 20px;
+}
+
+#clock {
+    color: #AEB1AB;
+    background-color: rgba(12,12,13, 0.87);  /* 87% opacity */
+}
+
+#memory {
+    color: #AEB1AB;
+    background-color: rgba(12,12,13, 0.87);
+}
+
+#battery {
+    color: #AEB1AB;
+    background-color: rgba(12,12,13, 0.87);
+}
+
+#wireplumber {
+    color: #AEB1AB;
+    background-color: rgba(12,12,13, 0.87);
+}
+
+#custom-screenshot_t {
+    color: #AEB1AB;
+    background-color: rgba(12,12,13, 0.87);
+}
+
+#custom-power {
+    color: #AEB1AB;
+    background-color: rgba(12,12,13, 0.87);
+}
+
+#custom-notification {
+    color: #AEB1AB;
+    background-color: rgba(12,12,13, 0.87);
+}
+
+#network {
+    color: #AEB1AB;
+    background-color: rgba(12,12,13, 0.87);
+}
+
+#custom-clipboard {
+    color: #AEB1AB;
+    background-color: rgba(12,12,13, 0.87);
+}
+
+#pulseaudio {
+    color: #AEB1AB;
+    background-color: rgba(12,12,13, 0.87);
+}

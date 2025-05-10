@@ -1,0 +1,11 @@
+width=700
+height=700
+show=dmenu
+prompt=Clipboard
+normal_window=false
+layer=overlay
+insensitive=true
+allow_images=true
+image_size=24
+gtk_dark=true
+no-actions=true

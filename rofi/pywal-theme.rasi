@@ -1,0 +1,120 @@
+* {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 12px;
+}
+
+window {
+    transparency:                   "real";
+    background-color:               @background;
+    text-color:                    @foreground;
+    border:                        2px;
+    border-color:                  @selected;
+    border-radius:                 10px;
+    width:                         40%;
+    location:                      center;
+    anchor:                        center;
+}
+
+prompt {
+    enabled:                       true;
+    padding:                       4px 4px 6px 6px;
+    background-color:              @background;
+    text-color:                   @foreground;
+    cursor:                      pointer;
+}
+
+textbox-prompt-colon {
+    expand:                        false;
+    str:                          "";
+    background-color:              @background;
+    text-color:                   @foreground;
+    padding:                       4px 0px 0px 8px;
+}
+
+entry {
+    background-color:              @background;
+    text-color:                   @foreground;
+    placeholder-color:            @foreground;
+    expand:                       true;
+    horizontal-align:             0;
+    placeholder:                  "Search...";
+    blink:                       true;
+    border:                       0px;
+    padding:                      4px 0px 0px 8px;
+    cursor:                      text;
+    enabled:                     true;
+}
+
+inputbar {
+    children:                      [ prompt, entry ];
+    background-color:              @background;
+    text-color:                   @foreground;
+    expand:                       false;
+    margin:                       0px;
+    padding:                      8px;
+}
+
+listview {
+    background-color:              @background;
+    padding:                       0px;
+    columns:                       1;
+    lines:                        8;
+    spacing:                      4px;
+    cycle:                        true;
+    dynamic:                      true;
+    layout:                       vertical;
+}
+
+mainbox {
+    background-color:              @background;
+    children:                      [ inputbar, listview ];
+    spacing:                      12px;
+    padding:                      12px;
+}
+
+element {
+    background-color:              @background;
+    text-color:                   @foreground;
+    orientation:                   horizontal;
+    border-radius:                4px;
+    padding:                      4px;
+}
+
+element-icon {
+    background-color:              inherit;
+    text-color:                   inherit;
+    horizontal-align:              0.5;
+    vertical-align:                0.5;
+    size:                         24px;
+    border:                       0px;
+}
+
+element-text {
+    background-color:              inherit;
+    text-color:                   inherit;
+    expand:                       true;
+    horizontal-align:             0;
+    vertical-align:               0.5;
+    margin:                       2px 0px 2px 8px;
+}
+
+element selected {
+    background-color:              @selected;
+    text-color:                   @background;
+    border:                       0px;
+    border-radius:                8px;
+}
+
+element.active,
+element.selected.active {
+    background-color:              @active;
+    text-color:                   @background;
+    border-radius:                8px;
+}
+
+element.urgent,
+element.selected.urgent {
+    background-color:              @urgent;
+    text-color:                   @background;
+    border-radius:                8px;
+} 

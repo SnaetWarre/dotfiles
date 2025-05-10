@@ -1,0 +1,54 @@
+* {
+    background-image: none;
+    box-shadow: none;
+}
+
+window {
+    background-color: rgba(${color0_rgb}, 0.9); /* Was BG_RGB */
+}
+
+button {
+    border-radius: 8px;
+    border-color: rgba(${color2_rgb}, 0.4); /* Was COLOR_2_RGB */
+    text-decoration-color: rgb(${color7_rgb}); /* Was COLOR_7_RGB */
+    color: rgb(${color7_rgb}); /* Was COLOR_7_RGB */
+    background-color: rgba(${color0_rgb}, 0.7); /* Was BG_RGB */
+    border-style: solid;
+    border-width: 2px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25%;
+    margin: 5px;
+    transition: all 0.15s ease-in-out;
+}
+
+button:focus, button:active, button:hover {
+    background-color: rgba(${color2_rgb}, 0.7); /* Was COLOR_2_RGB */
+    border-color: rgba(${color2_rgb}, 0.8); /* Was COLOR_2_RGB */
+    outline-style: none;
+}
+
+/* Reference locally generated SVG icons */
+#lock {
+    background-image: image(url("$HOME/.config/wlogout/icons/lock.svg"));
+}
+
+#logout {
+    background-image: image(url("$HOME/.config/wlogout/icons/logout.svg"));
+}
+
+#suspend {
+    background-image: image(url("$HOME/.config/wlogout/icons/suspend.svg"));
+}
+
+#hibernate {
+    background-image: image(url("$HOME/.config/wlogout/icons/hibernate.svg"));
+}
+
+#shutdown {
+    background-image: image(url("$HOME/.config/wlogout/icons/shutdown.svg"));
+}
+
+#reboot {
+    background-image: image(url("$HOME/.config/wlogout/icons/reboot.svg"));
+} 

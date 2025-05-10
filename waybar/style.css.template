@@ -1,0 +1,156 @@
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 12pt;
+  font-weight: 600;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+}
+
+#waybar {
+    background-color: transparent;
+    color: $color7; /* Was COLOR_7 */
+    transition-property: background-color;
+    transition-duration: 0.5s;
+    border-radius: 12px;
+    margin: 6px;
+}
+
+#waybar.hidden {
+    opacity: 0.2;
+}
+
+#workspaces {
+    background-color: rgba($color0_rgb, 0.6);
+    border-radius: 8px;
+    margin: 4px;
+    padding: 0 4px;
+}
+
+#workspaces button {
+    box-shadow: none;
+    text-shadow: none;
+    padding: 0 8px;
+    border-radius: 8px;
+    margin: 4px 3px;
+    color: $color7; /* Was COLOR_7 */
+    font-size: 14pt;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+#workspaces button.active {
+    background-color: rgba($color2_rgb, 0.3); /* Was COLOR_2_RGB */
+    color: $color2; /* Was COLOR_2 */
+    padding: 0 14px;
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+#workspaces button:hover {
+    background: rgba($color1_rgb, 0.3); /* Was COLOR_1_RGB */
+    color: $color6; /* Was COLOR_6 */
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.05);
+}
+
+#clock,
+#battery,
+#memory,
+#pulseaudio,
+#custom-screenshot_t,
+#custom-power,
+#network,
+#custom-notification,
+#custom-clipboard {
+    background-color: rgba($color0_rgb, 0.6); /* Was COLOR_0_RGB */
+    color: $color7; /* Default text color, will be overridden per module */
+    border-radius: 8px;
+    padding: 2px 16px;
+    margin: 4px 2px;
+    min-width: 20px;
+}
+
+#clock {
+    color: $color1; /* Override for unique text color */
+    font-weight: bold; /* Keep existing specific style for clock */
+}
+
+#memory {
+    color: $color2; /* Override for unique text color */
+}
+
+#battery {
+    color: $color3; /* Override for unique text color */
+}
+
+#battery.charging, #battery.plugged {
+    background-color: rgba($color2_rgb, 0.3); /* Kept existing special state */
+}
+
+#battery.critical:not(.charging) {
+    background-color: rgba(245, 60, 60, 0.3); /* Kept existing special state */
+    animation: blink 0.5s linear infinite alternate;
+}
+
+@keyframes blink {
+    to {
+        background-color: rgba(245, 60, 60, 0.5);
+    }
+}
+
+#pulseaudio { /* Already in generic block, this is for text color override */
+    color: $color4; /* Override for unique text color */
+}
+
+#pulseaudio.muted {
+    background-color: rgba(245, 184, 60, 0.3); /* Kept existing special state */
+}
+
+#custom-screenshot_t {
+    color: $color5; /* Override for unique text color */
+}
+
+#custom-power {
+    color: $color6; /* Override for unique text color */
+    margin-right: 8px; /* Keep specific layout adjustment */
+    padding: 0 14px;   /* Keep specific layout adjustment */
+}
+
+#network {
+    color: $color1; /* Changed from $color8 to $color1 (red) */
+}
+
+#network.disconnected {
+    background-color: rgba(245, 60, 60, 0.3); /* Kept existing special state */
+}
+
+#custom-notification {
+    color: $color2; /* Changed from $color9 to $color2 (green) */
+}
+
+#custom-clipboard {
+    background-color: rgba($color0_rgb, 0.6); /* Was COLOR_0_RGB */
+    color: $color7; /* Default text color, will be overridden per module */
+    border-radius: 8px;
+    padding: 2px 16px;
+    margin: 4px 2px; /* Changed from 4px 4px for closer spacing */
+    min-width: 20px;
+}
+
+#window { /* #window had a slightly different background, will keep it specific */
+    background-color: rgba($color0_rgb, 0.65); /* Specific background for #window */
+    color: $color4; /* Changed from $color11 to $color4 (blue) */
+    border-radius: 8px;
+    margin: 4px 2px; /* Changed from 4px 3px for closer spacing */
+    padding: 0 14px;
+}
+
+tooltip {
+    border-radius: 10px;
+    background-color: rgba($color0_rgb, 0.85); /* Was COLOR_0_RGB */
+    padding: 8px;
+    margin: 4px;
+}
+
+tooltip label {
+    color: $color7; /* Was COLOR_7 */
+} 

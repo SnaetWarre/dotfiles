@@ -1,0 +1,76 @@
+@define-color cc-bg rgba(30, 30, 30, 0.65);
+@define-color noti-border-color rgba(245,158,105, 0.8); /* Was COLOR_2_RGB */
+@define-color noti-bg rgba(30, 30, 30, 0.75);
+@define-color noti-bg-darker rgba(27, 27, 27, 0.75);
+@define-color noti-bg-hover rgba(35, 35, 35, 0.75);
+@define-color noti-bg-focus rgba(245,158,105, 0.2); /* Was COLOR_2_RGB */
+@define-color noti-close-bg rgba(255, 255, 255, 0.1);
+@define-color noti-close-bg-hover rgba(255, 255, 255, 0.15);
+@define-color text-color rgb(239,225,203); /* Was COLOR_7_RGB */
+@define-color text-color-disabled rgb(167,157,142); /* Was COLOR_8_RGB */
+@define-color border-white rgba(245,158,105, 0.4); /* Was COLOR_2_RGB */
+
+/* Sliders */
+.control-center scale trough {
+  background-color: rgba(35, 35, 35, 0.75);
+  border-radius: 5px;
+  margin: 0 10px;
+}
+
+.control-center scale trough highlight {
+  background-color: rgba(245,158,105, 0.85); /* Was COLOR_2_RGB */
+  border-radius: 5px;
+}
+
+.control-center scale slider {
+  background-color: rgb(239,225,203); /* Was COLOR_7_RGB */
+  border-radius: 100%;
+  margin: -10px;
+  min-height: 20px;
+  min-width: 20px;
+}
+
+.notification-row {
+  outline: none;
+  margin: 10px;
+  padding: 0;
+}
+
+.notification-row:focus,
+.notification-row:hover {
+  background: @noti-bg-hover;
+}
+
+.notification {
+  background: @noti-bg;
+  padding: 8px;
+  margin: 8px;
+  border-radius: 12px;
+  border: 2px solid @border-white;
+}
+
+.notification-content {
+  background: transparent;
+  padding: 8px;
+  margin: 0;
+}
+
+.close-button {
+  background: @noti-close-bg;
+  color: @text-color;
+  text-shadow: none;
+  padding: 0;
+  border-radius: 100%;
+  margin-top: 10px;
+  margin-right: 10px;
+  box-shadow: none;
+  border: none;
+  min-width: 24px;
+  min-height: 24px;
+}
+
+.close-button:hover {
+  box-shadow: none;
+  background: @noti-close-bg-hover;
+  transition: all 0.15s ease-in-out;
+} 
