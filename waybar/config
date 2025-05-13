@@ -17,7 +17,8 @@
     "spacing": 8,
 
     "modules-left": [
-        "hyprland/workspaces"
+        "custom/rofi",
+	"hyprland/workspaces"
     ],
     "modules-center": [
         "clock"
@@ -48,14 +49,14 @@
 
 
     "custom/rofi": {
-        "format": "",
+        "format": "",
         "tooltip": false,
         "on-click-right": "nwg-drawer",
-        "on-click": "wofi --show run",
+        "on-click": "rofi -show combi -modi drun,run,combi -combi-modi drun,run -theme ~/.config/rofi/config.rasi",
         "on-click-middle": "pkill -9 wofi"
     },
     "custom/screenshot_t":{
-        "format":"󰹑 ",
+        "format":"󰹑",
         "on-click": "~/.config/hypr/scripts/screenshot_full",
         "on-click-right":"~/.config/hypr/scripts/screenshot_area"
     },

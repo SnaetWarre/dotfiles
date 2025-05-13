@@ -60,7 +60,8 @@
 #custom-power,
 #network,
 #custom-notification,
-#custom-clipboard {
+#custom-clipboard,
+#custom-rofi {
     background-color: rgba($color0_rgb, 0.6); /* Was COLOR_0_RGB */
     color: $color7; /* Default text color, will be overridden per module */
     border-radius: 8px;
@@ -76,6 +77,15 @@
 
 #memory {
     color: $color2; /* Override for unique text color */
+}
+
+#custom-rofi {
+    color: $color7;
+    padding: 0 10px 0 6px;
+}
+
+#custom-screenshot_t {
+    padding: 0 10px 0 6px;
 }
 
 #battery {
@@ -112,7 +122,7 @@
 #custom-power {
     color: $color6; /* Override for unique text color */
     margin-right: 8px; /* Keep specific layout adjustment */
-    padding: 0 14px;   /* Keep specific layout adjustment */
+    padding: 0 10px 0 6px;
 }
 
 #network {
