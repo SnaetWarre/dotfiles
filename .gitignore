@@ -26,6 +26,8 @@
 !wlogout/**/*
 !wofi/
 !wofi/**/*
+!nvim/
+!nvim/**/*
 
 !*.log
 !*.swp
