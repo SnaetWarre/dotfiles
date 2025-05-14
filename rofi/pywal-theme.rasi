@@ -1,6 +1,6 @@
 * {
     font-family: "JetBrainsMono Nerd Font";
-    font-size: 12px;
+    font-size: 18px;
 }
 
 window {
@@ -10,14 +10,14 @@ window {
     border:                        2px;
     border-color:                  @selected;
     border-radius:                 10px;
-    width:                         40%;
+    width:                         44%;
     location:                      center;
     anchor:                        center;
 }
 
 prompt {
     enabled:                       true;
-    padding:                       4px 4px 6px 6px;
+    padding:                       4px 4px 7px 7px;
     background-color:              @background;
     text-color:                   @foreground;
     cursor:                      pointer;
@@ -28,7 +28,7 @@ textbox-prompt-colon {
     str:                          "";
     background-color:              @background;
     text-color:                   @foreground;
-    padding:                       4px 0px 0px 8px;
+    padding:                       4px 0px 0px 9px;
 }
 
 entry {
@@ -40,7 +40,7 @@ entry {
     placeholder:                  "Search...";
     blink:                       true;
     border:                       0px;
-    padding:                      4px 0px 0px 8px;
+    padding:                      4px 0px 0px 9px;
     cursor:                      text;
     enabled:                     true;
 }
@@ -51,14 +51,14 @@ inputbar {
     text-color:                   @foreground;
     expand:                       false;
     margin:                       0px;
-    padding:                      8px;
+    padding:                      9px;
 }
 
 listview {
     background-color:              @background;
     padding:                       0px;
     columns:                       1;
-    lines:                        8;
+    lines:                        7;
     spacing:                      4px;
     cycle:                        true;
     dynamic:                      true;
@@ -68,8 +68,8 @@ listview {
 mainbox {
     background-color:              @background;
     children:                      [ inputbar, listview ];
-    spacing:                      12px;
-    padding:                      12px;
+    spacing:                      13px;
+    padding:                      13px;
 }
 
 element {
@@ -78,6 +78,7 @@ element {
     orientation:                   horizontal;
     border-radius:                4px;
     padding:                      4px;
+    children:                     [ element-icon, element-text ];
 }
 
 element-icon {
@@ -85,7 +86,7 @@ element-icon {
     text-color:                   inherit;
     horizontal-align:              0.5;
     vertical-align:                0.5;
-    size:                         24px;
+    size:                         36px;
     border:                       0px;
 }
 
@@ -95,7 +96,7 @@ element-text {
     expand:                       true;
     horizontal-align:             0;
     vertical-align:               0.5;
-    margin:                       2px 0px 2px 8px;
+    margin:                       2px 0px 2px 9px;
 }
 
 element selected {
