@@ -50,4 +50,4 @@ require('nvim-treesitter.configs').setup({
 require('Comment').setup()
 
 -- Set colorscheme
-vim.cmd.colorscheme "tokyonight" 
+vim.cmd.colorscheme "rose-pine" 
