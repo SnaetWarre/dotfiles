@@ -1,14 +1,14 @@
 @define-color cc-bg rgba(30, 30, 30, 0.65);
-@define-color noti-border-color rgba(56,85,77, 0.8); /* Was COLOR_2_RGB */
+@define-color noti-border-color rgba(242,150,116, 0.8); /* Was COLOR_2_RGB */
 @define-color noti-bg rgba(30, 30, 30, 0.75);
 @define-color noti-bg-darker rgba(27, 27, 27, 0.75);
 @define-color noti-bg-hover rgba(35, 35, 35, 0.75);
-@define-color noti-bg-focus rgba(56,85,77, 0.2); /* Was COLOR_2_RGB */
+@define-color noti-bg-focus rgba(242,150,116, 0.2); /* Was COLOR_2_RGB */
 @define-color noti-close-bg rgba(255, 255, 255, 0.1);
 @define-color noti-close-bg-hover rgba(255, 255, 255, 0.15);
-@define-color text-color rgb(200,195,192); /* Was COLOR_7_RGB */
-@define-color text-color-disabled rgb(140,136,134); /* Was COLOR_8_RGB */
-@define-color border-white rgba(56,85,77, 0.4); /* Was COLOR_2_RGB */
+@define-color text-color rgb(176,188,209); /* Was COLOR_7_RGB */
+@define-color text-color-disabled rgb(123,131,146); /* Was COLOR_8_RGB */
+@define-color border-white rgba(242,150,116, 0.4); /* Was COLOR_2_RGB */
 
 /* Sliders */
 .control-center scale trough {
@@ -18,12 +18,12 @@
 }
 
 .control-center scale trough highlight {
-  background-color: rgba(56,85,77, 0.85); /* Was COLOR_2_RGB */
+  background-color: rgba(242,150,116, 0.85); /* Was COLOR_2_RGB */
   border-radius: 5px;
 }
 
 .control-center scale slider {
-  background-color: rgb(200,195,192); /* Was COLOR_7_RGB */
+  background-color: rgb(176,188,209); /* Was COLOR_7_RGB */
   border-radius: 100%;
   margin: -10px;
   min-height: 20px;
