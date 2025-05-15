@@ -9,7 +9,7 @@
 
 #waybar {
     background-color: transparent;
-    color: #c2cfbd; /* Was COLOR_7 */
+    color: #cbbbe4; /* Was COLOR_7 */
     transition-property: background-color;
     transition-duration: 0.5s;
     border-radius: 12px;
@@ -21,7 +21,7 @@
 }
 
 #workspaces {
-    background-color: rgba(6,8,10, 0.6);
+    background-color: rgba(10,9,22, 0.6);
     border-radius: 8px;
     margin: 4px;
     padding: 0 4px;
@@ -33,22 +33,22 @@
     padding: 0 8px;
     border-radius: 8px;
     margin: 4px 3px;
-    color: #c2cfbd; /* Was COLOR_7 */
+    color: #cbbbe4; /* Was COLOR_7 */
     font-size: 14pt;
     background-color: transparent;
     transition: all 0.3s ease;
 }
 
 #workspaces button.active {
-    background-color: rgba(139,119,63, 0.3); /* Was COLOR_2_RGB */
-    color: #8B773F; /* Was COLOR_2 */
+    background-color: rgba(154,112,210, 0.3); /* Was COLOR_2_RGB */
+    color: #9A70D2; /* Was COLOR_2 */
     padding: 0 14px;
     box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.1);
 }
 
 #workspaces button:hover {
-    background: rgba(83,108,95, 0.3); /* Was COLOR_1_RGB */
-    color: #6E9587; /* Was COLOR_6 */
+    background: rgba(147,106,184, 0.3); /* Was COLOR_1_RGB */
+    color: #D8ADBC; /* Was COLOR_6 */
     box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.05);
 }
 
@@ -62,8 +62,8 @@
 #custom-notification,
 #custom-clipboard,
 #custom-rofi {
-    background-color: rgba(6,8,10, 0.6); /* Was COLOR_0_RGB */
-    color: #c2cfbd; /* Default text color, will be overridden per module */
+    background-color: rgba(10,9,22, 0.6); /* Was COLOR_0_RGB */
+    color: #cbbbe4; /* Default text color, will be overridden per module */
     border-radius: 8px;
     padding: 2px 16px;
     margin: 4px 2px;
@@ -71,16 +71,16 @@
 }
 
 #clock {
-    color: #536C5F; /* Override for unique text color */
+    color: #936AB8; /* Override for unique text color */
     font-weight: bold; /* Keep existing specific style for clock */
 }
 
 #memory {
-    color: #8B773F; /* Override for unique text color */
+    color: #9A70D2; /* Override for unique text color */
 }
 
 #custom-rofi {
-    color: #c2cfbd;
+    color: #cbbbe4;
     padding: 0 10px 0 6px;
 }
 
@@ -89,11 +89,11 @@
 }
 
 #battery {
-    color: #6D8871; /* Override for unique text color */
+    color: #D278C5; /* Override for unique text color */
 }
 
 #battery.charging, #battery.plugged {
-    background-color: rgba(139,119,63, 0.3); /* Kept existing special state */
+    background-color: rgba(154,112,210, 0.3); /* Kept existing special state */
 }
 
 #battery.critical:not(.charging) {
@@ -108,7 +108,7 @@
 }
 
 #pulseaudio { /* Already in generic block, this is for text color override */
-    color: #9C9A64; /* Override for unique text color */
+    color: #648AD5; /* Override for unique text color */
 }
 
 #pulseaudio.muted {
@@ -116,17 +116,17 @@
 }
 
 #custom-screenshot_t {
-    color: #E0BC5F; /* Override for unique text color */
+    color: #EB9AB4; /* Override for unique text color */
 }
 
 #custom-power {
-    color: #6E9587; /* Override for unique text color */
+    color: #D8ADBC; /* Override for unique text color */
     margin-right: 8px; /* Keep specific layout adjustment */
     padding: 0 10px 0 6px;
 }
 
 #network {
-    color: #536C5F; /* Changed from #879084 to #536C5F (red) */
+    color: #936AB8; /* Changed from #8e829f to #936AB8 (red) */
 }
 
 #network.disconnected {
@@ -134,12 +134,12 @@
 }
 
 #custom-notification {
-    color: #8B773F; /* Changed from $color9 to #8B773F (green) */
+    color: #9A70D2; /* Changed from $color9 to #9A70D2 (green) */
 }
 
 #custom-clipboard {
-    background-color: rgba(6,8,10, 0.6); /* Was COLOR_0_RGB */
-    color: #c2cfbd; /* Default text color, will be overridden per module */
+    background-color: rgba(10,9,22, 0.6); /* Was COLOR_0_RGB */
+    color: #cbbbe4; /* Default text color, will be overridden per module */
     border-radius: 8px;
     padding: 2px 16px;
     margin: 4px 2px; /* Changed from 4px 4px for closer spacing */
@@ -147,8 +147,8 @@
 }
 
 #window { /* #window had a slightly different background, will keep it specific */
-    background-color: rgba(6,8,10, 0.65); /* Specific background for #window */
-    color: #9C9A64; /* Changed from $color11 to #9C9A64 (blue) */
+    background-color: rgba(10,9,22, 0.65); /* Specific background for #window */
+    color: #648AD5; /* Changed from $color11 to #648AD5 (blue) */
     border-radius: 8px;
     margin: 4px 2px; /* Changed from 4px 3px for closer spacing */
     padding: 0 14px;
@@ -156,11 +156,11 @@
 
 tooltip {
     border-radius: 10px;
-    background-color: rgba(6,8,10, 0.85); /* Was COLOR_0_RGB */
+    background-color: rgba(10,9,22, 0.85); /* Was COLOR_0_RGB */
     padding: 8px;
     margin: 4px;
 }
 
 tooltip label {
-    color: #c2cfbd; /* Was COLOR_7 */
+    color: #cbbbe4; /* Was COLOR_7 */
 } 
