@@ -4,10 +4,10 @@ configuration {
 }
 
 * {
-    background: $color0;       /* Was COLOR_BG */
+    background: rgba(${color0_rgb}, 0.90);       /* Was COLOR_BG */
     foreground: $color7;       /* Was COLOR_FG */
     selected: $color4;         /* Was COLOR_SELECTED */
-    background-alt: $color1;   /* Was COLOR_BG_ALT */
+    background-alt: rgba(${color1_rgb}, 0.90);   /* Was COLOR_BG_ALT */
 
     border: 0;
     margin: 0;
