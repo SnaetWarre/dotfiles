@@ -1,7 +1,7 @@
 * {
   font-family: "JetBrainsMono Nerd Font";
   font-size: 12pt;
-  font-weight: 600;
+  font-weight: 500;
   border: none;
   border-radius: 0;
   min-height: 0;
@@ -9,11 +9,11 @@
 
 #waybar {
     background-color: transparent;
-    color: #cebeca; /* Was COLOR_7 */
+    color: #d7d2db;
     transition-property: background-color;
     transition-duration: 0.5s;
-    border-radius: 12px;
-    margin: 6px;
+    border-radius: 16px;
+    margin: 8px;
 }
 
 #waybar.hidden {
@@ -21,35 +21,36 @@
 }
 
 #workspaces {
-    background-color: rgba(27,31,38, 0.6);
-    border-radius: 8px;
+    background-color: rgba(27,19,22, 0.85);
+    border-radius: 12px;
     margin: 4px;
-    padding: 0 4px;
+    padding: 0 8px;
 }
 
 #workspaces button {
     box-shadow: none;
     text-shadow: none;
-    padding: 0 8px;
-    border-radius: 8px;
-    margin: 4px 3px;
-    color: #cebeca; /* Was COLOR_7 */
-    font-size: 14pt;
+    padding: 0 12px;
+    border-radius: 6px;
+    margin: 5px 2px;
+    color: #d7d2db;
+    font-size: 13pt;
     background-color: transparent;
     transition: all 0.3s ease;
 }
 
 #workspaces button.active {
-    background-color: rgba(143,115,141, 0.3); /* Was COLOR_2_RGB */
-    color: #8F738D; /* Was COLOR_2 */
-    padding: 0 14px;
-    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+    background-color: rgba(175,146,143, 0.5);
+    color: #ffffff;
+    padding: 0 16px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    font-weight: bold;
 }
 
 #workspaces button:hover {
-    background: rgba(103,104,131, 0.3); /* Was COLOR_1_RGB */
-    color: #BB8697; /* Was COLOR_6 */
-    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.05);
+    background: rgba(138,121,138, 0.6);
+    color: #F8DDBC;
+    padding: 0 14px;
 }
 
 #clock,
@@ -61,106 +62,150 @@
 #network,
 #custom-notification,
 #custom-clipboard,
-#custom-rofi {
-    background-color: rgba(27,31,38, 0.6); /* Was COLOR_0_RGB */
-    color: #cebeca; /* Default text color, will be overridden per module */
-    border-radius: 8px;
-    padding: 2px 16px;
-    margin: 4px 2px;
+#custom-rofi,
+#custom-iss {
+    background-color: rgba(27,19,22, 0.85);
+    color: #d7d2db;
+    border-radius: 10px;
+    padding: 0 16px;
+    margin: 4px 3px;
     min-width: 20px;
+    border: 1px solid rgba(175,146,143, 0.15);
 }
 
 #clock {
-    color: #676883; /* Override for unique text color */
-    font-weight: bold; /* Keep existing specific style for clock */
+    color: #8A798A;
+    font-weight: bold;
+    padding: 0 18px;
+    background-color: rgba(27,19,22, 0.9);
+    border: 1px solid rgba(138,121,138, 0.3);
 }
 
 #memory {
-    color: #8F738D; /* Override for unique text color */
+    color: #AF928F;
+    background-color: rgba(27,19,22, 0.85);
+    border: 1px solid rgba(175,146,143, 0.3);
 }
 
 #custom-rofi {
-    color: #cebeca;
-    padding: 0 10px 0 6px;
+    color: #d7d2db;
+    padding: 0 14px;
+    background-color: rgba(27,19,22, 0.9);
 }
 
 #custom-screenshot_t {
     padding: 0 10px 0 6px;
+    background-color: rgba(27,19,22, 0.85);
+    border: 1px solid rgba(244,204,181, 0.3);
 }
 
 #battery {
-    color: #B9788C; /* Override for unique text color */
+    color: #A194A4;
+    background-color: rgba(27,19,22, 0.85);
+    padding: 0 18px;
+    border: 1px solid rgba(161,148,164, 0.3);
 }
 
 #battery.charging, #battery.plugged {
-    background-color: rgba(143,115,141, 0.3); /* Kept existing special state */
+    background-color: rgba(175,146,143, 0.3);
+    color: #d7d2db;
+    border: 1px solid rgba(175,146,143, 0.5);
 }
 
 #battery.critical:not(.charging) {
-    background-color: rgba(245, 60, 60, 0.3); /* Kept existing special state */
+    background-color: rgba(245, 60, 60, 0.4);
+    color: #f55a5a;
     animation: blink 0.5s linear infinite alternate;
+    border: 1px solid rgba(245, 60, 60, 0.6);
 }
 
 @keyframes blink {
     to {
-        background-color: rgba(245, 60, 60, 0.5);
+        background-color: rgba(245, 60, 60, 0.6);
     }
 }
 
-#pulseaudio { /* Already in generic block, this is for text color override */
-    color: #C07D85; /* Override for unique text color */
+#pulseaudio {
+    color: #D1AEA2;
+    background-color: rgba(27,19,22, 0.85);
+    border: 1px solid rgba(209,174,162, 0.3);
 }
 
 #pulseaudio.muted {
-    background-color: rgba(245, 184, 60, 0.3); /* Kept existing special state */
+    background-color: rgba(245, 184, 60, 0.3);
+    color: #f5b83c;
+    border: 1px solid rgba(245, 184, 60, 0.5);
 }
 
 #custom-screenshot_t {
-    color: #7A8498; /* Override for unique text color */
+    color: #F4CCB5;
 }
 
 #custom-power {
-    color: #BB8697; /* Override for unique text color */
-    margin-right: 8px; /* Keep specific layout adjustment */
+    color: #F8DDBC;
+    margin-right: 8px;
     padding: 0 10px 0 6px;
+    background-color: rgba(27,19,22, 0.85);
+    border: 1px solid rgba(248,221,188, 0.3);
 }
 
 #network {
-    color: #676883; /* Changed from #90858d to #676883 (red) */
+    color: #8A798A;
+    background-color: rgba(27,19,22, 0.85);
+    border: 1px solid rgba(138,121,138, 0.3);
 }
 
 #network.disconnected {
-    background-color: rgba(245, 60, 60, 0.3); /* Kept existing special state */
+    background-color: rgba(245, 60, 60, 0.4);
+    color: #f55a5a;
+    border: 1px solid rgba(245, 60, 60, 0.6);
 }
 
 #custom-notification {
-    color: #8F738D; /* Changed from $color9 to #8F738D (green) */
+    color: #AF928F;
+    background-color: rgba(27,19,22, 0.85);
+    border: 1px solid rgba(175,146,143, 0.3);
 }
 
 #custom-clipboard {
-    background-color: rgba(27,31,38, 0.6); /* Was COLOR_0_RGB */
-    color: #cebeca; /* Default text color, will be overridden per module */
-    border-radius: 8px;
-    padding: 2px 16px;
-    margin: 4px 2px; /* Changed from 4px 4px for closer spacing */
+    background-color: rgba(27,19,22, 0.85);
+    color: #d7d2db;
+    border-radius: 10px;
+    padding: 0 16px;
+    margin: 4px 3px;
     min-width: 20px;
+    border: 1px solid rgba(175,146,143, 0.15);
 }
 
-#window { /* #window had a slightly different background, will keep it specific */
-    background-color: rgba(27,31,38, 0.65); /* Specific background for #window */
-    color: #C07D85; /* Changed from $color11 to #C07D85 (blue) */
-    border-radius: 8px;
-    margin: 4px 2px; /* Changed from 4px 3px for closer spacing */
-    padding: 0 14px;
+#window {
+    background-color: rgba(27,19,22, 0.9);
+    color: #D1AEA2;
+    border-radius: 10px;
+    margin: 4px 3px;
+    padding: 0 18px;
+    font-weight: 600;
+    border: 1px solid rgba(209,174,162, 0.3);
 }
 
 tooltip {
-    border-radius: 10px;
-    background-color: rgba(27,31,38, 0.85); /* Was COLOR_0_RGB */
-    padding: 8px;
+    border-radius: 12px;
+    background-color: rgba(27,19,22, 0.95);
+    padding: 12px;
     margin: 4px;
+    border: 1px solid rgba(175,146,143, 0.3);
 }
 
 tooltip label {
-    color: #cebeca; /* Was COLOR_7 */
+    color: #d7d2db;
+}
+
+@keyframes iss-blink {
+    from { opacity: 1; }
+    to { opacity: 1.5; }
+}
+
+#custom-iss {
+    color: #A194A4;
+    background-color: rgba(27,19,22, 0.85);
+    border: 1px solid rgba(161,148,164, 0.3);
 } 

@@ -17,7 +17,8 @@
     "spacing": 8,
 
     "modules-left": [
-	      "hyprland/workspaces"
+        "hyprland/workspaces",
+        "custom/iss"
     ],
     "modules-center": [
         "clock"
@@ -48,7 +49,7 @@
 
 
     "custom/rofi": {
-        "format": "",
+        "format": "",
         "tooltip": false,
         "on-click-right": "nwg-drawer",
         "on-click": "rofi -show combi -modi drun,run,combi -combi-modi drun,run -theme ~/.config/rofi/config.rasi",
@@ -98,8 +99,8 @@
         "interval": 10
     },
     "custom/storage": {
-        "format": " {}",
-        "format-alt": "{percentage}% ",
+        "format": " {}",
+        "format-alt": "{percentage}% ",
         "format-alt-click": "click-right",
         "return-type": "json",
         "interval": 60,
@@ -110,16 +111,15 @@
         "format": "{icon} {percent}%",
         "format-alt": "{percent}% {icon}",
         "format-alt-click": "click-right",
-        //"format-icons": ["", ""],
-        "format-icons": ["", ""],
+        "format-icons": ["", ""],
         "on-scroll-down": "brightnessctl s 5%-",
         "on-scroll-up": "brightnessctl s +5%"
     },
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
-            "activated": "",
-            "deactivated": ""
+            "activated": "",
+            "deactivated": ""
         },
         "tooltip": "true"
     },
@@ -139,7 +139,7 @@
         "return-type": "json",
         "max-length": 40,
         "format-icons": {
-            "spotify": "",
+            "spotify": "",
             "default": "🎜"
         },
         "escape": true,
@@ -167,23 +167,23 @@
       "exec": {
         "pre": "if unit_status=\"$(systemctl --user is-active gammastep)\"; then\nstatus=\"$unit_status ($(journalctl --user -u gammastep.service -g 'Period: ' | tail -1 | cut -d ':' -f6 | xargs))\"\nelse\nstatus=\"$unit_status\"\nfi",
         "alt": "${status:-inactive}",
-        "tooltip": "Gammastep is $status",
+        "tooltip": "Gammastep is $status"
       },
       "format": "{icon}",
       "format-icons": {
         "activating": "󰁪 ",
         "deactivating": "󰁪 ",
         "inactive": "? ",
-        "active (Night)": " ",
+        "active (Night)": " ",
         "active (Nighttime)": " ",
         "active (Transition (Night)": " ",
         "active (Transition (Nighttime)": " ",
-        "active (Day)": " ",
-        "active (Daytime)": " ",
-        "active (Transition (Day)": " ",
-        "active (Transition (Daytime)": " "
+        "active (Day)": " ",
+        "active (Daytime)": " ",
+        "active (Transition (Day)": " ",
+        "active (Transition (Daytime)": " "
       },
-      "on-click": "systemctl --user is-active gammastep && systemctl --user stop gammastep || systemctl --user start gammastep",
+      "on-click": "systemctl --user is-active gammastep && systemctl --user stop gammastep || systemctl --user start gammastep"
     },
 
     "cpu": {
@@ -196,9 +196,9 @@
 
     "mpd": {
         "max-length": 25,
-        "format": "<span foreground='#bb9af7'></span> {title}",
-        "format-paused": " {title}",
-        "format-stopped": "<span foreground='#bb9af7'></span>",
+        "format": "<span foreground='#bb9af7'></span> {title}",
+        "format-paused": " {title}",
+        "format-stopped": "<span foreground='#bb9af7'></span>",
         "format-disconnected": "",
         "on-click": "mpc --quiet toggle",
         "on-click-right": "mpc update; mpc ls | mpc add",
@@ -229,16 +229,16 @@
     "hyprland/workspaces": {
         "format": "{icon}",
         "format-icons": {
-            "1": "◉",
-            "2": "◉",
-            "3": "◉",
-            "4": "◉",
-            "5": "◉",
-            "6": "◉",
-            "7": "◉",
-            "8": "◉",
-            "9": "◉",
-            "10": "◉"
+            "1": "󰘧",
+            "2": "󰘬",
+            "3": "󰘲",
+            "4": "󰙀",
+            "5": "󰙅",
+            "6": "󰙞",
+            "7": "󰙧",
+            "8": "󰙮",
+            "9": "󰙴",
+            "10": "󰚀"
         },
         "on-click": "activate",
         "all-outputs": true,
@@ -313,7 +313,7 @@
     },
 
     "custom/clipboard": {
-        "format": "",
+        "format": "",
         "on-click": "cliphist list | rofi -dmenu -theme ~/.config/rofi/config.rasi | cliphist decode | wl-copy",
         "tooltip": false
     },
@@ -325,6 +325,15 @@
         "spacing": 4,
         "min-width": 20,
         "on-click-right": "firefox https://www.perplexity.ai/"
+    },
+
+    "custom/iss": {
+        "format": " {text}",
+        "return-type": "json",
+        "interval": 15,
+        "exec": "~/.config/waybar/modules/iss-tracker.sh",
+        "on-click": "firefox https://spotthestation.nasa.gov/tracking_map.cfm",
+        "tooltip": true
     }
 
    

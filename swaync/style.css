@@ -1,7 +1,7 @@
-@define-color background      rgba(27,31,38, 0.90);
-@define-color text            rgb(206,190,202);
-@define-color text-alt        rgb(144,133,141);
-@define-color background-alt  rgba(27,31,38, 0.90);
+@define-color background      rgba(27,19,22, 0.90);
+@define-color text            rgb(215,210,219);
+@define-color text-alt        rgb(150,147,153);
+@define-color background-alt  rgba(27,19,22, 0.90);
 @define-color selected        alpha(@text-alt, .4);
 @define-color hover           alpha(@selected, .4);
 @define-color urgent          @text-alt;
@@ -9,10 +9,10 @@
 * {
   color: @text;
   all: unset;
-  font-size: 14px;
-  font-family: "CaskaydiaCove Nerd Font";
+  font-size: 20px;
+  font-family: "JetBrainsMono Nerd Font";
   transition: 200ms;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .notification-background {
