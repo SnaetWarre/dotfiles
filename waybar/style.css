@@ -9,7 +9,7 @@
 
 #waybar {
     background-color: transparent;
-    color: #d7d2db;
+    color: #e1e9f0;
     transition-property: background-color;
     transition-duration: 0.5s;
     border-radius: 16px;
@@ -21,7 +21,7 @@
 }
 
 #workspaces {
-    background-color: rgba(27,19,22, 0.85);
+    background-color: rgba(12,16,22, 0.85);
     border-radius: 12px;
     margin: 4px;
     padding: 0 8px;
@@ -33,14 +33,14 @@
     padding: 0 12px;
     border-radius: 6px;
     margin: 5px 2px;
-    color: #d7d2db;
+    color: #e1e9f0;
     font-size: 13pt;
     background-color: transparent;
     transition: all 0.3s ease;
 }
 
 #workspaces button.active {
-    background-color: rgba(175,146,143, 0.5);
+    background-color: rgba(182,168,179, 0.5);
     color: #ffffff;
     padding: 0 16px;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
@@ -48,8 +48,8 @@
 }
 
 #workspaces button:hover {
-    background: rgba(138,121,138, 0.6);
-    color: #F8DDBC;
+    background: rgba(114,172,200, 0.6);
+    color: #CFD6D9;
     padding: 0 14px;
 }
 
@@ -64,52 +64,52 @@
 #custom-clipboard,
 #custom-rofi,
 #custom-iss {
-    background-color: rgba(27,19,22, 0.85);
-    color: #d7d2db;
+    background-color: rgba(12,16,22, 0.85);
+    color: #e1e9f0;
     border-radius: 10px;
     padding: 0 16px;
     margin: 4px 3px;
     min-width: 20px;
-    border: 1px solid rgba(175,146,143, 0.15);
+    border: 1px solid rgba(182,168,179, 0.15);
 }
 
 #clock {
-    color: #8A798A;
+    color: #72ACC8;
     font-weight: bold;
     padding: 0 18px;
-    background-color: rgba(27,19,22, 0.9);
-    border: 1px solid rgba(138,121,138, 0.3);
+    background-color: rgba(12,16,22, 0.9);
+    border: 1px solid rgba(114,172,200, 0.3);
 }
 
 #memory {
-    color: #AF928F;
-    background-color: rgba(27,19,22, 0.85);
-    border: 1px solid rgba(175,146,143, 0.3);
+    color: #B6A8B3;
+    background-color: rgba(12,16,22, 0.85);
+    border: 1px solid rgba(182,168,179, 0.3);
 }
 
 #custom-rofi {
-    color: #d7d2db;
+    color: #e1e9f0;
     padding: 0 14px;
-    background-color: rgba(27,19,22, 0.9);
+    background-color: rgba(12,16,22, 0.9);
 }
 
 #custom-screenshot_t {
     padding: 0 10px 0 6px;
-    background-color: rgba(27,19,22, 0.85);
-    border: 1px solid rgba(244,204,181, 0.3);
+    background-color: rgba(12,16,22, 0.85);
+    border: 1px solid rgba(178,201,211, 0.3);
 }
 
 #battery {
-    color: #A194A4;
-    background-color: rgba(27,19,22, 0.85);
+    color: #8EB8CB;
+    background-color: rgba(12,16,22, 0.85);
     padding: 0 18px;
-    border: 1px solid rgba(161,148,164, 0.3);
+    border: 1px solid rgba(142,184,203, 0.3);
 }
 
 #battery.charging, #battery.plugged {
-    background-color: rgba(175,146,143, 0.3);
-    color: #d7d2db;
-    border: 1px solid rgba(175,146,143, 0.5);
+    background-color: rgba(182,168,179, 0.3);
+    color: #e1e9f0;
+    border: 1px solid rgba(182,168,179, 0.5);
 }
 
 #battery.critical:not(.charging) {
@@ -126,9 +126,9 @@
 }
 
 #pulseaudio {
-    color: #D1AEA2;
-    background-color: rgba(27,19,22, 0.85);
-    border: 1px solid rgba(209,174,162, 0.3);
+    color: #A6BBC6;
+    background-color: rgba(12,16,22, 0.85);
+    border: 1px solid rgba(166,187,198, 0.3);
 }
 
 #pulseaudio.muted {
@@ -138,21 +138,21 @@
 }
 
 #custom-screenshot_t {
-    color: #F4CCB5;
+    color: #B2C9D3;
 }
 
 #custom-power {
-    color: #F8DDBC;
+    color: #CFD6D9;
     margin-right: 8px;
     padding: 0 10px 0 6px;
-    background-color: rgba(27,19,22, 0.85);
-    border: 1px solid rgba(248,221,188, 0.3);
+    background-color: rgba(12,16,22, 0.85);
+    border: 1px solid rgba(207,214,217, 0.3);
 }
 
 #network {
-    color: #8A798A;
-    background-color: rgba(27,19,22, 0.85);
-    border: 1px solid rgba(138,121,138, 0.3);
+    color: #72ACC8;
+    background-color: rgba(12,16,22, 0.85);
+    border: 1px solid rgba(114,172,200, 0.3);
 }
 
 #network.disconnected {
@@ -162,41 +162,41 @@
 }
 
 #custom-notification {
-    color: #AF928F;
-    background-color: rgba(27,19,22, 0.85);
-    border: 1px solid rgba(175,146,143, 0.3);
+    color: #B6A8B3;
+    background-color: rgba(12,16,22, 0.85);
+    border: 1px solid rgba(182,168,179, 0.3);
 }
 
 #custom-clipboard {
-    background-color: rgba(27,19,22, 0.85);
-    color: #d7d2db;
+    background-color: rgba(12,16,22, 0.85);
+    color: #e1e9f0;
     border-radius: 10px;
     padding: 0 16px;
     margin: 4px 3px;
     min-width: 20px;
-    border: 1px solid rgba(175,146,143, 0.15);
+    border: 1px solid rgba(182,168,179, 0.15);
 }
 
 #window {
-    background-color: rgba(27,19,22, 0.9);
-    color: #D1AEA2;
+    background-color: rgba(12,16,22, 0.9);
+    color: #A6BBC6;
     border-radius: 10px;
     margin: 4px 3px;
     padding: 0 18px;
     font-weight: 600;
-    border: 1px solid rgba(209,174,162, 0.3);
+    border: 1px solid rgba(166,187,198, 0.3);
 }
 
 tooltip {
     border-radius: 12px;
-    background-color: rgba(27,19,22, 0.95);
+    background-color: rgba(12,16,22, 0.95);
     padding: 12px;
     margin: 4px;
-    border: 1px solid rgba(175,146,143, 0.3);
+    border: 1px solid rgba(182,168,179, 0.3);
 }
 
 tooltip label {
-    color: #d7d2db;
+    color: #e1e9f0;
 }
 
 @keyframes iss-blink {
@@ -205,7 +205,7 @@ tooltip label {
 }
 
 #custom-iss {
-    color: #A194A4;
-    background-color: rgba(27,19,22, 0.85);
-    border: 1px solid rgba(161,148,164, 0.3);
+    color: #8EB8CB;
+    background-color: rgba(12,16,22, 0.85);
+    border: 1px solid rgba(142,184,203, 0.3);
 } 
