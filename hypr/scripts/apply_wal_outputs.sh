@@ -204,5 +204,17 @@ pywalfox update
 
 echo "updated firefox colors"
 
+# Set keyboard color using rogauracore
+if command -v rogauracore &> /dev/null; then
+    echo "Setting keyboard color using rogauracore..."
+    # Use color4 (accent color) for the keyboard
+    if rogauracore single_static "${color4#\#}"; then
+        echo "Successfully set keyboard color to ${color4}"
+    else
+        echo "Warning: Failed to set keyboard color. Make sure udev rules are properly set up."
+    fi
+else
+    echo "Warning: rogauracore not found, skipping keyboard color update"
+fi
 
 echo "apply_wal_outputs.sh finished successfully." 
