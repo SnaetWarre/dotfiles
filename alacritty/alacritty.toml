@@ -9,28 +9,28 @@ size = 15.0 # <-- Adjust this number for your preferred size
 # Normal (Regular) font face
 [font.normal]
 # Use the exact family name from fc-list
-family = "JetBrainsMono Nerd Font"
+family = "JetBrains Mono"
 # style = "Regular" # Usually not needed if family name is specific
 
 # Bold font face
 [font.bold]
 # Alacritty should find this automatically if 'normal.family' is set,
 # but you can specify explicitly if needed.
-family = "JetBrainsMono Nerd Font"
+family = "JetBrains Mono"
 style = "Bold"
 
 # Italic font face
 [font.italic]
 # Alacritty should find this automatically if 'normal.family' is set,
 # but you can specify explicitly if needed.
-family = "JetBrainsMono Nerd Font"
+family = "JetBrains Mono"
 style = "Italic"
 
 # Bold Italic font face
 [font.bold_italic]
 # Alacritty should find this automatically if 'normal.family' is set,
 # but you can specify explicitly if needed.
-family = "JetBrainsMono Nerd Font"
+family = "JetBrains Mono"
 style = "Bold Italic"
 
 [cursor]
