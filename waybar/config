@@ -18,7 +18,6 @@
 
     "modules-left": [
         "hyprland/workspaces",
-        "custom/iss"
     ],
     "modules-center": [
         "clock#date"
@@ -28,7 +27,6 @@
         "memory",
         "battery",
         "pulseaudio",
-        "custom/screenshot_t",
         "custom/power"
     ],
 
