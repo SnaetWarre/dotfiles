@@ -3,11 +3,11 @@ window-padding-x = 5
 window-padding-y = 7
 
 # Font configuration
-font-size = 17.0
+font-size = 18.0
 
 # Font family - Ghostty uses a single font-family setting
 # and automatically finds bold, italic, and bold-italic variants
-font-family = JetBrains Mono 
+font-family = JetBrains Mono
 
 # You can explicitly set font families for different styles if needed:
 font-family-bold = JetBrains Mono
@@ -18,3 +18,6 @@ font-family-bold-italic = JetBrains Mono
 cursor-style = bar
 # Note: Ghostty doesn't have separate vi_mode_style - it uses the same cursor style
 # cursor-style-blink = true  # Uncomment if you want blinking cursor
+#
+
+
