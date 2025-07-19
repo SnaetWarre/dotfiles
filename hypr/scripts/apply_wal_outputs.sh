@@ -34,8 +34,9 @@ SWAYLOCK_CONFIG_DIR="$CONFIG_DIR/swaylock"
 SWAYLOCK_TEMPLATE="$SWAYLOCK_CONFIG_DIR/config.template"
 SWAYLOCK_OUTPUT_CONFIG="$SWAYLOCK_CONFIG_DIR/config"
 
-ALACRITTY_CONFIG="$CONFIG_DIR/alacritty/alacritty.toml"
-ALACRITTY_WAL_COLORS="$CACHE_DIR/colors-alacritty.toml"
+GHOSTTY_CONFIG_DIR="$CONFIG_DIR/ghostty"
+GHOSTTY_TEMPLATE="$GHOSTTY_CONFIG_DIR/config.template"
+GHOSTTY_OUTPUT_CONFIG="$GHOSTTY_CONFIG_DIR/config"
 
 # --- Check for Pywal colors ---
 if [ ! -f "$COLORS_SH" ]; then
@@ -180,6 +181,16 @@ else
     envsubst "$ROFI_WALLPAPER_VARS" < "$ROFI_WALLPAPER_TEMPLATE" > "$ROFI_WALLPAPER_OUTPUT"
 fi
 
+# --- Process Ghostty Config ---
+echo "Processing Ghostty template: $GHOSTTY_TEMPLATE -> $GHOSTTY_OUTPUT_CONFIG"
+if [ ! -f "$GHOSTTY_TEMPLATE" ]; then
+    echo "Warning: Ghostty template not found at $GHOSTTY_TEMPLATE" >&2
+else
+    # Define vars needed by ghostty template
+    GHOSTTY_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}'
+    envsubst "$GHOSTTY_VARS" < "$GHOSTTY_TEMPLATE" > "$GHOSTTY_OUTPUT_CONFIG"
+fi
+
 # --- Generate Perplexity SVG ---
 echo "Generating Perplexity SVG: $PERPLEXITY_SVG"
 mkdir -p "$WAYBAR_ICONS_DIR"
@@ -199,7 +210,7 @@ if [ -f "$SWAYNC_OUTPUT_CSS" ] && command -v swaync-client &> /dev/null; then
     swaync-client -rs || echo "Warning: swaync-client -rs failed."
 fi
 
-# updating firefox with it 
+# updating firefox with it
 pywalfox update
 
 echo "updated firefox colors"
@@ -217,4 +228,4 @@ else
     echo "Warning: rogauracore not found, skipping keyboard color update"
 fi
 
-echo "apply_wal_outputs.sh finished successfully." 
+echo "apply_wal_outputs.sh finished successfully."
