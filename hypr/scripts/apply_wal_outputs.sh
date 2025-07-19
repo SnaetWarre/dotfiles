@@ -38,6 +38,9 @@ GHOSTTY_CONFIG_DIR="$CONFIG_DIR/ghostty"
 GHOSTTY_TEMPLATE="$GHOSTTY_CONFIG_DIR/config.template"
 GHOSTTY_OUTPUT_CONFIG="$GHOSTTY_CONFIG_DIR/config"
 
+ZED_THEME_WAL_DIR="$CONFIG_DIR/zed-theme-wal"
+ZED_GENERATE_THEME_SCRIPT="$ZED_THEME_WAL_DIR/generate_theme"
+
 # --- Check for Pywal colors ---
 if [ ! -f "$COLORS_SH" ]; then
     echo "Error: Pywal color file not found at $COLORS_SH" >&2
@@ -189,6 +192,20 @@ else
     # Define vars needed by ghostty template
     GHOSTTY_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}'
     envsubst "$GHOSTTY_VARS" < "$GHOSTTY_TEMPLATE" > "$GHOSTTY_OUTPUT_CONFIG"
+fi
+
+# --- Generate Zed Theme ---
+echo "Generating Zed theme from wal colors..."
+if [ ! -f "$ZED_GENERATE_THEME_SCRIPT" ]; then
+    echo "Warning: Zed theme generator not found at $ZED_GENERATE_THEME_SCRIPT" >&2
+elif [ ! -x "$ZED_GENERATE_THEME_SCRIPT" ]; then
+    echo "Warning: Zed theme generator is not executable at $ZED_GENERATE_THEME_SCRIPT" >&2
+else
+    if "$ZED_GENERATE_THEME_SCRIPT" --mode readability; then
+        echo "Successfully generated Zed theme"
+    else
+        echo "Warning: Failed to generate Zed theme" >&2
+    fi
 fi
 
 # --- Generate Perplexity SVG ---
