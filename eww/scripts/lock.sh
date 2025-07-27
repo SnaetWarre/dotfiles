@@ -1,3 +1,3 @@
 #!/bin/bash
 
-hyprctl switchxkblayout at-translated-set-2-keyboard 0 && hyprlock
+swaylock-fancy -e -K -p 10 -f Hack-Regular
