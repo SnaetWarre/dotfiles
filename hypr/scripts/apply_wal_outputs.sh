@@ -41,6 +41,10 @@ GHOSTTY_OUTPUT_CONFIG="$GHOSTTY_CONFIG_DIR/config"
 ZED_THEME_WAL_DIR="$CONFIG_DIR/zed-theme-wal"
 ZED_GENERATE_THEME_SCRIPT="$ZED_THEME_WAL_DIR/generate_theme"
 
+EWW_CONFIG_DIR="$CONFIG_DIR/eww"
+EWW_TEMPLATE="$EWW_CONFIG_DIR/eww.scss.template"
+EWW_OUTPUT_CSS="$EWW_CONFIG_DIR/eww.scss"
+
 # --- Check for Pywal colors ---
 if [ ! -f "$COLORS_SH" ]; then
     echo "Error: Pywal color file not found at $COLORS_SH" >&2
@@ -194,6 +198,50 @@ else
     envsubst "$GHOSTTY_VARS" < "$GHOSTTY_TEMPLATE" > "$GHOSTTY_OUTPUT_CONFIG"
 fi
 
+# --- Process eww CSS ---
+echo "Processing eww template: $EWW_TEMPLATE -> $EWW_OUTPUT_CSS"
+if [ ! -f "$EWW_TEMPLATE" ]; then
+    echo "Warning: eww template not found at $EWW_TEMPLATE" >&2
+else
+    # We need to export all color variables including extended colors for eww
+    # eww template uses color9-color15 for hover states
+    export color9 color10 color11 color12 color13 color14 color15
+
+    # Calculate RGB for extended colors if they exist
+    if [ -n "$color9" ]; then
+        color9_rgb=$(hex_to_rgb "$color9")
+        export color9_rgb
+    fi
+    if [ -n "$color10" ]; then
+        color10_rgb=$(hex_to_rgb "$color10")
+        export color10_rgb
+    fi
+    if [ -n "$color11" ]; then
+        color11_rgb=$(hex_to_rgb "$color11")
+        export color11_rgb
+    fi
+    if [ -n "$color12" ]; then
+        color12_rgb=$(hex_to_rgb "$color12")
+        export color12_rgb
+    fi
+    if [ -n "$color13" ]; then
+        color13_rgb=$(hex_to_rgb "$color13")
+        export color13_rgb
+    fi
+    if [ -n "$color14" ]; then
+        color14_rgb=$(hex_to_rgb "$color14")
+        export color14_rgb
+    fi
+    if [ -n "$color15" ]; then
+        color15_rgb=$(hex_to_rgb "$color15")
+        export color15_rgb
+    fi
+
+    # Define vars needed by eww template
+    EWW_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}:${color9}:${color10}:${color11}:${color12}:${color13}:${color14}:${color15}:${color0_rgb}:${color1_rgb}:${color2_rgb}:${color3_rgb}:${color4_rgb}:${color5_rgb}:${color6_rgb}:${color7_rgb}:${color8_rgb}:${color9_rgb}:${color10_rgb}:${color11_rgb}:${color12_rgb}:${color13_rgb}:${color14_rgb}:${color15_rgb}'
+    envsubst "$EWW_VARS" < "$EWW_TEMPLATE" > "$EWW_OUTPUT_CSS"
+fi
+
 # --- Generate Zed Theme ---
 echo "Generating Zed theme from wal colors..."
 if [ ! -f "$ZED_GENERATE_THEME_SCRIPT" ]; then
@@ -220,6 +268,12 @@ cat > "$PERPLEXITY_SVG" << EOF
 EOF
 
 echo "Applying changes that require service restarts..."
+
+# Restart eww if the template was processed
+if [ -f "$EWW_OUTPUT_CSS" ] && command -v eww &> /dev/null; then
+    echo "Restarting eww..."
+    eww reload || echo "Warning: eww reload failed."
+fi
 
 # Restart swaync if the template was processed
 if [ -f "$SWAYNC_OUTPUT_CSS" ] && command -v swaync-client &> /dev/null; then

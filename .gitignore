@@ -28,6 +28,11 @@
 !wofi/**/*
 !nvim/
 !nvim/**/*
+!eww/*
+!eww/
+!eww/scripts/*
+
+
 
 !*.log
 !*.swp

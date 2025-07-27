@@ -1,5 +1,5 @@
 # Window padding
-window-padding-x = 5
+window-padding-x = 7
 window-padding-y = 7
 
 # Font configuration
@@ -50,3 +50,7 @@ palette = 12=${color4}
 palette = 13=${color5}
 palette = 14=${color6}
 palette = 15=${color7}
+
+
+background-opacity = 0.7
+background-blur = true
