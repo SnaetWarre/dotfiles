@@ -1,7 +1,7 @@
-@define-color background      rgba(15,14,16, 0.90);
-@define-color text            rgb(224,192,172);
-@define-color text-alt        rgb(156,134,120);
-@define-color background-alt  rgba(15,14,16, 0.90);
+@define-color background      rgba(16,25,34, 0.90);
+@define-color text            rgb(170,188,207);
+@define-color text-alt        rgb(118,131,144);
+@define-color background-alt  rgba(16,25,34, 0.90);
 @define-color selected        alpha(@text-alt, .4);
 @define-color hover           alpha(@selected, .4);
 @define-color urgent          @text-alt;
