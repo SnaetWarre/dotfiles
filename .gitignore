@@ -31,8 +31,7 @@
 !eww/*
 !eww/
 !eww/scripts/*
-!starship.toml
-
+!.zshrc
 
 
 !*.log
