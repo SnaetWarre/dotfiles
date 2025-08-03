@@ -405,6 +405,7 @@ return {
         },
         git = {
           enable = true,
+          ignore = false,
         },
         actions = {
           open_file = {

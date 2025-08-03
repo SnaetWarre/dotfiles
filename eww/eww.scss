@@ -51,6 +51,24 @@
   }
 }
 
+.visiting{
+  opacity:1;
+  color: #ffffff;
+  font-weight: bold;
+  transition: opacity 0.3s;
+  &:hover{
+    opacity:1;
+  }
+}
+
+.occupied{
+  opacity:0.8;
+  transition: opacity 0.3s;
+  &:hover{
+    opacity:1;
+  }
+}
+
 .time-label{
   background-color:rgba(23,27,33,0.38);
   color:#667388;

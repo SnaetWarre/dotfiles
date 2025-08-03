@@ -7,10 +7,11 @@
     "uptime",
     "packages",
     "wm",
+    "terminal",
     "cpu",
     "gpu",
     "memory",
     "disk",
-    "colors"
+    "colors"  
   ]
 }

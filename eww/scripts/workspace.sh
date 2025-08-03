@@ -11,16 +11,15 @@ ws() {
 
     for ((i=1; i<=workspaces; i++)); do
         windows=$(echo "$workspace_data" | jq -r "[.[] | select(.id == ${i})] | .[0]?.windows // 0")
-        workspace_icon+=(" ")
         if [[ "$current_workspace" == "$i" ]]; then
+            workspace_icon+=(" ")
             workspace_class+=("visiting")
         elif [[ "$windows" -gt 0 ]]; then
+            workspace_icon+=(" ")
             workspace_class+=("occupied")
         else
+            workspace_icon+=(" ")
             workspace_class+=("free")
-        fi
-        if [[ "$current_workspace" == "$i" ]]; then
-            workspace_icon[$((i-1))]=" "
         fi
     done
 
