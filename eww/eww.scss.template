@@ -13,17 +13,7 @@
   margin:6.5px;
 }
 
-.menu{
-  margin-left:12px;
-}
 
-.menu-eventbox{
-  color:${color4};
-  transition: color 0.3s;
-  &:hover{
-    color:${color7};
-  }
-}
 
 .power{
   margin-right:10px;
@@ -44,6 +34,7 @@
   font-family: "JetBrains Mono";
   font-size: 16px;
   color: ${color7};
+  margin-left: 12px;
 }
 
 .div{
@@ -165,7 +156,7 @@ menu {
   font-size:4px;
 }
 
-.wifictl-container, .menuctl-container{
+.wifictl-container{
   box-shadow: 0 2px 3px 2px rgba(${color0_rgb},0.7);
   margin:5.5px;
   border-radius: 20px;
@@ -174,7 +165,7 @@ menu {
   padding: 5px;
 }
 
-.wifi-header, .menu-header{
+.wifi-header{
   font-size:25px;
   margin-left:15px;
   margin-top:10px;
@@ -182,7 +173,7 @@ menu {
   color:${color4};
 }
 
-.wifi-stats, .menu-subheader{
+.wifi-stats{
   color: ${color7};
   margin-left:15px;
 }
@@ -195,7 +186,7 @@ menu {
   color: ${color2};
 }
 
-.network-container, .app-container{
+.network-container{
   min-height:15rem;
   margin:7px;
   margin-top:17px;
@@ -204,11 +195,7 @@ menu {
   background-color:rgba(${color0_rgb},0.28);
 }
 
-.app-container{
-  min-height:25rem;
-}
-
-.wifi-option-box, .app-option-box{
+.wifi-option-box{
   font-size:16px;
   margin:5px 5px;
   border-radius:15px;
@@ -219,14 +206,6 @@ menu {
 
 .wifi-ssid{
   margin:2px 15px;
-}
-
-.app-display{
-  margin:2px 2px;
-}
-
-.app-name{
-  margin-left:15px;
 }
 
 .wifi-ssid-01{
@@ -714,5 +693,3 @@ tooltip{
   background-color:${color5};
   border-radius: 10px;
 }
-
-
