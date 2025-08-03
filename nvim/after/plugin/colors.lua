@@ -1,5 +1,5 @@
 function ColorMyPencils(color)
-    color = color or "rose-pine"
+    color = color or "catppuccin"
     local status_ok, _ = pcall(vim.cmd.colorscheme, color)
     if not status_ok then
         vim.cmd.colorscheme("default")
@@ -10,4 +10,4 @@ function ColorMyPencils(color)
     vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 end
 
-ColorMyPencils() 
+ColorMyPencils()
