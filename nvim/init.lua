@@ -12,9 +12,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Load lazy.nvim
-require("lazy").setup("plugins")
-
 -- Set leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -32,6 +29,9 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.termguicolors = true
+
+-- Load lazy.nvim
+require("lazy").setup("plugins")
 
 -- Load custom configurations
 require("theprimeagen") 
