@@ -1,0 +1,18 @@
+{
+  "name": "Osaka Jade",
+  "description": "A modern dark theme with vibrant accents",
+  "author": "Adapted from Omarchy",
+  "version": "1.0",
+  "type": "dark",
+  "colors": {
+    "background": "#0a0a0a",
+    "foreground": "#f8f9fa",
+    "accent": "#339af0",
+    "red": "#ff6b6b",
+    "green": "#51cf66",
+    "yellow": "#ffd43b",
+    "blue": "#339af0",
+    "magenta": "#cc5de8",
+    "cyan": "#22b8cf"
+  }
+}

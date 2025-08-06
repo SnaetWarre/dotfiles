@@ -1,0 +1,18 @@
+{
+  "name": "Matte Black",
+  "description": "A sleek dark theme with red accents",
+  "author": "Adapted from Omarchy",
+  "version": "1.0",
+  "type": "dark",
+  "colors": {
+    "background": "#121212",
+    "foreground": "#8a8a8d",
+    "accent": "#e68e0d",
+    "red": "#D35F5F",
+    "green": "#FFC107",
+    "yellow": "#b91c1c",
+    "blue": "#e68e0d",
+    "magenta": "#D35F5F",
+    "cyan": "#bebebe"
+  }
+}

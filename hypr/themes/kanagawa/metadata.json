@@ -1,0 +1,18 @@
+{
+  "name": "Kanagawa",
+  "description": "A theme inspired by the colors of the famous painting",
+  "author": "Adapted from Omarchy",
+  "version": "1.0",
+  "type": "dark",
+  "colors": {
+    "background": "#1f1f28",
+    "foreground": "#dcd7ba",
+    "accent": "#7aa89f",
+    "red": "#e46876",
+    "green": "#98bb6c",
+    "yellow": "#dca561",
+    "blue": "#7aa89f",
+    "magenta": "#c586c0",
+    "cyan": "#7dc4a4"
+  }
+}

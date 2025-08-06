@@ -1,0 +1,18 @@
+{
+  "name": "Everforest",
+  "description": "A warm, green-tinted dark theme inspired by nature",
+  "author": "Adapted from Omarchy",
+  "version": "1.0",
+  "type": "dark",
+  "colors": {
+    "background": "#2d353b",
+    "foreground": "#d3c6aa",
+    "accent": "#7fbbb3",
+    "red": "#e67e80",
+    "green": "#a7c080",
+    "yellow": "#dbbc7f",
+    "blue": "#7fbbb3",
+    "magenta": "#d699b6",
+    "cyan": "#83c092"
+  }
+}

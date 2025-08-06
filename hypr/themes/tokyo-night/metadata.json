@@ -1,0 +1,18 @@
+{
+  "name": "Tokyo Night",
+  "description": "A dark theme with blue and purple accents",
+  "author": "Adapted from Omarchy",
+  "version": "1.0",
+  "type": "dark",
+  "colors": {
+    "background": "#1a1b26",
+    "foreground": "#c0caf5",
+    "accent": "#7aa2f7",
+    "red": "#f7768e",
+    "green": "#9ece6a",
+    "yellow": "#e0af68",
+    "blue": "#7aa2f7",
+    "magenta": "#bb9af7",
+    "cyan": "#7dcfff"
+  }
+}

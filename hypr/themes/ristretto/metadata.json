@@ -1,0 +1,18 @@
+{
+  "name": "Ristretto",
+  "description": "A dark theme with muted colors",
+  "author": "Adapted from Omarchy",
+  "version": "1.0",
+  "type": "dark",
+  "colors": {
+    "background": "#2d2d2d",
+    "foreground": "#f2f2f2",
+    "accent": "#6699cc",
+    "red": "#f2777a",
+    "green": "#99cc99",
+    "yellow": "#ffcc66",
+    "blue": "#6699cc",
+    "magenta": "#cc99cc",
+    "cyan": "#66cccc"
+  }
+}

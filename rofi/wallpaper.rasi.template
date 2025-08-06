@@ -94,6 +94,6 @@ element-icon {
 element-text {
     horizontal-align: 0.5;
     vertical-align: 0.5;
-    text-color: transparent;
+    text-color: @foreground;
     background-color: transparent;
 } 
