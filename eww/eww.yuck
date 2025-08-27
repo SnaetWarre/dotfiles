@@ -95,7 +95,7 @@
              :halign "center"
              :valign "center"
              (box :class "batico-short"
-                  (literal :content batico)
+                  (literal :content "${battery_combined.icon}")
              )
              (label :class "bsht"
                     :text "${EWW_BATTERY.BAT0.capacity}%")
@@ -457,7 +457,7 @@
                         (box :class "bats"
                              :space-evenly false
                              (box :class "batico-main"
-                                  (literal :content batico)
+                                  (literal :content "${battery_combined.icon}")
                              )
                              (box :class "bat-detail"
                                   :orientation "v"
@@ -467,7 +467,7 @@
                                   )
                                   (box :class "bat-status"
                                        :space-evenly false
-                                       (label :limit-width 26 :text "${batest}")
+                                       (label :limit-width 26 :text "${battery_combined.status}")
                                   )
                              )
                         )
@@ -582,8 +582,7 @@
     ))
 )
 
-(deflisten batico "./scripts/batico.sh")
-(deflisten batest "./scripts/batest.sh")
+(deflisten battery_combined "./scripts/battery_combined.sh")
 (deflisten music :initial "{}" "./scripts/music.sh")
 (deflisten pmusic :initial "{}" "./scripts/pmusic.sh")
 

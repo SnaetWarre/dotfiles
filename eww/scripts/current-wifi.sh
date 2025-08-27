@@ -1,14 +1,18 @@
 #!/bin/bash
 
+# Get WiFi info in one command
 wifi_info=$(nmcli -t -f active,ssid,signal dev wifi | grep '^yes')
 
 if [[ -z "$wifi_info" ]]; then
-    echo '{"icon": "󰤭", "ssid": "Disconnected", "strength": 0}'
+    echo '{"icon": "", "ssid": "Disconnected", "strength": 0}'
     exit 0
 fi
 
-ssid=$(echo "$wifi_info" | cut -d: -f2)
-signal=$(echo "$wifi_info" | cut -d: -f3)
-icon="󰤨 "
+# Parse the single line output
+IFS=':' read -r active ssid signal <<< "$wifi_info"
 
-echo "{\"icon\": \"$icon\", \"ssid\": \"${ssid^^}\", \"strength\": $signal}"
+# Convert SSID to uppercase once
+ssid_upper="${ssid^^}"
+icon=" "
+
+echo "{\"icon\": \"$icon\", \"ssid\": \"$ssid_upper\", \"strength\": $signal}"
