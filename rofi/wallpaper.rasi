@@ -4,10 +4,10 @@ configuration {
 }
 
 * {
-    background: rgba(12,16,17, 0.90);       /* Was COLOR_BG */
-    foreground: #bccec8;       /* Was COLOR_FG */
-    selected: #EC6A63;         /* Was COLOR_SELECTED */
-    background-alt: rgba(131,63,61, 0.90);   /* Was COLOR_BG_ALT */
+    background: rgba(23,27,33, 0.90);       /* Was COLOR_BG */
+    foreground: #aab1bb;       /* Was COLOR_FG */
+    selected: #667286;         /* Was COLOR_SELECTED */
+    background-alt: rgba(95,109,128, 0.90);   /* Was COLOR_BG_ALT */
 
     border: 0;
     margin: 0;
@@ -15,34 +15,34 @@ configuration {
     spacing: 0;
 
     background-color: @background;
+    font: "JetBrainsMono Nerd Font 11";
 }
 
 window {
-    width: 80%;
-    height: 80%;
+    width: 60%;
+    height: 65%;
     background-color: @background;
     border-radius: 12px;
 }
 
 mainbox {
     children: [ inputbar, listview ];
-    padding: 12px;
+    padding: 10px;
 }
 
 inputbar {
     children: [ prompt, entry ];
     background-color: @background;
-    padding: 8px;
-    margin: 0px 0px 12px 0px;
-    border-radius: 8px;
+    padding: 6px 8px;
+    margin: 0px 0px 8px 0px;
+    border-radius: 10px;
 }
 
 prompt {
     enabled: true;
-    padding: 8px;
+    padding: 4px 8px;
     background-color: transparent;
     text-color: @foreground;
-    font: "Ubuntu 14";
 }
 
 entry {
@@ -52,25 +52,25 @@ entry {
     expand: true;
     horizontal-align: 0;
     placeholder: "Type to search...";
-    padding: 8px;
+    padding: 6px 8px;
     border-radius: 8px;
 }
 
 listview {
-    columns: 3;
+    columns: 7;
     lines: 3;
     cycle: false;
     dynamic: true;
     layout: vertical;
     scrollbar: false;
-    spacing: 12px;
+    spacing: 10px;
     fixed-height: true;
     fixed-columns: true;
 }
 
 element {
     orientation: vertical;
-    padding: 4px;
+    padding: 3px;
     border-radius: 8px;
 }
 
@@ -85,7 +85,7 @@ element selected.normal {
 }
 
 element-icon {
-    size: 200px;
+    size: 140px;
     horizontal-align: 0.5;
     vertical-align: 0.5;
     border-radius: 8px;
@@ -96,4 +96,6 @@ element-text {
     vertical-align: 0.5;
     text-color: @foreground;
     background-color: transparent;
+    font: "JetBrainsMono Nerd Font 9";
+    padding: 4px 0 0 0;
 } 

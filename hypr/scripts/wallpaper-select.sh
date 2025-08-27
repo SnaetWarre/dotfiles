@@ -18,7 +18,7 @@ while IFS= read -r wallpaper; do
 done <<< "$WALLPAPERS"
 
 # Show rofi menu with image previews
-SELECTED=$(cat "$TEMP_FILE" | rofi -dmenu -i -p "Select Wallpaper" -theme ~/.config/rofi/wallpaper.rasi -show-icons -icon-theme "Papirus" -columns 3 -modi "run,drun,icons" -show icons)
+SELECTED=$(cat "$TEMP_FILE" | rofi -dmenu -i -p "Select Wallpaper" -theme ~/.config/rofi/wallpaper.rasi -show-icons -icon-theme "Papirus" -modi "icons" -show icons)
 
 # Clean up temp file
 rm "$TEMP_FILE"

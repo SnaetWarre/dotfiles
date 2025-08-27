@@ -155,7 +155,12 @@ echo "  Theme name saved for Neovim: $THEME_NAME"
 if [ ! -z "$wallpaper" ] && [ -f "$wallpaper" ]; then
     echo "Setting wallpaper..."
     if command -v swww &> /dev/null; then
-        swww img "$wallpaper" || echo "  Warning: Failed to set wallpaper with swww"
+        swww img "$wallpaper" \
+          --transition-type grow \
+          --transition-angle 30 \
+          --transition-duration 1.0 \
+          --transition-fps 120 \
+          --transition-bezier .2,1,.2,1 || echo "  Warning: Failed to set wallpaper with swww"
     elif command -v swaybg &> /dev/null; then
         killall swaybg 2>/dev/null || true
         swaybg -i "$wallpaper" &
