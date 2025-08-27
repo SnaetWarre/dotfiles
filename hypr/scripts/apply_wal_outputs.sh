@@ -300,3 +300,20 @@ else
 fi
 
 echo "apply_wal_outputs.sh finished successfully."
+
+# --- Update Hyprland border colors dynamically ---
+if command -v hyprctl &> /dev/null; then
+    # Use active accent as a gradient and softened inactive border
+    # Convert hex like #aabbcc to 0xffaabbcc
+    to_rgba_ff() {
+        local hex=${1#"#"}
+        echo "0xff${hex}"
+    }
+    ACTIVE_A=$(to_rgba_ff "$color4")
+    ACTIVE_B=$(to_rgba_ff "$color1")
+    INACTIVE=$(to_rgba_ff "${color7#\#}")
+
+    # Apply with gradient angle for flair
+    hyprctl keyword general:col.active_border "$ACTIVE_A $ACTIVE_B 45deg" >/dev/null 2>&1 || true
+    hyprctl keyword general:col.inactive_border "$INACTIVE" >/dev/null 2>&1 || true
+fi

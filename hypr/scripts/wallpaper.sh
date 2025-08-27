@@ -45,8 +45,13 @@ else
 fi
 
 # Rofi update is now handled by apply_wal_outputs.sh
-# Set wallpaper with swww
-swww img "$WALLPAPER" --transition-duration 0
+# Set wallpaper with swww — smooth premium transition
+swww img "$WALLPAPER" \
+  --transition-type grow \
+  --transition-angle 30 \
+  --transition-duration 1.0 \
+  --transition-fps 120 \
+  --transition-bezier .2,1,.2,1
 
 # Reload Waybar to apply new colors
 killall -SIGUSR2 waybar
