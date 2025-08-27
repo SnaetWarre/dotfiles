@@ -4,15 +4,15 @@
 }
 
 window {
-    background-color: rgba(40,40,40, 0.9); /* Was BG_RGB */
+    background-color: rgba(18,18,18, 0.9); /* Was BG_RGB */
 }
 
 button {
     border-radius: 8px;
-    border-color: rgba(152,151,26, 0.4); /* Was COLOR_2_RGB */
-    text-decoration-color: rgb(235,219,178); /* Was COLOR_7_RGB */
-    color: rgb(235,219,178); /* Was COLOR_7_RGB */
-    background-color: rgba(40,40,40, 0.7); /* Was BG_RGB */
+    border-color: rgba(255,193,7, 0.4); /* Was COLOR_2_RGB */
+    text-decoration-color: rgb(190,190,190); /* Was COLOR_7_RGB */
+    color: rgb(190,190,190); /* Was COLOR_7_RGB */
+    background-color: rgba(18,18,18, 0.7); /* Was BG_RGB */
     border-style: solid;
     border-width: 2px;
     background-repeat: no-repeat;
@@ -23,8 +23,8 @@ button {
 }
 
 button:focus, button:active, button:hover {
-    background-color: rgba(152,151,26, 0.7); /* Was COLOR_2_RGB */
-    border-color: rgba(152,151,26, 0.8); /* Was COLOR_2_RGB */
+    background-color: rgba(255,193,7, 0.7); /* Was COLOR_2_RGB */
+    border-color: rgba(255,193,7, 0.8); /* Was COLOR_2_RGB */
     outline-style: none;
 }
 
