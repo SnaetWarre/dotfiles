@@ -281,10 +281,14 @@ if [ -f "$SWAYNC_OUTPUT_CSS" ] && command -v swaync-client &> /dev/null; then
     swaync-client -rs || echo "Warning: swaync-client -rs failed."
 fi
 
-# updating firefox with it
-pywalfox update
-
-echo "updated firefox colors"
+# Update Firefox (if available) to pick up latest wal cache without touching our templates
+PYWALFOX_BIN="$(command -v pywalfox || true)"
+if [ -z "$PYWALFOX_BIN" ] && [ -x "$HOME/.local/bin/pywalfox" ]; then
+    PYWALFOX_BIN="$HOME/.local/bin/pywalfox"
+fi
+if [ -n "$PYWALFOX_BIN" ]; then
+    "$PYWALFOX_BIN" update && echo "updated firefox colors" || echo "Warning: pywalfox update failed"
+fi
 
 # Set keyboard color using rogauracore
 if command -v rogauracore &> /dev/null; then

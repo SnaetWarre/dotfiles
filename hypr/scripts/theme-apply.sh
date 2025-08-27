@@ -170,13 +170,22 @@ if [ ! -z "$wallpaper" ] && [ -f "$wallpaper" ]; then
     else
         echo "  Warning: No wallpaper setter found (swww, swaybg, or feh)"
     fi
+
+    # Run pywal in cache-only mode for Firefox theme without touching our templates
+    if command -v wal &> /dev/null; then
+        wal -n -q -i "$wallpaper" || echo "  Warning: wal failed to generate cache colors"
+        sleep 1
+        if command -v pywalfox &> /dev/null; then
+            pywalfox update || echo "  Warning: Failed to update Firefox theme"
+        elif [ -x "$HOME/anaconda3/bin/python" ]; then
+            "$HOME/anaconda3/bin/python" -m pywalfox update || echo "  Warning: Failed to update Firefox theme (python -m)"
+        else
+            python3 -m pywalfox update 2>/dev/null || true
+        fi
+    fi
 fi
 
-# Update Firefox theme if pywalfox is available
-if command -v pywalfox &> /dev/null; then
-    echo "Updating Firefox theme..."
-    pywalfox update || echo "  Warning: Failed to update Firefox theme"
-fi
+# Note: Firefox theme already updated above when wallpaper is applied (if wal/pywalfox exist)
 
 # Save current theme
 echo "$THEME_NAME" > "$CURRENT_THEME_FILE"

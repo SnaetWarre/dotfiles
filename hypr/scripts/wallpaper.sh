@@ -26,6 +26,16 @@ if [ $? -ne 0 ]; then
     # exit 1
 fi
 
+# Give wal a moment to flush cache, then update Firefox via pywalfox
+sleep 1
+if command -v pywalfox &> /dev/null; then
+    pywalfox update || echo "Warning: pywalfox update failed"
+elif [ -x "$HOME/anaconda3/bin/python" ]; then
+    "$HOME/anaconda3/bin/python" -m pywalfox update || echo "Warning: pywalfox (python -m) update failed"
+else
+    python3 -m pywalfox update 2>/dev/null || true
+fi
+
 # Apply colors using the new master script (handles Waybar, Rofi, etc.)
 # This script sources the colors internally, ensuring it gets the latest.
 echo "Applying Pywal colors via master script..."
