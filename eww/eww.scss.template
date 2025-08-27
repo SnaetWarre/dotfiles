@@ -8,7 +8,7 @@
 .bar{
   box-shadow: 0 2px 3px 1px rgba(${color0_rgb},0.9);
   border-radius: 0px;
-  background-color: rgba(${color0_rgb},0.94);
+  background-color: rgba(${color0_rgb}, 1);
   padding: 5px;
   margin:0;
 }
