@@ -38,8 +38,36 @@ if [ -n "$SELECTED" ]; then
     echo "Theme selected: $SELECTED"
     
     if [ -f "$THEMES_DIR/$SELECTED/colors.sh" ]; then
+        # If the theme has multiple backgrounds, let the user choose one
+        BG_DIR="$THEMES_DIR/$SELECTED/backgrounds"
+        if [ -d "$BG_DIR" ]; then
+            mapfile -t BG_LIST < <(find "$BG_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" \))
+        else
+            BG_LIST=()
+        fi
+
+        if [ ${#BG_LIST[@]} -gt 0 ]; then
+            BG_TEMP_FILE=$(mktemp)
+            for bg in "${BG_LIST[@]}"; do
+                fname=$(basename "$bg")
+                echo -e "$fname\0icon\x1f$bg" >> "$BG_TEMP_FILE"
+            done
+
+            BG_SELECTED=$(cat "$BG_TEMP_FILE" | rofi -dmenu -i -p "Select Background" -theme ~/.config/rofi/wallpaper.rasi -show-icons -icon-theme "Papirus" -modi "icons" -show icons)
+            rm "$BG_TEMP_FILE"
+
+            if [ -n "$BG_SELECTED" ]; then
+                # Resolve the full path (handles duplicate names poorly, but ok for typical setups)
+                BG_PATH=$(find "$BG_DIR" -type f -name "$BG_SELECTED" | head -n 1)
+                if [ -n "$BG_PATH" ] && [ -f "$BG_PATH" ]; then
+                    echo "Applying theme: $SELECTED with background: $BG_PATH"
+                    wallpaper="$BG_PATH" ~/.config/hypr/scripts/theme-apply.sh "$SELECTED"
+                    exit $?
+                fi
+            fi
+        fi
+
         echo "Applying theme: $SELECTED"
-        # Run the theme apply script with the selected theme
         ~/.config/hypr/scripts/theme-apply.sh "$SELECTED"
     else
         echo "Error: Selected theme not found or invalid!"

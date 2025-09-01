@@ -27,7 +27,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Give wal a moment to flush cache, then update Firefox via pywalfox
-sleep 1
+sleep 2
 if command -v pywalfox &> /dev/null; then
     pywalfox update || echo "Warning: pywalfox update failed"
 elif [ -x "$HOME/anaconda3/bin/python" ]; then

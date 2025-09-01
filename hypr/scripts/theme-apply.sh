@@ -38,8 +38,16 @@ echo "Applying theme: $THEME_NAME"
 # Export theme name for Neovim
 export THEME_NAME="$THEME_NAME"
 
+# Preserve a user-provided wallpaper (from caller) before sourcing theme file
+SELECTED_WALLPAPER_FROM_ENV="${wallpaper:-}"
+
 # Source the theme colors
 source "$THEME_DIR/colors.sh"
+
+# If a wallpaper was provided by the caller, prefer it over theme default
+if [ -n "$SELECTED_WALLPAPER_FROM_ENV" ] && [ -f "$SELECTED_WALLPAPER_FROM_ENV" ]; then
+    wallpaper="$SELECTED_WALLPAPER_FROM_ENV"
+fi
 
 # Helper function to convert hex to RGB
 hex_to_rgb() {
@@ -194,7 +202,7 @@ if [ ! -z "$wallpaper" ] && [ -f "$wallpaper" ]; then
         fi
         if [ -n "$WALP" ] && [ -f "$WALP" ]; then
             wal -n -q -i "$WALP" || echo "  Warning: wal failed to generate cache colors"
-            sleep 2
+            sleep 0.2
             if command -v pywalfox &> /dev/null; then
                 pywalfox update || echo "  Warning: Failed to update Firefox theme"
             elif [ -x "$HOME/anaconda3/bin/python" ]; then
