@@ -1,9 +1,12 @@
 /* Generated eww SCSS template for pywal integration */
 /* This file will be processed by apply_wal_outputs.sh */
 
-*{
-  all: unset;
-  font-family: "Symbols Nerd Font", "Symbols Nerd Font Mono", "JetBrainsMono Nerd Font", "JetBrainsMono Nerd Font Mono", "DejaVu Sans", "Noto Sans", sans-serif;
+* {
+    all: unset;
+    font-family:
+        "Symbols Nerd Font", "Symbols Nerd Font Mono",
+        "JetBrainsMono Nerd Font", "JetBrainsMono Nerd Font Mono",
+        "DejaVu Sans", "Noto Sans", sans-serif;
 }
 
 .batico-main,
@@ -11,7 +14,9 @@
 .ramico,
 .diskico,
 .mico {
-  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Symbols Nerd Font Mono", sans-serif;
+    font-family:
+        "JetBrainsMono Nerd Font", "Symbols Nerd Font",
+        "Symbols Nerd Font Mono", sans-serif;
 }
 
 .bar{
@@ -94,7 +99,7 @@
   background-color:rgba(${color0_rgb},0.38);
   padding:0px 13px;
   border-radius:20px;
-  font-size:13px;
+  font-size:15px;
   margin:3px 0px;
 }
 
@@ -102,7 +107,7 @@
   background-color:rgba(${color0_rgb},0.38);
   padding:0px 18px;
   border-radius:20px;
-  font-size:13px;
+  font-size:15px;
   margin:0px 0px;
 }
 
@@ -117,6 +122,7 @@
 .ram-icon{
   font-family: "JetBrainsMono Nerd Font";
   margin-right: 3px;
+  padding: 2px 2 2 0;
 }
 
 .wifi-div{
@@ -473,12 +479,14 @@ tooltip{
 .batico-short{
   font-family: "JetBrainsMono Nerd Font";
   margin-right:3px;
+  padding: 2px 0 0 0;
 }
 
 .volume-icon{
   font-family: "JetBrainsMono Nerd Font";
   color:${color5};
   margin-right: 3px;
+  padding: 2px 2 2 0 ;
 }
 
 .volico{
