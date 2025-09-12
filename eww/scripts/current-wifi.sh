@@ -4,7 +4,7 @@
 wifi_info=$(nmcli -t -f active,ssid,signal dev wifi | grep '^yes')
 
 if [[ -z "$wifi_info" ]]; then
-    echo '{"icon": "", "ssid": "Disconnected", "strength": 0}'
+    echo '{"icon": "󰤯", "ssid": "Disconnected", "strength": 0}'
     exit 0
 fi
 
@@ -13,6 +13,17 @@ IFS=':' read -r active ssid signal <<< "$wifi_info"
 
 # Convert SSID to uppercase once
 ssid_upper="${ssid^^}"
-icon=" "
+# Choose icon based on signal strength
+if [[ "$signal" -ge 75 ]]; then
+  icon="󰤨"
+elif [[ "$signal" -ge 50 ]]; then
+  icon="󰤥"
+elif [[ "$signal" -ge 25 ]]; then
+  icon="󰤢"
+elif [[ "$signal" -gt 0 ]]; then
+  icon="󰤟"
+else
+  icon="󰤯"
+fi
 
 echo "{\"icon\": \"$icon\", \"ssid\": \"$ssid_upper\", \"strength\": $signal}"

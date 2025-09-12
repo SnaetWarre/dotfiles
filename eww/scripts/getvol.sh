@@ -1,23 +1,32 @@
 #!/bin/bash
 
-# Function to update volume display
-update_volume() {
-    local vol=$(pamixer --get-volume)
-    local mute=$(pamixer --get-mute)
-    
-    if [ "$mute" = true ]; then
-        /usr/bin/eww update volico=""
+# Function to get volume display
+get_volume() {
+    local vol
+    vol=$(pamixer --get-volume)
+    vol=${vol:-0}
+    local mute
+    mute=$(pamixer --get-mute)
+
+    local icon
+    if [ "$mute" = true ] || [ "$vol" -eq 0 ]; then
+        icon="󰖁"  # muted
         vol="0"
+    elif [ "$vol" -lt 34 ]; then
+        icon="󰕿"  # low
+    elif [ "$vol" -lt 67 ]; then
+        icon="󰖀"  # medium
     else
-        /usr/bin/eww update volico=""
+        icon="󰕾"  # high
     fi
-    /usr/bin/eww update get_vol="$vol"
+
+    echo "{\"icon\": \"$icon\", \"volume\": $vol}"
 }
 
-# Initial update
-update_volume
+# Initial output
+get_volume
 
 # Listen for volume changes
 pactl subscribe | stdbuf -oL grep --line-buffered "Event 'change' on sink" | while read -r _; do
-    update_volume
+    get_volume
 done

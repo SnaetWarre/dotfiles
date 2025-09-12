@@ -4,23 +4,23 @@ get_icon(){
   case $1 in
     9[0-9]|100)
       CLASS="BAT1"
-      ICON=""
+      ICON=""
       ;;
     8[0-9]|7[0-9]|6[5-9])
       CLASS="BAT2"
-      ICON=""
+      ICON=""
       ;;
     6[0-4]|5[0-9]|4[5-9])
       CLASS="BAT3"
-      ICON=""
+      ICON=""
       ;;
     4[0-4]|3[0-9]|2[0-9]|1[5-9])
       CLASS="BAT4"
-      ICON=""
+      ICON=""
       ;;
     *)
       CLASS="BAT5"
-      ICON=""
+      ICON=""
       ;;
   esac
 }
@@ -33,13 +33,13 @@ while true; do
     CHARGE_FULL=$(cat /sys/class/power_supply/BAT0/charge_full)
     STATUS=$(cat /sys/class/power_supply/BAT0/status)
     BATTERY=$(cat /sys/class/power_supply/BAT0/capacity)
-    
+
     # Get icon and class
     get_icon "$BATTERY"
     if [[ "$STATUS" == "Charging" ]]; then
         CLASS="CHARGING"
     fi
-    
+
     # Calculate time estimate
     if [ "$CURRENT_NOW" -ne 0 ]; then
         if [[ "$STATUS" == "Discharging" ]]; then
@@ -59,12 +59,12 @@ while true; do
     else
         TIME_EST="Calculating..., $STATUS"
     fi
-    
+
     # Output JSON with both status and icon
     jq -n -c \
         --arg status "$TIME_EST" \
         --arg icon "(box :class \"$CLASS\" \"$ICON\")" \
         '{status: $status, icon: $icon}'
-    
+
     sleep 1
 done

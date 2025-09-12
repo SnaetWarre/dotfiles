@@ -57,7 +57,7 @@
 )
 
 (defvar volrev false)
-(defvar volico "󰕾")
+
 
 (defwidget volume []
     (eventbox :cursor "pointer"
@@ -67,9 +67,9 @@
                        :space-evenly false
                        :halign "center"
                        :valign "center"
-                       (label :class "volume-icon" :text "${volico}")
+                       (label :class "volume-icon" :text "${get_volume.icon}")
                        (label :class "bsht"
-                              :text "${get_vol}%")
+                              :text "${get_volume.volume}%")
                   )
               )
     )
@@ -81,7 +81,7 @@
              :space-evenly false
              :halign "center"
              :valign "center"
-             (label :class "ram-icon" :text " ")
+             (label :class "ram-icon" :text "")
              (label :class "bsht"
                     :text "${round(EWW_RAM.used_mem_perc,0)}%")
         )
@@ -552,9 +552,9 @@
                              (box :class "volume-slider"
                                   :space-evenly false
                                   :halign "center"
-                                  (label :text "${volico}")
+                                  (label :text "${get_volume.icon}")
                                   (scale :class "vol"
-                                         :value get_vol
+                                         :value {get_volume.volume}
                                          :max 101
                                          :min 0
                                          :round-digits 0
@@ -594,8 +594,7 @@
   "brightnessctl -m | awk -F, '{gsub(/%/, \"\", \$4); print \$4}'"
 )
 
-(defvar get_vol "")
-(deflisten get_volume
+(deflisten get_volume :initial "{\"icon\": \"󰕾\", \"volume\": 50}"
     "./scripts/getvol.sh"
 )
 

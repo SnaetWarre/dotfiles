@@ -3,6 +3,15 @@
 
 *{
   all: unset;
+  font-family: "Symbols Nerd Font", "Symbols Nerd Font Mono", "JetBrainsMono Nerd Font", "JetBrainsMono Nerd Font Mono", "DejaVu Sans", "Noto Sans", sans-serif;
+}
+
+.batico-main,
+.cpuico,
+.ramico,
+.diskico,
+.mico {
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Symbols Nerd Font Mono", sans-serif;
 }
 
 .bar{
@@ -23,7 +32,7 @@
   color:${color1};
   font-weight:bold;
   font-size:20px;
-  font-family: "JetBrains Mono";
+  font-family: "JetBrainsMono Nerd Font";
   transition: color 0.3s;
   &:hover{
     color:${color3};
@@ -31,7 +40,7 @@
 }
 
 .ws{
-  font-family: "JetBrains Mono";
+  font-family: "JetBrainsMono Nerd Font";
   font-size: 26px;
   color: ${color7};
   margin-left: 12px;
@@ -106,6 +115,7 @@
 }
 
 .ram-icon{
+  font-family: "JetBrainsMono Nerd Font";
   margin-right: 3px;
 }
 
@@ -119,7 +129,7 @@
 
 .tray-button{
   font-size:20px;
-  font-family:"JetBrains Mono";
+  font-family:"JetBrainsMono Nerd Font";
   color: ${color7};
   border-radius:10px;
   transition: background-color 0.6s;
@@ -161,6 +171,7 @@ menu {
 }
 
 .wifi{
+  font-family: "JetBrainsMono Nerd Font";
   background-color:rgba(${color0_rgb},0.38);
   padding-left: 13px;
   padding-right: 13px;
@@ -460,10 +471,12 @@ tooltip{
 }
 
 .batico-short{
+  font-family: "JetBrainsMono Nerd Font";
   margin-right:3px;
 }
 
 .volume-icon{
+  font-family: "JetBrainsMono Nerd Font";
   color:${color5};
   margin-right: 3px;
 }
