@@ -35,6 +35,10 @@
 !idealworkflow.png
 
 
+!zed/
+!zed/*
+
+
 !*.log
 !*.swp
 !*~
@@ -52,8 +56,3 @@
 !*.pfx
 !.ssh/
 !.gnupg/
-
-
-
-
-
