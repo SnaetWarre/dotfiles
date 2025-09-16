@@ -1,29 +1,141 @@
-// Zed keymap
-//
-// For information on binding keys, see the Zed
-// documentation: https://zed.dev/docs/key-bindings
-//
-// To see the default key bindings run `zed: open default keymap`
-// from the command palette.
 [
   {
-    "context": "Workspace",
+    "context": "Editor && !menu",
     "bindings": {
-      // "shift shift": "file_finder::Toggle"
+      "tab": "menu::SelectNext",
+      "shift-tab": "menu::SelectPrevious"
     }
   },
   {
-    "context": "Editor && vim_mode == insert",
+    "context": "vim_mode == normal && !menu",
     "bindings": {
-      // "j k": "vim::NormalBefore"
+      "space f f": "file_finder::Toggle",
+      "space f w": "pane::DeploySearch",
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-a": "editor::SelectAll",
+      "ctrl-w h": "pane::SplitLeft",
+      "ctrl-w j": "pane::SplitDown",
+      "ctrl-w k": "pane::SplitUp",
+      "ctrl-w l": "pane::SplitRight",
+      "ctrl-w v": "pane::SplitVertical",
+      "ctrl-w q": "pane::CloseAllItems",
+      "ctrl-shift-h": "workspace::SwapPaneLeft",
+      "ctrl-shift-j": "workspace::SwapPaneDown",
+      "ctrl-shift-k": "workspace::SwapPaneUp",
+      "ctrl-shift-l": "workspace::SwapPaneRight",
+      "tab": "pane::ActivateNextItem",
+      "shift-tab": "pane::ActivatePreviousItem",
+      "space g d": "editor::GoToDefinition",
+      "space x": "pane::CloseActiveItem",
+      "space g b": "git::Blame",
+      "space t": "workspace::ToggleRightDock",
+      "space e": "workspace::ToggleLeftDock",
+      "space /": ["workspace::SendKeystrokes", "shift-v g c"], // Switch to visual, comment line and switch back to normal
+      "space w": "workspace::Save",
+      "space g o": "git::Branch",
+      "space o o": "projects::OpenRecent",
+      "space l g": [
+        "task::Spawn",
+        { "task_name": "start lazygit", "reveal_target": "dock" }
+      ]
     }
   },
   {
-    "context": "vim_mode == normal",
+    "context": "vim_mode == insert",
     "bindings": {
-      "ctrl-n": "project_panel::ToggleFocus",
-      "ctrl-h": "project_panel::ToggleFocus",
-      "alt-h": "terminal_panel::ToggleFocus"
+      "j j": "vim::NormalBefore"
+    }
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      // "g c" is default vim keybinding to comment and switch to normal mode
+      "space /": ["workspace::SendKeystrokes", "g c"]
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "shift-a": "project_panel::NewDirectory",
+      "a": "project_panel::NewFile",
+      "shift-y": "workspace::CopyRelativePath",
+      "d": "project_panel::Trash",
+      "space e": "workspace::ToggleLeftDock",
+      "r": "project_panel::Rename"
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "tab": "pane::GoBack",
+      "shift-tab": "pane::GoForward"
+    }
+  },
+  {
+    "context": "KeyContextView",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "space x": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-t": "workspace::NewTerminal",
+      "tab": "menu::SelectNext",
+      "shift-tab": "pane::GoForward"
+    }
+  },
+  {
+    "context": "vim_mode == insert && Editor && showing_completions",
+    "bindings": {
+      "tab": "editor::ContextMenuNext",
+      "shift-tab": "editor::ContextMenuPrevious"
+    }
+  },
+  {
+    "context": "ProjectSearchBar > Editor",
+    "use_key_equivalents": true,
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-t": "workspace::NewTerminal",
+      "tab": "pane::ActivateNextItem",
+      "shift-tab": "pane::ActivatePreviousItem"
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "space g g": "editor::OpenExcerpts",
+      "tab": "pane::ActivateNextItem",
+      "shift-tab": "pane::ActivatePreviousItem"
+    }
+  },
+  {
+    "context": "EmptyPane",
+    "bindings": {
+      "space f f": "file_finder::Toggle",
+      "space o o": "projects::OpenRecent"
     }
   }
+  // {
+  //   "context": "Terminal && mouse_reporting == off",
+  //   "bindings": {
+  //     "space x": "pane::CloseActiveItem"
+  //   }
+  // }
 ]

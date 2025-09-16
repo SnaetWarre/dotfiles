@@ -25,4 +25,12 @@ return {
   -- 		},
   -- 	},
   -- },
+
+
+require("nvim-tree").setup({
+  filters = {
+    dotfiles = false,      -- laat verborgen bestanden (dotfiles) zien
+    git_ignored = false,   -- negeer .gitignore NIET
+  }
+ })
 }

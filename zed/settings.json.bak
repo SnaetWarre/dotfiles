@@ -1,0 +1,86 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "auto_update_extensions": {
+    "*": true
+  },
+  "edit_predictions": {
+    "mode": "eager",
+    "copilot": {
+      "proxy": null,
+      "proxy_no_verify": null,
+      "enterprise_uri": null
+    },
+    "enabled_in_text_threads": false
+  },
+  "vim_mode": true,
+  "agent": {
+    "always_allow_tool_actions": true,
+    "default_profile": "write",
+    "model_parameters": [],
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "claude-sonnet-4"
+    }
+  },
+  "features": {
+    "edit_prediction_provider": "copilot"
+  },
+  "context_servers": {
+    "mcp-server-context7": {
+      "source": "extension",
+      "enabled": true,
+      "settings": {
+        "default_minimum_tokens": "10000"
+      }
+    }
+  },
+  "icon_theme": "Material Icon Theme",
+  "ui_font_size": 20,
+  "ui_font_family": "JetBrains Mono",
+  "ui_font_weight": 600,
+  "buffer_font_size": 17,
+  "buffer_font_weight": 600,
+  "agent_font_size": 20,
+  "buffer_font_family": "JetBrains Mono",
+  "base_keymap": "Cursor",
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "Gruvbox Dark Soft"
+  },
+  "autosave": {
+    "after_delay": { "milliseconds": 500 }
+  },
+  "collaboration_panel": {
+    "button": false,
+    "dock": "left"
+  },
+  "git_panel": {
+    "button": true,
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "right",
+    "button": false
+  },
+  "notification_panel": {
+    "button": false
+  },
+  "chat_panel": {
+    "button": "never",
+    "dock": "right"
+  },
+  "terminal": {
+    "button": true
+  },
+  "debugger": {
+    "button": false
+  }
+}
