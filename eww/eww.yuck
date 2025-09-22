@@ -646,7 +646,7 @@
     :monitor 0
     :stacking "bg"
     :geometry (geometry :anchor "top center"
-                        :width "100%"
+                        :width "99.5%"
                         :height "45px"
     )
     :exclusive true
