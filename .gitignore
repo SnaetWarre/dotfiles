@@ -38,6 +38,7 @@
 !zed/
 !zed/*
 
+!.zshrc_copy
 
 !*.log
 !*.swp
