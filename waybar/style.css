@@ -9,7 +9,7 @@
 
 #waybar {
     background-color: transparent;
-    color: #afbfd1;
+    color: #a5e6f6;
     transition-property: background-color, box-shadow, backdrop-filter;
     transition-duration: 0.5s;
     border-radius: 16px;
@@ -21,13 +21,13 @@
 }
 
 #workspaces {
-    background: linear-gradient(180deg, rgba(11,15,36, 0.60), rgba(11,15,36, 0.85));
+    background: linear-gradient(180deg, rgba(15,46,114, 0.60), rgba(15,46,114, 0.85));
     border-radius: 12px;
     margin: 4px;
     padding: 0 8px;
     backdrop-filter: blur(6px) saturate(120%);
     -webkit-backdrop-filter: blur(6px) saturate(120%);
-    box-shadow: 0 10px 30px rgba(11,15,36, 0.25), inset 0 1px 0 rgba(175,191,209, 0.08);
+    box-shadow: 0 10px 30px rgba(15,46,114, 0.25), inset 0 1px 0 rgba(165,230,246, 0.08);
 }
 
 #workspaces button {
@@ -36,25 +36,25 @@
     padding: 0 12px;
     border-radius: 6px;
     margin: 5px 2px;
-    color: #afbfd1;
+    color: #a5e6f6;
     font-size: 13pt;
     background-color: transparent;
     transition: all 0.3s ease;
 }
 
 #workspaces button.active {
-    background: linear-gradient(180deg, rgba(70,83,114, 0.65), rgba(70,83,114, 0.35));
+    background: linear-gradient(180deg, rgba(15,110,230, 0.65), rgba(15,110,230, 0.35));
     color: #ffffff;
     padding: 0 16px;
-    box-shadow: 0 8px 18px rgba(70,83,114, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 18px rgba(15,110,230, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
     font-weight: bold;
 }
 
 #workspaces button:hover {
-    background: rgba(53,74,111, 0.6);
-    color: #53668C;
+    background: rgba(14,85,203, 0.6);
+    color: #24CBFE;
     padding: 0 14px;
-    filter: drop-shadow(0 3px 8px rgba(53,74,111, 0.35));
+    filter: drop-shadow(0 3px 8px rgba(14,85,203, 0.35));
 }
 
 #clock,
@@ -68,54 +68,54 @@
 #custom-clipboard,
 #custom-rofi,
 #custom-iss {
-    background: linear-gradient(180deg, rgba(11,15,36, 0.60), rgba(11,15,36, 0.85));
-    color: #afbfd1;
+    background: linear-gradient(180deg, rgba(15,46,114, 0.60), rgba(15,46,114, 0.85));
+    color: #a5e6f6;
     border-radius: 10px;
     padding: 0 16px;
     margin: 4px 3px;
     min-width: 20px;
-    border: 1px solid rgba(70,83,114, 0.15);
+    border: 1px solid rgba(15,110,230, 0.15);
     backdrop-filter: blur(8px) saturate(130%);
     -webkit-backdrop-filter: blur(8px) saturate(130%);
 }
 
 #clock {
-    color: #354A6F;
+    color: #0E55CB;
     font-weight: bold;
     padding: 0 18px;
-    background-color: rgba(11,15,36, 0.9);
-    border: 1px solid rgba(53,74,111, 0.3);
+    background-color: rgba(15,46,114, 0.9);
+    border: 1px solid rgba(14,85,203, 0.3);
 }
 
 #memory {
-    color: #465372;
-    background-color: rgba(11,15,36, 0.85);
-    border: 1px solid rgba(70,83,114, 0.3);
+    color: #0F6EE6;
+    background-color: rgba(15,46,114, 0.85);
+    border: 1px solid rgba(15,110,230, 0.3);
 }
 
 #custom-rofi {
-    color: #afbfd1;
+    color: #a5e6f6;
     padding: 0 14px;
-    background-color: rgba(11,15,36, 0.9);
+    background-color: rgba(15,46,114, 0.9);
 }
 
 #custom-screenshot_t {
     padding: 0 10px 0 6px;
-    background-color: rgba(11,15,36, 0.85);
-    border: 1px solid rgba(61,87,132, 0.3);
+    background-color: rgba(15,46,114, 0.85);
+    border: 1px solid rgba(20,176,254, 0.3);
 }
 
 #battery {
-    color: #526171;
-    background-color: rgba(11,15,36, 0.85);
+    color: #1090FC;
+    background-color: rgba(15,46,114, 0.85);
     padding: 0 18px;
-    border: 1px solid rgba(82,97,113, 0.3);
+    border: 1px solid rgba(16,144,252, 0.3);
 }
 
 #battery.charging, #battery.plugged {
-    background-color: rgba(70,83,114, 0.3);
-    color: #afbfd1;
-    border: 1px solid rgba(70,83,114, 0.5);
+    background-color: rgba(15,110,230, 0.3);
+    color: #a5e6f6;
+    border: 1px solid rgba(15,110,230, 0.5);
 }
 
 #battery.critical:not(.charging) {
@@ -132,9 +132,9 @@
 }
 
 #pulseaudio {
-    color: #7D6F75;
-    background-color: rgba(11,15,36, 0.85);
-    border: 1px solid rgba(125,111,117, 0.3);
+    color: #2098FE;
+    background-color: rgba(15,46,114, 0.85);
+    border: 1px solid rgba(32,152,254, 0.3);
 }
 
 #pulseaudio.muted {
@@ -144,21 +144,21 @@
 }
 
 #custom-screenshot_t {
-    color: #3D5784;
+    color: #14B0FE;
 }
 
 #custom-power {
-    color: #53668C;
+    color: #24CBFE;
     margin-right: 8px;
     padding: 0 10px 0 6px;
-    background-color: rgba(11,15,36, 0.85);
-    border: 1px solid rgba(83,102,140, 0.3);
+    background-color: rgba(15,46,114, 0.85);
+    border: 1px solid rgba(36,203,254, 0.3);
 }
 
 #network {
-    color: #354A6F;
-    background-color: rgba(11,15,36, 0.85);
-    border: 1px solid rgba(53,74,111, 0.3);
+    color: #0E55CB;
+    background-color: rgba(15,46,114, 0.85);
+    border: 1px solid rgba(14,85,203, 0.3);
 }
 
 #network.disconnected {
@@ -168,42 +168,42 @@
 }
 
 #custom-notification {
-    color: #465372;
-    background-color: rgba(11,15,36, 0.85);
-    border: 1px solid rgba(70,83,114, 0.3);
+    color: #0F6EE6;
+    background-color: rgba(15,46,114, 0.85);
+    border: 1px solid rgba(15,110,230, 0.3);
 }
 
 #custom-clipboard {
-    background-color: rgba(11,15,36, 0.85);
-    color: #afbfd1;
+    background-color: rgba(15,46,114, 0.85);
+    color: #a5e6f6;
     border-radius: 10px;
     padding: 0 16px;
     margin: 4px 3px;
     min-width: 20px;
-    border: 1px solid rgba(70,83,114, 0.15);
+    border: 1px solid rgba(15,110,230, 0.15);
 }
 
 #window {
-    background: linear-gradient(180deg, rgba(11,15,36, 0.60), rgba(11,15,36, 0.9));
-    color: #7D6F75;
+    background: linear-gradient(180deg, rgba(15,46,114, 0.60), rgba(15,46,114, 0.9));
+    color: #2098FE;
     border-radius: 10px;
     margin: 4px 3px;
     padding: 0 18px;
     font-weight: 600;
-    border: 1px solid rgba(125,111,117, 0.3);
+    border: 1px solid rgba(32,152,254, 0.3);
     backdrop-filter: blur(8px) saturate(120%);
 }
 
 tooltip {
     border-radius: 12px;
-    background-color: rgba(11,15,36, 0.95);
+    background-color: rgba(15,46,114, 0.95);
     padding: 12px;
     margin: 4px;
-    border: 1px solid rgba(70,83,114, 0.3);
+    border: 1px solid rgba(15,110,230, 0.3);
 }
 
 tooltip label {
-    color: #afbfd1;
+    color: #a5e6f6;
 }
 
 @keyframes iss-blink {
@@ -212,7 +212,7 @@ tooltip label {
 }
 
 #custom-iss {
-    color: #526171;
-    background-color: rgba(11,15,36, 0.85);
-    border: 1px solid rgba(82,97,113, 0.3);
+    color: #1090FC;
+    background-color: rgba(15,46,114, 0.85);
+    border: 1px solid rgba(16,144,252, 0.3);
 } 

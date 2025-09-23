@@ -25,8 +25,8 @@
     "default_profile": "write",
     "model_parameters": [],
     "default_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-5-mini"
+      "provider": "zed.dev",
+      "model": "claude-sonnet-4"
     }
   },
   "features": {
