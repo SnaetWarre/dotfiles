@@ -1,5 +1,5 @@
 * {
-  font-family: "JetBrainsMono Nerd Font";
+  font-family: "JetBrainsMono";
   font-size: 12pt;
   font-weight: 500;
   border: none;
@@ -8,53 +8,43 @@
 }
 
 #waybar {
-    background-color: transparent;
+    background-color: rgba($color0_rgb, 0.85);
     color: $color7;
-    transition-property: background-color, box-shadow, backdrop-filter;
-    transition-duration: 0.5s;
-    border-radius: 16px;
-    margin: 8px;
-}
-
-#waybar.hidden {
-    opacity: 0.2;
+    border-radius: 0px;
+    margin: 12px 0 0 0;
+    padding: 0 8px;
 }
 
 #workspaces {
-    background: linear-gradient(180deg, rgba($color0_rgb, 0.60), rgba($color0_rgb, 0.85));
-    border-radius: 12px;
-    margin: 4px;
-    padding: 0 8px;
-    backdrop-filter: blur(6px) saturate(120%);
-    -webkit-backdrop-filter: blur(6px) saturate(120%);
-    box-shadow: 0 10px 30px rgba($color0_rgb, 0.25), inset 0 1px 0 rgba($color7_rgb, 0.08);
+    background-color: rgba($color0_rgb, 0.85);
+    border-radius: 0px;
+    margin: 2px 6px;
+    padding: 0 4px;
 }
 
 #workspaces button {
     box-shadow: none;
     text-shadow: none;
-    padding: 0 12px;
-    border-radius: 6px;
-    margin: 5px 2px;
+    padding: 0 4px;
+    border-radius: 0px;
+    margin: 1px 2px;
     color: $color7;
-    font-size: 13pt;
+    font-size: 10pt;
     background-color: transparent;
-    transition: all 0.3s ease;
+    border: none;
 }
 
 #workspaces button.active {
-    background: linear-gradient(180deg, rgba($color2_rgb, 0.65), rgba($color2_rgb, 0.35));
+    background-color: rgba($color2_rgb, 0.65);
     color: #ffffff;
-    padding: 0 16px;
-    box-shadow: 0 8px 18px rgba($color2_rgb, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    padding: 0 4px;
     font-weight: bold;
 }
 
 #workspaces button:hover {
     background: rgba($color1_rgb, 0.6);
     color: $color6;
-    padding: 0 14px;
-    filter: drop-shadow(0 3px 8px rgba($color1_rgb, 0.35));
+    padding: 0 4px;
 }
 
 #clock,
@@ -70,13 +60,11 @@
 #custom-iss {
     background: linear-gradient(180deg, rgba($color0_rgb, 0.60), rgba($color0_rgb, 0.85));
     color: $color7;
-    border-radius: 10px;
+    border-radius: 0px;
     padding: 0 16px;
     margin: 4px 3px;
     min-width: 20px;
     border: 1px solid rgba($color2_rgb, 0.15);
-    backdrop-filter: blur(8px) saturate(130%);
-    -webkit-backdrop-filter: blur(8px) saturate(130%);
 }
 
 #clock {
@@ -176,7 +164,7 @@
 #custom-clipboard {
     background-color: rgba($color0_rgb, 0.85);
     color: $color7;
-    border-radius: 10px;
+    border-radius: 0px;
     padding: 0 16px;
     margin: 4px 3px;
     min-width: 20px;
@@ -186,16 +174,15 @@
 #window {
     background: linear-gradient(180deg, rgba($color0_rgb, 0.60), rgba($color0_rgb, 0.9));
     color: $color4;
-    border-radius: 10px;
+    border-radius: 0px;
     margin: 4px 3px;
     padding: 0 18px;
     font-weight: 600;
     border: 1px solid rgba($color4_rgb, 0.3);
-    backdrop-filter: blur(8px) saturate(120%);
 }
 
 tooltip {
-    border-radius: 12px;
+    border-radius: 0px;
     background-color: rgba($color0_rgb, 0.95);
     padding: 12px;
     margin: 4px;
@@ -215,4 +202,4 @@ tooltip label {
     color: $color3;
     background-color: rgba($color0_rgb, 0.85);
     border: 1px solid rgba($color3_rgb, 0.3);
-} 
+}

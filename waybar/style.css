@@ -1,5 +1,5 @@
 * {
-  font-family: "JetBrainsMono Nerd Font";
+  font-family: "JetBrainsMono";
   font-size: 12pt;
   font-weight: 500;
   border: none;
@@ -8,53 +8,43 @@
 }
 
 #waybar {
-    background-color: transparent;
-    color: #e6b2c2;
-    transition-property: background-color, box-shadow, backdrop-filter;
-    transition-duration: 0.5s;
-    border-radius: 16px;
-    margin: 8px;
-}
-
-#waybar.hidden {
-    opacity: 0.2;
+    background-color: rgba(27,30,37, 0.85);
+    color: #dfe6ea;
+    border-radius: 0px;
+    margin: 12px 0 0 0;
+    padding: 0 8px;
 }
 
 #workspaces {
-    background: linear-gradient(180deg, rgba(15,16,22, 0.60), rgba(15,16,22, 0.85));
-    border-radius: 12px;
-    margin: 4px;
-    padding: 0 8px;
-    backdrop-filter: blur(6px) saturate(120%);
-    -webkit-backdrop-filter: blur(6px) saturate(120%);
-    box-shadow: 0 10px 30px rgba(15,16,22, 0.25), inset 0 1px 0 rgba(230,178,194, 0.08);
+    background-color: rgba(27,30,37, 0.85);
+    border-radius: 0px;
+    margin: 2px 6px;
+    padding: 0 4px;
 }
 
 #workspaces button {
     box-shadow: none;
     text-shadow: none;
-    padding: 0 12px;
-    border-radius: 6px;
-    margin: 5px 2px;
-    color: #e6b2c2;
-    font-size: 13pt;
+    padding: 0 4px;
+    border-radius: 0px;
+    margin: 1px 2px;
+    color: #dfe6ea;
+    font-size: 10pt;
     background-color: transparent;
-    transition: all 0.3s ease;
+    border: none;
 }
 
 #workspaces button.active {
-    background: linear-gradient(180deg, rgba(159,161,108, 0.65), rgba(159,161,108, 0.35));
+    background-color: rgba(144,172,179, 0.65);
     color: #ffffff;
-    padding: 0 16px;
-    box-shadow: 0 8px 18px rgba(159,161,108, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    padding: 0 4px;
     font-weight: bold;
 }
 
 #workspaces button:hover {
-    background: rgba(78,81,115, 0.6);
-    color: #7A7380;
-    padding: 0 14px;
-    filter: drop-shadow(0 3px 8px rgba(78,81,115, 0.35));
+    background: rgba(126,170,193, 0.6);
+    color: #B1CFDC;
+    padding: 0 4px;
 }
 
 #clock,
@@ -68,54 +58,52 @@
 #custom-clipboard,
 #custom-rofi,
 #custom-iss {
-    background: linear-gradient(180deg, rgba(15,16,22, 0.60), rgba(15,16,22, 0.85));
-    color: #e6b2c2;
-    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(27,30,37, 0.60), rgba(27,30,37, 0.85));
+    color: #dfe6ea;
+    border-radius: 0px;
     padding: 0 16px;
     margin: 4px 3px;
     min-width: 20px;
-    border: 1px solid rgba(159,161,108, 0.15);
-    backdrop-filter: blur(8px) saturate(130%);
-    -webkit-backdrop-filter: blur(8px) saturate(130%);
+    border: 1px solid rgba(144,172,179, 0.15);
 }
 
 #clock {
-    color: #4E5173;
+    color: #7EAAC1;
     font-weight: bold;
     padding: 0 18px;
-    background-color: rgba(15,16,22, 0.9);
-    border: 1px solid rgba(78,81,115, 0.3);
+    background-color: rgba(27,30,37, 0.9);
+    border: 1px solid rgba(126,170,193, 0.3);
 }
 
 #memory {
-    color: #9FA16C;
-    background-color: rgba(15,16,22, 0.85);
-    border: 1px solid rgba(159,161,108, 0.3);
+    color: #90ACB3;
+    background-color: rgba(27,30,37, 0.85);
+    border: 1px solid rgba(144,172,179, 0.3);
 }
 
 #custom-rofi {
-    color: #e6b2c2;
+    color: #dfe6ea;
     padding: 0 14px;
-    background-color: rgba(15,16,22, 0.9);
+    background-color: rgba(27,30,37, 0.9);
 }
 
 #custom-screenshot_t {
     padding: 0 10px 0 6px;
-    background-color: rgba(15,16,22, 0.85);
-    border: 1px solid rgba(159,206,106, 0.3);
+    background-color: rgba(27,30,37, 0.85);
+    border: 1px solid rgba(137,192,208, 0.3);
 }
 
 #battery {
-    color: #DBAA6B;
-    background-color: rgba(15,16,22, 0.85);
+    color: #81A1C1;
+    background-color: rgba(27,30,37, 0.85);
     padding: 0 18px;
-    border: 1px solid rgba(219,170,107, 0.3);
+    border: 1px solid rgba(129,161,193, 0.3);
 }
 
 #battery.charging, #battery.plugged {
-    background-color: rgba(159,161,108, 0.3);
-    color: #e6b2c2;
-    border: 1px solid rgba(159,161,108, 0.5);
+    background-color: rgba(144,172,179, 0.3);
+    color: #dfe6ea;
+    border: 1px solid rgba(144,172,179, 0.5);
 }
 
 #battery.critical:not(.charging) {
@@ -132,9 +120,9 @@
 }
 
 #pulseaudio {
-    color: #E0AF68;
-    background-color: rgba(15,16,22, 0.85);
-    border: 1px solid rgba(224,175,104, 0.3);
+    color: #ACBAC7;
+    background-color: rgba(27,30,37, 0.85);
+    border: 1px solid rgba(172,186,199, 0.3);
 }
 
 #pulseaudio.muted {
@@ -144,21 +132,21 @@
 }
 
 #custom-screenshot_t {
-    color: #9FCE6A;
+    color: #89C0D0;
 }
 
 #custom-power {
-    color: #7A7380;
+    color: #B1CFDC;
     margin-right: 8px;
     padding: 0 10px 0 6px;
-    background-color: rgba(15,16,22, 0.85);
-    border: 1px solid rgba(122,115,128, 0.3);
+    background-color: rgba(27,30,37, 0.85);
+    border: 1px solid rgba(177,207,220, 0.3);
 }
 
 #network {
-    color: #4E5173;
-    background-color: rgba(15,16,22, 0.85);
-    border: 1px solid rgba(78,81,115, 0.3);
+    color: #7EAAC1;
+    background-color: rgba(27,30,37, 0.85);
+    border: 1px solid rgba(126,170,193, 0.3);
 }
 
 #network.disconnected {
@@ -168,42 +156,41 @@
 }
 
 #custom-notification {
-    color: #9FA16C;
-    background-color: rgba(15,16,22, 0.85);
-    border: 1px solid rgba(159,161,108, 0.3);
+    color: #90ACB3;
+    background-color: rgba(27,30,37, 0.85);
+    border: 1px solid rgba(144,172,179, 0.3);
 }
 
 #custom-clipboard {
-    background-color: rgba(15,16,22, 0.85);
-    color: #e6b2c2;
-    border-radius: 10px;
+    background-color: rgba(27,30,37, 0.85);
+    color: #dfe6ea;
+    border-radius: 0px;
     padding: 0 16px;
     margin: 4px 3px;
     min-width: 20px;
-    border: 1px solid rgba(159,161,108, 0.15);
+    border: 1px solid rgba(144,172,179, 0.15);
 }
 
 #window {
-    background: linear-gradient(180deg, rgba(15,16,22, 0.60), rgba(15,16,22, 0.9));
-    color: #E0AF68;
-    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(27,30,37, 0.60), rgba(27,30,37, 0.9));
+    color: #ACBAC7;
+    border-radius: 0px;
     margin: 4px 3px;
     padding: 0 18px;
     font-weight: 600;
-    border: 1px solid rgba(224,175,104, 0.3);
-    backdrop-filter: blur(8px) saturate(120%);
+    border: 1px solid rgba(172,186,199, 0.3);
 }
 
 tooltip {
-    border-radius: 12px;
-    background-color: rgba(15,16,22, 0.95);
+    border-radius: 0px;
+    background-color: rgba(27,30,37, 0.95);
     padding: 12px;
     margin: 4px;
-    border: 1px solid rgba(159,161,108, 0.3);
+    border: 1px solid rgba(144,172,179, 0.3);
 }
 
 tooltip label {
-    color: #e6b2c2;
+    color: #dfe6ea;
 }
 
 @keyframes iss-blink {
@@ -212,7 +199,7 @@ tooltip label {
 }
 
 #custom-iss {
-    color: #DBAA6B;
-    background-color: rgba(15,16,22, 0.85);
-    border: 1px solid rgba(219,170,107, 0.3);
-} 
+    color: #81A1C1;
+    background-color: rgba(27,30,37, 0.85);
+    border: 1px solid rgba(129,161,193, 0.3);
+}

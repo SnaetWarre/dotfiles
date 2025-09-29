@@ -9,12 +9,12 @@
 
     "height": 42,
 
-    "margin-left": 10,
+    "margin-left": 0,
     "margin-bottom": 0,
-    "margin-right": 10,
-    "margin-top": 8,	
+    "margin-right": 0,
+    "margin-top": 0,
 
-    "spacing": 8,
+    "spacing": 4,
 
     "modules-left": [
         "hyprland/workspaces",
@@ -30,7 +30,7 @@
         "custom/power"
     ],
 
-    
+
 
     // -------------------------------------------------------------------------
     // Modules
@@ -227,16 +227,16 @@
     "hyprland/workspaces": {
         "format": "{icon}",
         "format-icons": {
-            "1": "󰘧",
-            "2": "󰘬",
-            "3": "󰘲",
-            "4": "󰙀",
-            "5": "󰙅",
-            "6": "󰙞",
-            "7": "󰙧",
-            "8": "󰙮",
-            "9": "󰙴",
-            "10": "󰚀"
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "10": "10"
         },
         "on-click": "activate",
         "all-outputs": true,
@@ -298,9 +298,9 @@
             "notification": "<span foreground='#738BA5'>󰂚</span>",
             "none": "<span foreground='#565f89'>󰂛</span>",
             "dnd-notification": "<span foreground='#ff5555'>󰂚</span>",
-            "dnd-none": "<span foreground='#ff5555'>󰪑</span>",      
-            "inhibited-notification": "<span foreground='#e0af68'>󰂛</span>", 
-            "inhibited-none": "<span foreground='#414868'>󰂛</span>" 
+            "dnd-none": "<span foreground='#ff5555'>󰪑</span>",
+            "inhibited-notification": "<span foreground='#e0af68'>󰂛</span>",
+            "inhibited-none": "<span foreground='#414868'>󰂛</span>"
         },
         "return-type": "json",
         "exec-if": "which swaync-client",
@@ -334,5 +334,5 @@
         "tooltip": true
     }
 
-   
+
 }
