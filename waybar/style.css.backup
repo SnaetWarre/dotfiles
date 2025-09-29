@@ -1,5 +1,5 @@
 * {
-  font-family: "Noto Sans CJK SC", "JetBrainsMono Nerd Font", "Font Awesome 6 Free";
+  font-family: "Noto Sans CJK SC", "Iosevka Nerd Font", "Font Awesome 6 Free";
   font-size: 11pt;
   font-weight: bold;
 }
