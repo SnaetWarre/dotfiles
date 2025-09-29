@@ -10,7 +10,7 @@
   color: @text;
   all: unset;
   font-size: 20px;
-  font-family: "JetBrainsMono Nerd Font";
+  font-family: "Iosevka Nerd Font";
   transition: 200ms;
   font-weight: 500;
 }

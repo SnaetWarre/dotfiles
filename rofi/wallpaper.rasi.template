@@ -15,7 +15,7 @@ configuration {
     spacing: 0;
 
     background-color: @background;
-    font: "JetBrainsMono Nerd Font 11";
+    font: "Iosevka Nerd Font 11";
 }
 
 window {
@@ -96,6 +96,6 @@ element-text {
     vertical-align: 0.5;
     text-color: @foreground;
     background-color: transparent;
-    font: "JetBrainsMono Nerd Font 9";
+    font: "Iosevka Nerd Font 9";
     padding: 4px 0 0 0;
 } 
