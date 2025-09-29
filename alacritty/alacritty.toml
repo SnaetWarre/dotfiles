@@ -4,13 +4,13 @@ padding = { x = 12, y = 12 }
 
 [font]
 # Point size
-size = 15.0 # <-- Adjust this number for your preferred size
+size = 17.0 # <-- Adjust this number for your preferred size
 
 # Normal (Regular) font face
 [font.normal]
 # Use the exact family name from fc-list
 family = "JetBrains Mono"
-# style = "Regular" # Usually not needed if family name is specific
+style = "Regular" # Usually not needed if family name is specific
 
 # Bold font face
 [font.bold]
