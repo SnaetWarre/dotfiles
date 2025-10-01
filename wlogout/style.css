@@ -4,15 +4,15 @@
 }
 
 window {
-    background-color: rgba(15, 25, 28, 0.9);
+    background-color: rgba(2, 24, 38, 0.9);
 }
 
 button {
     border-radius: 8px;
-    border-color: rgba(113, 113, 112, 0.4);
-    text-decoration-color: rgb(204, 200, 199);
-    color: rgb(204, 200, 199);
-    background-color: rgba(15, 25, 28, 0.7);
+    border-color: rgba(94, 123, 149, 0.4);
+    text-decoration-color: rgb(129, 201, 218);
+    color: rgb(129, 201, 218);
+    background-color: rgba(2, 24, 38, 0.7);
     border-style: solid;
     border-width: 2px;
     background-repeat: no-repeat;
@@ -23,8 +23,8 @@ button {
 }
 
 button:focus, button:active, button:hover {
-    background-color: rgba(113, 113, 112, 0.7);
-    border-color: rgba(113, 113, 112, 0.8);
+    background-color: rgba(94, 123, 149, 0.7);
+    border-color: rgba(94, 123, 149, 0.8);
     outline-style: none;
 }
 

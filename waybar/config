@@ -150,14 +150,24 @@
         "tooltip": false,
         "on-click": "wlogout"
     },
-
+    
     "clock#date": {
-        "format": "{:%H:%M:%S  %e %b}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "today-format": "<b>{}</b>",
-        "on-click": "calcurse",
-        "on-click-right": "swaync-client -t -sw"
+    "format": "{:%H:%M:%S  %e %b}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "today-format": "<b>{}</b>",
+    "on-click": "calcurse",
+    "on-click-right": "swaync-client -t -sw",
+    "calendar": {
+      "mode": "month",
+      "format": {
+        "months": "<span color='#ff6699'><b>{}</b></span>",
+        "days": "<span color='#cdd6f4'><b>{}</b></span>",
+        "weekdays": "<span color='#7CD37C'><b>{}</b></span>",
+        "today": "<span color='#ffcc66'><b>{}</b></span>"
+            }
+        }
     },
+
 
     "custom/gammastep": {
       "interval": 5,
@@ -232,7 +242,7 @@
             "3": "3",
             "4": "4",
             "5": "5",
-            "6": "6",
+            "6": "[]=",
             "7": "7",
             "8": "8",
             "9": "9",
@@ -243,7 +253,7 @@
         "show-special": false,
         "sort-by-number": true,
         "persistent-workspaces": {
-            "*": 5
+            "*": 6
         }
     },
 

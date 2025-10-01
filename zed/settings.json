@@ -19,14 +19,15 @@
     },
     "enabled_in_text_threads": false
   },
-  "vim_mode": false,
+  "vim_mode": true,
   "agent": {
-    "always_allow_tool_actions": true,
+    "play_sound_when_agent_done": false,
+    "always_allow_tool_actions": false,
     "default_profile": "write",
     "model_parameters": [],
     "default_model": {
       "provider": "copilot_chat",
-      "model": "gpt-5-mini"
+      "model": "grok-code-fast-1"
     }
   },
   "features": {
@@ -53,7 +54,7 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Ayu Light"
+    "dark": "Ayu Dark"
   },
   "autosave": {
     "after_delay": { "milliseconds": 500 }
