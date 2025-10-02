@@ -27,7 +27,7 @@
     "model_parameters": [],
     "default_model": {
       "provider": "copilot_chat",
-      "model": "grok-code-fast-1"
+      "model": "claude-sonnet-4.5"
     }
   },
   "features": {
