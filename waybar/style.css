@@ -8,15 +8,15 @@
 }
 
 #waybar {
-    background-color: rgba(2,24,38, 0.85);
-    color: #81c9da;
+    background-color: rgba(23,27,33, 0.85);
+    color: #aab1bb;
     border-radius: 0px;
     margin: 12px 0 0 0;
     padding: 0 8px;
 }
 
 #workspaces {
-    background-color: rgba(2,24,38, 0.85);
+    background-color: rgba(23,27,33, 0.85);
     border-radius: 0px;
     margin: 2px 6px;
     padding: 0 4px;
@@ -28,22 +28,22 @@
     padding: 0 4px;
     border-radius: 0px;
     margin: 1px 2px;
-    color: #81c9da;
+    color: #aab1bb;
     font-size: 10pt;
     background-color: transparent;
     border: none;
 }
 
 #workspaces button.active {
-    background-color: rgba(94,123,149, 0.65);
+    background-color: rgba(101,114,133, 0.65);
     color: #ffffff;
     padding: 0 4px;
     font-weight: bold;
 }
 
 #workspaces button:hover {
-    background: rgba(14,126,161, 0.6);
-    color: #14A7C5;
+    background: rgba(95,109,128, 0.6);
+    color: #667388;
     padding: 0 4px;
 }
 
@@ -58,52 +58,52 @@
 #custom-clipboard,
 #custom-rofi,
 #custom-iss {
-    background: linear-gradient(180deg, rgba(2,24,38, 0.60), rgba(2,24,38, 0.85));
-    color: #81c9da;
+    background: linear-gradient(180deg, rgba(23,27,33, 0.60), rgba(23,27,33, 0.85));
+    color: #aab1bb;
     border-radius: 0px;
     padding: 0 16px;
     margin: 4px 3px;
     min-width: 20px;
-    border: 1px solid rgba(94,123,149, 0.15);
+    border: 1px solid rgba(101,114,133, 0.15);
 }
 
 #clock {
-    color: #0E7EA1;
+    color: #5F6D80;
     font-weight: bold;
     padding: 0 18px;
-    background-color: rgba(2,24,38, 0.9);
-    border: 1px solid rgba(14,126,161, 0.3);
+    background-color: rgba(23,27,33, 0.9);
+    border: 1px solid rgba(95,109,128, 0.3);
 }
 
 #memory {
-    color: #5E7B95;
-    background-color: rgba(2,24,38, 0.85);
-    border: 1px solid rgba(94,123,149, 0.3);
+    color: #657285;
+    background-color: rgba(23,27,33, 0.85);
+    border: 1px solid rgba(101,114,133, 0.3);
 }
 
 #custom-rofi {
-    color: #81c9da;
+    color: #aab1bb;
     padding: 0 14px;
-    background-color: rgba(2,24,38, 0.9);
+    background-color: rgba(23,27,33, 0.9);
 }
 
 #custom-screenshot_t {
     padding: 0 10px 0 6px;
-    background-color: rgba(2,24,38, 0.85);
-    border: 1px solid rgba(18,161,190, 0.3);
+    background-color: rgba(23,27,33, 0.85);
+    border: 1px solid rgba(102,115,134, 0.3);
 }
 
 #battery {
-    color: #10829D;
-    background-color: rgba(2,24,38, 0.85);
+    color: #667387;
+    background-color: rgba(23,27,33, 0.85);
     padding: 0 18px;
-    border: 1px solid rgba(16,130,157, 0.3);
+    border: 1px solid rgba(102,115,135, 0.3);
 }
 
 #battery.charging, #battery.plugged {
-    background-color: rgba(94,123,149, 0.3);
-    color: #81c9da;
-    border: 1px solid rgba(94,123,149, 0.5);
+    background-color: rgba(101,114,133, 0.3);
+    color: #aab1bb;
+    border: 1px solid rgba(101,114,133, 0.5);
 }
 
 #battery.critical:not(.charging) {
@@ -120,9 +120,9 @@
 }
 
 #pulseaudio {
-    color: #1092B0;
-    background-color: rgba(2,24,38, 0.85);
-    border: 1px solid rgba(16,146,176, 0.3);
+    color: #667286;
+    background-color: rgba(23,27,33, 0.85);
+    border: 1px solid rgba(102,114,134, 0.3);
 }
 
 #pulseaudio.muted {
@@ -132,21 +132,21 @@
 }
 
 #custom-screenshot_t {
-    color: #12A1BE;
+    color: #667386;
 }
 
 #custom-power {
-    color: #14A7C5;
+    color: #667388;
     margin-right: 8px;
     padding: 0 10px 0 6px;
-    background-color: rgba(2,24,38, 0.85);
-    border: 1px solid rgba(20,167,197, 0.3);
+    background-color: rgba(23,27,33, 0.85);
+    border: 1px solid rgba(102,115,136, 0.3);
 }
 
 #network {
-    color: #0E7EA1;
-    background-color: rgba(2,24,38, 0.85);
-    border: 1px solid rgba(14,126,161, 0.3);
+    color: #5F6D80;
+    background-color: rgba(23,27,33, 0.85);
+    border: 1px solid rgba(95,109,128, 0.3);
 }
 
 #network.disconnected {
@@ -156,41 +156,41 @@
 }
 
 #custom-notification {
-    color: #5E7B95;
-    background-color: rgba(2,24,38, 0.85);
-    border: 1px solid rgba(94,123,149, 0.3);
+    color: #657285;
+    background-color: rgba(23,27,33, 0.85);
+    border: 1px solid rgba(101,114,133, 0.3);
 }
 
 #custom-clipboard {
-    background-color: rgba(2,24,38, 0.85);
-    color: #81c9da;
+    background-color: rgba(23,27,33, 0.85);
+    color: #aab1bb;
     border-radius: 0px;
     padding: 0 16px;
     margin: 4px 3px;
     min-width: 20px;
-    border: 1px solid rgba(94,123,149, 0.15);
+    border: 1px solid rgba(101,114,133, 0.15);
 }
 
 #window {
-    background: linear-gradient(180deg, rgba(2,24,38, 0.60), rgba(2,24,38, 0.9));
-    color: #1092B0;
+    background: linear-gradient(180deg, rgba(23,27,33, 0.60), rgba(23,27,33, 0.9));
+    color: #667286;
     border-radius: 0px;
     margin: 4px 3px;
     padding: 0 18px;
     font-weight: 600;
-    border: 1px solid rgba(16,146,176, 0.3);
+    border: 1px solid rgba(102,114,134, 0.3);
 }
 
 tooltip {
     border-radius: 0px;
-    background-color: rgba(2,24,38, 0.95);
+    background-color: rgba(23,27,33, 0.95);
     padding: 12px;
     margin: 4px;
-    border: 1px solid rgba(94,123,149, 0.3);
+    border: 1px solid rgba(101,114,133, 0.3);
 }
 
 tooltip label {
-    color: #81c9da;
+    color: #aab1bb;
 }
 
 @keyframes iss-blink {
@@ -199,7 +199,7 @@ tooltip label {
 }
 
 #custom-iss {
-    color: #10829D;
-    background-color: rgba(2,24,38, 0.85);
-    border: 1px solid rgba(16,130,157, 0.3);
+    color: #667387;
+    background-color: rgba(23,27,33, 0.85);
+    border: 1px solid rgba(102,115,135, 0.3);
 }
