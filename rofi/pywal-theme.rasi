@@ -1,5 +1,5 @@
 * {
-    font-family: "Iosevka Nerd Font";
+    font-family: "Iosevka Nerd Font Medium";
     font-size: 18px;
 }
 
@@ -9,8 +9,8 @@ window {
     text-color:                    @foreground;
     border:                        2px;
     border-color:                  @selected;
-    border-radius:                 10px;
-    width:                         44%;
+    border-radius:                 0px;
+    width:                         20%;
     location:                      center;
     anchor:                        center;
 }
