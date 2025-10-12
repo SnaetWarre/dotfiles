@@ -1,7 +1,7 @@
-@define-color background      rgba(10,10,14, 0.90);
-@define-color text            rgb(175,190,185);
-@define-color text-alt        rgb(122,133,129);
-@define-color background-alt  rgba(10,10,14, 0.90);
+@define-color background      rgba(4,4,5, 0.90);
+@define-color text            rgb(198,194,193);
+@define-color text-alt        rgb(138,135,135);
+@define-color background-alt  rgba(4,4,5, 0.90);
 @define-color selected        alpha(@text-alt, .4);
 @define-color hover           alpha(@selected, .4);
 @define-color urgent          @text-alt;
@@ -9,7 +9,7 @@
 * {
   color: @text;
   all: unset;
-  font-size: 20px;
+  font-size: 26px;
   font-family: "Iosevka Nerd Font";
   transition: 200ms;
   font-weight: 500;
@@ -35,11 +35,11 @@
 .notification .summary {
   font-weight: 800;
   margin-bottom: 1px;
-  font-size: 1rem;
+  font-size: 1.4rem;
 }
 
 .notification .body {
-  font-size: 0.8rem;
+  font-size: 1.1rem;
 }
   
 .notification .image {
@@ -68,7 +68,7 @@
 }
 
 .notification > *:last-child > * {
-  min-height: 3.2em;
+  min-height: 3.6em;
 }
 
 .notification > *:last-child > * .notification-action {
@@ -76,6 +76,7 @@
   margin: 0 6px 9px 6px;
   border: 2px solid @text-alt;
   border-radius: 8px;
+  font-size: 1rem;
 }
 
 .notification > *:last-child > * .notification-action:hover {
@@ -125,7 +126,7 @@ progressbar {
 
 .notification-group-headers {
   font-weight: bold;
-  font-size: 2rem;
+  font-size: 2.6rem;
   color: @text;
   letter-spacing: 2px;
 }
@@ -141,6 +142,7 @@ progressbar {
   margin: 4px; 
   border-radius: 6px;
   padding: 4px;
+  font-size: 1.3rem;
 }
 
 /* WIDGETS --------------------------------------------------------------------------- */
@@ -149,13 +151,13 @@ progressbar {
 .widget-dnd {
   padding: 5px 15px; 
   margin: 20px 0 0 0;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   color: @text;
 }
 
 .widget-dnd switch {
   background: @background-alt;
-  font-size: initial;
+  font-size: 1.2rem;
   border-radius: 8px;
   box-shadow: none;
   padding: 2px;
@@ -186,6 +188,7 @@ progressbar {
   margin: 0 5px;
   padding: 5px 0 0 0 ; 
   background-color: @background-alt;
+  font-size: 1.15rem;
 }
 
 .widget-mpris-player .image-button:hover {
@@ -199,6 +202,7 @@ carouselindicatordots {
 
 .control-center-list-placeholder {
   color: @text;
+  font-size: 1.2rem;
 }
 
 .widget-mpris-album-art {
@@ -208,11 +212,11 @@ carouselindicatordots {
  
 .widget-mpris-title {
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
 }
  
 .widget-mpris-subtitle {
   font-weight: 700;
   color: @text-alt;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
 } 

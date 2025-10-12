@@ -24,6 +24,10 @@ SWAYNC_CONFIG_DIR="$CONFIG_DIR/swaync"
 SWAYNC_TEMPLATE="$SWAYNC_CONFIG_DIR/style.css.template"
 SWAYNC_OUTPUT_CSS="$SWAYNC_CONFIG_DIR/style.css"
 
+SWAYOSD_CONFIG_DIR="$CONFIG_DIR/swayosd"
+SWAYOSD_TEMPLATE="$SWAYOSD_CONFIG_DIR/style.css.template"
+SWAYOSD_OUTPUT_CSS="$SWAYOSD_CONFIG_DIR/style.css"
+
 WLOGOUT_CONFIG_DIR="$CONFIG_DIR/wlogout"
 WLOGOUT_TEMPLATE="$WLOGOUT_CONFIG_DIR/style.css.template"
 WLOGOUT_OUTPUT_CSS="$WLOGOUT_CONFIG_DIR/style.css"
@@ -116,6 +120,16 @@ else
     # Define vars needed by swaync template
     SWAYNC_VARS='${color0_rgb}:${color2_rgb}:${color7_rgb}:${color8_rgb}'
     envsubst "$SWAYNC_VARS" < "$SWAYNC_TEMPLATE" > "$SWAYNC_OUTPUT_CSS"
+fi
+
+# --- Process SwayOSD CSS ---
+echo "Processing SwayOSD template: $SWAYOSD_TEMPLATE -> $SWAYOSD_OUTPUT_CSS"
+if [ ! -f "$SWAYOSD_TEMPLATE" ]; then
+    echo "Warning: SwayOSD template not found at $SWAYOSD_TEMPLATE" >&2
+else
+    # Define vars needed by swayosd template
+    SWAYOSD_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}:${color0_rgb}:${color2_rgb}:${color3_rgb}:${color4_rgb}:${color6_rgb}:${color7_rgb}:${color8_rgb}'
+    envsubst "$SWAYOSD_VARS" < "$SWAYOSD_TEMPLATE" > "$SWAYOSD_OUTPUT_CSS"
 fi
 
 # --- Process Wlogout CSS ---
@@ -279,6 +293,13 @@ fi
 if [ -f "$SWAYNC_OUTPUT_CSS" ] && command -v swaync-client &> /dev/null; then
     echo "Restarting swaync..."
     swaync-client -rs || echo "Warning: swaync-client -rs failed."
+fi
+
+# Restart swayosd if the template was processed
+if [ -f "$SWAYOSD_OUTPUT_CSS" ] && command -v swayosd-server &> /dev/null; then
+    echo "Restarting swayosd..."
+    pkill swayosd-server || true
+    swayosd-server & disown
 fi
 
 # Update Firefox (if available) to pick up latest wal cache without touching our templates

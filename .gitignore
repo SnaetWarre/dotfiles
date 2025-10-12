@@ -33,7 +33,8 @@
 !eww/scripts/*
 !.zshrc
 !idealworkflow.png
-
+!swayosd/
+!swayosd/**/*
 
 !zed/
 !zed/*
