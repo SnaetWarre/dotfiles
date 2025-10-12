@@ -18,6 +18,8 @@
 
     "modules-left": [
         "hyprland/workspaces",
+        "hyprland/submap",
+        "tray"
     ],
     "modules-center": [
         "clock#date"
@@ -35,6 +37,12 @@
     // -------------------------------------------------------------------------
     // Modules
     // -------------------------------------------------------------------------
+
+
+    "hyprland/submap": {
+    "format": " {}",
+    "max-length": 50
+  },
 
     "custom/sp1": {
         "format": " | ",
@@ -150,7 +158,7 @@
         "tooltip": false,
         "on-click": "wlogout"
     },
-    
+
     "clock#date": {
     "format": "{:%H:%M:%S  %e %b}",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
@@ -281,8 +289,8 @@
     },
 
     "tray": {
-        "icon-size": 15,
-        "spacing": 5
+        "icon-size": 16,
+        "spacing": 8
     },
 
     "temperature": {

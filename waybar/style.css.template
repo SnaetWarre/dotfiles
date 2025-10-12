@@ -22,6 +22,14 @@
     padding: 0 4px;
 }
 
+#tray {
+    background-color: rgba($color0_rgb, 0.85);
+    border: 1px solid rgba($color1_rgb, 0.3);
+    border-radius: 0px;
+    padding: 0 8px;
+    margin: 4px 3px;
+}
+
 #workspaces button {
     box-shadow: none;
     text-shadow: none;
@@ -57,7 +65,8 @@
 #custom-notification,
 #custom-clipboard,
 #custom-rofi,
-#custom-iss {
+#custom-iss
+#submap {
     background: linear-gradient(180deg, rgba($color0_rgb, 0.60), rgba($color0_rgb, 0.85));
     color: $color7;
     border-radius: 0px;

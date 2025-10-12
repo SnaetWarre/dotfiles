@@ -44,17 +44,17 @@
   },
   "icon_theme": "Material Icon Theme",
   "ui_font_size": 24,
-  "ui_font_family": "Iosevka Nerd Font",
-  "ui_font_weight": 600,
+  "ui_font_family": "JetBrains Mono",
+  "ui_font_weight": 400,
   "buffer_font_size": 20,
-  "buffer_font_weight": 700,
+  "buffer_font_weight": 400,
   "agent_font_size": 24,
-  "buffer_font_family": "Iosevka Nerd Font",
+  "buffer_font_family": "JetBrains Mono",
   "base_keymap": "Cursor",
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Ayu Dark"
+    "dark": "Ayu Light"
   },
   "autosave": {
     "after_delay": { "milliseconds": 500 }
