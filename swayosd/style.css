@@ -1,9 +1,9 @@
 /* SwayOSD Custom Styling - Pywal themed */
 
 window {
-  background: rgba(4,4,5, 0.92);
+  background: rgba(14,15,16, 0.92);
   border-radius: 12px;
-  border: 2px solid rgba(198,194,193, 0.15);
+  border: 2px solid rgba(200,209,220, 0.15);
   padding: 12px 20px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
@@ -19,7 +19,7 @@ image {
   margin-right: 12px;
   min-width: 28px;
   min-height: 28px;
-  color: #c6c2c1;
+  color: #c8d1dc;
 }
 
 /* Label showing percentage */
@@ -27,7 +27,7 @@ label {
   font-family: "Iosevka Nerd Font";
   font-size: 14px;
   font-weight: 600;
-  color: #c6c2c1;
+  color: #c8d1dc;
   margin-left: 12px;
   min-width: 45px;
 }
@@ -37,12 +37,12 @@ progressbar {
   min-width: 180px;
   min-height: 8px;
   border-radius: 6px;
-  background: rgba(198,194,193, 0.15);
+  background: rgba(200,209,220, 0.15);
 }
 
 /* Progress bar fill */
 progress {
-  background: linear-gradient(90deg, #72778A, #434150);
+  background: linear-gradient(90deg, #ABACAE, #6A7988);
   border-radius: 6px;
 }
 
@@ -50,24 +50,24 @@ progress {
 trough {
   min-height: 8px;
   border-radius: 6px;
-  background: rgba(138,135,135, 0.2);
+  background: rgba(140,146,154, 0.2);
 }
 
 /* Muted state styling */
 .muted {
-  color: #877668;
+  color: #909091;
 }
 
 .muted progress {
-  background: #877668;
+  background: #909091;
 }
 
 /* Caps lock indicator */
 .caps-on {
-  color: #6B6460;
+  color: #778899;
 }
 
 .caps-on progress {
-  background: #6B6460;
+  background: #778899;
 }
 
