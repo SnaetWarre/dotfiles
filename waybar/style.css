@@ -8,23 +8,23 @@
 }
 
 #waybar {
-    background-color: rgba(12,2,1, 0.85);
-    color: #d1b5b9;
+    background-color: rgba(9,10,11, 0.85);
+    color: #b5b8be;
     border-radius: 0px;
     margin: 12px 0 0 0;
     padding: 0 8px;
 }
 
 #workspaces {
-    background-color: rgba(12,2,1, 0.85);
+    background-color: rgba(9,10,11, 0.85);
     border-radius: 0px;
     margin: 2px 6px;
     padding: 0 4px;
 }
 
 #tray {
-    background-color: rgba(12,2,1, 0.85);
-    border: 1px solid rgba(169,29,11, 0.3);
+    background-color: rgba(9,10,11, 0.85);
+    border: 1px solid rgba(56,57,70, 0.3);
     border-radius: 0px;
     padding: 0 8px;
     margin: 4px 3px;
@@ -36,22 +36,22 @@
     padding: 0 4px;
     border-radius: 0px;
     margin: 1px 2px;
-    color: #d1b5b9;
+    color: #b5b8be;
     font-size: 10pt;
     background-color: transparent;
     border: none;
 }
 
 #workspaces button.active {
-    background-color: rgba(209,46,5, 0.65);
+    background-color: rgba(67,61,72, 0.65);
     color: #ffffff;
     padding: 0 4px;
     font-weight: bold;
 }
 
 #workspaces button:hover {
-    background: rgba(169,29,11, 0.6);
-    color: #F9963E;
+    background: rgba(56,57,70, 0.6);
+    color: #717586;
     padding: 0 4px;
 }
 
@@ -66,53 +66,61 @@
 #custom-clipboard,
 #custom-rofi,
 #custom-iss
-#submap {
-    background: linear-gradient(180deg, rgba(12,2,1, 0.60), rgba(12,2,1, 0.85));
-    color: #d1b5b9;
+#submap,
+#custom-screenrecording-indicator {
+    background: linear-gradient(180deg, rgba(9,10,11, 0.60), rgba(9,10,11, 0.85));
+    color: #b5b8be;
     border-radius: 0px;
     padding: 0 16px;
     margin: 4px 3px;
     min-width: 20px;
-    border: 1px solid rgba(209,46,5, 0.15);
+    border: 1px solid rgba(67,61,72, 0.15);
+}
+
+
+#custom-screenrecording-indicator.recording {
+    background-color: rgba(245, 60, 60, 0.25);
+    color: #ff6b6b;
+    border-color: rgba(245, 60, 60, 0.6);
 }
 
 #clock {
-    color: #A91D0B;
+    color: #383946;
     font-weight: bold;
     padding: 0 18px;
-    background-color: rgba(12,2,1, 0.9);
-    border: 1px solid rgba(169,29,11, 0.3);
+    background-color: rgba(9,10,11, 0.9);
+    border: 1px solid rgba(56,57,70, 0.3);
 }
 
 #memory {
-    color: #D12E05;
-    background-color: rgba(12,2,1, 0.85);
-    border: 1px solid rgba(209,46,5, 0.3);
+    color: #433D48;
+    background-color: rgba(9,10,11, 0.85);
+    border: 1px solid rgba(67,61,72, 0.3);
 }
 
 #custom-rofi {
-    color: #d1b5b9;
+    color: #b5b8be;
     padding: 0 14px;
-    background-color: rgba(12,2,1, 0.9);
+    background-color: rgba(9,10,11, 0.9);
 }
 
 #custom-screenshot_t {
     padding: 0 10px 0 6px;
-    background-color: rgba(12,2,1, 0.85);
-    border: 1px solid rgba(170,92,82, 0.3);
+    background-color: rgba(9,10,11, 0.85);
+    border: 1px solid rgba(93,95,108, 0.3);
 }
 
 #battery {
-    color: #DA2806;
-    background-color: rgba(12,2,1, 0.85);
+    color: #3D414E;
+    background-color: rgba(9,10,11, 0.85);
     padding: 0 18px;
-    border: 1px solid rgba(218,40,6, 0.3);
+    border: 1px solid rgba(61,65,78, 0.3);
 }
 
 #battery.charging, #battery.plugged {
-    background-color: rgba(209,46,5, 0.3);
-    color: #d1b5b9;
-    border: 1px solid rgba(209,46,5, 0.5);
+    background-color: rgba(67,61,72, 0.3);
+    color: #b5b8be;
+    border: 1px solid rgba(67,61,72, 0.5);
 }
 
 #battery.critical:not(.charging) {
@@ -129,9 +137,9 @@
 }
 
 #pulseaudio {
-    color: #F25B09;
-    background-color: rgba(12,2,1, 0.85);
-    border: 1px solid rgba(242,91,9, 0.3);
+    color: #494854;
+    background-color: rgba(9,10,11, 0.85);
+    border: 1px solid rgba(73,72,84, 0.3);
 }
 
 #pulseaudio.muted {
@@ -141,21 +149,21 @@
 }
 
 #custom-screenshot_t {
-    color: #AA5C52;
+    color: #5D5F6C;
 }
 
 #custom-power {
-    color: #F9963E;
+    color: #717586;
     margin-right: 8px;
     padding: 0 10px 0 6px;
-    background-color: rgba(12,2,1, 0.85);
-    border: 1px solid rgba(249,150,62, 0.3);
+    background-color: rgba(9,10,11, 0.85);
+    border: 1px solid rgba(113,117,134, 0.3);
 }
 
 #network {
-    color: #A91D0B;
-    background-color: rgba(12,2,1, 0.85);
-    border: 1px solid rgba(169,29,11, 0.3);
+    color: #383946;
+    background-color: rgba(9,10,11, 0.85);
+    border: 1px solid rgba(56,57,70, 0.3);
 }
 
 #network.disconnected {
@@ -165,41 +173,41 @@
 }
 
 #custom-notification {
-    color: #D12E05;
-    background-color: rgba(12,2,1, 0.85);
-    border: 1px solid rgba(209,46,5, 0.3);
+    color: #433D48;
+    background-color: rgba(9,10,11, 0.85);
+    border: 1px solid rgba(67,61,72, 0.3);
 }
 
 #custom-clipboard {
-    background-color: rgba(12,2,1, 0.85);
-    color: #d1b5b9;
+    background-color: rgba(9,10,11, 0.85);
+    color: #b5b8be;
     border-radius: 0px;
     padding: 0 16px;
     margin: 4px 3px;
     min-width: 20px;
-    border: 1px solid rgba(209,46,5, 0.15);
+    border: 1px solid rgba(67,61,72, 0.15);
 }
 
 #window {
-    background: linear-gradient(180deg, rgba(12,2,1, 0.60), rgba(12,2,1, 0.9));
-    color: #F25B09;
+    background: linear-gradient(180deg, rgba(9,10,11, 0.60), rgba(9,10,11, 0.9));
+    color: #494854;
     border-radius: 0px;
     margin: 4px 3px;
     padding: 0 18px;
     font-weight: 600;
-    border: 1px solid rgba(242,91,9, 0.3);
+    border: 1px solid rgba(73,72,84, 0.3);
 }
 
 tooltip {
     border-radius: 0px;
-    background-color: rgba(12,2,1, 0.95);
+    background-color: rgba(9,10,11, 0.95);
     padding: 12px;
     margin: 4px;
-    border: 1px solid rgba(209,46,5, 0.3);
+    border: 1px solid rgba(67,61,72, 0.3);
 }
 
 tooltip label {
-    color: #d1b5b9;
+    color: #b5b8be;
 }
 
 @keyframes iss-blink {
@@ -208,10 +216,12 @@ tooltip label {
 }
 
 #custom-iss {
-    color: #DA2806;
-    background-color: rgba(12,2,1, 0.85);
-    border: 1px solid rgba(218,40,6, 0.3);
+    color: #3D414E;
+    background-color: rgba(9,10,11, 0.85);
+    border: 1px solid rgba(61,65,78, 0.3);
 }
+
+
 
 /* Compact shortcuts group: Waybar's CSS supports only limited properties.
    Avoid flex, transforms, filters, transitions here. Use background/border changes on hover. */

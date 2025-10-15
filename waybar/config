@@ -22,7 +22,8 @@
         "tray"
     ],
     "modules-center": [
-        "clock#date"
+        "clock#date",
+        "custom/screenrecording-indicator"
     ],
     "modules-right": [
         "custom/shortcut_vscode", 
@@ -159,6 +160,13 @@
         "tooltip": false,
         "on-click": "wlogout"
     },
+
+    "custom/screenrecording-indicator": {
+    "on-click": "/home/warre/.config/waybar/modules/toggle-screenrecord.sh",
+    "exec": "/home/warre/.config/waybar/modules/screen-recording.sh",
+    "signal": 8,
+    "return-type": "json"
+  },
 
     "clock#date": {
     "format": "{:%H:%M:%S  %e %b}",
