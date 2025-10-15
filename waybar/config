@@ -25,6 +25,7 @@
         "clock#date"
     ],
     "modules-right": [
+        "custom/shortcut_vscode", 
         "network",
         "memory",
         "battery",
@@ -341,6 +342,27 @@
         "spacing": 4,
         "min-width": 20,
         "on-click-right": "firefox https://www.perplexity.ai/"
+    },
+
+    "custom/shortcut_firefox": {
+        "format": " ",
+        "on-click": "firefox",
+        "tooltip": false,
+        "min-width": 22
+    },
+
+    "custom/shortcut_spotify": {
+        "format": " ",
+        "on-click": "flatpak run com.spotify.Client || spotify",
+        "tooltip": false,
+        "min-width": 22
+    },
+
+    "custom/shortcut_vscode": {
+        "format": " ",
+        "on-click": "code",
+        "tooltip": false,
+        "min-width": 22
     },
 
     "custom/iss": {

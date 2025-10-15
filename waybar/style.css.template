@@ -212,3 +212,51 @@ tooltip label {
     background-color: rgba($color0_rgb, 0.85);
     border: 1px solid rgba($color3_rgb, 0.3);
 }
+
+/* Compact shortcuts group: Waybar's CSS supports only limited properties.
+   Avoid flex, transforms, filters, transitions here. Use background/border changes on hover. */
+
+/* Basic appearance for all shortcut modules: match the rest of modules */
+#custom-shortcut_firefox, #custom-shortcut_spotify, #custom-shortcut_vscode, #custom-perplexity {
+    background: transparent;
+    border: none;
+    padding: 0 10px;
+    margin: 4px 2px;
+    min-width: 28px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px 24px;  /* larger, crisper icons */
+}
+
+/* Visual grouping to appear as a single compact tray */
+#custom-shortcut_firefox { background-image: url("file://$HOME/.config/waybar/icons/firefox.svg"); }
+
+#custom-shortcut_spotify, #custom-shortcut_vscode { }
+#custom-shortcut_spotify {
+    /* Spotify SVG has a 20x20 viewBox; render at 20px for sharper edges */
+    background-size: 20px 20px;
+}
+
+#custom-perplexity { }
+
+/* Hover effect: simple background/border color change (supported by Waybar) */
+#custom-shortcut_firefox:hover, #custom-shortcut_spotify:hover, #custom-shortcut_vscode:hover, #custom-perplexity:hover {
+    background-color: transparent;
+}
+
+/* Middle icons: specific images */
+#custom-shortcut_spotify {
+    background-image: url("file://$HOME/.config/waybar/icons/spotify.svg");
+}
+
+#custom-shortcut_vscode {
+    background-image: url("file://$HOME/.config/waybar/icons/vscode.svg");
+}
+
+/* Perplexity icon styling: use the themed perplexity.svg already generated */
+#custom-perplexity {
+    background-image: url("file://$HOME/.config/waybar/icons/perplexity.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px 24px;
+}

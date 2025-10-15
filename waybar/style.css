@@ -8,23 +8,23 @@
 }
 
 #waybar {
-    background-color: rgba(14,15,16, 0.85);
-    color: #c8d1dc;
+    background-color: rgba(12,2,1, 0.85);
+    color: #d1b5b9;
     border-radius: 0px;
     margin: 12px 0 0 0;
     padding: 0 8px;
 }
 
 #workspaces {
-    background-color: rgba(14,15,16, 0.85);
+    background-color: rgba(12,2,1, 0.85);
     border-radius: 0px;
     margin: 2px 6px;
     padding: 0 4px;
 }
 
 #tray {
-    background-color: rgba(14,15,16, 0.85);
-    border: 1px solid rgba(132,126,117, 0.3);
+    background-color: rgba(12,2,1, 0.85);
+    border: 1px solid rgba(169,29,11, 0.3);
     border-radius: 0px;
     padding: 0 8px;
     margin: 4px 3px;
@@ -36,22 +36,22 @@
     padding: 0 4px;
     border-radius: 0px;
     margin: 1px 2px;
-    color: #c8d1dc;
+    color: #d1b5b9;
     font-size: 10pt;
     background-color: transparent;
     border: none;
 }
 
 #workspaces button.active {
-    background-color: rgba(106,121,136, 0.65);
+    background-color: rgba(209,46,5, 0.65);
     color: #ffffff;
     padding: 0 4px;
     font-weight: bold;
 }
 
 #workspaces button:hover {
-    background: rgba(132,126,117, 0.6);
-    color: #ABACAE;
+    background: rgba(169,29,11, 0.6);
+    color: #F9963E;
     padding: 0 4px;
 }
 
@@ -67,52 +67,52 @@
 #custom-rofi,
 #custom-iss
 #submap {
-    background: linear-gradient(180deg, rgba(14,15,16, 0.60), rgba(14,15,16, 0.85));
-    color: #c8d1dc;
+    background: linear-gradient(180deg, rgba(12,2,1, 0.60), rgba(12,2,1, 0.85));
+    color: #d1b5b9;
     border-radius: 0px;
     padding: 0 16px;
     margin: 4px 3px;
     min-width: 20px;
-    border: 1px solid rgba(106,121,136, 0.15);
+    border: 1px solid rgba(209,46,5, 0.15);
 }
 
 #clock {
-    color: #847E75;
+    color: #A91D0B;
     font-weight: bold;
     padding: 0 18px;
-    background-color: rgba(14,15,16, 0.9);
-    border: 1px solid rgba(132,126,117, 0.3);
+    background-color: rgba(12,2,1, 0.9);
+    border: 1px solid rgba(169,29,11, 0.3);
 }
 
 #memory {
-    color: #6A7988;
-    background-color: rgba(14,15,16, 0.85);
-    border: 1px solid rgba(106,121,136, 0.3);
+    color: #D12E05;
+    background-color: rgba(12,2,1, 0.85);
+    border: 1px solid rgba(209,46,5, 0.3);
 }
 
 #custom-rofi {
-    color: #c8d1dc;
+    color: #d1b5b9;
     padding: 0 14px;
-    background-color: rgba(14,15,16, 0.9);
+    background-color: rgba(12,2,1, 0.9);
 }
 
 #custom-screenshot_t {
     padding: 0 10px 0 6px;
-    background-color: rgba(14,15,16, 0.85);
-    border: 1px solid rgba(147,159,173, 0.3);
+    background-color: rgba(12,2,1, 0.85);
+    border: 1px solid rgba(170,92,82, 0.3);
 }
 
 #battery {
-    color: #778899;
-    background-color: rgba(14,15,16, 0.85);
+    color: #DA2806;
+    background-color: rgba(12,2,1, 0.85);
     padding: 0 18px;
-    border: 1px solid rgba(119,136,153, 0.3);
+    border: 1px solid rgba(218,40,6, 0.3);
 }
 
 #battery.charging, #battery.plugged {
-    background-color: rgba(106,121,136, 0.3);
-    color: #c8d1dc;
-    border: 1px solid rgba(106,121,136, 0.5);
+    background-color: rgba(209,46,5, 0.3);
+    color: #d1b5b9;
+    border: 1px solid rgba(209,46,5, 0.5);
 }
 
 #battery.critical:not(.charging) {
@@ -129,9 +129,9 @@
 }
 
 #pulseaudio {
-    color: #909091;
-    background-color: rgba(14,15,16, 0.85);
-    border: 1px solid rgba(144,144,145, 0.3);
+    color: #F25B09;
+    background-color: rgba(12,2,1, 0.85);
+    border: 1px solid rgba(242,91,9, 0.3);
 }
 
 #pulseaudio.muted {
@@ -141,21 +141,21 @@
 }
 
 #custom-screenshot_t {
-    color: #939FAD;
+    color: #AA5C52;
 }
 
 #custom-power {
-    color: #ABACAE;
+    color: #F9963E;
     margin-right: 8px;
     padding: 0 10px 0 6px;
-    background-color: rgba(14,15,16, 0.85);
-    border: 1px solid rgba(171,172,174, 0.3);
+    background-color: rgba(12,2,1, 0.85);
+    border: 1px solid rgba(249,150,62, 0.3);
 }
 
 #network {
-    color: #847E75;
-    background-color: rgba(14,15,16, 0.85);
-    border: 1px solid rgba(132,126,117, 0.3);
+    color: #A91D0B;
+    background-color: rgba(12,2,1, 0.85);
+    border: 1px solid rgba(169,29,11, 0.3);
 }
 
 #network.disconnected {
@@ -165,41 +165,41 @@
 }
 
 #custom-notification {
-    color: #6A7988;
-    background-color: rgba(14,15,16, 0.85);
-    border: 1px solid rgba(106,121,136, 0.3);
+    color: #D12E05;
+    background-color: rgba(12,2,1, 0.85);
+    border: 1px solid rgba(209,46,5, 0.3);
 }
 
 #custom-clipboard {
-    background-color: rgba(14,15,16, 0.85);
-    color: #c8d1dc;
+    background-color: rgba(12,2,1, 0.85);
+    color: #d1b5b9;
     border-radius: 0px;
     padding: 0 16px;
     margin: 4px 3px;
     min-width: 20px;
-    border: 1px solid rgba(106,121,136, 0.15);
+    border: 1px solid rgba(209,46,5, 0.15);
 }
 
 #window {
-    background: linear-gradient(180deg, rgba(14,15,16, 0.60), rgba(14,15,16, 0.9));
-    color: #909091;
+    background: linear-gradient(180deg, rgba(12,2,1, 0.60), rgba(12,2,1, 0.9));
+    color: #F25B09;
     border-radius: 0px;
     margin: 4px 3px;
     padding: 0 18px;
     font-weight: 600;
-    border: 1px solid rgba(144,144,145, 0.3);
+    border: 1px solid rgba(242,91,9, 0.3);
 }
 
 tooltip {
     border-radius: 0px;
-    background-color: rgba(14,15,16, 0.95);
+    background-color: rgba(12,2,1, 0.95);
     padding: 12px;
     margin: 4px;
-    border: 1px solid rgba(106,121,136, 0.3);
+    border: 1px solid rgba(209,46,5, 0.3);
 }
 
 tooltip label {
-    color: #c8d1dc;
+    color: #d1b5b9;
 }
 
 @keyframes iss-blink {
@@ -208,7 +208,55 @@ tooltip label {
 }
 
 #custom-iss {
-    color: #778899;
-    background-color: rgba(14,15,16, 0.85);
-    border: 1px solid rgba(119,136,153, 0.3);
+    color: #DA2806;
+    background-color: rgba(12,2,1, 0.85);
+    border: 1px solid rgba(218,40,6, 0.3);
+}
+
+/* Compact shortcuts group: Waybar's CSS supports only limited properties.
+   Avoid flex, transforms, filters, transitions here. Use background/border changes on hover. */
+
+/* Basic appearance for all shortcut modules: match the rest of modules */
+#custom-shortcut_firefox, #custom-shortcut_spotify, #custom-shortcut_vscode, #custom-perplexity {
+    background: transparent;
+    border: none;
+    padding: 0 10px;
+    margin: 4px 2px;
+    min-width: 28px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px 24px;  /* larger, crisper icons */
+}
+
+/* Visual grouping to appear as a single compact tray */
+#custom-shortcut_firefox { background-image: url("file:///home/warre/.config/waybar/icons/firefox.svg"); }
+
+#custom-shortcut_spotify, #custom-shortcut_vscode { }
+#custom-shortcut_spotify {
+    /* Spotify SVG has a 20x20 viewBox; render at 20px for sharper edges */
+    background-size: 20px 20px;
+}
+
+#custom-perplexity { }
+
+/* Hover effect: simple background/border color change (supported by Waybar) */
+#custom-shortcut_firefox:hover, #custom-shortcut_spotify:hover, #custom-shortcut_vscode:hover, #custom-perplexity:hover {
+    background-color: transparent;
+}
+
+/* Middle icons: specific images */
+#custom-shortcut_spotify {
+    background-image: url("file:///home/warre/.config/waybar/icons/spotify.svg");
+}
+
+#custom-shortcut_vscode {
+    background-image: url("file:///home/warre/.config/waybar/icons/vscode.svg");
+}
+
+/* Perplexity icon styling: use the themed perplexity.svg already generated */
+#custom-perplexity {
+    background-image: url("file:///home/warre/.config/waybar/icons/perplexity.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px 24px;
 }

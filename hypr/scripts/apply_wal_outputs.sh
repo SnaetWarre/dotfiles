@@ -24,10 +24,6 @@ SWAYNC_CONFIG_DIR="$CONFIG_DIR/swaync"
 SWAYNC_TEMPLATE="$SWAYNC_CONFIG_DIR/style.css.template"
 SWAYNC_OUTPUT_CSS="$SWAYNC_CONFIG_DIR/style.css"
 
-SWAYOSD_CONFIG_DIR="$CONFIG_DIR/swayosd"
-SWAYOSD_TEMPLATE="$SWAYOSD_CONFIG_DIR/style.css.template"
-SWAYOSD_OUTPUT_CSS="$SWAYOSD_CONFIG_DIR/style.css"
-
 WLOGOUT_CONFIG_DIR="$CONFIG_DIR/wlogout"
 WLOGOUT_TEMPLATE="$WLOGOUT_CONFIG_DIR/style.css.template"
 WLOGOUT_OUTPUT_CSS="$WLOGOUT_CONFIG_DIR/style.css"
@@ -107,7 +103,7 @@ export color0_rgb color1_rgb color2_rgb color3_rgb color4_rgb color5_rgb color6_
 
 # Ensure the variables list for envsubst only contains valid shell variable names ($ or ${})
 # The previous list was okay, but this is slightly safer if variable names had dashes etc.
-WAYBAR_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}:${color0_rgb}:${color1_rgb}:${color2_rgb}:${color3_rgb}:${color4_rgb}:${color5_rgb}:${color6_rgb}:${color7_rgb}:${color8_rgb}'
+WAYBAR_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}:${color0_rgb}:${color1_rgb}:${color2_rgb}:${color3_rgb}:${color4_rgb}:${color5_rgb}:${color6_rgb}:${color7_rgb}:${color8_rgb}:$HOME'
 
 envsubst "$WAYBAR_VARS" < "$WAYBAR_TEMPLATE" > "$WAYBAR_OUTPUT_CSS"
 
@@ -120,16 +116,6 @@ else
     # Define vars needed by swaync template
     SWAYNC_VARS='${color0_rgb}:${color2_rgb}:${color7_rgb}:${color8_rgb}'
     envsubst "$SWAYNC_VARS" < "$SWAYNC_TEMPLATE" > "$SWAYNC_OUTPUT_CSS"
-fi
-
-# --- Process SwayOSD CSS ---
-echo "Processing SwayOSD template: $SWAYOSD_TEMPLATE -> $SWAYOSD_OUTPUT_CSS"
-if [ ! -f "$SWAYOSD_TEMPLATE" ]; then
-    echo "Warning: SwayOSD template not found at $SWAYOSD_TEMPLATE" >&2
-else
-    # Define vars needed by swayosd template
-    SWAYOSD_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}:${color0_rgb}:${color2_rgb}:${color3_rgb}:${color4_rgb}:${color6_rgb}:${color7_rgb}:${color8_rgb}'
-    envsubst "$SWAYOSD_VARS" < "$SWAYOSD_TEMPLATE" > "$SWAYOSD_OUTPUT_CSS"
 fi
 
 # --- Process Wlogout CSS ---
@@ -281,6 +267,64 @@ cat > "$PERPLEXITY_SVG" << EOF
 </svg>
 EOF
 
+# --- Theme other Waybar app icons (firefox/spotify/vscode) ---
+echo "Theming Waybar app icons in $WAYBAR_ICONS_DIR"
+
+# Helper to inject a global style that forces a single fill color
+theme_svg_monochrome() {
+    local file="$1"
+    local fill_color="$2"
+    if [ ! -f "$file" ]; then
+        return 1
+    fi
+    # Remove any previous wal-color style blocks (wherever they were)
+    sed -i '/<style id="wal-color">.*<\/style>/d' "$file"
+    # Robust injection: after the end of the opening <svg ...> tag (works for one-line or multi-line)
+    awk -v COLOR="$fill_color" "
+        BEGIN { inserted = 0; started = 0 }
+        {
+            if (!inserted) {
+                if (!started && match(\$0, /<svg/)) {
+                    started = 1
+                }
+                if (started) {
+                    # Find the first '>' after <svg and split the line there
+                    if (match(\$0, />/)) {
+                        pre = substr(\$0, 1, RSTART)
+                        post = substr(\$0, RSTART+1)
+                        print pre
+                        print \"<style id=\\\"wal-color\\\">path,circle,polygon,polyline,g,ellipse{fill:\" COLOR \" !important; stroke:none !important;} rect[fill=\\\"none\\\"],rect[fill=\\\"none\\\"]{fill:none !important; stroke:none !important;}</style>\"
+                        print post
+                        inserted = 1
+                        next
+                    }
+                }
+            }
+            print \$0
+        }
+    " "$file" > "${file}.tmp" && mv "${file}.tmp" "$file"
+}
+
+icons_to_theme="firefox spotify vscode"
+for icon in $icons_to_theme; do
+    svg_path="$WAYBAR_ICONS_DIR/${icon}.svg"
+    if [ -f "$svg_path" ]; then
+        echo "  Theming ${icon}.svg (monochrome to $color7)..."
+        if ! theme_svg_monochrome "$svg_path" "$color7"; then
+            echo "  Fallback theming for ${icon}.svg via sed replace..."
+            sed -e "s/#000000/${color7}/g" \
+                -e "s/#000/${color7}/g" \
+                -e "s/black/${color7}/g" \
+                -e "s/#808080/${color8}/g" \
+                -e "s/grey/${color8}/g" \
+                -e "s/gray/${color8}/g" \
+                "$svg_path" > "${svg_path}.tmp" && mv "${svg_path}.tmp" "$svg_path"
+        fi
+    else
+        echo "  Warning: icon not found: $svg_path" >&2
+    fi
+done
+
 echo "Applying changes that require service restarts..."
 
 # Restart eww if the template was processed
@@ -295,12 +339,7 @@ if [ -f "$SWAYNC_OUTPUT_CSS" ] && command -v swaync-client &> /dev/null; then
     swaync-client -rs || echo "Warning: swaync-client -rs failed."
 fi
 
-# Restart swayosd if the template was processed
-if [ -f "$SWAYOSD_OUTPUT_CSS" ] && command -v swayosd-server &> /dev/null; then
-    echo "Restarting swayosd..."
-    pkill swayosd-server || true
-    swayosd-server & disown
-fi
+
 
 # Update Firefox (if available) to pick up latest wal cache without touching our templates
 PYWALFOX_BIN="$(command -v pywalfox || true)"
