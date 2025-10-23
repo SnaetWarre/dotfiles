@@ -7,25 +7,6 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "bottom_dock_layout": "contained",
-  "tabs": {
-    "git_status": true,
-    "file_icons": true
-  },
-  "title_bar": {
-    "show_menus": false,
-    "show_branch_icon": true
-  },
-  "prettier": {
-    "allowed": true
-  },
-  "minimap": {
-    "thumb": "hover",
-    "show": "auto"
-  },
-  "relative_line_numbers": false,
-  "cursor_shape": "block",
-  "agent_buffer_font_size": 12.0,
   "auto_update_extensions": {
     "*": true
   },
@@ -38,7 +19,7 @@
     },
     "enabled_in_text_threads": false
   },
-  "vim_mode": false,
+  "vim_mode": true,
   "agent": {
     "play_sound_when_agent_done": false,
     "always_allow_tool_actions": true,
@@ -62,12 +43,12 @@
     }
   },
   "icon_theme": "Material Icon Theme",
-  "ui_font_size": 23.0,
+  "ui_font_size": 24,
   "ui_font_family": "JetBrains Mono",
-  "ui_font_weight": 500.0,
+  "ui_font_weight": 400,
   "buffer_font_size": 20.0,
-  "buffer_font_weight": 580.0,
-  "agent_ui_font_size": 25.0,
+  "buffer_font_weight": 400,
+  "agent_font_size": 24,
   "buffer_font_family": "JetBrains Mono",
   "base_keymap": "Cursor",
   "theme": {
@@ -98,9 +79,6 @@
     "dock": "right"
   },
   "terminal": {
-    "max_scroll_history_lines": 10032,
-    "default_height": 300.0,
-    "copy_on_select": true,
     "button": true
   },
   "debugger": {

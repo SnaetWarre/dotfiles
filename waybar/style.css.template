@@ -77,6 +77,12 @@
     border: 1px solid rgba($color2_rgb, 0.15);
 }
 
+#custom-screenrecording-indicator {
+    padding: 0 6px;
+    margin: 4px 0px;
+    min-width: 20px;
+}
+
 
 #custom-screenrecording-indicator.recording {
     background-color: rgba(245, 60, 60, 0.25);
