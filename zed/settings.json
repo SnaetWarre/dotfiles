@@ -7,6 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "show_edit_predictions": false,
   "bottom_dock_layout": "contained",
   "tabs": {
     "git_status": true,
@@ -38,7 +39,7 @@
     },
     "enabled_in_text_threads": false
   },
-  "vim_mode": false,
+  "vim_mode": true,
   "agent": {
     "play_sound_when_agent_done": false,
     "always_allow_tool_actions": true,
@@ -71,9 +72,9 @@
   "buffer_font_family": "JetBrains Mono",
   "base_keymap": "Cursor",
   "theme": {
-    "mode": "system",
-    "light": "One Light",
-    "dark": "Ayu Light"
+    "mode": "dark",
+    "light": "Ayu Dark",
+    "dark": "Ayu Dark"
   },
   "autosave": {
     "after_delay": { "milliseconds": 500 }

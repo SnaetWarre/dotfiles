@@ -111,7 +111,7 @@ window#waybar {
 
 #clock {
   font-weight: bold;
-  font-size: 12px;
+  font-size: 18px;
   color: $color3;
 }
 
@@ -119,7 +119,7 @@ window#waybar {
 
 #custom-asus-profile {
   font-weight: bold;
-  font-size: 12px;
+  font-size: 18px;
   color: $color3;
 }
 
@@ -195,11 +195,19 @@ window#waybar {
   margin: 6px 3px;
 }
 
+#custom-workspace-1,
+#custom-workspace-2,
+#custom-workspace-3,
+#custom-workspace-4 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
 #custom-workspace-1:hover,
 #custom-workspace-2:hover,
 #custom-workspace-3:hover,
 #custom-workspace-4:hover {
-  color: $color3; 
+  color: $color3;
   transition: all 0.2s ease-in-out;
 }
 

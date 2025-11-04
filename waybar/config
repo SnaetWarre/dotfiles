@@ -14,8 +14,6 @@
     "clock",
     "custom/power",
     "network",
-    "bluetooth",
-    "custom/microphone"
   ],
 
   "modules-center": [

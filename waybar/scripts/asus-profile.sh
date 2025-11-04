@@ -24,7 +24,7 @@ profile=$(asusctl profile -p | awk '/Active profile/ {print $NF}')
 
 case "$profile" in
   Performance)
-    text="RAZGON"
+    text="REACTOR ON"
     fg="$color_red"
     ;;
   Balanced)
