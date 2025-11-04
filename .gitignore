@@ -1,17 +1,42 @@
-# Ignore everything
+# Ignore everything by default
 *
-# Do not ignore the following folders and their subfolders
+
+# ============================================================================
+# WHITELISTED DIRECTORIES AND FILES
+# ============================================================================
+
+# Meta files
 !.gitignore
+!README.md
+!STOW_USAGE.md
+!stow-dotfiles.sh
+# ============================================================================
+# HOME DIRECTORY DOTFILES (managed via stow)
+# ============================================================================
+!home/
+!home/**/*
+
+# ============================================================================
+# CONFIG DIRECTORIES
+# ============================================================================
+
+# Window Manager / Compositor
 !hypr/
 !hypr/**/*
+!eww/
+!eww/**/*
+
+# Terminal & Shell
 !alacritty/
 !alacritty/**/*
+!ghostty/
+!ghostty/**/*
+
+# System Utilities
 !btop/
 !btop/**/*
 !fastfetch/
 !fastfetch/**/*
-!ghostty/
-!ghostty/**/*
 !rofi/
 !rofi/**/*
 !rog/
@@ -20,41 +45,58 @@
 !swaylock/**/*
 !swaync/
 !swaync/**/*
+!swayosd/
+!swayosd/**/*
 !waybar/
 !waybar/**/*
 !wlogout/
 !wlogout/**/*
 !wofi/
 !wofi/**/*
+
+# Editors
 !nvim/
 !nvim/**/*
-!eww/*
-!eww/
-!eww/scripts/*
-!.zshrc
-!idealworkflow.png
-!swayosd/
-!swayosd/**/*
-
 !zed/
-!zed/*
+!zed/**/*
+# Exclude zed extensions (auto-installed by editor)
+zed/extensions/
 
+# Theming (Pywal)
+!wal/
+!wal/**/*
+
+# Misc
+!idealworkflow.png
 !.zshrc_copy
+!.zshrc_optimized
 
-!*.log
-!*.swp
-!*~
-!.DS_Store
-!.env
-!*.key
-!*.pem
-!*.crt
-!*.p12
-!*.pfx
-!*.key
-!*.pem
-!*.crt
-!*.p12
-!*.pfx
-!.ssh/
-!.gnupg/
+# ============================================================================
+# SECURITY: EXPLICITLY IGNORE SENSITIVE FILES
+# ============================================================================
+# These patterns ensure sensitive files are NEVER tracked
+.env
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+.ssh/
+.gnupg/
+**/secrets/
+**/*secret*
+**/*password*
+**/*token*
+
+# ============================================================================
+# IGNORE COMMON TEMPORARY/BACKUP FILES
+# ============================================================================
+*.log
+*.swp
+*~
+.DS_Store
+*.backup
+*.bak
+.cache/
+**/settings_backup.json
+**/*.bak
