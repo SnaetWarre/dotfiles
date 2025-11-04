@@ -7,7 +7,12 @@
      xmlns="http://www.w3.org/2000/svg"
      xmlns:xlink="http://www.w3.org/1999/xlink"
      width="128" height="128" version="1.1">
-<style id="wal-color">path,circle,polygon,polyline,g,ellipse{fill:#dddddd !important; stroke:none !important;} rect[fill="none"],rect[fill="none"]{fill:none !important; stroke:none !important;}</style>
+<style id="wal-color">path,circle,polygon,polyline,g,ellipse{fill:#b0b0ba !important; stroke:none !important;} rect[fill="none"],rect[fill="none"]{fill:none !important; stroke:none !important;}</style>
+
+
+
+
+
 
 
 
