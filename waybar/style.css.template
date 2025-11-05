@@ -64,6 +64,7 @@ window#waybar {
 #bluetooth,
 #custom-bluetooth,
 #custom-brightness,
+#custom-system-stats,
 #custom-volume,
 #custom-battery,
 #custom-power,
@@ -209,6 +210,10 @@ window#waybar {
 #custom-workspace-4:hover {
   color: $color3;
   transition: all 0.2s ease-in-out;
+}
+
+/* === System Stats (vertical) ============================================= */
+#custom-system-stats {
 }
 
 /* === Hover Effects ======================================================= */

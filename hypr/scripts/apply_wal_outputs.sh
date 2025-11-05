@@ -65,6 +65,14 @@ GHOSTTY_CONFIG_DIR="$CONFIG_DIR/ghostty"
 GHOSTTY_TEMPLATE="$GHOSTTY_CONFIG_DIR/config.template"
 GHOSTTY_OUTPUT_CONFIG="$GHOSTTY_CONFIG_DIR/config"
 
+GTK3_DIR="$CONFIG_DIR/gtk-3.0"
+GTK3_TEMPLATE="$GTK3_DIR/gtk.css.template"
+GTK3_OUTPUT="$GTK3_DIR/gtk.css"
+
+GTK4_DIR="$CONFIG_DIR/gtk-4.0"
+GTK4_TEMPLATE="$GTK4_DIR/gtk.css.template"
+GTK4_OUTPUT="$GTK4_DIR/gtk.css"
+
 ZED_THEME_WAL_DIR="$CONFIG_DIR/zed-theme-wal"
 ZED_GENERATE_THEME_SCRIPT="$ZED_THEME_WAL_DIR/generate_theme"
 
@@ -175,7 +183,7 @@ WAYBAR_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color
 PRE_HASH=$(sha256sum "$WAYBAR_OUTPUT_CSS" 2>/dev/null | awk '{print $1}' || echo none)
 tmp_waybar=$(mktemp)
 envsubst "$WAYBAR_VARS" < "$WAYBAR_TEMPLATE" > "$tmp_waybar"
-STATUS=$(write_if_changed "$tmp_waybar" "$WAYBAR_OUTPUT_CSS")
+STATUS=$(write_if_changed "$tmp_waybar" "$WAYBAR_OUTPUT_CSS" || true)
 if [ "$STATUS" = "changed" ]; then
     WAYBAR_CHANGED=1
 fi
@@ -195,7 +203,7 @@ else
     SWAYNC_VARS='${color0_rgb}:${color2_rgb}:${color7_rgb}:${color8_rgb}'
     tmp_swaync=$(mktemp)
     envsubst "$SWAYNC_VARS" < "$SWAYNC_TEMPLATE" > "$tmp_swaync"
-    SWAYNC_STATUS=$(write_if_changed "$tmp_swaync" "$SWAYNC_OUTPUT_CSS")
+    SWAYNC_STATUS=$(write_if_changed "$tmp_swaync" "$SWAYNC_OUTPUT_CSS" || true)
     if [ "$SWAYNC_STATUS" = "changed" ]; then
         SWAYNC_CHANGED=1
     fi
@@ -302,6 +310,34 @@ else
     log_step "ghostty-config" "$__t_ghostty"
 fi
 
+# --- Process GTK-3.0 CSS ---
+echo "Processing GTK-3.0 template: $GTK3_TEMPLATE -> $GTK3_OUTPUT"
+__t_gtk3=$(now_ms)
+if [ -f "$GTK3_TEMPLATE" ]; then
+    # Define vars needed by GTK-3.0 template
+    GTK3_VARS='${color0_rgb}:${color1_rgb}:${color2_rgb}:${color3_rgb}:${color4_rgb}:${color5_rgb}:${color6_rgb}:${color7_rgb}:${color8_rgb}'
+    tmp_gtk3=$(mktemp)
+    envsubst "$GTK3_VARS" < "$GTK3_TEMPLATE" > "$tmp_gtk3"
+    write_if_changed "$tmp_gtk3" "$GTK3_OUTPUT" >/dev/null || true
+    log_step "gtk3-css" "$__t_gtk3"
+else
+    echo "Warning: GTK-3.0 template not found at $GTK3_TEMPLATE" >&2
+fi
+
+# --- Process GTK-4.0 CSS ---
+echo "Processing GTK-4.0 template: $GTK4_TEMPLATE -> $GTK4_OUTPUT"
+__t_gtk4=$(now_ms)
+if [ -f "$GTK4_TEMPLATE" ]; then
+    # Define vars needed by GTK-4.0 template
+    GTK4_VARS='${color0_rgb}:${color1_rgb}:${color2_rgb}:${color3_rgb}:${color4_rgb}:${color5_rgb}:${color6_rgb}:${color7_rgb}:${color8_rgb}'
+    tmp_gtk4=$(mktemp)
+    envsubst "$GTK4_VARS" < "$GTK4_TEMPLATE" > "$tmp_gtk4"
+    write_if_changed "$tmp_gtk4" "$GTK4_OUTPUT" >/dev/null || true
+    log_step "gtk4-css" "$__t_gtk4"
+else
+    echo "Warning: GTK-4.0 template not found at $GTK4_TEMPLATE" >&2
+fi
+
 # --- Process eww CSS ---
 echo "Processing eww template: $EWW_TEMPLATE -> $EWW_OUTPUT_CSS"
 __t_eww=$(now_ms)
@@ -345,7 +381,7 @@ if [ -f "$EWW_TEMPLATE" ]; then
     EWW_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}:${color9}:${color10}:${color11}:${color12}:${color13}:${color14}:${color15}:${color0_rgb}:${color1_rgb}:${color2_rgb}:${color3_rgb}:${color4_rgb}:${color5_rgb}:${color6_rgb}:${color7_rgb}:${color8_rgb}:${color9_rgb}:${color10_rgb}:${color11_rgb}:${color12_rgb}:${color13_rgb}:${color14_rgb}:${color15_rgb}'
     tmp_eww=$(mktemp)
     envsubst "$EWW_VARS" < "$EWW_TEMPLATE" > "$tmp_eww"
-    EWW_STATUS=$(write_if_changed "$tmp_eww" "$EWW_OUTPUT_CSS")
+    EWW_STATUS=$(write_if_changed "$tmp_eww" "$EWW_OUTPUT_CSS" || true)
     if [ "$EWW_STATUS" = "changed" ]; then
         EWW_CHANGED=1
     fi

@@ -1,9 +1,17 @@
 #!/bin/bash
 # workspace-2.sh — highlight workspace 2 if active
 
-# Load pywal colors if available
-if [ -f "$HOME/.cache/wal/colors.sh" ]; then
-    source "$HOME/.cache/wal/colors.sh"
+# Load wal/pywal colors from colors file
+if [ -f "$HOME/.cache/wal/colors" ]; then
+    # Read colors file (16 colors, indexed 0-15)
+    color_index=0
+    while IFS= read -r color || [ -n "$color" ]; do
+        color="${color#\#}"
+        color="#${color}"
+        eval "color${color_index}=${color}"
+        color_index=$((color_index + 1))
+        [ $color_index -ge 16 ] && break
+    done < "$HOME/.cache/wal/colors"
     color_orange="${color3:-#fab387}"
 else
     # Fallback to dionysus color

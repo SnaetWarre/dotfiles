@@ -201,7 +201,7 @@ if [ ! -z "$wallpaper" ] && [ -f "$wallpaper" ]; then
             fi
         fi
         if [ -n "$WALP" ] && [ -f "$WALP" ]; then
-            WAL_BACKEND_SETTING="${WAL_BACKEND:-haishoku}"
+            WAL_BACKEND_SETTING="${WAL_BACKEND:-wal}"
             wal --backend "$WAL_BACKEND_SETTING" -n -q -i "$WALP" || echo "  Warning: wal failed to generate cache colors"
         fi
     fi
