@@ -3,9 +3,36 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
+# --- Timing helpers ---
+now_ms() { date +%s%3N; }
+log_step() {
+    local label="$1"; shift
+    local start_ms="$1"; shift
+    local end_ms; end_ms=$(now_ms)
+    local delta=$((end_ms - start_ms))
+    echo "[timing] ${label}: ${delta} ms"
+}
+__t_total=$(now_ms)
+
+# Only write to target if content actually changed. Echoes "changed" or "unchanged" and returns 0/1 accordingly.
+write_if_changed() {
+    local tmp_file="$1"
+    local target_file="$2"
+    if [ -f "$target_file" ] && cmp -s "$tmp_file" "$target_file"; then
+        rm -f "$tmp_file"
+        echo "unchanged"
+        return 1
+    else
+        mv "$tmp_file" "$target_file"
+        echo "changed"
+        return 0
+    fi
+}
+
 # --- Configuration ---
 CACHE_DIR="$HOME/.cache/wal"
 COLORS_SH="$CACHE_DIR/colors.sh"
+COLORS_JSON="$CACHE_DIR/colors.json"
 CONFIG_DIR="$HOME/.config"
 LOCAL_SHARE_DIR="$HOME/.local/share"
 
@@ -45,14 +72,52 @@ EWW_CONFIG_DIR="$CONFIG_DIR/eww"
 EWW_TEMPLATE="$EWW_CONFIG_DIR/eww.scss.template"
 EWW_OUTPUT_CSS="$EWW_CONFIG_DIR/eww.scss"
 
-# --- Check for Pywal colors ---
-if [ ! -f "$COLORS_SH" ]; then
-    echo "Error: Pywal color file not found at $COLORS_SH" >&2
-    exit 1
+# --- Load Pywal colors ---
+if [ -f "$COLORS_SH" ]; then
+    echo "Sourcing Pywal colors from $COLORS_SH..."
+    source "$COLORS_SH"
+else
+    echo "colors.sh not found, attempting JSON fallback at $COLORS_JSON..." >&2
+    if [ -f "$COLORS_JSON" ]; then
+        # Export colors from JSON using python (jq-free fallback)
+        eval "$(COLORS_JSON_PATH=\"$COLORS_JSON\" /usr/bin/env python3 - <<'PY'
+import json, os, sys
+p = os.environ.get('COLORS_JSON_PATH')
+try:
+    with open(p, 'r') as f:
+        data = json.load(f)
+except Exception as e:
+    print(f"echo 'Error reading {p}: {e}' >&2")
+    sys.exit(1)
+colors = data.get('colors', {})
+wp = data.get('wallpaper', '')
+for i in range(16):
+    k = f'color{i}'
+    v = colors.get(k)
+    if v is not None:
+        # Quote the hex so shell doesn't treat # as comment
+        print(f"export {k}='{v}'")
+if wp:
+    # Quote wallpaper path safely
+    print(f"export wallpaper='{wp}'")
+PY
+)"
+        echo "Loaded colors from JSON fallback"
+    else
+        echo "Error: Neither $COLORS_SH nor $COLORS_JSON found. Aborting." >&2
+        exit 1
+    fi
 fi
 
-echo "Sourcing Pywal colors from $COLORS_SH..."
-source "$COLORS_SH"
+# If wal didn't rewrite colors.sh (cache hit), ensure wallpaper path is fresh
+if [ -f "$CACHE_DIR/wallpaper" ]; then
+    CURRENT_WALLPAPER_FILE=$(cat "$CACHE_DIR/wallpaper" 2>/dev/null || true)
+    if [ -n "$CURRENT_WALLPAPER_FILE" ]; then
+        wallpaper="$CURRENT_WALLPAPER_FILE"
+        export wallpaper
+        echo "[apply] Using wallpaper from $CACHE_DIR/wallpaper: $wallpaper"
+    fi
+fi
 
 
 # --- Verify Sourced Colors ---
@@ -93,6 +158,8 @@ color8_rgb=$(hex_to_rgb "$color8")
 
 # --- Process Waybar CSS ---
 echo "Processing Waybar template: $WAYBAR_TEMPLATE -> $WAYBAR_OUTPUT_CSS"
+__t_waybar=$(now_ms)
+WAYBAR_CHANGED=0
 if [ ! -f "$WAYBAR_TEMPLATE" ]; then
     echo "Error: Waybar template not found at $WAYBAR_TEMPLATE" >&2
     exit 1
@@ -105,31 +172,53 @@ export color0_rgb color1_rgb color2_rgb color3_rgb color4_rgb color5_rgb color6_
 # The previous list was okay, but this is slightly safer if variable names had dashes etc.
 WAYBAR_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}:${color0_rgb}:${color1_rgb}:${color2_rgb}:${color3_rgb}:${color4_rgb}:${color5_rgb}:${color6_rgb}:${color7_rgb}:${color8_rgb}:$HOME'
 
-envsubst "$WAYBAR_VARS" < "$WAYBAR_TEMPLATE" > "$WAYBAR_OUTPUT_CSS"
+PRE_HASH=$(sha256sum "$WAYBAR_OUTPUT_CSS" 2>/dev/null | awk '{print $1}' || echo none)
+tmp_waybar=$(mktemp)
+envsubst "$WAYBAR_VARS" < "$WAYBAR_TEMPLATE" > "$tmp_waybar"
+STATUS=$(write_if_changed "$tmp_waybar" "$WAYBAR_OUTPUT_CSS")
+if [ "$STATUS" = "changed" ]; then
+    WAYBAR_CHANGED=1
+fi
+POST_HASH=$(sha256sum "$WAYBAR_OUTPUT_CSS" 2>/dev/null | awk '{print $1}' || echo none)
+echo "[waybar-css] pre=$PRE_HASH post=$POST_HASH changed=$WAYBAR_CHANGED"
+log_step "waybar-css" "$__t_waybar"
 
 # --- Process Swaync CSS ---
 echo "Processing Swaync template: $SWAYNC_TEMPLATE -> $SWAYNC_OUTPUT_CSS"
+__t_swaync=$(now_ms)
+SWAYNC_CHANGED=0
 if [ ! -f "$SWAYNC_TEMPLATE" ]; then
     echo "Error: Swaync template not found at $SWAYNC_TEMPLATE" >&2
     # Don't exit, maybe user doesn't have swaync
 else
     # Define vars needed by swaync template
     SWAYNC_VARS='${color0_rgb}:${color2_rgb}:${color7_rgb}:${color8_rgb}'
-    envsubst "$SWAYNC_VARS" < "$SWAYNC_TEMPLATE" > "$SWAYNC_OUTPUT_CSS"
+    tmp_swaync=$(mktemp)
+    envsubst "$SWAYNC_VARS" < "$SWAYNC_TEMPLATE" > "$tmp_swaync"
+    SWAYNC_STATUS=$(write_if_changed "$tmp_swaync" "$SWAYNC_OUTPUT_CSS")
+    if [ "$SWAYNC_STATUS" = "changed" ]; then
+        SWAYNC_CHANGED=1
+    fi
+    log_step "swaync-css" "$__t_swaync"
 fi
 
 # --- Process Wlogout CSS ---
 echo "Processing Wlogout template: $WLOGOUT_TEMPLATE -> $WLOGOUT_OUTPUT_CSS"
+__t_wlogout_css=$(now_ms)
 if [ ! -f "$WLOGOUT_TEMPLATE" ]; then
     echo "Warning: Wlogout template not found at $WLOGOUT_TEMPLATE" >&2
 else
     # Define vars needed by wlogout template (includes HOME for icon path)
     WLOGOUT_VARS='${color0_rgb}:${color2_rgb}:${color7_rgb}:$HOME'
-    envsubst "$WLOGOUT_VARS" < "$WLOGOUT_TEMPLATE" > "$WLOGOUT_OUTPUT_CSS"
+    tmp_wlogout=$(mktemp)
+    envsubst "$WLOGOUT_VARS" < "$WLOGOUT_TEMPLATE" > "$tmp_wlogout"
+    write_if_changed "$tmp_wlogout" "$WLOGOUT_OUTPUT_CSS" >/dev/null || true
+    log_step "wlogout-css" "$__t_wlogout_css"
 fi
 
 # --- Generate Wlogout Icons ---
 echo "Generating Wlogout icons in $WLOGOUT_ICONS_DIR"
+__t_wlogout_icns=$(now_ms)
 mkdir -p "$WLOGOUT_ICONS_DIR"
 wlogout_icons="lock logout suspend hibernate shutdown reboot"
 for icon in $wlogout_icons; do
@@ -149,21 +238,27 @@ for icon in $wlogout_icons; do
         echo "  Warning: Source icon not found: $src_icon" >&2
     fi
 done
+log_step "wlogout-icons" "$__t_wlogout_icns"
 
 # --- Process Swaylock Config ---
 echo "Processing Swaylock template: $SWAYLOCK_TEMPLATE -> $SWAYLOCK_OUTPUT_CONFIG"
+__t_swaylock=$(now_ms)
 if [ ! -f "$SWAYLOCK_TEMPLATE" ]; then
     echo "Warning: Swaylock template not found at $SWAYLOCK_TEMPLATE" >&2
 else
     # Define vars needed by swaylock template
     SWAYLOCK_VARS='${wallpaper}:${color0_rgb}:${color1_rgb}:${color2_rgb}:${color3_rgb}:${color4_rgb}:${color5_rgb}:${color6_rgb}:${color7_rgb}:${color8_rgb}'
-    envsubst "$SWAYLOCK_VARS" < "$SWAYLOCK_TEMPLATE" > "$SWAYLOCK_OUTPUT_CONFIG"
+    tmp_swaylock=$(mktemp)
+    envsubst "$SWAYLOCK_VARS" < "$SWAYLOCK_TEMPLATE" > "$tmp_swaylock"
+    write_if_changed "$tmp_swaylock" "$SWAYLOCK_OUTPUT_CONFIG" >/dev/null || true
+    log_step "swaylock-config" "$__t_swaylock"
 fi
 
 # --- Generate Rofi Files ---
 
 # 1. Generate colors.rasi (for config.rasi)
 echo "Generating Rofi colors file: $ROFI_COLORS_RASI"
+__t_rofi_colors=$(now_ms)
 mkdir -p "$ROFI_CONFIG_DIR"
 cat > "$ROFI_COLORS_RASI" << EOF
 /* Generated by apply_wal_outputs.sh */
@@ -176,33 +271,42 @@ cat > "$ROFI_COLORS_RASI" << EOF
     urgent:         $color3; /* Standard Rofi urgent */
 }
 EOF
+log_step "rofi-colors" "$__t_rofi_colors"
 
 # 2. Generate wallpaper.rasi (from template)
 echo "Processing Rofi wallpaper theme: $ROFI_WALLPAPER_TEMPLATE -> $ROFI_WALLPAPER_OUTPUT"
+__t_rofi_wall=$(now_ms)
 if [ ! -f "$ROFI_WALLPAPER_TEMPLATE" ]; then
     echo "Error: Rofi wallpaper template not found at $ROFI_WALLPAPER_TEMPLATE" >&2
     # Don't exit, maybe user doesn't use this Rofi theme
 else
     # Define vars needed by rofi wallpaper template
     ROFI_WALLPAPER_VARS='${color0_rgb}:${color1_rgb}:${color4}:${color7}'
-    envsubst "$ROFI_WALLPAPER_VARS" < "$ROFI_WALLPAPER_TEMPLATE" > "$ROFI_WALLPAPER_OUTPUT"
+    tmp_rofi_wall=$(mktemp)
+    envsubst "$ROFI_WALLPAPER_VARS" < "$ROFI_WALLPAPER_TEMPLATE" > "$tmp_rofi_wall"
+    write_if_changed "$tmp_rofi_wall" "$ROFI_WALLPAPER_OUTPUT" >/dev/null || true
+    log_step "rofi-wallpaper" "$__t_rofi_wall"
 fi
 
 # --- Process Ghostty Config ---
 echo "Processing Ghostty template: $GHOSTTY_TEMPLATE -> $GHOSTTY_OUTPUT_CONFIG"
+__t_ghostty=$(now_ms)
 if [ ! -f "$GHOSTTY_TEMPLATE" ]; then
     echo "Warning: Ghostty template not found at $GHOSTTY_TEMPLATE" >&2
 else
     # Define vars needed by ghostty template
     GHOSTTY_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}'
-    envsubst "$GHOSTTY_VARS" < "$GHOSTTY_TEMPLATE" > "$GHOSTTY_OUTPUT_CONFIG"
+    tmp_ghostty=$(mktemp)
+    envsubst "$GHOSTTY_VARS" < "$GHOSTTY_TEMPLATE" > "$tmp_ghostty"
+    write_if_changed "$tmp_ghostty" "$GHOSTTY_OUTPUT_CONFIG" >/dev/null || true
+    log_step "ghostty-config" "$__t_ghostty"
 fi
 
 # --- Process eww CSS ---
 echo "Processing eww template: $EWW_TEMPLATE -> $EWW_OUTPUT_CSS"
-if [ ! -f "$EWW_TEMPLATE" ]; then
-    echo "Warning: eww template not found at $EWW_TEMPLATE" >&2
-else
+__t_eww=$(now_ms)
+EWW_CHANGED=0
+if [ -f "$EWW_TEMPLATE" ]; then
     # We need to export all color variables including extended colors for eww
     # eww template uses color9-color15 for hover states
     export color9 color10 color11 color12 color13 color14 color15
@@ -239,126 +343,54 @@ else
 
     # Define vars needed by eww template
     EWW_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}:${color9}:${color10}:${color11}:${color12}:${color13}:${color14}:${color15}:${color0_rgb}:${color1_rgb}:${color2_rgb}:${color3_rgb}:${color4_rgb}:${color5_rgb}:${color6_rgb}:${color7_rgb}:${color8_rgb}:${color9_rgb}:${color10_rgb}:${color11_rgb}:${color12_rgb}:${color13_rgb}:${color14_rgb}:${color15_rgb}'
-    envsubst "$EWW_VARS" < "$EWW_TEMPLATE" > "$EWW_OUTPUT_CSS"
-fi
-
-# --- Generate Zed Theme ---
-echo "Generating Zed theme from wal colors..."
-if [ ! -f "$ZED_GENERATE_THEME_SCRIPT" ]; then
-    echo "Warning: Zed theme generator not found at $ZED_GENERATE_THEME_SCRIPT" >&2
-elif [ ! -x "$ZED_GENERATE_THEME_SCRIPT" ]; then
-    echo "Warning: Zed theme generator is not executable at $ZED_GENERATE_THEME_SCRIPT" >&2
+    tmp_eww=$(mktemp)
+    envsubst "$EWW_VARS" < "$EWW_TEMPLATE" > "$tmp_eww"
+    EWW_STATUS=$(write_if_changed "$tmp_eww" "$EWW_OUTPUT_CSS")
+    if [ "$EWW_STATUS" = "changed" ]; then
+        EWW_CHANGED=1
+    fi
+    log_step "eww-css" "$__t_eww"
 else
-    if "$ZED_GENERATE_THEME_SCRIPT" --mode readability; then
-        echo "Successfully generated Zed theme"
-    else
-        echo "Warning: Failed to generate Zed theme" >&2
-    fi
+    echo "Warning: eww template not found at $EWW_TEMPLATE" >&2
 fi
 
-# --- Generate Perplexity SVG ---
-echo "Generating Perplexity SVG: $PERPLEXITY_SVG"
-mkdir -p "$WAYBAR_ICONS_DIR"
-cat > "$PERPLEXITY_SVG" << EOF
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 509.64">
-    <path fill="$color6" d="M115.613 0h280.774C459.974 0 512 52.025 512 115.612v278.415c0 63.587-52.026 115.613-115.613 115.613H115.613C52.026 509.64 0 457.614 0 394.027V115.612C0 52.025 52.026 0 115.613 0z"/>
-    <path fill="$color0" fill-rule="nonzero" d="M348.851 128.063l-68.946 58.302h68.946v-58.302zm-83.908 48.709l100.931-85.349v94.942h32.244v143.421h-38.731v90.004l-94.442-86.662v83.946h-17.023v-83.906l-96.596 86.246v-89.628h-37.445V186.365h38.732V90.768l95.309 84.958v-83.16h17.023l-.002 84.206zm-29.209 26.616c-34.955.02-69.893 0-104.83 0v109.375h20.415v-27.121l84.415-82.254zm41.445 0l82.208 82.324v27.051h21.708V203.388c-34.617 0-69.274.02-103.916 0zm-42.874-17.023l-64.669-57.646v57.646h64.669zm13.617 124.076v-95.2l-79.573 77.516v88.731l79.573-71.047zm17.252-95.022v94.863l77.19 70.83c0-29.485-.012-58.943-.012-88.425l-77.178-77.268z"/>
-</svg>
-EOF
+# Zed theme generation removed by user request
 
-# --- Theme other Waybar app icons (firefox/spotify/vscode) ---
-echo "Theming Waybar app icons in $WAYBAR_ICONS_DIR"
+# Waybar Perplexity SVG generation removed by user request
 
-# Helper to inject a global style that forces a single fill color
-theme_svg_monochrome() {
-    local file="$1"
-    local fill_color="$2"
-    if [ ! -f "$file" ]; then
-        return 1
-    fi
-    # Remove any previous wal-color style blocks (wherever they were)
-    sed -i '/<style id="wal-color">.*<\/style>/d' "$file"
-    # Robust injection: after the end of the opening <svg ...> tag (works for one-line or multi-line)
-    awk -v COLOR="$fill_color" "
-        BEGIN { inserted = 0; started = 0 }
-        {
-            if (!inserted) {
-                if (!started && match(\$0, /<svg/)) {
-                    started = 1
-                }
-                if (started) {
-                    # Find the first '>' after <svg and split the line there
-                    if (match(\$0, />/)) {
-                        pre = substr(\$0, 1, RSTART)
-                        post = substr(\$0, RSTART+1)
-                        print pre
-                        print \"<style id=\\\"wal-color\\\">path,circle,polygon,polyline,g,ellipse{fill:\" COLOR \" !important; stroke:none !important;} rect[fill=\\\"none\\\"],rect[fill=\\\"none\\\"]{fill:none !important; stroke:none !important;}</style>\"
-                        print post
-                        inserted = 1
-                        next
-                    }
-                }
-            }
-            print \$0
-        }
-    " "$file" > "${file}.tmp" && mv "${file}.tmp" "$file"
-}
-
-icons_to_theme="firefox spotify vscode"
-for icon in $icons_to_theme; do
-    svg_path="$WAYBAR_ICONS_DIR/${icon}.svg"
-    if [ -f "$svg_path" ]; then
-        echo "  Theming ${icon}.svg (monochrome to $color7)..."
-        if ! theme_svg_monochrome "$svg_path" "$color7"; then
-            echo "  Fallback theming for ${icon}.svg via sed replace..."
-            sed -e "s/#000000/${color7}/g" \
-                -e "s/#000/${color7}/g" \
-                -e "s/black/${color7}/g" \
-                -e "s/#808080/${color8}/g" \
-                -e "s/grey/${color8}/g" \
-                -e "s/gray/${color8}/g" \
-                "$svg_path" > "${svg_path}.tmp" && mv "${svg_path}.tmp" "$svg_path"
-        fi
-    else
-        echo "  Warning: icon not found: $svg_path" >&2
-    fi
-done
+# Waybar icon theming removed by user request
 
 echo "Applying changes that require service restarts..."
+__t_restart=$(now_ms)
 
 # Restart eww if the template was processed
-if [ -f "$EWW_OUTPUT_CSS" ] && command -v eww &> /dev/null; then
-    echo "Restarting eww..."
-    eww reload || echo "Warning: eww reload failed."
+if [ "$EWW_CHANGED" = 1 ] && command -v eww &> /dev/null; then
+    echo "Restarting eww (async)..."
+    ( eww reload || echo "Warning: eww reload failed." ) &
 fi
 
 # Restart swaync if the template was processed
-if [ -f "$SWAYNC_OUTPUT_CSS" ] && command -v swaync-client &> /dev/null; then
-    echo "Restarting swaync..."
-    swaync-client -rs || echo "Warning: swaync-client -rs failed."
+if [ "$SWAYNC_CHANGED" = 1 ] && command -v swaync-client &> /dev/null; then
+    echo "Restarting swaync (async)..."
+    ( swaync-client -rs || echo "Warning: swaync-client -rs failed." ) &
 fi
 
-
-
-# Update Firefox (if available) to pick up latest wal cache without touching our templates
-PYWALFOX_BIN="$(command -v pywalfox || true)"
-if [ -z "$PYWALFOX_BIN" ] && [ -x "$HOME/.local/bin/pywalfox" ]; then
-    PYWALFOX_BIN="$HOME/.local/bin/pywalfox"
+# Reload waybar if its CSS changed (synchronous to guarantee pickup)
+if [ "$WAYBAR_CHANGED" = 1 ] && pgrep waybar >/dev/null; then
+    echo "Reloading Waybar due to CSS change..."
+    killall -SIGUSR2 waybar || true
 fi
-if [ -n "$PYWALFOX_BIN" ]; then
-    "$PYWALFOX_BIN" update && echo "updated firefox colors" || echo "Warning: pywalfox update failed"
-fi
+
+log_step "service-restarts" "$__t_restart"
+
+# Removed pywalfox update step
 
 # Set keyboard color using rogauracore
 if command -v rogauracore &> /dev/null; then
-    echo "Setting keyboard color using rogauracore..."
-    # Use color4 (accent color) for the keyboard
-    if rogauracore single_static "${color4#\#}"; then
-        echo "Successfully set keyboard color to ${color4}"
-    else
-        echo "Warning: Failed to set keyboard color. Make sure udev rules are properly set up."
-    fi
+    __t_roga=$(now_ms)
+    echo "Setting keyboard color using rogauracore (async)..."
+    ( rogauracore single_static "${color4#\#}" >/dev/null 2>&1 && echo "Successfully set keyboard color to ${color4}" || echo "Warning: Failed to set keyboard color." ) &
+    log_step "rogauracore" "$__t_roga"
 else
     echo "Warning: rogauracore not found, skipping keyboard color update"
 fi
@@ -366,6 +398,7 @@ fi
 echo "apply_wal_outputs.sh finished successfully."
 
 # --- Update Hyprland border colors dynamically ---
+__t_hyprctl=$(now_ms)
 if command -v hyprctl &> /dev/null; then
     # Use active accent as a gradient and softened inactive border
     # Convert hex like #aabbcc to 0xffaabbcc
@@ -381,3 +414,7 @@ if command -v hyprctl &> /dev/null; then
     hyprctl keyword general:col.active_border "$ACTIVE_A $ACTIVE_B 45deg" >/dev/null 2>&1 || true
     hyprctl keyword general:col.inactive_border "$INACTIVE" >/dev/null 2>&1 || true
 fi
+log_step "hyprctl-borders" "$__t_hyprctl"
+
+# Total
+log_step "TOTAL apply_wal_outputs.sh" "$__t_total"

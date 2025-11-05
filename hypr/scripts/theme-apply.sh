@@ -179,7 +179,7 @@ if [ ! -z "$wallpaper" ] && [ -f "$wallpaper" ]; then
         swww img "$wallpaper" \
           --transition-type grow \
           --transition-angle 30 \
-          --transition-duration 1.0 \
+          --transition-duration 0 \
           --transition-fps 120 \
           --transition-bezier .2,1,.2,1 || echo "  Warning: Failed to set wallpaper with swww"
     elif command -v swaybg &> /dev/null; then
@@ -201,15 +201,8 @@ if [ ! -z "$wallpaper" ] && [ -f "$wallpaper" ]; then
             fi
         fi
         if [ -n "$WALP" ] && [ -f "$WALP" ]; then
-            wal -n -q -i "$WALP" || echo "  Warning: wal failed to generate cache colors"
-            sleep 0.2
-            if command -v pywalfox &> /dev/null; then
-                pywalfox update || echo "  Warning: Failed to update Firefox theme"
-            elif [ -x "$HOME/anaconda3/bin/python" ]; then
-                "$HOME/anaconda3/bin/python" -m pywalfox update || echo "  Warning: Failed to update Firefox theme (python -m)"
-            else
-                python3 -m pywalfox update 2>/dev/null || true
-            fi
+            WAL_BACKEND_SETTING="${WAL_BACKEND:-wal}"
+            wal --backend "$WAL_BACKEND_SETTING" -n -q -i "$WALP" || echo "  Warning: wal failed to generate cache colors"
         fi
     fi
 fi
