@@ -29,8 +29,8 @@ echo "Selected wallpaper: $WALLPAPER"
 # Apply wallpaper with pywal and wait for it to finish
 # Use -q (quiet)
 echo "Running Pywal to generate colors (waiting for completion)..."
-# Choose the classic/default backend unless overridden
-WAL_BACKEND="${WAL_BACKEND:-wal}"
+# Default to the fast haishoku backend unless overridden
+WAL_BACKEND="${WAL_BACKEND:-haishoku}"
 __t0=$(now_ms)
 
 # If the selected wallpaper differs from last colors.sh entry, force regeneration
