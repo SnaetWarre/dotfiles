@@ -175,7 +175,7 @@ alias kys="poweroff"
 alias houjekankerbek="poweroff"
 alias yay="paru"
 alias cd="z"
-
+alias :q="exit"
 # ============================================================================
 # FUNCTIONS
 # ============================================================================
