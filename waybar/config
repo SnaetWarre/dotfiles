@@ -49,7 +49,7 @@
     "tooltip-format-wifi": "{icon} {essid}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
     "tooltip-format-ethernet": "󰀂  {ifname}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
     "tooltip-format-disconnected": "Disconnected",
-    "on-click": "nm-connection-editor",
+    "on-click": "alacritty -e nmtui",
     "interval": 5,
     "nospacing": 1
   },

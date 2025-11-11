@@ -20,36 +20,36 @@ cursor-style = bar
 # cursor-style-blink = true  # Uncomment if you want blinking cursor
 
 # Pywal Color Scheme - Generated automatically
-background = #040404
-foreground = #dddddd
+background = #000000
+foreground = #f1f1f1
 
 # Selection colors
-selection-background = #575757
-selection-foreground = #040404
+selection-background = #6E6E6E
+selection-foreground = #000000
 
 # Cursor colors
-cursor-color = #dddddd
-cursor-text = #040404
+cursor-color = #f1f1f1
+cursor-text = #000000
 
 # Normal colors (0-7)
-palette = 0=#040404
-palette = 1=#474747
-palette = 2=#575757
-palette = 3=#676767
-palette = 4=#777777
-palette = 5=#8E8E8E
-palette = 6=#B0B0B0
-palette = 7=#dddddd
+palette = 0=#000000
+palette = 1=#575757
+palette = 2=#6E6E6E
+palette = 3=#8E8E8E
+palette = 4=#B0B0B0
+palette = 5=#CDCDCD
+palette = 6=#E8E8E8
+palette = 7=#f1f1f1
 
 # Bright colors (8-15)
-palette = 8=#9a9a9a
-palette = 9=#474747
-palette = 10=#575757
-palette = 11=#676767
-palette = 12=#777777
-palette = 13=#8E8E8E
-palette = 14=#B0B0B0
-palette = 15=#dddddd
+palette = 8=#a8a8a8
+palette = 9=#575757
+palette = 10=#6E6E6E
+palette = 11=#8E8E8E
+palette = 12=#B0B0B0
+palette = 13=#CDCDCD
+palette = 14=#E8E8E8
+palette = 15=#f1f1f1
 
 
 background-opacity = 0.7 
