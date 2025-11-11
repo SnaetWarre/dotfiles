@@ -2,15 +2,28 @@
 # ── battery.sh ─────────────────────────────────────────────
 # Description: Shows battery % with ASCII bar + dynamic tooltip
 # Usage: Waybar `custom/battery` every 10s
-# Dependencies: upower, awk, seq, printf
+# Dependencies: upower, awk
 #  ──────────────────────────────────────────────────────────
 
-capacity=$(cat /sys/class/power_supply/BAT0/capacity)
-status=$(cat /sys/class/power_supply/BAT0/status)
+capacity=$(cat /sys/class/power_supply/BAT0/capacity 2>/dev/null || echo 0)
+status=$(cat /sys/class/power_supply/BAT0/status 2>/dev/null || echo "Unknown")
 
-# Get detailed info from upower
-time_to_empty=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk -F: '/time to empty/ {print $2}' | xargs)
-time_to_full=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | awk -F: '/time to full/ {print $2}' | xargs)
+# Cache upower calls (refresh every 30 seconds)
+upower_cache="$HOME/.cache/wal/waybar_battery_upower_cache"
+cache_age=0
+if [ -f "$upower_cache" ]; then
+    cache_time=$(stat -c %Y "$upower_cache" 2>/dev/null || echo 0)
+    current_time=$(date +%s 2>/dev/null || echo 0)
+    cache_age=$((current_time - cache_time))
+fi
+
+if [ ! -f "$upower_cache" ] || [ "$cache_age" -gt 30 ]; then
+    time_to_empty=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 2>/dev/null | awk -F: '/time to empty/ {print $2}' | xargs)
+    time_to_full=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 2>/dev/null | awk -F: '/time to full/ {print $2}' | xargs)
+    echo "$time_to_empty|$time_to_full" > "$upower_cache" 2>/dev/null
+else
+    IFS='|' read -r time_to_empty time_to_full < "$upower_cache" 2>/dev/null
+fi
 
 # Icons
 charging_icons=(󰢜 󰂆 󰂇 󰂈 󰢝 󰂉 󰢞 󰂊 󰂋 󰂅)
@@ -27,29 +40,37 @@ else
     icon=${default_icons[$index]}
 fi
 
-# ASCII bar
+# Fast ASCII bar generation
 filled=$((capacity / 10))
+[ "$filled" -gt 10 ] && filled=10
 empty=$((10 - filled))
-bar=$(printf '█%.0s' $(seq 1 $filled))
-pad=$(printf '░%.0s' $(seq 1 $empty))
+bar=""
+pad=""
+i=0
+while [ $i -lt $filled ]; do bar="${bar}█"; i=$((i+1)); done
+i=0
+while [ $i -lt $empty ]; do pad="${pad}░"; i=$((i+1)); done
 ascii_bar="[$bar$pad]"
 
-# Load wal/pywal colors from colors file
-if [ -f "$HOME/.cache/wal/colors" ]; then
-    # Read colors file (16 colors, indexed 0-15)
-    color_index=0
-    while IFS= read -r color || [ -n "$color" ]; do
-        color="${color#\#}"
-        color="#${color}"
-        eval "color${color_index}=${color}"
-        color_index=$((color_index + 1))
-        [ $color_index -ge 16 ] && break
-    done < "$HOME/.cache/wal/colors"
-    color_red="${color1:-#bf616a}"
-    color_orange="${color3:-#fab387}"
-    color_cyan="${color6:-#56b6c2}"
+# Fast color cache (updated only if colors file changed)
+CACHE_FILE="$HOME/.cache/wal/waybar_battery_colors_cache"
+COLORS_FILE="$HOME/.cache/wal/colors"
+
+if [ -f "$COLORS_FILE" ] && [ "$COLORS_FILE" -nt "$CACHE_FILE" ] 2>/dev/null; then
+    # Extract colors directly (lines 2, 4, 7 for color1, color3, color6)
+    color_red=$(sed -n '2p' "$COLORS_FILE" 2>/dev/null | sed 's/^#*#/#/')
+    color_orange=$(sed -n '4p' "$COLORS_FILE" 2>/dev/null | sed 's/^#*#/#/')
+    color_cyan=$(sed -n '7p' "$COLORS_FILE" 2>/dev/null | sed 's/^#*#/#/')
+    [ -z "$color_red" ] && color_red="#bf616a"
+    [ -z "$color_orange" ] && color_orange="#fab387"
+    [ -z "$color_cyan" ] && color_cyan="#56b6c2"
+    echo "$color_red|$color_orange|$color_cyan" > "$CACHE_FILE" 2>/dev/null
+elif [ -f "$CACHE_FILE" ]; then
+    IFS='|' read -r color_red color_orange color_cyan < "$CACHE_FILE" 2>/dev/null
+    [ -z "$color_red" ] && color_red="#bf616a"
+    [ -z "$color_orange" ] && color_orange="#fab387"
+    [ -z "$color_cyan" ] && color_cyan="#56b6c2"
 else
-    # Fallback to dionysus colors
     color_red="#bf616a"
     color_orange="#fab387"
     color_cyan="#56b6c2"

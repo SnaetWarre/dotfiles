@@ -1,24 +1,25 @@
 #!/bin/bash
 # workspace-4.sh — highlight workspace 4 if active
 
-# Load wal/pywal colors from colors file
-if [ -f "$HOME/.cache/wal/colors" ]; then
-    # Read colors file (16 colors, indexed 0-15)
-    color_index=0
-    while IFS= read -r color || [ -n "$color" ]; do
-        color="${color#\#}"
-        color="#${color}"
-        eval "color${color_index}=${color}"
-        color_index=$((color_index + 1))
-        [ $color_index -ge 16 ] && break
-    done < "$HOME/.cache/wal/colors"
-    color_orange="${color3:-#fab387}"
+# Fast color cache (updated only if colors file changed)
+CACHE_FILE="$HOME/.cache/wal/waybar_colors_cache"
+COLORS_FILE="$HOME/.cache/wal/colors"
+
+if [ -f "$COLORS_FILE" ] && [ "$COLORS_FILE" -nt "$CACHE_FILE" ] 2>/dev/null; then
+    # Extract color3 directly (4th line, 0-indexed)
+    color_orange=$(sed -n '4p' "$COLORS_FILE" 2>/dev/null | sed 's/^#*#/#/')
+    [ -z "$color_orange" ] && color_orange="#fab387"
+    echo "$color_orange" > "$CACHE_FILE" 2>/dev/null
+elif [ -f "$CACHE_FILE" ]; then
+    color_orange=$(cat "$CACHE_FILE" 2>/dev/null)
+    [ -z "$color_orange" ] && color_orange="#fab387"
 else
-    # Fallback to dionysus color
     color_orange="#fab387"
 fi
 
-active=$(hyprctl activeworkspace -j | jq '.id')
+# Fast JSON parsing without jq - extract id directly using sed
+active=$(hyprctl activeworkspace -j 2>/dev/null | sed -n 's/.*"id":\s*\([0-9]*\).*/\1/p' | head -n1)
+active=${active:-0}
 
 if [ "$active" -eq 4 ]; then
   echo "[<span foreground='$color_orange'>●</span>]"

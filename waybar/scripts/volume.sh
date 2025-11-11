@@ -2,25 +2,69 @@
 # ── volume.sh ─────────────────────────────────────────────
 # Description: Shows current audio volume with ASCII bar + tooltip
 # Usage: Waybar `custom/volume` every 1s
-# Dependencies: wpctl, awk, seq, printf
+# Dependencies: wpctl, awk
 # ───────────────────────────────────────────────────────────
 
-# Get raw volume and convert to int
-vol_output=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
-vol_raw=$(echo "$vol_output" | awk '{ print $2 }' | sed 's/^Volume: //')
-# Remove % sign if present and convert to percentage
-vol_int=$(echo "$vol_raw" | awk '{ printf "%.0f", $1 * 100 }')
+# Fast color cache (updated only if colors file changed)
+CACHE_FILE="$HOME/.cache/wal/waybar_volume_colors_cache"
+COLORS_FILE="$HOME/.cache/wal/colors"
 
-# Check mute status
-is_muted=$(echo "$vol_output" | grep -q MUTED && echo true || echo false)
+if [ -f "$COLORS_FILE" ] && [ "$COLORS_FILE" -nt "$CACHE_FILE" ] 2>/dev/null; then
+    # Extract colors directly (lines 2, 4, 7 for color1, color3, color6)
+    color_red=$(sed -n '2p' "$COLORS_FILE" 2>/dev/null | sed 's/^#*#/#/')
+    color_orange=$(sed -n '4p' "$COLORS_FILE" 2>/dev/null | sed 's/^#*#/#/')
+    color_cyan=$(sed -n '7p' "$COLORS_FILE" 2>/dev/null | sed 's/^#*#/#/')
+    [ -z "$color_red" ] && color_red="#bf616a"
+    [ -z "$color_orange" ] && color_orange="#fab387"
+    [ -z "$color_cyan" ] && color_cyan="#56b6c2"
+    echo "$color_red|$color_orange|$color_cyan" > "$CACHE_FILE" 2>/dev/null
+elif [ -f "$CACHE_FILE" ]; then
+    IFS='|' read -r color_red color_orange color_cyan < "$CACHE_FILE" 2>/dev/null
+    [ -z "$color_red" ] && color_red="#bf616a"
+    [ -z "$color_orange" ] && color_orange="#fab387"
+    [ -z "$color_cyan" ] && color_cyan="#56b6c2"
+else
+    color_red="#bf616a"
+    color_orange="#fab387"
+    color_cyan="#56b6c2"
+fi
 
-# Get default sink description (human-readable)
-sink=$(wpctl status | awk '/Sinks:/,/Sources:/' | grep '\*' | cut -d'.' -f2- | sed 's/^\s*//; s/\[.*//')
+# Single wpctl call - get volume and check mute in one go
+vol_output=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null)
+
+# Fast parsing: extract volume and mute status
+if echo "$vol_output" | grep -q "MUTED"; then
+    is_muted=true
+    vol_int=0
+else
+    is_muted=false
+    # Extract volume number directly (format: "Volume: 0.XX" or "Volume: 1.00")
+    vol_raw=$(echo "$vol_output" | awk '{print $2}')
+    # Convert to integer percentage (0-100)
+    vol_int=$(awk -v v="$vol_raw" 'BEGIN {printf "%.0f", v*100}')
+fi
+
+# Get sink name (cached, refresh every 30 seconds to avoid stale data)
+sink_cache="$HOME/.cache/wal/waybar_sink_cache"
+cache_age=0
+if [ -f "$sink_cache" ]; then
+    cache_time=$(stat -c %Y "$sink_cache" 2>/dev/null || echo 0)
+    current_time=$(date +%s 2>/dev/null || echo 0)
+    cache_age=$((current_time - cache_time))
+fi
+
+if [ ! -f "$sink_cache" ] || [ "$cache_age" -gt 30 ]; then
+    sink=$(wpctl status 2>/dev/null | awk '/Sinks:/,/Sources:/ {if (/\*/) {gsub(/^[│ ]*\*[ ]*[0-9]+\. /, ""); sub(/ \[vol:.*/, ""); gsub(/^[[:space:]]+/, ""); print; exit}}')
+    [ -z "$sink" ] && sink="Default"
+    echo "$sink" > "$sink_cache" 2>/dev/null
+else
+    sink=$(cat "$sink_cache" 2>/dev/null)
+    [ -z "$sink" ] && sink="Default"
+fi
 
 # Icon logic
 if [ "$is_muted" = true ]; then
   icon="󰖁"
-  vol_int=0
 elif [ "$vol_int" -eq 0 ]; then
   icon="󰕿"
 elif [ "$vol_int" -lt 50 ]; then
@@ -29,33 +73,17 @@ else
   icon="󰕾"
 fi
 
-# ASCII bar
+# Fast ASCII bar generation
 filled=$((vol_int / 10))
+[ "$filled" -gt 10 ] && filled=10
 empty=$((10 - filled))
-bar=$(printf '█%.0s' $(seq 1 $filled))
-pad=$(printf '░%.0s' $(seq 1 $empty))
+bar=""
+pad=""
+i=0
+while [ $i -lt $filled ]; do bar="${bar}█"; i=$((i+1)); done
+i=0
+while [ $i -lt $empty ]; do pad="${pad}░"; i=$((i+1)); done
 ascii_bar="[$bar$pad]"
-
-# Load wal/pywal colors from colors file
-if [ -f "$HOME/.cache/wal/colors" ]; then
-    # Read colors file (16 colors, indexed 0-15)
-    color_index=0
-    while IFS= read -r color || [ -n "$color" ]; do
-        color="${color#\#}"
-        color="#${color}"
-        eval "color${color_index}=${color}"
-        color_index=$((color_index + 1))
-        [ $color_index -ge 16 ] && break
-    done < "$HOME/.cache/wal/colors"
-    color_red="${color1:-#bf616a}"
-    color_orange="${color3:-#fab387}"
-    color_cyan="${color6:-#56b6c2}"
-else
-    # Fallback to dionysus colors
-    color_red="#bf616a"
-    color_orange="#fab387"
-    color_cyan="#56b6c2"
-fi
 
 # Color logic
 if [ "$is_muted" = true ] || [ "$vol_int" -lt 10 ]; then

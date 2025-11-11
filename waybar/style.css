@@ -15,19 +15,19 @@ waybar * {
 }
 
 #waybar {
-  background-color: rgba(0,0,0, 0.95);
+  background-color: rgba(11,13,12, 0.95);
   border-radius: 2px;
   opacity: 0.95;
 }
 
 window#waybar {
-  background: rgba(0,0,0, 0.95);
+  background: rgba(11,13,12, 0.95);
   transition-property: background-color;
   transition-duration: 0.5s;
-  color: #f1f1f1;
-  border: 3px solid #B0B0B0;
-  border-left: 3px solid #E8E8E8;
-  border-right: 3px solid #E8E8E8;
+  color: #e7e6e7;
+  border: 3px solid #BFC1C1;
+  border-left: 3px solid #CFCFD1;
+  border-right: 3px solid #CFCFD1;
 }
 
 /* === Workspaces ========================================================== */
@@ -44,18 +44,18 @@ window#waybar {
   padding: 6px 6px;
   margin: 6px 3px;
   border-radius: 4px;
-  background-color: rgba(0,0,0, 0.8);
-  color: #E8E8E8;
+  background-color: rgba(11,13,12, 0.8);
+  color: #CFCFD1;
 }
 
 #workspaces button.active {
-  color: #8E8E8E;
-  background-color: #E8E8E8;
+  color: #BEBEC1;
+  background-color: #CFCFD1;
 }
 
 #workspaces button:hover {
-  color: rgba(0,0,0, 1);
-  background-color: #E8E8E8;
+  color: rgba(11,13,12, 1);
+  background-color: #CFCFD1;
 }
 
 /* === Default Module Container Styling ==================================== */
@@ -78,34 +78,34 @@ window#waybar {
 #tray {
   padding: 6px 12px;
   margin: 6px 6px;
-  background-color: rgba(0,0,0, 0.85);
-  border: 2px solid #B0B0B0;
+  background-color: rgba(11,13,12, 0.85);
+  border: 2px solid #BFC1C1;
   border-radius: 2px;
 }
 
 /* === Audio ============================================================== */
 
 #pulseaudio.muted {
-  background-color: #CDCDCD;
-  color: rgba(0,0,0, 1);
+  background-color: #BFC0C0;
+  color: rgba(11,13,12, 1);
 }
 
 /* === Bluetooth =========================================================== */
 
 #bluetooth.disabled {
-  color: #8E8E8E;
+  color: #BEBEC1;
 }
 
 #custom-bluetooth {
-  color: #E8E8E8;
+  color: #CFCFD1;
   transition: color 0.2s ease-in-out;
 }
 
 /* === Network ============================================================= */
 
 #network.disconnected {
-  background-color: #575757;
-  color: rgba(0,0,0, 1);
+  background-color: #9E9FA1;
+  color: rgba(11,13,12, 1);
 }
 
 /* === Clock =============================================================== */
@@ -113,7 +113,7 @@ window#waybar {
 #clock {
   font-weight: bold;
   font-size: 18px;
-  color: #8E8E8E;
+  color: #BEBEC1;
 }
 
 /* === Asus Profile ======================================================== */
@@ -121,7 +121,7 @@ window#waybar {
 #custom-asus-profile {
   font-weight: bold;
   font-size: 18px;
-  color: #8E8E8E;
+  color: #BEBEC1;
 }
 
 /* === Screen Recording =================================================== */
@@ -135,15 +135,15 @@ window#waybar {
 }
 
 #custom-screenrecording-indicator.recording {
-  background-color: rgba(87,87,87, 0.3);
-  color: #575757;
-  border: 2px solid #575757;
+  background-color: rgba(158,159,161, 0.3);
+  color: #9E9FA1;
+  border: 2px solid #9E9FA1;
 }
 
 #custom-screenrecording-indicator.idle {
-  color: #f1f1f1;
-  background-color: rgba(0,0,0, 0.85);
-  border: 2px solid #B0B0B0;
+  color: #e7e6e7;
+  background-color: rgba(11,13,12, 0.85);
+  border: 2px solid #BFC1C1;
 }
 
 /* === Battery ============================================================= */
@@ -155,7 +155,7 @@ window#waybar {
 
 /* 🔴 Critical */
 #custom-battery .battery-critical {
-  background-color: #575757;
+  background-color: #9E9FA1;
   color: white;
   padding: 2px 6px;
   border-radius: 6px;
@@ -164,28 +164,28 @@ window#waybar {
 
 /* 🟠 Warning */
 #custom-battery .battery-warning {
-  background-color: #8E8E8E;
-  color: rgba(0,0,0, 1);
+  background-color: #BEBEC1;
+  color: rgba(11,13,12, 1);
   padding: 2px 6px;
   border-radius: 6px;
 }
 
 /* 🟢 Normal */
 #custom-battery .battery-normal {
-  color: #f1f1f1;
+  color: #e7e6e7;
 }
 
 /* === Brightness ========================================================== */
 
 #backlight {
-  background-color: rgba(0,0,0, 0.85);
+  background-color: rgba(11,13,12, 0.85);
 }
 
 /* === Tray ================================================================ */
 
 #tray {
   padding: 4px 8px;
-  background-color: rgba(0,0,0, 0.85);
+  background-color: rgba(11,13,12, 0.85);
 }
 
 /* === Custom Workspace Labels ============================================= */
@@ -208,7 +208,7 @@ window#waybar {
 #custom-workspace-2:hover,
 #custom-workspace-3:hover,
 #custom-workspace-4:hover {
-  color: #8E8E8E;
+  color: #BEBEC1;
   transition: all 0.2s ease-in-out;
 }
 
@@ -234,21 +234,21 @@ window#waybar {
 #custom-brightness:hover,
 #clock:hover,
 #tray:hover {
-  background-color: rgba(168,168,168, 0.8);
-  border: 2px solid #E8E8E8;
-  color: #E8E8E8;
+  background-color: rgba(161,161,161, 0.8);
+  border: 2px solid #CFCFD1;
+  color: #CFCFD1;
   transition: all 0.2s ease-in-out;
 }
 
 /* === Tooltips ============================================================ */
 
 tooltip {
-  color: #E8E8E8;
-  background-color: rgba(0,0,0, 0.95);
-  border: 1px solid #E8E8E8;
+  color: #CFCFD1;
+  background-color: rgba(11,13,12, 0.95);
+  border: 1px solid #CFCFD1;
   font-weight: bold;
 }
 
 tooltip label {
-  color: #f1f1f1;
+  color: #e7e6e7;
 }

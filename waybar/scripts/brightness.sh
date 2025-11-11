@@ -2,44 +2,52 @@
 # ── brightness.sh ─────────────────────────────────────────
 # Description: Shows current brightness with ASCII bar + tooltip
 # Usage: Waybar `custom/brightness` every 2s
-# Dependencies: brightnessctl, seq, printf, awk
+# Dependencies: brightnessctl, awk
 #  ─────────────────────────────────────────────────────────
 
 # Get brightness percentage
-brightness=$(brightnessctl get)
-max_brightness=$(brightnessctl max)
+brightness=$(brightnessctl get 2>/dev/null || echo 0)
+max_brightness=$(brightnessctl max 2>/dev/null || echo 1)
 percent=$((brightness * 100 / max_brightness))
 
-# Build ASCII bar
-filled=$((percent / 10))
-empty=$((10 - filled))
-bar=$(printf '█%.0s' $(seq 1 $filled))
-pad=$(printf '░%.0s' $(seq 1 $empty))
-ascii_bar="[$bar$pad]"
+# Fast color cache (updated only if colors file changed)
+CACHE_FILE="$HOME/.cache/wal/waybar_brightness_colors_cache"
+COLORS_FILE="$HOME/.cache/wal/colors"
 
-# Icon
-icon="󰛨"
-
-# Load wal/pywal colors from colors file
-if [ -f "$HOME/.cache/wal/colors" ]; then
-    # Read colors file (16 colors, indexed 0-15)
-    color_index=0
-    while IFS= read -r color || [ -n "$color" ]; do
-        color="${color#\#}"
-        color="#${color}"
-        eval "color${color_index}=${color}"
-        color_index=$((color_index + 1))
-        [ $color_index -ge 16 ] && break
-    done < "$HOME/.cache/wal/colors"
-    color_red="${color1:-#bf616a}"
-    color_orange="${color3:-#fab387}"
-    color_cyan="${color6:-#56b6c2}"
+if [ -f "$COLORS_FILE" ] && [ "$COLORS_FILE" -nt "$CACHE_FILE" ] 2>/dev/null; then
+    # Extract colors directly (lines 2, 4, 7 for color1, color3, color6)
+    color_red=$(sed -n '2p' "$COLORS_FILE" 2>/dev/null | sed 's/^#*#/#/')
+    color_orange=$(sed -n '4p' "$COLORS_FILE" 2>/dev/null | sed 's/^#*#/#/')
+    color_cyan=$(sed -n '7p' "$COLORS_FILE" 2>/dev/null | sed 's/^#*#/#/')
+    [ -z "$color_red" ] && color_red="#bf616a"
+    [ -z "$color_orange" ] && color_orange="#fab387"
+    [ -z "$color_cyan" ] && color_cyan="#56b6c2"
+    echo "$color_red|$color_orange|$color_cyan" > "$CACHE_FILE" 2>/dev/null
+elif [ -f "$CACHE_FILE" ]; then
+    IFS='|' read -r color_red color_orange color_cyan < "$CACHE_FILE" 2>/dev/null
+    [ -z "$color_red" ] && color_red="#bf616a"
+    [ -z "$color_orange" ] && color_orange="#fab387"
+    [ -z "$color_cyan" ] && color_cyan="#56b6c2"
 else
-    # Fallback to dionysus colors
     color_red="#bf616a"
     color_orange="#fab387"
     color_cyan="#56b6c2"
 fi
+
+# Fast ASCII bar generation
+filled=$((percent / 10))
+[ "$filled" -gt 10 ] && filled=10
+empty=$((10 - filled))
+bar=""
+pad=""
+i=0
+while [ $i -lt $filled ]; do bar="${bar}█"; i=$((i+1)); done
+i=0
+while [ $i -lt $empty ]; do pad="${pad}░"; i=$((i+1)); done
+ascii_bar="[$bar$pad]"
+
+# Icon
+icon="󰛨"
 
 # Color thresholds
 if [ "$percent" -lt 20 ]; then
@@ -50,8 +58,23 @@ else
     fg="$color_cyan"
 fi
 
-# Device name (first column from brightnessctl --machine-readable)
-device=$(brightnessctl --machine-readable | awk -F, 'NR==1 {print $1}')
+# Device name (cached, refresh every 60 seconds)
+device_cache="$HOME/.cache/wal/waybar_brightness_device_cache"
+cache_age=0
+if [ -f "$device_cache" ]; then
+    cache_time=$(stat -c %Y "$device_cache" 2>/dev/null || echo 0)
+    current_time=$(date +%s 2>/dev/null || echo 0)
+    cache_age=$((current_time - cache_time))
+fi
+
+if [ ! -f "$device_cache" ] || [ "$cache_age" -gt 60 ]; then
+    device=$(brightnessctl --machine-readable 2>/dev/null | awk -F, 'NR==1 {print $1}')
+    [ -z "$device" ] && device="Display"
+    echo "$device" > "$device_cache" 2>/dev/null
+else
+    device=$(cat "$device_cache" 2>/dev/null)
+    [ -z "$device" ] && device="Display"
+fi
 
 # Tooltip text
 tooltip="Brightness: $percent%\nDevice: $device"
