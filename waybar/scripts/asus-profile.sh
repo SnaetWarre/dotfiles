@@ -1,9 +1,9 @@
 #!/bin/bash
-# ── asus-profile.sh ───────────────────────────────────────  
+# ── asus-profile.sh ───────────────────────────────────────
 # Description: Display current ASUS power profile with color
 # Usage: Called by Waybar `custom/asus-profile`
 # Dependencies: asusctl, awk
-# ──────────────────────────────────────────────────────────  
+# ──────────────────────────────────────────────────────────
 
 # Load wal/pywal colors from colors file
 if [ -f "$HOME/.cache/wal/colors" ]; then
@@ -40,7 +40,7 @@ case "$profile" in
     fg="$color_orange"
     ;;
   Quiet|LowPower)
-    text="REACTOR SLEEP"
+    text="REACTOR OFF"
     fg="$color_cyan"
     ;;
   *)

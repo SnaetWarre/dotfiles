@@ -12,6 +12,7 @@
     "gpu",
     "memory",
     "disk",
+    "osage",
     "colors"  
   ]
 }

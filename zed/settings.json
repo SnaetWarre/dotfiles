@@ -24,7 +24,7 @@
     "thumb": "hover",
     "show": "auto"
   },
-  "relative_line_numbers": false,
+  "relative_line_numbers": "disabled",
   "cursor_shape": "block",
   "agent_buffer_font_size": 12.0,
   "auto_update_extensions": {
@@ -41,14 +41,15 @@
   },
   "vim_mode": true,
   "agent": {
-    "play_sound_when_agent_done": false,
-    "always_allow_tool_actions": true,
-    "default_profile": "write",
-    "model_parameters": [],
-    "default_model": {
-      "provider": "copilot_chat",
-      "model": "claude-sonnet-4.5"
-    }
+    "profiles": {
+      "planner": {
+        "name": "Planner",
+        "tools": {},
+        "enable_all_context_servers": false,
+        "context_servers": {}
+      }
+    },
+    "model_parameters": []
   },
   "features": {
     "edit_prediction_provider": "copilot"

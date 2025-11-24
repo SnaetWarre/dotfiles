@@ -1,8 +1,8 @@
 #!/bin/bash
 # ── brightness.sh ─────────────────────────────────────────
-# Description: Shows current brightness with ASCII bar + tooltip
+# Description: Shows current brightness percentage (minimal)
 # Usage: Waybar `custom/brightness` every 2s
-# Dependencies: brightnessctl, awk
+# Dependencies: brightnessctl
 #  ─────────────────────────────────────────────────────────
 
 # Get brightness percentage
@@ -33,18 +33,6 @@ else
     color_orange="#fab387"
     color_cyan="#56b6c2"
 fi
-
-# Fast ASCII bar generation
-filled=$((percent / 10))
-[ "$filled" -gt 10 ] && filled=10
-empty=$((10 - filled))
-bar=""
-pad=""
-i=0
-while [ $i -lt $filled ]; do bar="${bar}█"; i=$((i+1)); done
-i=0
-while [ $i -lt $empty ]; do pad="${pad}░"; i=$((i+1)); done
-ascii_bar="[$bar$pad]"
 
 # Icon
 icon="󰛨"
@@ -80,4 +68,4 @@ fi
 tooltip="Brightness: $percent%\nDevice: $device"
 
 # JSON output
-echo "{\"text\":\"<span foreground='$fg'>$icon $ascii_bar $percent%</span>\",\"tooltip\":\"$tooltip\"}"
+echo "{\"text\":\"<span foreground='$fg'>$icon $percent%</span>\",\"tooltip\":\"$tooltip\"}"

@@ -1,6 +1,6 @@
 #!/bin/bash
 # ── volume.sh ─────────────────────────────────────────────
-# Description: Shows current audio volume with ASCII bar + tooltip
+# Description: Shows current audio volume percentage (minimal)
 # Usage: Waybar `custom/volume` every 1s
 # Dependencies: wpctl, awk
 # ───────────────────────────────────────────────────────────
@@ -73,18 +73,6 @@ else
   icon="󰕾"
 fi
 
-# Fast ASCII bar generation
-filled=$((vol_int / 10))
-[ "$filled" -gt 10 ] && filled=10
-empty=$((10 - filled))
-bar=""
-pad=""
-i=0
-while [ $i -lt $filled ]; do bar="${bar}█"; i=$((i+1)); done
-i=0
-while [ $i -lt $empty ]; do pad="${pad}░"; i=$((i+1)); done
-ascii_bar="[$bar$pad]"
-
 # Color logic
 if [ "$is_muted" = true ] || [ "$vol_int" -lt 10 ]; then
   fg="$color_red"
@@ -102,4 +90,4 @@ else
 fi
 
 # Final JSON output
-echo "{\"text\":\"<span foreground='$fg'>$icon $ascii_bar $vol_int%</span>\",\"tooltip\":\"$tooltip\"}"
+echo "{\"text\":\"<span foreground='$fg'>$icon $vol_int%</span>\",\"tooltip\":\"$tooltip\"}"

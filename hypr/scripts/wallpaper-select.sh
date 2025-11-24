@@ -4,7 +4,7 @@
 WALLPAPER_DIR="$HOME/Pictures/wallpapers"
 
 # Get list of wallpapers and create preview entries
-WALLPAPERS=$(find "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" \))
+WALLPAPERS=$(find "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" -o -name "*.gif" \))
 
 # Create a temporary file for the preview menu
 TEMP_FILE=$(mktemp)

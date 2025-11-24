@@ -1,48 +1,62 @@
 // ──────────────────────────────────────────────────────────────────────────
 //  °˖* ૮(  • ᴗ ｡)っ🍸  pewdiepie/archdaemon/dionysh shhheersh
-//  Waybar config
-//  vers. 1.0.0
+//  Waybar config - Minimal Edition
+//  vers. 2.0.0
 // ──────────────────────────────────────────────────────────────────────────
 
 {
   "layer": "top",
   "position": "top",
-  "height": 38,
+  "height": 35,
+  "margin-top": 4,
+  "margin-bottom": 4,
+  "margin-left": 2,
+  "margin-right": 2,
 
   // ── Modules Layout ───────────────────────────────────────────────
   "modules-left": [
     "clock",
+    "custom/separator",
     "custom/power",
+    "custom/separator",
     "network",
-    "custom/system-stats",
+    "custom/separator",
+    "custom/system-stats"
   ],
 
   "modules-center": [
-    "custom/workspace-1",
-    "custom/workspace-2",
-    "custom/asus-profile",
-    "custom/workspace-3",
-    "custom/workspace-4"
+    "hyprland/workspaces"
   ],
 
   "modules-right": [
     "custom/screenrecording-indicator",
+    "custom/separator",
     "custom/battery",
+    "custom/separator",
     "custom/volume",
-    "custom/brightness"
+    "custom/separator",
+    "custom/brightness",
+    "custom/separator",
+    "custom/asus-profile"
   ],
+
+  // ── Separator ────────────────────────────────────────────────────
+  "custom/separator": {
+    "format": "|",
+    "tooltip": false
+  },
 
   // ── Clock ────────────────────────────────────────────────────────
   "clock": {
     "tooltip-format": "{calendar}",
-    "format-alt": "  {:%a, %d %b %Y}",
-    "format": "[   {:%I:%M %p} ]"
+    "format-alt": "{:%a, %d %b %Y}",
+    "format": "{:%I:%M %p}"
   },
 
   // ── Network ──────────────────────────────────────────────────────
   "network": {
     "format-wifi": "{icon}",
-    "format-icons": ["[ 󰤯 ]", "[ 󰤟 ]", "[ 󰤢 ]", "[ 󰤥 ]", "[ 󰤨 ]"],
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
     "format-ethernet": "󰀂",
     "format-alt": "󱛇",
     "format-disconnected": "󰖪",
@@ -54,26 +68,6 @@
     "nospacing": 1
   },
 
-  // ── Keyboard ─────────────────────────────────────────────────────
-  "keyboard-state": {
-    "numlock": true,
-    "capslock": true,
-    "format": " {layout}"
-  },
-
-  // ── Bluetooth ────────────────────────────────────────────────────
-  "bluetooth": {
-    "format": "{icon}",
-    "format-icons": {
-      "enabled": "[  ]",
-      "disabled": "[ 󰂲 ]"
-    },
-    "on-click": "~/.config/waybar/scripts/bluetooth-toggle.sh",
-    "tooltip-format": "Bluetooth is {status}",
-    "interval": 5
-  },
-
-
   // ── Asus Profile ─────────────────────────────────────────────────
   "custom/asus-profile": {
     "exec": "~/.config/waybar/scripts/asus-profile.sh",
@@ -84,7 +78,6 @@
     "on-click": "~/.config/waybar/scripts/cycle-asus-profile.sh"
   },
 
-
   // ── Screen Recording ───────────────────────────────────────────────
   "custom/screenrecording-indicator": {
     "on-click": "~/.config/waybar/modules/toggle-screenrecord.sh",
@@ -93,41 +86,12 @@
     "return-type": "json"
   },
 
-  // ── Battery (scripted + built-in) ────────────────────────────────
+  // ── Battery (scripted) ────────────────────────────────────────────
   "custom/battery": {
     "exec": "~/.config/waybar/scripts/battery.sh",
     "return-type": "json",
     "interval": 10,
     "on-click": "xfce4-power-manager-settings"
-  },
-
-
-  "battery": {
-    "format": "{icon}  {capacity}%",
-    "format-icons": {
-      "charging": [
-        "󰢜","󰂆","󰂇","󰂈","󰢝","󰂉","󰢞","󰂊","󰂋","󰂅"
-      ],
-      "default": [
-        "󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"
-      ]
-    },
-    "format-full": "Charged ",
-    "interval": 5,
-    "states": {
-      "warning": 20,
-      "critical": 10
-    },
-    "tooltip": true
-  },
-
-  // ── Microphone ───────────────────────────────────────────────────
-  "custom/microphone": {
-    "exec": "~/.config/waybar/scripts/mic.sh",
-    "interval": 1,
-    "tooltip": true,
-    "tooltip-format": "Mic Toggle",
-    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
   },
 
   // ── Brightness ───────────────────────────────────────────────────
@@ -140,37 +104,14 @@
     "on-scroll-down": "brightnessctl set 5%-"
   },
 
-  "backlight": {
-    "format": "󰛨  {percent}%",
-    "format-icons": ["󰃞","󰃟","󰃠","󰃝","󰃜","󰃛"],
-    "class": "flicker-bar",
-    "on-click": "~/.config/waybar/scripts/brightness-toggle.sh"
-  },
-
-  // ── Workspaces (custom scripts) ──────────────────────────────────
-  "custom/workspace-1": {
-    "exec": "~/.config/waybar/scripts/workspaces/workspace-1.sh",
-    "interval": 1,
-    "on-click": "hyprctl dispatch workspace 1",
-    "tooltip": "Switch to workspace 1"
-  },
-  "custom/workspace-2": {
-    "exec": "~/.config/waybar/scripts/workspaces/workspace-2.sh",
-    "interval": 1,
-    "on-click": "hyprctl dispatch workspace 2",
-    "tooltip": "Switch to workspace 2"
-  },
-  "custom/workspace-3": {
-    "exec": "~/.config/waybar/scripts/workspaces/workspace-3.sh",
-    "interval": 1,
-    "on-click": "hyprctl dispatch workspace 3",
-    "tooltip": "Switch to workspace 3"
-  },
-  "custom/workspace-4": {
-    "exec": "~/.config/waybar/scripts/workspaces/workspace-4.sh",
-    "interval": 1,
-    "on-click": "hyprctl dispatch workspace 4",
-    "tooltip": "Switch to workspace 4"
+  // ── Workspaces (native hyprland module) ──────────────────────────
+  "hyprland/workspaces": {
+    "format": "{id}",
+    "on-click": "activate",
+    "sort-by-number": true,
+    "persistent-workspaces": {
+      "*": 5
+    }
   },
 
   // ── Volume ───────────────────────────────────────────────────────
@@ -184,7 +125,6 @@
     "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
   },
 
-
   // ── System Stats (CPU/RAM/VRAM) ───────────────────────────────────
   "custom/system-stats": {
     "exec": "~/.config/waybar/scripts/system-stats.sh",
@@ -192,19 +132,11 @@
     "interval": 2
   },
 
-
   // ── Power ────────────────────────────────────────────────────────
   "custom/power": {
-    "format": "[ 󰤆 ]",
+    "format": "󰤆",
     "tooltip": true,
     "tooltip-format": "Power Menu",
     "on-click": "wlogout"
-  },
-
-  // ── Spacer ───────────────────────────────────────────────────────
-  "custom/squares": {
-    "format": " ",
-    "tooltip": false
   }
 }
-

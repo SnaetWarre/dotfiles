@@ -1,33 +1,30 @@
 #!/bin/bash
 # ── system-stats.sh ─────────────────────────────────────────
-# Description: CPU, RAM, VRAM usage in vertical layout (pywal colors only)
+# Description: CPU, RAM, VRAM usage with percentages (minimal)
 # Usage: Waybar `custom/system-stats` every 2s
-# Dependencies: awk, seq, printf, (optional) nvidia-smi
+# Dependencies: awk, (optional) nvidia-smi
 #  ─────────────────────────────────────────────────────────
 
 set -eo pipefail
 
-# Load wal/pywal colors from colors file (NO hardcoded fallbacks)
+# Load wal/pywal colors from colors file
 HAVE_PYWAL=false
 if [ -f "$HOME/.cache/wal/colors" ]; then
-  # Read colors file (16 colors, indexed 0-15)
-  # Format: one hex color per line (e.g., #181414)
   color_index=0
   while IFS= read -r color || [ -n "$color" ]; do
-    # Remove # prefix if present, then add it back for consistency
     color="${color#\#}"
     color="#${color}"
     eval "color${color_index}=${color}"
     color_index=$((color_index + 1))
     [ $color_index -ge 16 ] && break
   done < "$HOME/.cache/wal/colors"
-  
-  # Verify we have the colors we need (color1, color4, color6, color7)
+
   if [ -n "${color1:-}" ] && [ -n "${color4:-}" ] && [ -n "${color6:-}" ] && [ -n "${color7:-}" ]; then
     HAVE_PYWAL=true
   fi
 fi
 
+# CPU calculation
 read_cpu() {
   awk '/^cpu\s/ {print $2+$3+$4+$5+$6+$7+$8, $5+$6}' /proc/stat
 }
@@ -79,23 +76,6 @@ if command -v nvidia-smi >/dev/null 2>&1; then
   fi
 fi
 
-# Build ASCII bars
-mk_bar() {
-  local pct=$1
-  if [ "$pct" = "N/A" ]; then
-    printf "[ N/A ]"
-    return
-  fi
-  local filled=$((pct / 10))
-  [ "$filled" -gt 10 ] && filled=10
-  local empty=$((10 - filled))
-  local bar=""
-  local pad=""
-  bar=$(printf '█%.0s' $(seq 1 "$filled"))
-  pad=$(printf '░%.0s' $(seq 1 "$empty"))
-  printf "[%s%s]" "$bar" "$pad"
-}
-
 # Choose color based on thresholds from pywal
 pick_color() {
   local pct=$1
@@ -104,39 +84,38 @@ pick_color() {
     return
   fi
   if [ "$pct" = "N/A" ]; then
-    echo "$color7" # neutral fg
-  elif [ "$pct" -lt 20 ]; then
-    echo "$color1"
-  elif [ "$pct" -lt 55 ]; then
+    echo "$color7"
+  elif [ "$pct" -lt 50 ]; then
     echo "$color4"
+  elif [ "$pct" -lt 75 ]; then
+    echo "$color3"
   else
-    echo "$color6"
+    echo "$color1"
   fi
 }
 
-format_line() {
+format_stat() {
   local label=$1
   local pct=$2
-  local bar
-  bar=$(mk_bar "$pct")
-  local line
+  local text
   if [ "$pct" = "N/A" ]; then
-    line="$label $bar"
+    text="$label N/A"
   else
-    line="$label $bar ${pct}%"
+    text="$label ${pct}%"
   fi
+
   if $HAVE_PYWAL; then
     local col
     col=$(pick_color "$pct")
-    printf "<span foreground='%s'>%s</span>" "$col" "$line"
+    printf "<span foreground='%s'>%s</span>" "$col" "$text"
   else
-    printf "%s" "$line"
+    printf "%s" "$text"
   fi
 }
 
-cpu_line=$(format_line "CPU" "$cpu_used_pct")
-ram_line=$(format_line "RAM" "$ram_pct")
-vram_line=$(format_line "VRAM" "$vram_pct")
+cpu_text=$(format_stat "CPU" "$cpu_used_pct")
+ram_text=$(format_stat "RAM" "$ram_pct")
+vram_text=$(format_stat "VRAM" "$vram_pct")
 
 # Tooltip
 tooltip_cpu="CPU: ${cpu_used_pct}%"
@@ -147,11 +126,11 @@ else
   tooltip_vram="VRAM: ${vram_used_gib}/${vram_total_gib} GiB (${vram_pct}%)"
 fi
 
-# Horizontal layout: all stats on one line with spacing
-text="${cpu_line}  ${ram_line}  ${vram_line}"
+# Horizontal layout with pipe separators
+text="${cpu_text} | ${ram_text} | ${vram_text}"
 tooltip="${tooltip_cpu}\n${tooltip_ram}\n${tooltip_vram}"
 
-# Escape for JSON (replace newlines with \n, quotes with \", backslashes with \\)
+# Escape for JSON
 json_escape() {
   printf '%s' "$1" | sed 's/\\/\\\\/g; s/"/\\"/g; s/$/\\n/' | tr -d '\n' | sed 's/\\n$//'
 }
@@ -161,5 +140,3 @@ tooltip_escaped=$(json_escape "$tooltip")
 
 # Final JSON output
 printf '{"text":"%s","tooltip":"%s"}\n' "$text_escaped" "$tooltip_escaped"
-
-

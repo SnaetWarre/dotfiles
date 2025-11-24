@@ -1,6 +1,6 @@
 #!/bin/bash
 # ── battery.sh ─────────────────────────────────────────────
-# Description: Shows battery % with ASCII bar + dynamic tooltip
+# Description: Shows battery % with icon (minimal)
 # Usage: Waybar `custom/battery` every 10s
 # Dependencies: upower, awk
 #  ──────────────────────────────────────────────────────────
@@ -39,18 +39,6 @@ elif [[ "$status" == "Full" ]]; then
 else
     icon=${default_icons[$index]}
 fi
-
-# Fast ASCII bar generation
-filled=$((capacity / 10))
-[ "$filled" -gt 10 ] && filled=10
-empty=$((10 - filled))
-bar=""
-pad=""
-i=0
-while [ $i -lt $filled ]; do bar="${bar}█"; i=$((i+1)); done
-i=0
-while [ $i -lt $empty ]; do pad="${pad}░"; i=$((i+1)); done
-ascii_bar="[$bar$pad]"
 
 # Fast color cache (updated only if colors file changed)
 CACHE_FILE="$HOME/.cache/wal/waybar_battery_colors_cache"
@@ -95,4 +83,4 @@ else
 fi
 
 # JSON output
-echo "{\"text\":\"<span foreground='$fg'>$icon $ascii_bar $capacity%</span>\",\"tooltip\":\"$tooltip\"}"
+echo "{\"text\":\"<span foreground='$fg'>$icon $capacity%</span>\",\"tooltip\":\"$tooltip\"}"

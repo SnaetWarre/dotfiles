@@ -1,5 +1,5 @@
 #!/bin/bash
-# workspace-4.sh — Show workspace 4 number, highlighted if active
+# workspace-5.sh — Show workspace 5 number, highlighted if active
 
 # Fast color cache (updated only if colors file changed)
 CACHE_FILE="$HOME/.cache/wal/waybar_colors_cache"
@@ -21,8 +21,8 @@ fi
 active=$(hyprctl activeworkspace -j 2>/dev/null | sed -n 's/.*"id":\s*\([0-9]*\).*/\1/p' | head -n1)
 active=${active:-0}
 
-if [ "$active" -eq 4 ]; then
-  echo "<span foreground='$color_highlight' weight='bold'>4</span>"
+if [ "$active" -eq 5 ]; then
+  echo "<span foreground='$color_highlight' weight='bold'>5</span>"
 else
-  echo "4"
+  echo "5"
 fi
