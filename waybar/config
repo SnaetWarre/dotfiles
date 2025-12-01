@@ -31,6 +31,8 @@
   "modules-right": [
     "custom/screenrecording-indicator",
     "custom/separator",
+    "custom/display-mode",
+    "custom/separator",
     "custom/kbd-brightness",
     "custom/separator",
     "custom/battery",
@@ -86,6 +88,15 @@
     "exec": "~/.config/waybar/modules/screen-recording.sh",
     "signal": 8,
     "return-type": "json"
+  },
+
+  // ── Display Mode (Mirror/Extend) ───────────────────────────────────
+  "custom/display-mode": {
+    "exec": "~/.config/waybar/scripts/display-mode.sh",
+    "return-type": "json",
+    "interval": 2,
+    "on-click": "~/.config/waybar/scripts/display-toggle.sh",
+    "signal": 11
   },
 
   // ── Keyboard Brightness ────────────────────────────────────────────
