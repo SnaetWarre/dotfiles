@@ -61,7 +61,6 @@
   },
   "context_servers": {
     "mcp-server-context7": {
-      "source": "extension",
       "enabled": true,
       "settings": {
         "default_minimum_tokens": "10000"
@@ -99,10 +98,6 @@
   },
   "notification_panel": {
     "button": false
-  },
-  "chat_panel": {
-    "button": "never",
-    "dock": "right"
   },
   "terminal": {
     "max_scroll_history_lines": 10032,

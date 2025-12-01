@@ -16,9 +16,9 @@
 }
 
 window#waybar {
-  background: rgba(15,25,28, 0.85);
+  background: rgba(11,10,10, 0.85);
   border-radius: 8px;
-  color: #ccc8c7;
+  color: #cbbdbc;
   border: none;
   margin-top: 4px;
   margin-bottom: 4px;
@@ -27,7 +27,7 @@ window#waybar {
 /* === Separator =========================================================== */
 
 #custom-separator {
-  color: #8e8c8b;
+  color: #8e8483;
   background: transparent;
   padding: 0 4px;
   margin: 0;
@@ -44,7 +44,7 @@ window#waybar {
 
 #workspaces button {
   background: transparent;
-  color: #8e8c8b;
+  color: #8e8483;
   padding: 0 8px;
   margin: 0;
   border: none;
@@ -57,14 +57,14 @@ window#waybar {
 
 #workspaces button.active {
   background: transparent;
-  color: #ccc8c7;
-  border-bottom: 2px solid #ccc8c7;
+  color: #cbbdbc;
+  border-bottom: 2px solid #cbbdbc;
   font-weight: bold;
 }
 
 #workspaces button:hover {
   background: transparent;
-  color: #ccc8c7;
+  color: #cbbdbc;
 }
 
 /* === All Modules - Clean Minimal Styling ================================= */
@@ -79,7 +79,7 @@ window#waybar {
 #custom-asus-profile,
 #custom-screenrecording-indicator {
   background: transparent;
-  color: #ccc8c7;
+  color: #cbbdbc;
   padding: 0 8px;
   margin: 0;
   border: none;
@@ -89,61 +89,61 @@ window#waybar {
 /* === Clock =============================================================== */
 
 #clock {
-  color: #7B7E83;
+  color: #C38A7D;
   font-weight: 500;
 }
 
 /* === Power =============================================================== */
 
 #custom-power {
-  color: #515758;
+  color: #9A5353;
   font-size: 16px;
 }
 
 #custom-power:hover {
-  color: #515758;
+  color: #9A5353;
   transition: color 0.2s ease-in-out;
 }
 
 /* === Network ============================================================= */
 
 #network {
-  color: #89827D;
+  color: #A78379;
 }
 
 #network.disconnected {
-  color: #515758;
+  color: #9A5353;
 }
 
 /* === System Stats ======================================================== */
 
 #custom-system-stats {
-  color: #938D8B;
+  color: #877D82;
   font-size: 14px;
 }
 
 /* === Battery ============================================================= */
 
 #custom-battery {
-  color: #847C76;
+  color: #8E736D;
 }
 
 /* === Volume ============================================================== */
 
 #custom-volume {
-  color: #7B7E83;
+  color: #C38A7D;
 }
 
 /* === Brightness ========================================================== */
 
 #custom-brightness {
-  color: #938D8B;
+  color: #877D82;
 }
 
 /* === Asus Profile ======================================================== */
 
 #custom-asus-profile {
-  color: #717170;
+  color: #9F6F68;
   font-weight: 500;
   padding: 0 12px;
 }
@@ -151,12 +151,12 @@ window#waybar {
 /* === Screen Recording ==================================================== */
 
 #custom-screenrecording-indicator {
-  color: #89827D;
+  color: #A78379;
   padding: 0 8px;
 }
 
 #custom-screenrecording-indicator.recording {
-  color: #515758;
+  color: #9A5353;
   font-weight: bold;
 }
 
@@ -168,20 +168,20 @@ window#waybar {
 #custom-volume:hover,
 #custom-brightness:hover,
 #custom-asus-profile:hover {
-  color: #ccc8c7;
+  color: #cbbdbc;
   transition: color 0.2s ease-in-out;
 }
 
 /* === Tooltips ============================================================ */
 
 tooltip {
-  background: rgba(15,25,28, 0.95);
-  border: 1px solid #8e8c8b;
+  background: rgba(11,10,10, 0.95);
+  border: 1px solid #8e8483;
   border-radius: 4px;
-  color: #ccc8c7;
+  color: #cbbdbc;
   padding: 8px;
 }
 
 tooltip label {
-  color: #ccc8c7;
+  color: #cbbdbc;
 }
