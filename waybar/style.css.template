@@ -77,7 +77,9 @@ window#waybar {
 #custom-volume,
 #custom-brightness,
 #custom-asus-profile,
-#custom-screenrecording-indicator {
+#custom-screenrecording-indicator,
+#custom-display-mode,
+#custom-kbd-brightness {
   background: transparent;
   color: $color7;
   padding: 0 8px;
@@ -160,6 +162,19 @@ window#waybar {
   font-weight: bold;
 }
 
+/* === Display Mode ======================================================== */
+
+#custom-display-mode {
+  color: $color4;
+  padding: 0 8px;
+}
+
+/* === Keyboard Brightness ================================================= */
+
+#custom-kbd-brightness {
+  color: $color4;
+}
+
 /* === Hover Effects ======================================================= */
 
 #clock:hover,
@@ -167,7 +182,9 @@ window#waybar {
 #custom-battery:hover,
 #custom-volume:hover,
 #custom-brightness:hover,
-#custom-asus-profile:hover {
+#custom-asus-profile:hover,
+#custom-display-mode:hover,
+#custom-kbd-brightness:hover {
   color: $color7;
   transition: color 0.2s ease-in-out;
 }

@@ -42,11 +42,11 @@ monitor2_y=$(echo "$monitors" | jq -r '.[1].y // 0')
 
 if [ "$monitor1_x" = "$monitor2_x" ] && [ "$monitor1_y" = "$monitor2_y" ]; then
     mode="mirror"
-    icon="󰍹"
+    icon="󰍹  "
     tooltip="Display Mode: Mirroring\nClick to switch to Extended"
 else
     mode="extend"
-    icon="󰍺"
+    icon="󰍺  "
     tooltip="Display Mode: Extended\nClick to switch to Mirroring"
 fi
 
