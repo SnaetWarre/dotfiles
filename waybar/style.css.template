@@ -19,7 +19,8 @@ window#waybar {
   background: rgba($color0_rgb, 0.85);
   border-radius: 8px;
   color: $color7;
-  border: none;
+  border: 1px solid $color4;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   margin-top: 4px;
   margin-bottom: 4px;
 }

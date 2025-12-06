@@ -4,10 +4,10 @@ configuration {
 }
 
 * {
-    background: rgba(20,21,30, 0.90);       /* Was COLOR_BG */
-    foreground: #adbecf;       /* Was COLOR_FG */
-    selected: #C4A36F;         /* Was COLOR_SELECTED */
-    background-alt: rgba(50,71,114, 0.90);   /* Was COLOR_BG_ALT */
+    background: rgba(14,15,16, 0.90);       /* Was COLOR_BG */
+    foreground: #cccccd;       /* Was COLOR_FG */
+    selected: #7F8082;         /* Was COLOR_SELECTED */
+    background-alt: rgba(95,96,98, 0.90);   /* Was COLOR_BG_ALT */
 
     border: 0;
     margin: 0;
