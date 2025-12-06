@@ -1,12 +1,12 @@
-@define-color background      rgba(14,15,16, 0.95);
-@define-color text            rgb(204,204,205);
-@define-color text-alt        rgb(142,142,143);
-@define-color background-alt  rgba(14,15,16, 0.85);
+@define-color background      rgba(2,24,38, 0.95);
+@define-color text            rgb(129,201,218);
+@define-color text-alt        rgb(90,140,152);
+@define-color background-alt  rgba(2,24,38, 0.85);
 @define-color selected        alpha(@text-alt, .4);
 @define-color hover           alpha(@selected, .4);
 @define-color urgent          rgb(${color1_rgb});
 @define-color warning         rgb(${color3_rgb});
-@define-color normal-border   rgb(142,142,143);
+@define-color normal-border   rgb(90,140,152);
 @define-color accent          rgb(${color4_rgb});
 
 * {
@@ -21,17 +21,17 @@
 .notification-background {
   background: @background;
   box-shadow: 0 4px 12px alpha(@accent, 0.15),
-              0 2px 4px rgba(14,15,16, 0.5),
+              0 2px 4px rgba(2,24,38, 0.5),
               inset 0 1px 0 alpha(@text-alt, 0.1);
-  border-radius: 15px;
+  border-radius: 7px;
   margin: 14px;
   border: 1px solid alpha(@accent, 0.6);
 }
 
 .notification {
   padding: 0 5px;
-  border-radius: 15px;
-  border: 2px solid alpha(@accent, 0.5);
+  border-radius: 7px;
+  border: 1px solid alpha(@accent, 0.5);
 }
 
 .notification.low {
@@ -57,7 +57,7 @@
 }
 
 .notification.critical {
-  border: 3px solid @urgent;
+  border: 1px solid @urgent;
   background: alpha(@urgent, 0.15);
   box-shadow: 0 0 15px alpha(@urgent, 0.4),
               0 4px 12px alpha(@urgent, 0.3);
@@ -84,7 +84,7 @@
 .notification-background .close-button {
   margin: 6px;
   padding: 2px;
-  border-radius: 6px;
+  border-radius: 7px;
   background-color: transparent;
 }
 
@@ -99,8 +99,8 @@
 .notification > *:last-child > * .notification-action {
   background-color: @background-alt ;
   margin: 0 6px 9px 6px;
-  border: 2px solid @text-alt;
-  border-radius: 8px;
+  border: 1px solid @text-alt;
+  border-radius: 7px;
   font-size: 1rem;
 }
 
@@ -121,12 +121,12 @@
 
 .control-center {
   background: @background;
-  border-radius: 18px;
+  border-radius: 7px;
   margin: 8px;
   padding: 16px;
-  border: 2px solid alpha(@accent, 0.7);
+  border: 1px solid alpha(@accent, 0.7);
   box-shadow: 0 8px 32px alpha(@accent, 0.2),
-              0 4px 16px rgba(14,15,16, 0.6),
+              0 4px 16px rgba(2,24,38, 0.6),
               inset 0 1px 0 alpha(@accent, 0.15);
 }
 
@@ -143,7 +143,7 @@
 }
 
 progressbar, progress, trough {
-  border-radius: 12px;
+  border-radius: 7px;
 }
 
 progressbar {
@@ -172,7 +172,7 @@ progressbar {
   background: transparent;
   color: @text;
   margin: 4px;
-  border-radius: 6px;
+  border-radius: 7px;
   padding: 4px;
   font-size: 1.3rem;
 }
@@ -190,15 +190,15 @@ progressbar {
 .widget-dnd switch {
   background: @background-alt;
   font-size: 1.2rem;
-  border-radius: 8px;
-  box-shadow: inset 0 2px 4px rgba(14,15,16, 0.5);
+  border-radius: 7px;
+  box-shadow: inset 0 2px 4px rgba(2,24,38, 0.5);
   padding: 2px;
   border: 1px solid alpha(@accent, 0.6);
 }
 
 .widget-dnd switch slider {
   background: @accent;
-  border-radius: 8px;
+  border-radius: 7px;
   box-shadow: 0 0 8px alpha(@accent, 0.3);
 }
 
@@ -212,7 +212,7 @@ progressbar {
 
 .widget-mpris {
   background-color: @background-alt;
-  border-radius: 15px;
+  border-radius: 7px;
   padding: 0 10px;
   margin: 5px 0 0 0;
   border: 1px solid alpha(@accent, 0.5);
@@ -228,7 +228,7 @@ progressbar {
 }
 
 .widget-mpris-player .image-button:hover {
-  border-radius: 6px;
+  border-radius: 7px;
   background: @hover;
 }
 
@@ -242,7 +242,7 @@ carouselindicatordots {
 }
 
 .widget-mpris-album-art {
-  border-radius: 16px;
+  border-radius: 7px;
   margin: 10px;
 }
 
