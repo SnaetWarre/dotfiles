@@ -151,6 +151,37 @@ hex_to_rgb() {
     echo "$r,$g,$b"
 }
 
+# --- Keyboard brightness helpers ---
+KBD_BRIGHTNESS_PATH="/sys/class/leds/asus::kbd_backlight/brightness"
+
+get_kbd_brightness() {
+    if [ -r "$KBD_BRIGHTNESS_PATH" ]; then
+        cat "$KBD_BRIGHTNESS_PATH" 2>/dev/null || true
+    fi
+}
+
+set_kbd_brightness() {
+    local level="$1"
+    # Map numeric to asusctl modes; fallback to writing sysfs directly
+    local mode=""
+    case "$level" in
+        0) mode="off" ;;
+        1) mode="low" ;;
+        2) mode="med" ;;
+        3) mode="high" ;;
+    esac
+
+    if [ -n "$mode" ] && command -v asusctl >/dev/null 2>&1; then
+        asusctl --kbd-bright "$mode" >/dev/null 2>&1 && return 0
+    fi
+
+    if [ -n "$level" ] && [ -w "$KBD_BRIGHTNESS_PATH" ]; then
+        echo "$level" > "$KBD_BRIGHTNESS_PATH" 2>/dev/null && return 0
+    fi
+
+    return 1
+}
+
 # --- Calculate RGB Colors ---
 # These are needed for rgba() colors in the Waybar template
 echo "Calculating RGB colors..."
@@ -421,14 +452,31 @@ log_step "service-restarts" "$__t_restart"
 
 # Removed pywalfox update step
 
-# Set keyboard color using rogauracore
-if command -v rogauracore &> /dev/null; then
+# Set keyboard color (prefer asusctl, fallback to rogauracore)
+KB_COLOR="${color4#\#}"
+ORIG_KBD_BRIGHT=$(get_kbd_brightness)
+if command -v asusctl &> /dev/null; then
+    __t_asusctl=$(now_ms)
+    echo "Setting keyboard color using asusctl (async)..."
+    (
+        asusctl aura static -c "$KB_COLOR" >/dev/null 2>&1 && echo "Successfully set keyboard color to ${color4} via asusctl" || echo "Warning: Failed to set keyboard color via asusctl."
+        if [ -n "$ORIG_KBD_BRIGHT" ]; then
+            set_kbd_brightness "$ORIG_KBD_BRIGHT" || true
+        fi
+    ) &
+    log_step "asusctl" "$__t_asusctl"
+elif command -v rogauracore &> /dev/null; then
     __t_roga=$(now_ms)
     echo "Setting keyboard color using rogauracore (async)..."
-    ( rogauracore single_static "${color4#\#}" >/dev/null 2>&1 && echo "Successfully set keyboard color to ${color4}" || echo "Warning: Failed to set keyboard color." ) &
+    (
+        rogauracore single_static "$KB_COLOR" >/dev/null 2>&1 && echo "Successfully set keyboard color to ${color4}" || echo "Warning: Failed to set keyboard color."
+        if [ -n "$ORIG_KBD_BRIGHT" ]; then
+            set_kbd_brightness "$ORIG_KBD_BRIGHT" || true
+        fi
+    ) &
     log_step "rogauracore" "$__t_roga"
 else
-    echo "Warning: rogauracore not found, skipping keyboard color update"
+    echo "Warning: asusctl or rogauracore not found, skipping keyboard color update"
 fi
 
 echo "apply_wal_outputs.sh finished successfully."
