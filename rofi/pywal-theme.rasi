@@ -9,7 +9,7 @@ window {
     text-color:                    @foreground;
     border:                        2px;
     border-color:                  @selected;
-    border-radius:                 0px;
+    border-radius:                 5px;
     width:                         28%;
     location:                      center;
     anchor:                        center;
