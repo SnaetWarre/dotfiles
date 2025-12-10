@@ -41,6 +41,7 @@
   },
   "vim_mode": false,
   "agent": {
+    "default_profile": "write",
     "always_allow_tool_actions": true,
     "default_model": {
       "provider": "copilot_chat",

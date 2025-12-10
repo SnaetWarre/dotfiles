@@ -47,11 +47,11 @@ fi
 # Start wallpaper transition immediately in parallel (doesn't depend on pywal)
 __t3=$(now_ms)
 swww img "$WALLPAPER" \
-  --transition-type grow \
-  --transition-angle 30 \
-  --transition-duration 0 \
-  --transition-fps 120 \
-  --transition-bezier .2,1,.2,1 &
+    --transition-type grow \
+    --transition-angle 30 \
+    --transition-duration 0.5 \
+    --transition-fps 120 \
+    --transition-bezier .2,1,.2,1 &
 log_step "swww-start" "$__t3"
 
 # Generate colors (blocking) — write full cache (no -n) so colors.{sh,json} are updated
@@ -137,4 +137,4 @@ log_step "TOTAL wallpaper.sh" "$__t0"
 # Disable debug output
 set +x
 
-echo "Done!" 
+echo "Done!"

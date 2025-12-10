@@ -172,24 +172,21 @@ echo "Applying theme to Neovim..."
 echo "$THEME_NAME" > "$CURRENT_THEME_FILE"
 echo "  Theme name saved for Neovim: $THEME_NAME"
 
-# Apply wallpaper if specified
+# Apply wallpaper if specified (swww only)
 if [ ! -z "$wallpaper" ] && [ -f "$wallpaper" ]; then
-    echo "Setting wallpaper..."
+    echo "Setting wallpaper with swww..."
     if command -v swww &> /dev/null; then
+        # Kill any rogue swaybg or hyprpaper processes first
+        killall swaybg 2>/dev/null || true
+        killall hyprpaper 2>/dev/null || true
         swww img "$wallpaper" \
           --transition-type grow \
           --transition-angle 30 \
-          --transition-duration 0 \
+          --transition-duration 0.5 \
           --transition-fps 120 \
           --transition-bezier .2,1,.2,1 || echo "  Warning: Failed to set wallpaper with swww"
-    elif command -v swaybg &> /dev/null; then
-        killall swaybg 2>/dev/null || true
-        swaybg -i "$wallpaper" &
-        echo "  Wallpaper set with swaybg"
-    elif command -v feh &> /dev/null; then
-        feh --bg-fill "$wallpaper" || echo "  Warning: Failed to set wallpaper with feh"
     else
-        echo "  Warning: No wallpaper setter found (swww, swaybg, or feh)"
+        echo "  Error: swww not found! Please install swww."
     fi
 
     # Run pywal to refresh colors, then update the Firefox extension
