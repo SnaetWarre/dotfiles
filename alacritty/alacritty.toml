@@ -16,7 +16,7 @@ size = 17.0 # <-- Adjust this number for your preferred size
 [font.normal]
 # Use the exact family name from fc-list
 family = "Iosevka Nerd Font"
-style = "Regular" # Usually not needed if family name is specific
+style = "Medium" # Changed from Regular for thicker/fatter text
 
 # Bold font face
 [font.bold]
