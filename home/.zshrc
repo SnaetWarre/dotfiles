@@ -176,6 +176,14 @@ alias houjekankerbek="poweroff"
 alias yay="paru"
 alias cd="z"
 alias :q="exit"
+# Quick dot navigation (.. up to 9 dots => go up multiple directories)
+for _dots in {2..9}; do
+  _name=$(printf '%*s' "$_dots" '' | tr ' ' '.')
+  _levels=$((_dots - 1))
+  _path=$(printf '../%.0s' $(seq 1 "$_levels"))
+  alias "$_name"="cd $_path"
+done
+unset _dots _name _levels _path
 # ============================================================================
 # FUNCTIONS
 # ============================================================================
