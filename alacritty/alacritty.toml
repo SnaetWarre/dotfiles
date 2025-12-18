@@ -1,47 +1,245 @@
-# Import pywal colors
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                        ALACRITTY CONFIGURATION                               ║
+# ║                        Beautiful Terminal Setup                               ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+# ──────────────────────────────────────────────────────────────────────────────
+# GENERAL SETTINGS
+# ──────────────────────────────────────────────────────────────────────────────
 [general]
+# Import pywal colors for dynamic wallpaper-based theming
 import = ["~/.cache/wal/alacritty.toml"]
 
+# Reload config automatically when changed
+live_config_reload = true
+
+# Enable IPC for alacritty msg
+ipc_socket = true
+
+# ──────────────────────────────────────────────────────────────────────────────
+# WINDOW SETTINGS
+# ──────────────────────────────────────────────────────────────────────────────
 [window]
-padding = { x = 12, y = 12 }
-opacity = 0.8
+# Comfortable padding around terminal content
+padding = { x = 16, y = 14 }
+
+# Distribute extra padding evenly for a balanced look
+dynamic_padding = true
+
+# Semi-transparent background for modern glassy aesthetic
+opacity = 0.85
+
+# Request blur behind window (works on macOS/KDE Wayland)
+blur = true
+
+# Window decorations
+decorations = "Full"
+
+# Use dark theme for window decorations
+decorations_theme_variant = "Dark"
+
+# Allow applications to change window title
 dynamic_title = true
 
+# Custom title when dynamic title is disabled
+title = "Terminal"
 
+# Start as regular window
+startup_mode = "Windowed"
+
+# ──────────────────────────────────────────────────────────────────────────────
+# SCROLLING
+# ──────────────────────────────────────────────────────────────────────────────
+[scrolling]
+# Large scrollback buffer for extensive history
+history = 100000
+
+# Smooth scrolling multiplier
+multiplier = 3
+
+# ──────────────────────────────────────────────────────────────────────────────
+# FONT CONFIGURATION
+# ──────────────────────────────────────────────────────────────────────────────
 [font]
-# Point size
-size = 17.0 # <-- Adjust this number for your preferred size
+# Font size - balanced for readability
+size = 17.0
+
+# Letter and line spacing adjustments for better readability
+# Positive y = more line spacing, positive x = more letter spacing
+offset = { x = 0, y = 2 }
+
+# Glyph positioning fine-tuning
+glyph_offset = { x = 0, y = 1 }
+
+# Use built-in box drawing for consistent powerline/nerd fonts
+builtin_box_drawing = true
 
 # Normal (Regular) font face
 [font.normal]
-# Use the exact family name from fc-list
-family = "Iosevka Nerd Font"
-style = "Medium" # Changed from Regular for thicker/fatter text
+family = "JetBrainsMono Nerd Font"
+style = "Medium"
 
 # Bold font face
 [font.bold]
-# Alacritty should find this automatically if 'normal.family' is set,
-# but you can specify explicitly if needed.
-family = "Iosevka Nerd Font"
+family = "JetBrainsMono Nerd Font"
 style = "Bold"
 
 # Italic font face
 [font.italic]
-# Alacritty should find this automatically if 'normal.family' is set,
-# but you can specify explicitly if needed.
-family = "Iosevka Nerd Font"
-style = "Italic"
+family = "JetBrainsMono Nerd Font"
+style = "Medium Italic"
 
 # Bold Italic font face
 [font.bold_italic]
-# Alacritty should find this automatically if 'normal.family' is set,
-# but you can specify explicitly if needed.
-family = "Iosevka Nerd Font"
+family = "JetBrainsMono Nerd Font"
 style = "Bold Italic"
 
+# ──────────────────────────────────────────────────────────────────────────────
+# CURSOR SETTINGS
+# ──────────────────────────────────────────────────────────────────────────────
 [cursor]
-style = "Beam"
-vi_mode_style = "Block"
-blink_interval = 750
+# Blinking block cursor for visibility
+blink_interval = 500
+blink_timeout = 0  # Never stop blinking
+
+# Hollow cursor when window unfocused
 unfocused_hollow = true
-thickness = 0.15
+
+# Cursor thickness (for beam/underline styles)
+thickness = 0.2
+
+[cursor.style]
+shape = "Block"
+blinking = "On"
+
+[cursor.vi_mode_style]
+shape = "Block"
+blinking = "Off"
+
+# ──────────────────────────────────────────────────────────────────────────────
+# BELL SETTINGS (Visual feedback)
+# ──────────────────────────────────────────────────────────────────────────────
+[bell]
+# Smooth visual bell animation
+animation = "EaseOutExpo"
+duration = 80
+color = "#ffffff"
+
+# ──────────────────────────────────────────────────────────────────────────────
+# SELECTION SETTINGS
+# ──────────────────────────────────────────────────────────────────────────────
+[selection]
+# Semantic word separators
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+
+# Copy selection to clipboard automatically
+save_to_clipboard = true
+
+# ──────────────────────────────────────────────────────────────────────────────
+# MOUSE SETTINGS
+# ──────────────────────────────────────────────────────────────────────────────
+[mouse]
+# Hide cursor while typing for cleaner look
+hide_when_typing = true
+
+# ──────────────────────────────────────────────────────────────────────────────
+# TERMINAL HINTS (URL detection and more)
+# ──────────────────────────────────────────────────────────────────────────────
+[hints]
+# Hint label keys (home row focused)
+alphabet = "jfkdls;ahgurieowpq"
+
+# URL detection hint
+[[hints.enabled]]
+command = "helium"
+hyperlinks = true
+post_processing = true
+persist = false
+mouse.enabled = true
+mouse.mods = "None"
+binding = { key = "O", mods = "Control|Shift" }
+regex = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:|file:|git://|ssh:|ftp://)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
+
+# ──────────────────────────────────────────────────────────────────────────────
+# COLOR OVERRIDES (These complement pywal colors)
+# ──────────────────────────────────────────────────────────────────────────────
+[colors]
+# Make bold text use bright colors for better visibility
+draw_bold_text_with_bright_colors = true
+
+# Transparent backgrounds for all cells (works with window opacity)
+transparent_background_colors = true
+
+# Cursor colors (subtle highlight)
+[colors.cursor]
+text = "CellBackground"
+cursor = "CellForeground"
+
+# Vi mode cursor (distinct color when in vi mode)
+[colors.vi_mode_cursor]
+text = "CellBackground"
+cursor = "#f5c2e7"
+
+# Search highlighting
+[colors.search.matches]
+foreground = "#1e1e2e"
+background = "#a6e3a1"
+
+[colors.search.focused_match]
+foreground = "#1e1e2e"
+background = "#f9e2af"
+
+# Hint label colors
+[colors.hints.start]
+foreground = "#1e1e2e"
+background = "#f9e2af"
+
+[colors.hints.end]
+foreground = "#1e1e2e"
+background = "#a6adc8"
+
+# Line indicator (position during search)
+[colors.line_indicator]
+foreground = "None"
+background = "None"
+
+# Footer bar colors
+[colors.footer_bar]
+foreground = "#cdd6f4"
+background = "#1e1e2e"
+
+# Selection colors (elegant purple tint)
+[colors.selection]
+text = "#cdd6f4"
+background = "#585b70"
+
+# ──────────────────────────────────────────────────────────────────────────────
+# KEYBOARD BINDINGS
+# ──────────────────────────────────────────────────────────────────────────────
+[keyboard]
+bindings = [
+  # Window management
+  { key = "N", mods = "Control|Shift", action = "CreateNewWindow" },
+
+  # Font size controls
+  { key = "Plus", mods = "Control", action = "IncreaseFontSize" },
+  { key = "Minus", mods = "Control", action = "DecreaseFontSize" },
+  { key = "0", mods = "Control", action = "ResetFontSize" },
+
+  # Vi mode toggle
+  { key = "Space", mods = "Control|Shift", action = "ToggleViMode" },
+
+  # Search
+  { key = "F", mods = "Control|Shift", action = "SearchForward" },
+  { key = "B", mods = "Control|Shift", action = "SearchBackward" },
+
+  # Scrolling
+  { key = "PageUp", mods = "Shift", action = "ScrollPageUp" },
+  { key = "PageDown", mods = "Shift", action = "ScrollPageDown" },
+  { key = "Home", mods = "Shift", action = "ScrollToTop" },
+  { key = "End", mods = "Shift", action = "ScrollToBottom" },
+
+  # Clipboard (Linux)
+  { key = "C", mods = "Control|Shift", action = "Copy" },
+  { key = "V", mods = "Control|Shift", action = "Paste" },
+]

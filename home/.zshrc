@@ -176,6 +176,11 @@ alias houjekankerbek="poweroff"
 alias yay="paru"
 alias cd="z"
 alias :q="exit"
+
+# Docker engine management
+alias dockerstart="sudo systemctl start docker.service"
+alias dockerstop="sudo systemctl stop docker.service"
+alias dockerstatus="systemctl is-active docker.service"
 # Quick dot navigation (.. up to 9 dots => go up multiple directories)
 for _dots in {2..9}; do
   _name=$(printf '%*s' "$_dots" '' | tr ' ' '.')

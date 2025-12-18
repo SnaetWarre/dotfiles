@@ -16,10 +16,10 @@
 }
 
 window#waybar {
-  background: rgba(12,16,17, 0.85);
+  background: rgba(2,3,4, 0.85);
   border-radius: 8px;
-  color: #bccec8;
-  border: 1px solid #EC6A63;
+  color: #c4c1bc;
+  border: 1px solid #827B6D;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   margin-top: 4px;
   margin-bottom: 4px;
@@ -28,7 +28,7 @@ window#waybar {
 /* === Separator =========================================================== */
 
 #custom-separator {
-  color: #83908c;
+  color: #898783;
   background: transparent;
   padding: 0 4px;
   margin: 0;
@@ -45,7 +45,7 @@ window#waybar {
 
 #workspaces button {
   background: transparent;
-  color: #83908c;
+  color: #898783;
   padding: 0 8px;
   margin: 0;
   border: none;
@@ -58,14 +58,14 @@ window#waybar {
 
 #workspaces button.active {
   background: transparent;
-  color: #bccec8;
-  border-bottom: 2px solid #bccec8;
+  color: #c4c1bc;
+  border-bottom: 2px solid #c4c1bc;
   font-weight: bold;
 }
 
 #workspaces button:hover {
   background: transparent;
-  color: #bccec8;
+  color: #c4c1bc;
 }
 
 /* === All Modules - Clean Minimal Styling ================================= */
@@ -82,7 +82,7 @@ window#waybar {
 #custom-display-mode,
 #custom-kbd-brightness {
   background: transparent;
-  color: #bccec8;
+  color: #c4c1bc;
   padding: 0 8px;
   margin: 0;
   border: none;
@@ -92,61 +92,61 @@ window#waybar {
 /* === Clock =============================================================== */
 
 #clock {
-  color: #85847C;
+  color: #9C8E6D;
   font-weight: 500;
 }
 
 /* === Power =============================================================== */
 
 #custom-power {
-  color: #833F3D;
+  color: #494E54;
   font-size: 16px;
 }
 
 #custom-power:hover {
-  color: #833F3D;
+  color: #494E54;
   transition: color 0.2s ease-in-out;
 }
 
 /* === Network ============================================================= */
 
 #network {
-  color: #EC6A63;
+  color: #827B6D;
 }
 
 #network.disconnected {
-  color: #833F3D;
+  color: #494E54;
 }
 
 /* === System Stats ======================================================== */
 
 #custom-system-stats {
-  color: #79A99E;
+  color: #CAA978;
   font-size: 14px;
 }
 
 /* === Battery ============================================================= */
 
 #custom-battery {
-  color: #D9645E;
+  color: #6D7075;
 }
 
 /* === Volume ============================================================== */
 
 #custom-volume {
-  color: #85847C;
+  color: #9C8E6D;
 }
 
 /* === Brightness ========================================================== */
 
 #custom-brightness {
-  color: #79A99E;
+  color: #CAA978;
 }
 
 /* === Asus Profile ======================================================== */
 
 #custom-asus-profile {
-  color: #9E504B;
+  color: #5C5F61;
   font-weight: 500;
   padding: 0 12px;
 }
@@ -154,26 +154,26 @@ window#waybar {
 /* === Screen Recording ==================================================== */
 
 #custom-screenrecording-indicator {
-  color: #EC6A63;
+  color: #827B6D;
   padding: 0 8px;
 }
 
 #custom-screenrecording-indicator.recording {
-  color: #833F3D;
+  color: #494E54;
   font-weight: bold;
 }
 
 /* === Display Mode ======================================================== */
 
 #custom-display-mode {
-  color: #EC6A63;
+  color: #827B6D;
   padding: 0 8px;
 }
 
 /* === Keyboard Brightness ================================================= */
 
 #custom-kbd-brightness {
-  color: #EC6A63;
+  color: #827B6D;
 }
 
 /* === Hover Effects ======================================================= */
@@ -186,20 +186,20 @@ window#waybar {
 #custom-asus-profile:hover,
 #custom-display-mode:hover,
 #custom-kbd-brightness:hover {
-  color: #bccec8;
+  color: #c4c1bc;
   transition: color 0.2s ease-in-out;
 }
 
 /* === Tooltips ============================================================ */
 
 tooltip {
-  background: rgba(12,16,17, 0.95);
-  border: 1px solid #83908c;
+  background: rgba(2,3,4, 0.95);
+  border: 1px solid #898783;
   border-radius: 4px;
-  color: #bccec8;
+  color: #c4c1bc;
   padding: 8px;
 }
 
 tooltip label {
-  color: #bccec8;
+  color: #c4c1bc;
 }
