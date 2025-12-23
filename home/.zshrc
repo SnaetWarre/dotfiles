@@ -176,6 +176,7 @@ alias houjekankerbek="poweroff"
 alias yay="paru"
 alias cd="z"
 alias :q="exit"
+alias update="paru -Syu"
 
 # Docker engine management
 alias dockerstart="sudo systemctl start docker.service"

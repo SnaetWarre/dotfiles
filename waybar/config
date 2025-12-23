@@ -7,11 +7,11 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 35,
+  "height": 37,
   "margin-top": 4,
   "margin-bottom": 4,
   "margin-left": 4,
-  "margin-right": 3,
+  "margin-right": 4,
 
   // ── Modules Layout ───────────────────────────────────────────────
   "modules-left": [
@@ -34,6 +34,8 @@
     "custom/display-mode",
     "custom/separator",
     "custom/kbd-brightness",
+    "custom/separator",
+    "custom/touchpad",
     "custom/separator",
     "custom/battery",
     "custom/separator",
@@ -105,6 +107,15 @@
     "return-type": "json",
     "interval": 2,
     "on-click": "~/.config/waybar/scripts/cycle-kbd-brightness.sh"
+  },
+
+  // ── Touchpad ──────────────────────────────────────────────────────
+  "custom/touchpad": {
+    "exec": "~/.config/waybar/scripts/touchpad.sh",
+    "return-type": "json",
+    "interval": 2,
+    "on-click": "~/.config/waybar/scripts/touchpad-toggle.sh",
+    "signal": 12
   },
 
   // ── Battery (scripted) ────────────────────────────────────────────
