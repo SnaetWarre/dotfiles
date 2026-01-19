@@ -11,4 +11,4 @@
 [init]
 	defaultBranch = master
 [core]
-	editor = helix
+	editor = nvim
