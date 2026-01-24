@@ -28,7 +28,7 @@ else
     color_fg="#ffffff"
 fi
 
-profile=$(asusctl profile -p | awk '/Active profile/ {print $NF}')
+profile=$(asusctl profile get | awk '/Active profile/ {print $NF}')
 
 case "$profile" in
   Performance)

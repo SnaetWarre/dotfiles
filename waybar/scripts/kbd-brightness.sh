@@ -2,7 +2,7 @@
 # ── kbd-brightness.sh ───────────────────────────────────────
 # Description: Display current keyboard backlight brightness
 # Usage: Called by Waybar `custom/kbd-brightness`
-# Dependencies: asusctl or sysfs
+# Dependencies: asusctl
 # ──────────────────────────────────────────────────────────
 
 # Load wal/pywal colors from colors file
@@ -27,32 +27,27 @@ else
     color_high="#f9e2af"
 fi
 
-# Get current brightness from sysfs
-brightness_file="/sys/class/leds/asus::kbd_backlight/brightness"
-if [ -f "$brightness_file" ]; then
-    brightness=$(cat "$brightness_file")
-else
-    brightness=0
-fi
+# Get current brightness from asusctl
+brightness=$(asusctl leds get | awk -F': ' '{print $2}')
 
 # Map brightness value to label and color
 case "$brightness" in
-    0)
+    Off)
         text="󰌌 OFF"
         fg="$color_off"
         tooltip="Keyboard Backlight: Off"
         ;;
-    1)
+    Low)
         text="󰌌 LOW"
         fg="$color_low"
         tooltip="Keyboard Backlight: Low"
         ;;
-    2)
+    Med)
         text="󰌌 MED"
         fg="$color_med"
         tooltip="Keyboard Backlight: Medium"
         ;;
-    3)
+    High)
         text="󰌌 HIGH"
         fg="$color_high"
         tooltip="Keyboard Backlight: High"
