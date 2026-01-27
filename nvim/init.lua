@@ -35,3 +35,13 @@ require "autocmds"
 vim.schedule(function()
   require "mappings"
 end)
+
+-- Command to open kickstart reference
+vim.api.nvim_create_user_command("Kickstart", function()
+  vim.cmd("edit ~/.config/nvim-kickstart/init.lua")
+end, {})
+
+-- Command to open vimtutor (same as kickstart's :Tutor)
+vim.api.nvim_create_user_command("Tutor", function()
+  vim.cmd("terminal vimtutor")
+end, { bang = true })

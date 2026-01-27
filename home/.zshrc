@@ -122,6 +122,11 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.dotnet:$PATH"
 export PATH="/home/warre/.opencode/bin:$PATH"
 
+# Fix Belgian (AZERTY) keyboard layout
+if command -v setxkbmap &>/dev/null; then
+  setxkbmap be 2>/dev/null
+fi
+
 # LS_COLORS - Enhanced file type colors for ls and completion
 # Generate with vivid or use a good default scheme
 if command -v vivid &>/dev/null; then
@@ -211,6 +216,7 @@ alias yay="paru"
 alias cd="z"
 alias :q="exit"
 alias update="paru -Syu"
+alias oc="opencode"
 
 # Eza (modern ls replacement) - colorful and feature-rich
 if command -v eza &>/dev/null; then

@@ -51,3 +51,9 @@ map("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
 
 -- Paste without yanking in visual mode
 map("x", "<leader>p", '"_dP', { desc = "Paste without yanking" })
+
+-- Open kickstart reference file
+map("n", "<leader>ks", "<cmd>edit ~/.config/nvim-kickstart/init.lua<cr>", { desc = "Open kickstart reference" })
+
+-- Open vimtutor to practice vim skills
+map("n", "<leader>kt", "<cmd>Tutor<cr>", { desc = "Open vimtutor" })
