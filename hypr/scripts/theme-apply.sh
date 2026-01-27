@@ -189,8 +189,8 @@ if [ ! -z "$wallpaper" ] && [ -f "$wallpaper" ]; then
         echo "  Error: swww not found! Please install swww."
     fi
 
-    # Run pywal to refresh colors, then update the Firefox extension
-    if command -v wal &> /dev/null; then
+    # Run walrs to refresh colors
+    if command -v /home/warre/.local/bin/walrs &> /dev/null; then
         WALP="$wallpaper"
         if [ -z "$WALP" ] || [ ! -f "$WALP" ]; then
             if [ -f "$HOME/.cache/wal/wallpaper" ]; then
@@ -198,8 +198,7 @@ if [ ! -z "$wallpaper" ] && [ -f "$wallpaper" ]; then
             fi
         fi
         if [ -n "$WALP" ] && [ -f "$WALP" ]; then
-            WAL_BACKEND_SETTING="${WAL_BACKEND:-wal}"
-            wal --backend "$WAL_BACKEND_SETTING" -n -q -i "$WALP" || echo "  Warning: wal failed to generate cache colors"
+            /home/warre/.local/bin/walrs -W -q -i "$WALP" || echo "  Warning: walrs failed to generate cache colors"
         fi
     fi
 fi

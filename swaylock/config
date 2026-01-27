@@ -1,10 +1,10 @@
 # General
 ignore-empty-password
 show-failed-attempts
-font=Ubuntu
+font=Iosevka Nerd Font
 
 # Appearance
-image=/home/warre/Pictures/wallpapers/54 - uIHa176.jpg
+image=/home/warre/Pictures/wallpapers/13 - Gb6xVGP.jpg
 scaling=fill
 
 # Fade in the lockscreen
@@ -18,33 +18,32 @@ indicator-caps-lock
 indicator-idle-visible
 
 # Colors
-color=rgb(11, 15, 22)
-bs-hl-color=rgb(67, 117, 132)
-caps-lock-bs-hl-color=rgb(67, 117, 132)
-caps-lock-key-hl-color=rgb(232, 149, 113)
-inside-color=rgba(11, 15, 22, 0.53)
-inside-clear-color=rgba(175, 125, 128, 0.53)
-inside-caps-lock-color=rgba(67, 117, 132, 0.53)
-inside-ver-color=rgba(100, 136, 137, 0.53)
-inside-wrong-color=rgba(67, 117, 132, 0.53)
-key-hl-color=rgb(232, 149, 113)
-layout-bg-color=rgba(0, 0, 0, 0)
-layout-border-color=rgba(0, 0, 0, 0)
-layout-text-color=rgb(236, 203, 189)
-line-color=rgba(0, 0, 0, 0)
-line-clear-color=rgba(0, 0, 0, 0)
-line-caps-lock-color=rgba(0, 0, 0, 0)
-line-ver-color=rgba(0, 0, 0, 0)
-line-wrong-color=rgba(0, 0, 0, 0)
-ring-color=rgba(232, 149, 113, 0.8)
-ring-clear-color=rgba(175, 125, 128, 0.8)
-ring-caps-lock-color=rgba(67, 117, 132, 0.8)
-ring-ver-color=rgba(100, 136, 137, 0.8)
-ring-wrong-color=rgba(67, 117, 132, 0.8)
-separator-color=rgba(0, 0, 0, 0)
-text-color=rgb(236, 203, 189)
-text-clear-color=rgb(236, 203, 189)
-text-caps-lock-color=rgb(236, 203, 189)
-text-ver-color=rgb(236, 203, 189)
-text-wrong-color=rgb(236, 203, 189)
-EOF 
+color=5,5,15
+bs-hl-color=0,88,168
+caps-lock-bs-hl-color=0,88,168
+caps-lock-key-hl-color=54,78,103
+inside-color=5,5,1500
+inside-clear-color=0,77,15700
+inside-caps-lock-color=0,88,16800
+inside-ver-color=0,95,17600
+inside-wrong-color=0,88,16800
+key-hl-color=54,78,103
+layout-bg-color=5,5,1500
+layout-border-color=5,5,1500
+layout-text-color=182,203,217
+line-color=5,5,1500
+line-clear-color=5,5,1500
+line-caps-lock-color=5,5,1500
+line-ver-color=5,5,1500
+line-wrong-color=5,5,1500
+ring-color=54,78,103
+ring-clear-color=0,77,157
+ring-caps-lock-color=0,88,168
+ring-ver-color=0,95,176
+ring-wrong-color=0,88,168
+separator-color=5,5,1500
+text-color=182,203,217
+text-clear-color=182,203,217
+text-caps-lock-color=182,203,217
+text-ver-color=182,203,217
+text-wrong-color=182,203,217

@@ -4,7 +4,7 @@
 WALLPAPER_DIR="$HOME/Pictures/wallpapers"
 
 # Get list of wallpapers and create preview entries
-WALLPAPERS=$(find "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" -o -name "*.gif" \))
+WALLPAPERS=$(find "$WALLPAPER_DIR" -maxdepth 1 -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" -o -name "*.gif" \))
 
 # Create a temporary file for the preview menu
 TEMP_FILE=$(mktemp)
@@ -18,7 +18,7 @@ while IFS= read -r wallpaper; do
 done <<< "$WALLPAPERS"
 
 # Show rofi menu with image previews
-SELECTED=$(cat "$TEMP_FILE" | rofi -dmenu -i -p "Select Wallpaper" -theme ~/.config/rofi/wallpaper.rasi -show-icons -icon-theme "Papirus" -modi "icons" -show icons)
+SELECTED=$(cat "$TEMP_FILE" | rofi -dmenu -i -p "Select Wallpaper" -theme ~/.config/rofi/wallpaper.rasi -show-icons -icon-theme "Papirus")
 
 # Clean up temp file
 rm "$TEMP_FILE"
@@ -33,7 +33,7 @@ if [ -n "$SELECTED" ]; then
     if [ -f "$SELECTED_PATH" ]; then
         echo "Running wallpaper script..."
         # Run the wallpaper script with the selected wallpaper
-        bash -c "source ~/anaconda3/etc/profile.d/conda.sh && conda activate base && ~/.config/hypr/scripts/wallpaper.sh \"$SELECTED_PATH\""
+        ~/.config/hypr/scripts/wallpaper.sh "$SELECTED_PATH"
     else
         echo "Error: Selected wallpaper file not found!"
         exit 1

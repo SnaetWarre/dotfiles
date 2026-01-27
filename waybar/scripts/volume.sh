@@ -20,7 +20,7 @@ else
     vol_raw=${vol_output#Volume: }
     vol_raw=${vol_raw%% *}
     # Convert to percentage
-    vol=$(printf "%.0f" "$(echo "$vol_raw * 100" | bc)")
+    vol=$(awk -v v="$vol_raw" 'BEGIN { printf "%.0f", v * 100 }')
 
     if (( vol == 0 )); then
         icon="󰕿"

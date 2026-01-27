@@ -1,0 +1,49 @@
+# General
+ignore-empty-password
+show-failed-attempts
+font=Iosevka Nerd Font
+
+# Appearance
+image=${wallpaper}
+scaling=fill
+
+# Fade in the lockscreen
+fade-in=0.2
+
+# Indicator
+indicator
+indicator-radius=100
+indicator-thickness=7
+indicator-caps-lock
+indicator-idle-visible
+
+# Colors
+color=${color0_rgb}
+bs-hl-color=${color2_rgb}
+caps-lock-bs-hl-color=${color2_rgb}
+caps-lock-key-hl-color=${color4_rgb}
+inside-color=${color0_rgb}00
+inside-clear-color=${color1_rgb}00
+inside-caps-lock-color=${color2_rgb}00
+inside-ver-color=${color3_rgb}00
+inside-wrong-color=${color2_rgb}00
+key-hl-color=${color4_rgb}
+layout-bg-color=${color0_rgb}00
+layout-border-color=${color0_rgb}00
+layout-text-color=${color7_rgb}
+line-color=${color0_rgb}00
+line-clear-color=${color0_rgb}00
+line-caps-lock-color=${color0_rgb}00
+line-ver-color=${color0_rgb}00
+line-wrong-color=${color0_rgb}00
+ring-color=${color4_rgb}
+ring-clear-color=${color1_rgb}
+ring-caps-lock-color=${color2_rgb}
+ring-ver-color=${color3_rgb}
+ring-wrong-color=${color2_rgb}
+separator-color=${color0_rgb}00
+text-color=${color7_rgb}
+text-clear-color=${color7_rgb}
+text-caps-lock-color=${color7_rgb}
+text-ver-color=${color7_rgb}
+text-wrong-color=${color7_rgb}

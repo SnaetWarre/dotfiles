@@ -44,6 +44,13 @@ if [ "${WAL_FORCE_REGEN:-0}" = "1" ]; then
     rm -f "$HOME/.cache/wal/colors.sh" "$HOME/.cache/wal/colors.json" 2>/dev/null || true
 fi
 
+# Ensure swww-daemon is running
+if ! pgrep -x "swww-daemon" > /dev/null; then
+    echo "Starting swww-daemon..."
+    swww-daemon &
+    sleep 1
+fi
+
 # Start wallpaper transition immediately in parallel (doesn't depend on pywal)
 __t3=$(now_ms)
 swww img "$WALLPAPER" \
@@ -54,8 +61,9 @@ swww img "$WALLPAPER" \
     --transition-bezier .2,1,.2,1 &
 log_step "swww-start" "$__t3"
 
-# Generate colors (blocking) — write full cache (no -n) so colors.{sh,json} are updated
-wal --backend "$WAL_BACKEND" -i "$WALLPAPER" -q
+# Generate colors (blocking) - using walrs
+/home/warre/.local/bin/walrs -i "$WALLPAPER" -q -W
+
 # Ensure cache wallpaper path exists for consumers expecting it
 printf '%s' "$WALLPAPER" > "$HOME/.cache/wal/wallpaper" 2>/dev/null || true
 # Wait briefly for wal to write colors.sh; retry once without -n if missing
@@ -64,7 +72,7 @@ for _i in 1 2 3 4 5; do
     sleep 0.05
 done
 if [ ! -f "$HOME/.cache/wal/colors.sh" ]; then
-    wal --backend "$WAL_BACKEND" -i "$WALLPAPER" -q || true
+    /home/warre/.local/bin/walrs -i "$WALLPAPER" -q -W || true
     for _i in 1 2 3 4 5; do
         [ -f "$HOME/.cache/wal/colors.sh" ] && break
         sleep 0.05
