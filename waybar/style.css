@@ -16,11 +16,11 @@
 }
 
 window#waybar {
-  background: rgba(5,5,15, 0.85);
+  background: rgba(21,20,20, 0.85);
   border-radius: 0;
-  color: #b6cbd9;
+  color: #f6f9f9;
   border: none;
-  border-bottom: 2px solid #364e67;
+  border-bottom: 2px solid #96c1d3;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   margin-top: 4px;
   margin-bottom: 4px;
@@ -29,7 +29,7 @@ window#waybar {
 /* === Separator =========================================================== */
 
 #custom-separator {
-  color: #003076;
+  color: #615a91;
   background: transparent;
   padding: 0 4px;
   margin: 0;
@@ -46,7 +46,7 @@ window#waybar {
 
 #workspaces button {
   background: transparent;
-  color: #003076;
+  color: #615a91;
   padding: 0 8px;
   margin: 0;
   border: none;
@@ -59,14 +59,14 @@ window#waybar {
 
 #workspaces button.active {
   background: transparent;
-  color: #b6cbd9;
-  border-bottom: 3px solid #b6cbd9;
+  color: #f6f9f9;
+  border-bottom: 3px solid #f6f9f9;
   font-weight: bold;
 }
 
 #workspaces button:hover {
   background: transparent;
-  color: #b6cbd9;
+  color: #f6f9f9;
 }
 
 /* === All Modules - Clean Minimal Styling ================================= */
@@ -83,7 +83,7 @@ window#waybar {
 #custom-display-mode,
 #custom-kbd-brightness {
   background: transparent;
-  color: #b6cbd9;
+  color: #f6f9f9;
   padding: 0 8px;
   margin: 0;
   border: none;
@@ -93,61 +93,61 @@ window#waybar {
 /* === Clock =============================================================== */
 
 #clock {
-  color: #0a79c0;
+  color: #c8dae7;
   font-weight: 500;
 }
 
 /* === Power =============================================================== */
 
 #custom-power {
-  color: #004d9d;
+  color: #9a86a9;
   font-size: 16px;
 }
 
 #custom-power:hover {
-  color: #004d9d;
+  color: #9a86a9;
   transition: color 0.2s ease-in-out;
 }
 
 /* === Network ============================================================= */
 
 #network {
-  color: #364e67;
+  color: #96c1d3;
 }
 
 #network.disconnected {
-  color: #004d9d;
+  color: #9a86a9;
 }
 
 /* === System Stats ======================================================== */
 
 #custom-system-stats {
-  color: #326686;
+  color: #c3cbcb;
   font-size: 14px;
 }
 
 /* === Battery ============================================================= */
 
 #custom-battery {
-  color: #005fb0;
+  color: #80bbd5;
 }
 
 /* === Volume ============================================================== */
 
 #custom-volume {
-  color: #0a79c0;
+  color: #c8dae7;
 }
 
 /* === Brightness ========================================================== */
 
 #custom-brightness {
-  color: #326686;
+  color: #c3cbcb;
 }
 
 /* === Asus Profile ======================================================== */
 
 #custom-asus-profile {
-  color: #0058a8;
+  color: #66b2d6;
   font-weight: 500;
   padding: 0 12px;
 }
@@ -155,26 +155,26 @@ window#waybar {
 /* === Screen Recording ==================================================== */
 
 #custom-screenrecording-indicator {
-  color: #364e67;
+  color: #96c1d3;
   padding: 0 8px;
 }
 
 #custom-screenrecording-indicator.recording {
-  color: #004d9d;
+  color: #9a86a9;
   font-weight: bold;
 }
 
 /* === Display Mode ======================================================== */
 
 #custom-display-mode {
-  color: #364e67;
+  color: #96c1d3;
   padding: 0 8px;
 }
 
 /* === Keyboard Brightness ================================================= */
 
 #custom-kbd-brightness {
-  color: #364e67;
+  color: #96c1d3;
 }
 
 /* === Hover Effects ======================================================= */
@@ -187,20 +187,20 @@ window#waybar {
 #custom-asus-profile:hover,
 #custom-display-mode:hover,
 #custom-kbd-brightness:hover {
-  color: #b6cbd9;
+  color: #f6f9f9;
   transition: color 0.2s ease-in-out;
 }
 
 /* === Tooltips ============================================================ */
 
 tooltip {
-  background: rgba(5,5,15, 0.95);
-  border: 1px solid #003076;
+  background: rgba(21,20,20, 0.95);
+  border: 1px solid #615a91;
   border-radius: 4px;
-  color: #b6cbd9;
+  color: #f6f9f9;
   padding: 8px;
 }
 
 tooltip label {
-  color: #b6cbd9;
+  color: #f6f9f9;
 }
