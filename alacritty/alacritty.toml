@@ -27,7 +27,7 @@ padding = { x = 16, y = 14 }
 dynamic_padding = true
 
 # Semi-transparent background for modern glassy aesthetic
-opacity = 1
+opacity = 0.88
 
 # Request blur behind window (works on macOS/KDE Wayland)
 blur = true

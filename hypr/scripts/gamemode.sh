@@ -1,6 +1,6 @@
 #!/bin/bash
 # ── gamemode.sh ───────────────────────────────────────────
-# Description: Toggle game mode - sets Performance profile and unbinds rofi
+# Description: Toggle game mode - sets Performance profile, disables effects
 # Usage: Called by Hyprland keybind (Super + G)
 # Dependencies: asusctl, hyprctl, notify-send
 # ──────────────────────────────────────────────────────────
@@ -23,7 +23,17 @@ enable_gamemode() {
     # Unbind rofi (CTRL + SPACE)
     hyprctl keyword unbind "CTRL, SPACE"
 
-    notify "🎮 Game Mode ON"
+    # Disable blur for performance
+    hyprctl keyword decoration:blur:enabled false
+
+    # Disable opacity (set to 1.0)
+    hyprctl keyword decoration:active_opacity 1.0
+    hyprctl keyword decoration:inactive_opacity 1.0
+
+    # Disable animations (Hyprland 0.52+ syntax)
+    hyprctl keyword animations:enabled false
+
+    notify "🎮 Game Mode ON (Effects disabled)"
 }
 
 disable_gamemode() {
@@ -40,7 +50,17 @@ disable_gamemode() {
     # Rebind rofi (CTRL + SPACE)
     hyprctl keyword bindd "CTRL, SPACE, Runs your application launcher, exec, $ROFI_CMD"
 
-    notify "🎮 Game Mode OFF"
+    # Re-enable blur
+    hyprctl keyword decoration:blur:enabled true
+
+    # Restore opacity
+    hyprctl keyword decoration:active_opacity 1.0
+    hyprctl keyword decoration:inactive_opacity 0.85
+
+    # Re-enable animations
+    hyprctl keyword animations:enabled no
+
+    notify "🎮 Game Mode OFF (Effects restored)"
 }
 
 # Toggle based on state file existence
