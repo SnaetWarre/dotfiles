@@ -4,7 +4,7 @@ show-failed-attempts
 font=Iosevka Nerd Font
 
 # Appearance
-image=/home/warre/Pictures/wallpapers/satellite_dishes_on_a_building.jpg
+image=/home/warre/Pictures/wallpapers/cat.png
 scaling=fill
 
 # Fade in the lockscreen
@@ -18,32 +18,32 @@ indicator-caps-lock
 indicator-idle-visible
 
 # Colors
-color=18,32,38
-bs-hl-color=131,126,121
-caps-lock-bs-hl-color=131,126,121
-caps-lock-key-hl-color=152,129,132
-inside-color=18,32,3800
-inside-clear-color=115,114,11200
-inside-caps-lock-color=131,126,12100
-inside-ver-color=152,130,12400
-inside-wrong-color=131,126,12100
-key-hl-color=152,129,132
-layout-bg-color=18,32,3800
-layout-border-color=18,32,3800
-layout-text-color=220,224,227
-line-color=18,32,3800
-line-clear-color=18,32,3800
-line-caps-lock-color=18,32,3800
-line-ver-color=18,32,3800
-line-wrong-color=18,32,3800
-ring-color=152,129,132
-ring-clear-color=115,114,112
-ring-caps-lock-color=131,126,121
-ring-ver-color=152,130,124
-ring-wrong-color=131,126,121
-separator-color=18,32,3800
-text-color=220,224,227
-text-clear-color=220,224,227
-text-caps-lock-color=220,224,227
-text-ver-color=220,224,227
-text-wrong-color=220,224,227
+color=0,21,14
+bs-hl-color=63,153,137
+caps-lock-bs-hl-color=63,153,137
+caps-lock-key-hl-color=171,115,70
+inside-color=0,21,1400
+inside-clear-color=15,132,10100
+inside-caps-lock-color=63,153,13700
+inside-ver-color=42,172,11900
+inside-wrong-color=63,153,13700
+key-hl-color=171,115,70
+layout-bg-color=0,21,1400
+layout-border-color=0,21,1400
+layout-text-color=189,249,219
+line-color=0,21,1400
+line-clear-color=0,21,1400
+line-caps-lock-color=0,21,1400
+line-ver-color=0,21,1400
+line-wrong-color=0,21,1400
+ring-color=171,115,70
+ring-clear-color=15,132,101
+ring-caps-lock-color=63,153,137
+ring-ver-color=42,172,119
+ring-wrong-color=63,153,137
+separator-color=0,21,1400
+text-color=189,249,219
+text-clear-color=189,249,219
+text-caps-lock-color=189,249,219
+text-ver-color=189,249,219
+text-wrong-color=189,249,219

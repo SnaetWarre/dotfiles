@@ -82,7 +82,7 @@
     "always_allow_tool_actions": true,
     "default_model": {
       "provider": "copilot_chat",
-      "model": "gemini-3-flash-preview"
+      "model": "gpt-5.2-codex"
     },
     "profiles": {
       "planner": {
