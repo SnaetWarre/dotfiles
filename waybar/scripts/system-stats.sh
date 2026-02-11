@@ -128,7 +128,7 @@ fi
 
 # Horizontal layout with pipe separators
 text="${cpu_text} | ${ram_text} | ${vram_text}"
-tooltip="${tooltip_cpu}\n${tooltip_ram}\n${tooltip_vram}"
+tooltip="${tooltip_cpu}\\r${tooltip_ram}\\r${tooltip_vram}"
 
 # Escape for JSON
 json_escape() {
@@ -136,7 +136,7 @@ json_escape() {
 }
 
 text_escaped=$(json_escape "$text")
-tooltip_escaped=$(json_escape "$tooltip")
+tooltip_escaped="$tooltip"
 
 # Final JSON output
 printf '{"text":"%s","tooltip":"%s"}\n' "$text_escaped" "$tooltip_escaped"
