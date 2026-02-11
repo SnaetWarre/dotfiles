@@ -64,6 +64,7 @@
     "*": true
   },
   "edit_predictions": {
+    "provider": "copilot",
     "codestral": {
       "max_tokens": 150
     },
@@ -93,9 +94,6 @@
       }
     },
     "model_parameters": []
-  },
-  "features": {
-    "edit_prediction_provider": "copilot"
   },
   "context_servers": {
     "mcp-server-context7": {
@@ -140,5 +138,12 @@
   },
   "debugger": {
     "button": false
+  },
+  "languages": {
+    "Python": {
+      "language_servers": [
+        "ty"
+      ]
+    }
   }
 }
