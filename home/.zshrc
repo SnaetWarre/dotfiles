@@ -207,6 +207,10 @@ alias cd="z"
 alias :q="exit"
 alias update="paru -Syu"
 alias oc="opencode"
+alias poweroff="shutdown now"
+roblox() {
+  (setsid flatpak run org.vinegarhq.Sober > /dev/null 2>&1 &)
+}
 
 # ============================================================================
 # TYPO CORRECTIONS - Because we all fuck up sometimes
