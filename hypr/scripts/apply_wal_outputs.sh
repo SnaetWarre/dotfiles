@@ -494,8 +494,8 @@ if command -v hyprctl &> /dev/null; then
     ACTIVE_B=$(to_rgba_ff "$color1")
     INACTIVE=$(to_rgba_ff "${color7#\#}")
 
-    # Apply with gradient angle for flair
-    hyprctl keyword general:col.active_border "$ACTIVE_A $ACTIVE_B 45deg" >/dev/null 2>&1 || true
+    # Apply unified solid color border
+    hyprctl keyword general:col.active_border "$ACTIVE_A" >/dev/null 2>&1 || true
     hyprctl keyword general:col.inactive_border "$INACTIVE" >/dev/null 2>&1 || true
 fi
 log_step "hyprctl-borders" "$__t_hyprctl"
