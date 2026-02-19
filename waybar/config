@@ -25,7 +25,7 @@
   ],
 
   "modules-center": [
-    "hyprland/workspaces"
+    "ext/workspaces"
   ],
 
   "modules-right": [

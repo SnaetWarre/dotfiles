@@ -55,6 +55,8 @@
 !wlogout/**/*
 !wofi/
 !wofi/**/*
+!mango/
+!mango/**/*
 
 # Editors
 !nvim/

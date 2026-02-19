@@ -7,6 +7,11 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "agent_servers": {
+    "opencode": {
+      "type": "registry"
+    }
+  },
   "ssh_connections": [
     {
       "host": "jetson-orin-nano.local",
@@ -109,8 +114,8 @@
   "base_keymap": "VSCode",
   "theme": {
     "mode": "dark",
-    "light": "Ayu Light",
-    "dark": "Ayu Dark"
+    "light": "Tokyo Night Light",
+    "dark": "One Dark"
   },
   "autosave": {
     "after_delay": { "milliseconds": 500 }
