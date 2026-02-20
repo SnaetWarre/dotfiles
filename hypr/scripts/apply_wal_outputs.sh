@@ -500,5 +500,26 @@ if command -v hyprctl &> /dev/null; then
 fi
 log_step "hyprctl-borders" "$__t_hyprctl"
 
+# --- Update MangoWC window border colors dynamically ---
+__t_mangowc=$(now_ms)
+if [ -f "$CONFIG_DIR/mango/config.conf" ]; then
+    to_rgba_mango() {
+        local hex=${1#"#"}
+        echo "0x${hex}ff"
+    }
+    MANGO_ACTIVE=$(to_rgba_mango "$color4")
+    MANGO_INACTIVE=$(to_rgba_mango "$color7")
+    
+    # Uncomment and replace the color properties
+    sed -i -E "s/^[# \t]*focuscolor=.*/focuscolor=${MANGO_ACTIVE}/" "$CONFIG_DIR/mango/config.conf"
+    sed -i -E "s/^[# \t]*bordercolor=.*/bordercolor=${MANGO_INACTIVE}/" "$CONFIG_DIR/mango/config.conf"
+    
+    # Send reload signal via MangoWC's IPC
+    if command -v mmsg &> /dev/null; then
+        mmsg -s -d reload_config >/dev/null 2>&1 || true
+    fi
+fi
+log_step "mangowc-borders" "$__t_mangowc"
+
 # Total
 log_step "TOTAL apply_wal_outputs.sh" "$__t_total"
