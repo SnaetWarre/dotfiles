@@ -45,7 +45,7 @@
   "session": {
     "trust_all_worktrees": true
   },
-  "show_edit_predictions": false,
+  "show_edit_predictions": true,
   "bottom_dock_layout": "contained",
   "tabs": {
     "git_status": true,
@@ -88,7 +88,7 @@
     "always_allow_tool_actions": true,
     "default_model": {
       "provider": "copilot_chat",
-      "model": "gpt-5-mini"
+      "model": "gpt-5.3-codex"
     },
     "profiles": {
       "planner": {
@@ -113,12 +113,12 @@
   "buffer_font_family": "JetBrains Mono",
   "base_keymap": "VSCode",
   "theme": {
-    "mode": "dark",
-    "light": "Tokyo Night Light",
-    "dark": "One Dark"
+    "mode": "light",
+    "light": "Ayu Light",
+    "dark": "Tokyo Night Storm"
   },
   "autosave": {
-    "after_delay": { "milliseconds": 500 }
+    "after_delay": { "milliseconds": 100 }
   },
   "collaboration_panel": {
     "button": true,
@@ -136,6 +136,12 @@
     "button": false
   },
   "terminal": {
+    "toolbar": {
+      "breadcrumbs": true
+    },
+    "shell": {
+      "program": "sh"
+    },
     "max_scroll_history_lines": 10032,
     "default_height": 300.0,
     "copy_on_select": true,
@@ -145,10 +151,10 @@
     "button": false
   },
   "languages": {
-    "Python": {
-      "language_servers": [
-        "ty"
-      ]
+      "Python": {
+        "language_servers": [
+          "ty"
+        ]
+      }
     }
-  }
 }

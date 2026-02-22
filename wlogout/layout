@@ -1,6 +1,6 @@
 {
     "label" : "lock",
-    "action" : "swaylock-fancy -e -K -p 10 -f Hack-Regular",
+    "action" : "swaylock-fancy -e -K -p 10",
     "text" : "Lock",
     "keybind" : "l"
 }

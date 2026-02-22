@@ -151,7 +151,7 @@ alphabet = "jfkdls;ahgurieowpq"
 
 # URL detection hint
 [[hints.enabled]]
-command = "helium"
+command = "helium-browser"
 hyperlinks = true
 post_processing = true
 persist = false

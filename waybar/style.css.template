@@ -160,7 +160,17 @@ window#waybar {
 
 #custom-screenrecording-indicator.recording {
   color: $color1;
-  font-weight: bold;
+  animation-name: recording-blink;
+  animation-duration: 0.8s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes recording-blink {
+  to {
+    color: alpha($color1, 0.4);
+  }
 }
 
 /* === Display Mode ======================================================== */
