@@ -14,11 +14,11 @@ notify() {
 
 enable_gamemode() {
     # Save current profile before switching
-    current_profile=$(asusctl profile -p | awk '/Active profile/ {print $NF}')
+    current_profile=$(asusctl profile get | awk '/Active profile/ {print $NF}')
     echo "$current_profile" > "$STATE_FILE"
 
     # Set to Performance mode (Reactor ON)
-    asusctl profile -P Performance
+    asusctl profile set Performance
 
     # Unbind rofi (CTRL + SPACE)
     hyprctl keyword unbind "CTRL, SPACE"
@@ -40,11 +40,11 @@ disable_gamemode() {
     # Restore previous profile
     if [ -f "$STATE_FILE" ]; then
         previous_profile=$(cat "$STATE_FILE")
-        asusctl profile -P "$previous_profile"
+        asusctl profile set "$previous_profile"
         rm -f "$STATE_FILE"
     else
         # Fallback to Balanced if no saved state
-        asusctl profile -P Balanced
+        asusctl profile set Balanced
     fi
 
     # Rebind rofi (CTRL + SPACE)
