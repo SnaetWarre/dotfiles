@@ -1,7 +1,7 @@
 # General
 ignore-empty-password
 show-failed-attempts
-font=Iosevka Nerd Font
+font=JetBrainsMono Nerd Font
 
 # Appearance
 image=${wallpaper}

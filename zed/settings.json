@@ -83,12 +83,14 @@
   },
   "vim_mode": false,
   "agent": {
+    "tool_permissions": {
+      "default": "allow"
+    },
     "notify_when_agent_waiting": "all_screens",
     "default_profile": "write",
-    "always_allow_tool_actions": true,
     "default_model": {
       "provider": "copilot_chat",
-      "model": "gpt-5.3-codex"
+      "model": "claude-sonnet-4.6"
     },
     "profiles": {
       "planner": {
@@ -108,7 +110,7 @@
       }
     }
   },
-  "icon_theme": "Colored Zed Icons Theme Dark",
+  "icon_theme": "Zed (Default)",
   "ui_font_family": "JetBrains Mono",
   "buffer_font_family": "JetBrains Mono",
   "base_keymap": "VSCode",
@@ -139,9 +141,7 @@
     "toolbar": {
       "breadcrumbs": true
     },
-    "shell": {
-      "program": "sh"
-    },
+    "shell": "system",
     "max_scroll_history_lines": 10032,
     "default_height": 300.0,
     "copy_on_select": true,

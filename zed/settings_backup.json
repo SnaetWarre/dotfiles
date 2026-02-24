@@ -7,6 +7,11 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "agent_servers": {
+    "opencode": {
+      "type": "registry"
+    }
+  },
   "ssh_connections": [
     {
       "host": "jetson-orin-nano.local",
@@ -40,7 +45,7 @@
   "session": {
     "trust_all_worktrees": true
   },
-  "show_edit_predictions": false,
+  "show_edit_predictions": true,
   "bottom_dock_layout": "contained",
   "tabs": {
     "git_status": true,
@@ -64,6 +69,7 @@
     "*": true
   },
   "edit_predictions": {
+    "provider": "copilot",
     "codestral": {
       "max_tokens": 150
     },
@@ -82,7 +88,7 @@
     "always_allow_tool_actions": true,
     "default_model": {
       "provider": "copilot_chat",
-      "model": "gpt-5.2-codex"
+      "model": "gpt-5-mini"
     },
     "profiles": {
       "planner": {
@@ -93,9 +99,6 @@
       }
     },
     "model_parameters": []
-  },
-  "features": {
-    "edit_prediction_provider": "copilot"
   },
   "context_servers": {
     "mcp-server-context7": {
@@ -110,12 +113,12 @@
   "buffer_font_family": "JetBrains Mono",
   "base_keymap": "VSCode",
   "theme": {
-    "mode": "dark",
+    "mode": "light",
     "light": "Ayu Light",
-    "dark": "Ayu Dark"
+    "dark": "Tokyo Night Storm"
   },
   "autosave": {
-    "after_delay": { "milliseconds": 500 }
+    "after_delay": { "milliseconds": 100 }
   },
   "collaboration_panel": {
     "button": true,
@@ -133,6 +136,12 @@
     "button": false
   },
   "terminal": {
+    "toolbar": {
+      "breadcrumbs": true
+    },
+    "shell": {
+      "program": "sh"
+    },
     "max_scroll_history_lines": 10032,
     "default_height": 300.0,
     "copy_on_select": true,
@@ -140,5 +149,12 @@
   },
   "debugger": {
     "button": false
-  }
+  },
+  "languages": {
+      "Python": {
+        "language_servers": [
+          "ty"
+        ]
+      }
+    }
 }
