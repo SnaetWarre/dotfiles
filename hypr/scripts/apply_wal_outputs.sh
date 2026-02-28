@@ -422,6 +422,8 @@ else
 fi
 
 # Zed theme generation removed by user request
+echo "updating zed theme"
+bash ~/.config/zed/themes/generate-wal-theme.sh 
 
 # Waybar Perplexity SVG generation removed by user request
 
