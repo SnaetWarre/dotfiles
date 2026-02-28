@@ -12,6 +12,7 @@
     "cpu",
     "memory",
     "disk",
-    "kernel"
+    "kernel",
+    "colors"
   ]
 }

@@ -45,7 +45,7 @@
   "session": {
     "trust_all_worktrees": true
   },
-  "show_edit_predictions": true,
+  "show_edit_predictions": false,
   "bottom_dock_layout": "contained",
   "tabs": {
     "git_status": true,
@@ -75,6 +75,7 @@
     },
     "mode": "eager",
     "copilot": {
+      "enable_next_edit_suggestions": false,
       "proxy": null,
       "proxy_no_verify": null,
       "enterprise_uri": null
@@ -90,7 +91,7 @@
     "default_profile": "write",
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-sonnet-4.6"
+      "model": "gpt-4o"
     },
     "profiles": {
       "planner": {
@@ -115,9 +116,9 @@
   "buffer_font_family": "JetBrains Mono",
   "base_keymap": "VSCode",
   "theme": {
-    "mode": "light",
+    "mode": "dark",
     "light": "Ayu Light",
-    "dark": "Tokyo Night Storm"
+    "dark": "Zed Legacy: Ayu Dark"
   },
   "autosave": {
     "after_delay": { "milliseconds": 100 }
