@@ -45,7 +45,7 @@
   "session": {
     "trust_all_worktrees": true
   },
-  "show_edit_predictions": false,
+  "show_edit_predictions": true,
   "bottom_dock_layout": "contained",
   "tabs": {
     "git_status": true,
@@ -75,7 +75,7 @@
     },
     "mode": "eager",
     "copilot": {
-      "enable_next_edit_suggestions": false,
+      "enable_next_edit_suggestions": true,
       "proxy": null,
       "proxy_no_verify": null,
       "enterprise_uri": null
@@ -91,7 +91,7 @@
     "default_profile": "write",
     "default_model": {
       "provider": "copilot_chat",
-      "model": "gpt-4o"
+      "model": "claude-opus-4.6"
     },
     "profiles": {
       "planner": {
