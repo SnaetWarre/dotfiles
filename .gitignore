@@ -75,7 +75,12 @@ zed/extensions/
 !.zshrc_copy
 !.zshrc_optimized
 
-# ============================================================================
+#screenshots
+
+!screenshot_20260301_170133.png 
+!screenshot_20260301_170249.png
+!screenshot_20260301_170259.png
+#============================================================================
 # SECURITY: EXPLICITLY IGNORE SENSITIVE FILES
 # ============================================================================
 # These patterns ensure sensitive files are NEVER tracked
