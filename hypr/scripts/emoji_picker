@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Emoji picker using rofi
+# Emoji picker using tofi
 # The emoji will be copied to clipboard and typed automatically
 
 # Define emojis with descriptions

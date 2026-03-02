@@ -6,7 +6,7 @@
 # ──────────────────────────────────────────────────────────
 
 STATE_FILE="/tmp/gamemode_state"
-ROFI_CMD='rofi -show combi -modi drun,run,combi -combi-modi drun,run -combi-hide-mode-prefix true -theme ~/.config/rofi/config.rasi'
+TOFI_CMD='tofi-drun --config ~/.config/hypr/tofi-drun.conf'
 
 notify() {
     notify-send -u normal -t 3000 "Game Mode" "$1"
@@ -20,7 +20,7 @@ enable_gamemode() {
     # Set to Performance mode (Reactor ON)
     asusctl profile set Performance
 
-    # Unbind rofi (CTRL + SPACE)
+    # Unbind tofi (CTRL + SPACE)
     hyprctl keyword unbind "CTRL, SPACE"
 
     # Disable blur for performance
@@ -47,8 +47,8 @@ disable_gamemode() {
         asusctl profile set Balanced
     fi
 
-    # Rebind rofi (CTRL + SPACE)
-    hyprctl keyword bindd "CTRL, SPACE, Runs your application launcher, exec, $ROFI_CMD"
+    # Rebind tofi (CTRL + SPACE)
+    hyprctl keyword bindd "CTRL, SPACE, Runs your application launcher, exec, $TOFI_CMD"
 
     # Re-enable blur
     hyprctl keyword decoration:blur:enabled true
