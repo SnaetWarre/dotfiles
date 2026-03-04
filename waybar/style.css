@@ -16,11 +16,11 @@
 }
 
 window#waybar {
-  background: rgba(18,21,30, 0.85);
+  background: rgba(11,14,13, 0.85);
   border-radius: 0;
-  color: #f4cdae;
+  color: #f4f5f5;
   border: none;
-  border-bottom: 2px solid #5061a2;
+  border-bottom: 2px solid #a59aa5;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   margin-top: 0px;
   margin-bottom: 0px;
@@ -29,7 +29,7 @@ window#waybar {
 /* === Separator =========================================================== */
 
 #custom-separator {
-  color: #504540;
+  color: #676a6c;
   background: transparent;
   padding: 0 4px;
   margin: 0;
@@ -46,7 +46,7 @@ window#waybar {
 
 #workspaces button {
   background: transparent;
-  color: #504540;
+  color: #676a6c;
   padding: 0 8px;
   margin: 0;
   border: none;
@@ -58,14 +58,14 @@ window#waybar {
 
 #workspaces button.active {
   background: transparent;
-  color: #f4cdae;
-  border-bottom: 3px solid #f4cdae;
+  color: #f4f5f5;
+  border-bottom: 3px solid #f4f5f5;
   font-weight: bold;
 }
 
 #workspaces button:hover {
   background: transparent;
-  color: #f4cdae;
+  color: #f4f5f5;
 }
 
 /* === All Modules - Clean Minimal Styling ================================= */
@@ -82,7 +82,7 @@ window#waybar {
 #custom-display-mode,
 #custom-kbd-brightness {
   background: transparent;
-  color: #f4cdae;
+  color: #f4f5f5;
   padding: 0 8px;
   margin: 0;
   border: none;
@@ -92,61 +92,61 @@ window#waybar {
 /* === Clock =============================================================== */
 
 #clock {
-  color: #687992;
+  color: #c7c7c8;
   font-weight: 500;
 }
 
 /* === Power =============================================================== */
 
 #custom-power {
-  color: #446576;
+  color: #858789;
   font-size: 16px;
 }
 
 #custom-power:hover {
-  color: #446576;
+  color: #858789;
   transition: color 0.2s ease-in-out;
 }
 
 /* === Network ============================================================= */
 
 #network {
-  color: #5061a2;
+  color: #a59aa5;
 }
 
 #network.disconnected {
-  color: #446576;
+  color: #858789;
 }
 
 /* === System Stats ======================================================== */
 
 #custom-system-stats {
-  color: #c7681f;
+  color: #bfc1c2;
   font-size: 14px;
 }
 
 /* === Battery ============================================================= */
 
 #custom-battery {
-  color: #c55007;
+  color: #919395;
 }
 
 /* === Volume ============================================================== */
 
 #custom-volume {
-  color: #687992;
+  color: #c7c7c8;
 }
 
 /* === Brightness ========================================================== */
 
 #custom-brightness {
-  color: #c7681f;
+  color: #bfc1c2;
 }
 
 /* === Asus Profile ======================================================== */
 
 #custom-asus-profile {
-  color: #406d7b;
+  color: #958a95;
   font-weight: 500;
   padding: 0 12px;
 }
@@ -154,12 +154,12 @@ window#waybar {
 /* === Screen Recording ==================================================== */
 
 #custom-screenrecording-indicator {
-  color: #5061a2;
+  color: #a59aa5;
   padding: 0 8px;
 }
 
 #custom-screenrecording-indicator.recording {
-  color: #446576;
+  color: #858789;
   animation-name: recording-blink;
   animation-duration: 0.8s;
   animation-timing-function: linear;
@@ -169,21 +169,21 @@ window#waybar {
 
 @keyframes recording-blink {
   to {
-    color: alpha(#446576, 0.4);
+    color: alpha(#858789, 0.4);
   }
 }
 
 /* === Display Mode ======================================================== */
 
 #custom-display-mode {
-  color: #5061a2;
+  color: #a59aa5;
   padding: 0 8px;
 }
 
 /* === Keyboard Brightness ================================================= */
 
 #custom-kbd-brightness {
-  color: #5061a2;
+  color: #a59aa5;
 }
 
 /* === Hover Effects ======================================================= */
@@ -196,20 +196,20 @@ window#waybar {
 #custom-asus-profile:hover,
 #custom-display-mode:hover,
 #custom-kbd-brightness:hover {
-  color: #f4cdae;
+  color: #f4f5f5;
   transition: color 0.2s ease-in-out;
 }
 
 /* === Tooltips ============================================================ */
 
 tooltip {
-  background: rgba(18,21,30, 0.95);
-  border: 1px solid #504540;
+  background: rgba(11,14,13, 0.95);
+  border: 1px solid #676a6c;
   border-radius: 4px;
-  color: #f4cdae;
+  color: #f4f5f5;
   padding: 8px;
 }
 
 tooltip label {
-  color: #f4cdae;
+  color: #f4f5f5;
 }
