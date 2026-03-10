@@ -4,7 +4,7 @@ show-failed-attempts
 font=JetBrainsMono Nerd Font
 
 # Appearance
-image=/home/warre/Pictures/wallpapers/a_black_sand_with_white_foamy_waves.png
+image=/home/warre/Pictures/wallpapers/a_road_with_trees_and_mountains_in_the_background.jpg
 scaling=fill
 
 # Fade in the lockscreen
@@ -18,32 +18,32 @@ indicator-caps-lock
 indicator-idle-visible
 
 # Colors
-color=11,14,13
-bs-hl-color=149,138,149
-caps-lock-bs-hl-color=149,138,149
-caps-lock-key-hl-color=165,154,165
-inside-color=11,14,1300
-inside-clear-color=133,135,13700
-inside-caps-lock-color=149,138,14900
-inside-ver-color=145,147,14900
-inside-wrong-color=149,138,14900
-key-hl-color=165,154,165
-layout-bg-color=11,14,1300
-layout-border-color=11,14,1300
-layout-text-color=244,245,245
-line-color=11,14,1300
-line-clear-color=11,14,1300
-line-caps-lock-color=11,14,1300
-line-ver-color=11,14,1300
-line-wrong-color=11,14,1300
-ring-color=165,154,165
-ring-clear-color=133,135,137
-ring-caps-lock-color=149,138,149
-ring-ver-color=145,147,149
-ring-wrong-color=149,138,149
-separator-color=11,14,1300
-text-color=244,245,245
-text-clear-color=244,245,245
-text-caps-lock-color=244,245,245
-text-ver-color=244,245,245
-text-wrong-color=244,245,245
+color=37,53,56
+bs-hl-color=121,124,110
+caps-lock-bs-hl-color=121,124,110
+caps-lock-key-hl-color=166,133,88
+inside-color=37,53,5600
+inside-clear-color=119,119,10400
+inside-caps-lock-color=121,124,11000
+inside-ver-color=116,131,13100
+inside-wrong-color=121,124,11000
+key-hl-color=166,133,88
+layout-bg-color=37,53,5600
+layout-border-color=37,53,5600
+layout-text-color=223,228,232
+line-color=37,53,5600
+line-clear-color=37,53,5600
+line-caps-lock-color=37,53,5600
+line-ver-color=37,53,5600
+line-wrong-color=37,53,5600
+ring-color=166,133,88
+ring-clear-color=119,119,104
+ring-caps-lock-color=121,124,110
+ring-ver-color=116,131,131
+ring-wrong-color=121,124,110
+separator-color=37,53,5600
+text-color=223,228,232
+text-clear-color=223,228,232
+text-caps-lock-color=223,228,232
+text-ver-color=223,228,232
+text-wrong-color=223,228,232

@@ -212,6 +212,8 @@ roblox() {
   (setsid flatpak run org.vinegarhq.Sober > /dev/null 2>&1 &)
 }
 
+alias gui='cd "/home/warre/Documents/howest/Semester_5/Stage/StageOpdracht/Master" && mamba run -n DL python -m app.main'
+
 # ============================================================================
 # TYPO CORRECTIONS - Because we all fuck up sometimes
 # ============================================================================

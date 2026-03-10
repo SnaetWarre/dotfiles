@@ -7,7 +7,18 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "diagnostics": {
+    "inline": {
+      "enabled": true
+    }
+  },
   "agent_servers": {
+    "gemini": {
+      "type": "registry"
+    },
+    "cursor": {
+      "type": "registry"
+    },
     "github-copilot": {
       "type": "registry"
     },
@@ -48,9 +59,10 @@
   "session": {
     "trust_all_worktrees": true
   },
-  "show_edit_predictions": true,
+  "show_edit_predictions": false,
   "bottom_dock_layout": "contained",
   "tabs": {
+    "show_diagnostics": "all",
     "git_status": true,
     "file_icons": true
   },
@@ -78,7 +90,7 @@
     },
     "mode": "eager",
     "copilot": {
-      "enable_next_edit_suggestions": true,
+      "enable_next_edit_suggestions": false,
       "proxy": null,
       "proxy_no_verify": null,
       "enterprise_uri": null
@@ -87,14 +99,27 @@
   },
   "vim_mode": false,
   "agent": {
+    "favorite_models": [
+      {
+        "provider": "zed.dev",
+        "model": "gpt-5.4",
+        "enable_thinking": false
+      },
+      {
+        "provider": "copilot_chat",
+        "model": "gpt-5.4",
+        "enable_thinking": false
+      }
+    ],
     "tool_permissions": {
       "default": "allow"
     },
     "notify_when_agent_waiting": "all_screens",
     "default_profile": "write",
     "default_model": {
+      "enable_thinking": false,
       "provider": "copilot_chat",
-      "model": "claude-opus-4.6"
+      "model": "gpt-5.4"
     },
     "profiles": {
       "planner": {
@@ -160,5 +185,5 @@
           "ty"
         ]
       }
-    }
+  }
 }
