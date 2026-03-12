@@ -212,6 +212,10 @@ roblox() {
   (setsid flatpak run org.vinegarhq.Sober > /dev/null 2>&1 &)
 }
 
+alias vpnup="sudo wg-quick up wg0"
+alias vpndown="sudo wg-quick down wg0"
+alias vpnstatus="sudo wg"
+
 alias gui='cd "/home/warre/Documents/howest/Semester_5/Stage/StageOpdracht/Master" && mamba run -n DL python -m app.main'
 
 # ============================================================================

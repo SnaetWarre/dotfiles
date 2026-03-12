@@ -1,6 +1,6 @@
 # Window padding
-window-padding-x = 7
-window-padding-y = 7
+window-padding-x = 12
+window-padding-y = 12
 
 # Font configuration
 font-size = 18.0
@@ -15,42 +15,41 @@ font-family-italic = JetBrains Mono
 font-family-bold-italic = JetBrains Mono
 
 # Cursor configuration
-cursor-style = bar
+cursor-style = block
 # Note: Ghostty doesn't have separate vi_mode_style - it uses the same cursor style
-# cursor-style-blink = true  # Uncomment if you want blinking cursor
 
 # Pywal Color Scheme - Generated automatically
-background = #253538
-foreground = #dfe4e8
+background = #131428
+foreground = #cfd8d6
 
 # Selection colors
-selection-background = #797c6e
-selection-foreground = #253538
+selection-background = #595d6b
+selection-foreground = #131428
 
 # Cursor colors
-cursor-color = #dfe4e8
-cursor-text = #253538
+cursor-color = #cfd8d6
+cursor-text = #131428
 
 # Normal colors (0-7)
-palette = 0=#253538
-palette = 1=#777768
-palette = 2=#797c6e
-palette = 3=#748383
-palette = 4=#a68558
-palette = 5=#90a6a3
-palette = 6=#909ca7
-palette = 7=#dfe4e8
+palette = 0=#131428
+palette = 1=#474d5e
+palette = 2=#595d6b
+palette = 3=#635c6b
+palette = 4=#7d5a73
+palette = 5=#7e818a
+palette = 6=#6d827e
+palette = 7=#cfd8d6
 
 # Bright colors (8-15)
-palette = 8=#546d78
-palette = 9=#777768
-palette = 10=#797c6e
-palette = 11=#748383
-palette = 12=#a68558
-palette = 13=#90a6a3
-palette = 14=#909ca7
-palette = 15=#dfe4e8
+palette = 8=#433859
+palette = 9=#474d5e
+palette = 10=#595d6b
+palette = 11=#635c6b
+palette = 12=#7d5a73
+palette = 13=#7e818a
+palette = 14=#6d827e
+palette = 15=#cfd8d6
 
-
-background-opacity = 0.7 
+confirm-close-surface = false
+background-opacity = 0.88 
 background-blur = true
