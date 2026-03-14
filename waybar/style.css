@@ -16,11 +16,10 @@
 }
 
 window#waybar {
-  background: rgba(19,20,40, 0.85);
+  background: rgba(0,6,45, 0.85);
   border-radius: 0;
-  color: #cfd8d6;
+  color: #e3d3f1;
   border: none;
-  border-bottom: 2px solid #7d5a73;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   margin-top: 0px;
   margin-bottom: 0px;
@@ -29,7 +28,7 @@ window#waybar {
 /* === Separator =========================================================== */
 
 #custom-separator {
-  color: #433859;
+  color: #633c55;
   background: transparent;
   padding: 0 4px;
   margin: 0;
@@ -41,31 +40,33 @@ window#waybar {
 #workspaces {
   background: transparent;
   padding: 0;
-  margin: 0;
+  margin: 4px 0;
 }
 
 #workspaces button {
   background: transparent;
-  color: #433859;
-  padding: 0 8px;
-  margin: 0;
+  color: #e3d3f1;
+  opacity: 0.35;
+  padding: 2px 7px;
+  margin: 0 2px;
   border: none;
-  border-bottom: 2px solid transparent;
-  border-radius: 0;
-  font-size: 16px;
+  border-radius: 12px;
+  font-size: 15px;
   font-weight: normal;
+  transition: all 0.2s ease-in-out;
 }
 
 #workspaces button.active {
-  background: transparent;
-  color: #cfd8d6;
-  border-bottom: 3px solid #cfd8d6;
+  background: rgba(227,211,241, 0.15);
+  color: #e3d3f1;
+  opacity: 1;
   font-weight: bold;
 }
 
 #workspaces button:hover {
-  background: transparent;
-  color: #cfd8d6;
+  background: rgba(227,211,241, 0.08);
+  color: #e3d3f1;
+  opacity: 0.8;
 }
 
 /* === All Modules - Clean Minimal Styling ================================= */
@@ -82,7 +83,7 @@ window#waybar {
 #custom-display-mode,
 #custom-kbd-brightness {
   background: transparent;
-  color: #cfd8d6;
+  color: #e3d3f1;
   padding: 0 8px;
   margin: 0;
   border: none;
@@ -92,61 +93,61 @@ window#waybar {
 /* === Clock =============================================================== */
 
 #clock {
-  color: #7e818a;
+  color: #d56bab;
   font-weight: 500;
 }
 
 /* === Power =============================================================== */
 
 #custom-power {
-  color: #474d5e;
+  color: #764162;
   font-size: 16px;
 }
 
 #custom-power:hover {
-  color: #474d5e;
+  color: #764162;
   transition: color 0.2s ease-in-out;
 }
 
 /* === Network ============================================================= */
 
 #network {
-  color: #7d5a73;
+  color: #3378d1;
 }
 
 #network.disconnected {
-  color: #474d5e;
+  color: #764162;
 }
 
 /* === System Stats ======================================================== */
 
 #custom-system-stats {
-  color: #6d827e;
+  color: #9973bb;
   font-size: 14px;
 }
 
 /* === Battery ============================================================= */
 
 #custom-battery {
-  color: #635c6b;
+  color: #655bb2;
 }
 
 /* === Volume ============================================================== */
 
 #custom-volume {
-  color: #7e818a;
+  color: #d56bab;
 }
 
 /* === Brightness ========================================================== */
 
 #custom-brightness {
-  color: #6d827e;
+  color: #9973bb;
 }
 
 /* === Asus Profile ======================================================== */
 
 #custom-asus-profile {
-  color: #595d6b;
+  color: #a2486a;
   font-weight: 500;
   padding: 0 12px;
 }
@@ -154,12 +155,12 @@ window#waybar {
 /* === Screen Recording ==================================================== */
 
 #custom-screenrecording-indicator {
-  color: #7d5a73;
+  color: #3378d1;
   padding: 0 8px;
 }
 
 #custom-screenrecording-indicator.recording {
-  color: #474d5e;
+  color: #764162;
   animation-name: recording-blink;
   animation-duration: 0.8s;
   animation-timing-function: linear;
@@ -169,21 +170,21 @@ window#waybar {
 
 @keyframes recording-blink {
   to {
-    color: alpha(#474d5e, 0.4);
+    color: alpha(#764162, 0.4);
   }
 }
 
 /* === Display Mode ======================================================== */
 
 #custom-display-mode {
-  color: #7d5a73;
+  color: #3378d1;
   padding: 0 8px;
 }
 
 /* === Keyboard Brightness ================================================= */
 
 #custom-kbd-brightness {
-  color: #7d5a73;
+  color: #3378d1;
 }
 
 /* === Hover Effects ======================================================= */
@@ -196,20 +197,20 @@ window#waybar {
 #custom-asus-profile:hover,
 #custom-display-mode:hover,
 #custom-kbd-brightness:hover {
-  color: #cfd8d6;
+  color: #e3d3f1;
   transition: color 0.2s ease-in-out;
 }
 
 /* === Tooltips ============================================================ */
 
 tooltip {
-  background: rgba(19,20,40, 0.95);
-  border: 1px solid #433859;
+  background: rgba(0,6,45, 0.95);
+  border: 1px solid #633c55;
   border-radius: 4px;
-  color: #cfd8d6;
+  color: #e3d3f1;
   padding: 8px;
 }
 
 tooltip label {
-  color: #cfd8d6;
+  color: #e3d3f1;
 }
