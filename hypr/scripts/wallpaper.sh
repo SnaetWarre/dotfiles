@@ -15,6 +15,7 @@ log_step() {
 
 # Directory containing wallpapers
 WALLPAPER_DIR="$HOME/Pictures/wallpapers"
+WAL_BIN="${WAL_BIN:-$HOME/.local/bin/wal}"
 
 # If a specific wallpaper is provided as an argument, use it
 if [ -n "$1" ]; then
@@ -26,12 +27,17 @@ fi
 
 echo "Selected wallpaper: $WALLPAPER"
 
-# Apply wallpaper with pywal and wait for it to finish
+# Apply wallpaper and wait for palette generation to finish
 # Use -q (quiet)
-echo "Running Pywal to generate colors (waiting for completion)..."
+echo "Running wal to generate colors (waiting for completion)..."
 # Default to the classic wal backend unless overridden
 WAL_BACKEND="${WAL_BACKEND:-wal}"
 __t0=$(now_ms)
+
+if [ ! -x "$WAL_BIN" ]; then
+    echo "Error: wal binary not found at $WAL_BIN" >&2
+    exit 1
+fi
 
 # If the selected wallpaper differs from last colors.sh entry, force regeneration
 PREV_WALL_FROM_COLORS=$(grep -E "^wallpaper='" "$HOME/.cache/wal/colors.sh" 2>/dev/null | sed -E "s/^wallpaper='(.*)'$/\1/")
@@ -61,8 +67,8 @@ swww img "$WALLPAPER" \
     --transition-bezier .2,1,.2,1 &
 log_step "swww-start" "$__t3"
 
-# Generate colors (blocking) - using walrs
-/home/warre/.local/bin/walrs -i "$WALLPAPER" -q -W
+# Generate colors (blocking) with the local pywal-rs build
+"$WAL_BIN" -i "$WALLPAPER" -q -n --backend "$WAL_BACKEND"
 
 # Ensure cache wallpaper path exists for consumers expecting it
 printf '%s' "$WALLPAPER" > "$HOME/.cache/wal/wallpaper" 2>/dev/null || true
@@ -72,7 +78,7 @@ for _i in 1 2 3 4 5; do
     sleep 0.05
 done
 if [ ! -f "$HOME/.cache/wal/colors.sh" ]; then
-    /home/warre/.local/bin/walrs -i "$WALLPAPER" -q -W || true
+    "$WAL_BIN" -i "$WALLPAPER" -q -n --backend "$WAL_BACKEND" || true
     for _i in 1 2 3 4 5; do
         [ -f "$HOME/.cache/wal/colors.sh" ] && break
         sleep 0.05
@@ -110,7 +116,7 @@ fi
 
 # Apply colors using the new master script (handles Waybar, Rofi, etc.)
 # This script sources the colors internally, ensuring it gets the latest.
-echo "Applying Pywal colors via master script..."
+echo "Applying wal colors via master script..."
 if [ -x "$HOME/.config/hypr/scripts/apply_wal_outputs.sh" ]; then
     __t1=$(now_ms)
     "$HOME/.config/hypr/scripts/apply_wal_outputs.sh"

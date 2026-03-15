@@ -9,6 +9,7 @@ set -e
 THEMES_DIR="$HOME/.config/hypr/themes"
 CURRENT_THEME_FILE="$HOME/.config/hypr/current_theme"
 CONFIG_DIR="$HOME/.config"
+WAL_BIN="${WAL_BIN:-$HOME/.local/bin/wal}"
 
 # Check if theme name is provided
 if [ -z "$1" ]; then
@@ -56,6 +57,27 @@ hex_to_rgb() {
     local g=$((16#${hex:2:2}))
     local b=$((16#${hex:4:2}))
     echo "$r,$g,$b"
+}
+
+reload_ghostty() {
+    if ! pgrep ghostty >/dev/null 2>&1; then
+        echo "  Ghostty not running, theme will apply when it starts"
+        return 0
+    fi
+
+    if ! command -v gdbus >/dev/null 2>&1; then
+        echo "  Warning: gdbus not found, Ghostty needs a manual reload"
+        return 1
+    fi
+
+    gdbus call --session \
+        --dest com.mitchellh.ghostty \
+        --object-path /com/mitchellh/ghostty \
+        --method org.gtk.Actions.Activate \
+        reload-config "[]" "{}" >/dev/null 2>&1 || {
+        echo "  Warning: Failed to reload Ghostty"
+        return 1
+    }
 }
 
 # Calculate RGB colors
@@ -151,6 +173,7 @@ fi
 if [ -f "$CONFIG_DIR/ghostty/config.template" ]; then
     echo "Applying theme to Ghostty..."
     envsubst < "$CONFIG_DIR/ghostty/config.template" > "$CONFIG_DIR/ghostty/config"
+    reload_ghostty || true
 fi
 
 # Update Hyprland window border colors to match theme
@@ -208,8 +231,8 @@ if [ ! -z "$wallpaper" ] && [ -f "$wallpaper" ]; then
         echo "  Error: swww not found! Please install swww."
     fi
 
-    # Run walrs to refresh colors
-    if command -v /home/warre/.local/bin/walrs &> /dev/null; then
+    # Run wal to refresh colors
+    if [ -x "$WAL_BIN" ]; then
         WALP="$wallpaper"
         if [ -z "$WALP" ] || [ ! -f "$WALP" ]; then
             if [ -f "$HOME/.cache/wal/wallpaper" ]; then
@@ -217,8 +240,10 @@ if [ ! -z "$wallpaper" ] && [ -f "$wallpaper" ]; then
             fi
         fi
         if [ -n "$WALP" ] && [ -f "$WALP" ]; then
-            /home/warre/.local/bin/walrs -W -q -i "$WALP" || echo "  Warning: walrs failed to generate cache colors"
+            "$WAL_BIN" -n -q -i "$WALP" || echo "  Warning: wal failed to generate cache colors"
         fi
+    else
+        echo "  Warning: wal binary not found at $WAL_BIN"
     fi
 fi
 

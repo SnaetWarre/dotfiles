@@ -29,6 +29,22 @@ write_if_changed() {
     fi
 }
 
+reload_ghostty() {
+    if ! pgrep ghostty >/dev/null 2>&1; then
+        return 1
+    fi
+
+    if ! command -v gdbus >/dev/null 2>&1; then
+        return 1
+    fi
+
+    gdbus call --session \
+        --dest com.mitchellh.ghostty \
+        --object-path /com/mitchellh/ghostty \
+        --method org.gtk.Actions.Activate \
+        reload-config "[]" "{}" >/dev/null 2>&1
+}
+
 # --- Configuration ---
 CACHE_DIR="$HOME/.cache/wal"
 COLORS_SH="$CACHE_DIR/colors.sh"
@@ -330,6 +346,7 @@ fi
 # --- Process Ghostty Config ---
 echo "Processing Ghostty template: $GHOSTTY_TEMPLATE -> $GHOSTTY_OUTPUT_CONFIG"
 __t_ghostty=$(now_ms)
+GHOSTTY_CHANGED=0
 if [ ! -f "$GHOSTTY_TEMPLATE" ]; then
     echo "Warning: Ghostty template not found at $GHOSTTY_TEMPLATE" >&2
 else
@@ -337,7 +354,10 @@ else
     GHOSTTY_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}'
     tmp_ghostty=$(mktemp)
     envsubst "$GHOSTTY_VARS" < "$GHOSTTY_TEMPLATE" > "$tmp_ghostty"
-    write_if_changed "$tmp_ghostty" "$GHOSTTY_OUTPUT_CONFIG" >/dev/null || true
+    GHOSTTY_STATUS=$(write_if_changed "$tmp_ghostty" "$GHOSTTY_OUTPUT_CONFIG" || true)
+    if [ "$GHOSTTY_STATUS" = "changed" ]; then
+        GHOSTTY_CHANGED=1
+    fi
     log_step "ghostty-config" "$__t_ghostty"
 fi
 
@@ -442,6 +462,12 @@ fi
 if [ "$SWAYNC_CHANGED" = 1 ] && command -v swaync-client &> /dev/null; then
     echo "Restarting swaync (async)..."
     ( swaync-client -rs || echo "Warning: swaync-client -rs failed." ) &
+fi
+
+# Reload Ghostty if its config changed
+if [ "$GHOSTTY_CHANGED" = 1 ] && pgrep ghostty >/dev/null; then
+    echo "Reloading Ghostty due to config change..."
+    reload_ghostty || echo "Warning: Ghostty reload failed." >&2
 fi
 
 # Reload waybar if its CSS changed (synchronous to guarantee pickup)
