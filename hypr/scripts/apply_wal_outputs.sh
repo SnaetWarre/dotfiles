@@ -155,7 +155,7 @@ echo "Color verification successful (color0..8 and wallpaper)"
 
 # --- Export Core Colors for envsubst ---
 # Exporting ensures envsubst definitely sees them
-export color0 color1 color2 color3 color4 color5 color6 color7 color8 wallpaper
+export color0 color1 color2 color3 color4 color5 color6 color7 color8 color9 color10 color11 color12 color13 color14 color15 wallpaper
 
 # --- Helper Function ---
 # Converts hex color (e.g., #aabbcc) to R,G,B format (e.g., 170,187,204)
@@ -210,6 +210,13 @@ color5_rgb=$(hex_to_rgb "$color5")
 color6_rgb=$(hex_to_rgb "$color6")
 color7_rgb=$(hex_to_rgb "$color7")
 color8_rgb=$(hex_to_rgb "$color8")
+color9_rgb=$(hex_to_rgb "$color9")
+color10_rgb=$(hex_to_rgb "$color10")
+color11_rgb=$(hex_to_rgb "$color11")
+color12_rgb=$(hex_to_rgb "$color12")
+color13_rgb=$(hex_to_rgb "$color13")
+color14_rgb=$(hex_to_rgb "$color14")
+color15_rgb=$(hex_to_rgb "$color15")
 
 # --- Process Waybar CSS ---
 echo "Processing Waybar template: $WAYBAR_TEMPLATE -> $WAYBAR_OUTPUT_CSS"
@@ -221,21 +228,19 @@ if [ ! -f "$WAYBAR_TEMPLATE" ]; then
 fi
 
 # Export the calculated RGB vars so envsubst can find them
-export color0_rgb color1_rgb color2_rgb color3_rgb color4_rgb color5_rgb color6_rgb color7_rgb color8_rgb
+export color0_rgb color1_rgb color2_rgb color3_rgb color4_rgb color5_rgb color6_rgb color7_rgb color8_rgb color9_rgb color10_rgb color11_rgb color12_rgb color13_rgb color14_rgb color15_rgb
 
 # Ensure the variables list for envsubst only contains valid shell variable names ($ or ${})
 # The previous list was okay, but this is slightly safer if variable names had dashes etc.
-WAYBAR_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}:${color0_rgb}:${color1_rgb}:${color2_rgb}:${color3_rgb}:${color4_rgb}:${color5_rgb}:${color6_rgb}:${color7_rgb}:${color8_rgb}:$HOME'
+WAYBAR_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}:${color9}:${color10}:${color11}:${color12}:${color13}:${color14}:${color15}:${color0_rgb}:${color1_rgb}:${color2_rgb}:${color3_rgb}:${color4_rgb}:${color5_rgb}:${color6_rgb}:${color7_rgb}:${color8_rgb}:${color9_rgb}:${color10_rgb}:${color11_rgb}:${color12_rgb}:${color13_rgb}:${color14_rgb}:${color15_rgb}:$HOME'
 
-PRE_HASH=$(sha256sum "$WAYBAR_OUTPUT_CSS" 2>/dev/null | awk '{print $1}' || echo none)
 tmp_waybar=$(mktemp)
 envsubst "$WAYBAR_VARS" < "$WAYBAR_TEMPLATE" > "$tmp_waybar"
 STATUS=$(write_if_changed "$tmp_waybar" "$WAYBAR_OUTPUT_CSS" || true)
 if [ "$STATUS" = "changed" ]; then
     WAYBAR_CHANGED=1
 fi
-POST_HASH=$(sha256sum "$WAYBAR_OUTPUT_CSS" 2>/dev/null | awk '{print $1}' || echo none)
-echo "[waybar-css] pre=$PRE_HASH post=$POST_HASH changed=$WAYBAR_CHANGED"
+echo "[waybar-css] changed=$WAYBAR_CHANGED"
 log_step "waybar-css" "$__t_waybar"
 
 # --- Process Swaync CSS ---

@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# Enable debug output
-set -x
+# Enable debug output only when requested
+if [ "${WALLPAPER_DEBUG:-0}" = "1" ]; then
+    set -x
+fi
 
 # --- Timing helpers ---
 now_ms() { date +%s%3N; }
@@ -16,6 +18,16 @@ log_step() {
 # Directory containing wallpapers
 WALLPAPER_DIR="$HOME/Pictures/wallpapers"
 WAL_BIN="${WAL_BIN:-$HOME/.local/bin/wal}"
+WAL_BACKEND="${WAL_BACKEND:-wal}"
+WAL_SATURATE="${WAL_SATURATE:-}"
+
+run_wal() {
+    local wal_args=("$WAL_BIN" -i "$WALLPAPER" -q -n --backend "$WAL_BACKEND")
+    if [ -n "$WAL_SATURATE" ]; then
+        wal_args+=(--saturate "$WAL_SATURATE")
+    fi
+    "${wal_args[@]}"
+}
 
 # If a specific wallpaper is provided as an argument, use it
 if [ -n "$1" ]; then
@@ -30,8 +42,7 @@ echo "Selected wallpaper: $WALLPAPER"
 # Apply wallpaper and wait for palette generation to finish
 # Use -q (quiet)
 echo "Running wal to generate colors (waiting for completion)..."
-# Default to the classic wal backend unless overridden
-WAL_BACKEND="${WAL_BACKEND:-wal}"
+# Use the fast native backend with a mild saturation boost unless overridden
 __t0=$(now_ms)
 
 if [ ! -x "$WAL_BIN" ]; then
@@ -68,7 +79,7 @@ swww img "$WALLPAPER" \
 log_step "swww-start" "$__t3"
 
 # Generate colors (blocking) with the local pywal-rs build
-"$WAL_BIN" -i "$WALLPAPER" -q -n --backend "$WAL_BACKEND"
+run_wal
 
 # Ensure cache wallpaper path exists for consumers expecting it
 printf '%s' "$WALLPAPER" > "$HOME/.cache/wal/wallpaper" 2>/dev/null || true
@@ -78,7 +89,7 @@ for _i in 1 2 3 4 5; do
     sleep 0.05
 done
 if [ ! -f "$HOME/.cache/wal/colors.sh" ]; then
-    "$WAL_BIN" -i "$WALLPAPER" -q -n --backend "$WAL_BACKEND" || true
+    run_wal || true
     for _i in 1 2 3 4 5; do
         [ -f "$HOME/.cache/wal/colors.sh" ] && break
         sleep 0.05
@@ -140,15 +151,14 @@ fi
 # Set wallpaper with swww — smooth premium transition
 # swww already started above; if needed we could wait here, but keep parallel for speed
 
-# Reload Waybar to apply new colors
-__t4=$(now_ms)
-killall -SIGUSR2 waybar
-log_step "waybar-reload" "$__t4"
+# Waybar reload is handled inside apply_wal_outputs.sh when needed
 
 # Total timing
 log_step "TOTAL wallpaper.sh" "$__t0"
 
 # Disable debug output
-set +x
+if [ "${WALLPAPER_DEBUG:-0}" = "1" ]; then
+    set +x
+fi
 
 echo "Done!"

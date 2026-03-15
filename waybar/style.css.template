@@ -58,15 +58,15 @@ window#waybar {
 }
 
 #workspaces button.active {
-  background: rgba($color7_rgb, 0.15);
-  color: $color7;
+  background: rgba($color12_rgb, 0.18);
+  color: $color15;
   opacity: 1;
   font-weight: bold;
 }
 
 #workspaces button:hover {
-  background: rgba($color7_rgb, 0.08);
-  color: $color7;
+  background: rgba($color12_rgb, 0.10);
+  color: $color15;
   opacity: 0.8;
 }
 
@@ -94,61 +94,61 @@ window#waybar {
 /* === Clock =============================================================== */
 
 #clock {
-  color: $color5;
+  color: $color13;
   font-weight: 500;
 }
 
 /* === Power =============================================================== */
 
 #custom-power {
-  color: $color1;
+  color: $color9;
   font-size: 16px;
 }
 
 #custom-power:hover {
-  color: $color1;
+  color: $color15;
   transition: color 0.2s ease-in-out;
 }
 
 /* === Network ============================================================= */
 
 #network {
-  color: $color4;
+  color: $color12;
 }
 
 #network.disconnected {
-  color: $color1;
+  color: $color9;
 }
 
 /* === System Stats ======================================================== */
 
 #custom-system-stats {
-  color: $color6;
+  color: $color14;
   font-size: 14px;
 }
 
 /* === Battery ============================================================= */
 
 #custom-battery {
-  color: $color3;
+  color: $color11;
 }
 
 /* === Volume ============================================================== */
 
 #custom-volume {
-  color: $color5;
+  color: $color13;
 }
 
 /* === Brightness ========================================================== */
 
 #custom-brightness {
-  color: $color6;
+  color: $color14;
 }
 
 /* === Asus Profile ======================================================== */
 
 #custom-asus-profile {
-  color: $color2;
+  color: $color11;
   font-weight: 500;
   padding: 0 12px;
 }
@@ -156,12 +156,12 @@ window#waybar {
 /* === Screen Recording ==================================================== */
 
 #custom-screenrecording-indicator {
-  color: $color4;
+  color: $color12;
   padding: 0 8px;
 }
 
 #custom-screenrecording-indicator.recording {
-  color: $color1;
+  color: $color9;
   animation-name: recording-blink;
   animation-duration: 0.8s;
   animation-timing-function: linear;
@@ -171,21 +171,21 @@ window#waybar {
 
 @keyframes recording-blink {
   to {
-    color: alpha($color1, 0.4);
+    color: alpha($color9, 0.4);
   }
 }
 
 /* === Display Mode ======================================================== */
 
 #custom-display-mode {
-  color: $color4;
+  color: $color12;
   padding: 0 8px;
 }
 
 /* === Keyboard Brightness ================================================= */
 
 #custom-kbd-brightness {
-  color: $color4;
+  color: $color14;
 }
 
 /* === Hover Effects ======================================================= */
@@ -206,7 +206,7 @@ window#waybar {
 
 tooltip {
   background: rgba($color0_rgb, 0.95);
-  border: 1px solid $color8;
+  border: 1px solid $color12;
   border-radius: 4px;
   color: $color7;
   padding: 8px;

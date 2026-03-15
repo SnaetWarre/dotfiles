@@ -10,6 +10,8 @@ THEMES_DIR="$HOME/.config/hypr/themes"
 CURRENT_THEME_FILE="$HOME/.config/hypr/current_theme"
 CONFIG_DIR="$HOME/.config"
 WAL_BIN="${WAL_BIN:-$HOME/.local/bin/wal}"
+WAL_BACKEND="${WAL_BACKEND:-wal}"
+WAL_SATURATE="${WAL_SATURATE:-}"
 
 # Check if theme name is provided
 if [ -z "$1" ]; then
@@ -240,7 +242,11 @@ if [ ! -z "$wallpaper" ] && [ -f "$wallpaper" ]; then
             fi
         fi
         if [ -n "$WALP" ] && [ -f "$WALP" ]; then
-            "$WAL_BIN" -n -q -i "$WALP" || echo "  Warning: wal failed to generate cache colors"
+            WAL_ARGS=("$WAL_BIN" -n -q -i "$WALP" --backend "$WAL_BACKEND")
+            if [ -n "$WAL_SATURATE" ]; then
+                WAL_ARGS+=(--saturate "$WAL_SATURATE")
+            fi
+            "${WAL_ARGS[@]}" || echo "  Warning: wal failed to generate cache colors"
         fi
     else
         echo "  Warning: wal binary not found at $WAL_BIN"

@@ -4,7 +4,7 @@ show-failed-attempts
 font=JetBrainsMono Nerd Font
 
 # Appearance
-image=/home/warre/Pictures/wallpapers/call-it-a-day.jpg
+image=/home/warre/Pictures/wallpapers/black.jpg
 scaling=fill
 
 # Fade in the lockscreen
@@ -18,32 +18,32 @@ indicator-caps-lock
 indicator-idle-visible
 
 # Colors
-color=21,32,35
-bs-hl-color=82,92,80
-caps-lock-bs-hl-color=82,92,80
-caps-lock-key-hl-color=61,128,189
-inside-color=21,32,3500
-inside-clear-color=36,76,12400
-inside-caps-lock-color=82,92,8000
-inside-ver-color=100,92,7800
-inside-wrong-color=82,92,8000
-key-hl-color=61,128,189
-layout-bg-color=21,32,3500
-layout-border-color=21,32,3500
-layout-text-color=237,233,217
-line-color=21,32,3500
-line-clear-color=21,32,3500
-line-caps-lock-color=21,32,3500
-line-ver-color=21,32,3500
-line-wrong-color=21,32,3500
-ring-color=61,128,189
-ring-clear-color=36,76,124
-ring-caps-lock-color=82,92,80
-ring-ver-color=100,92,78
-ring-wrong-color=82,92,80
-separator-color=21,32,3500
-text-color=237,233,217
-text-clear-color=237,233,217
-text-caps-lock-color=237,233,217
-text-ver-color=237,233,217
-text-wrong-color=237,233,217
+color=0,0,0
+bs-hl-color=45,45,45
+caps-lock-bs-hl-color=45,45,45
+caps-lock-key-hl-color=75,75,75
+inside-color=0,0,000
+inside-clear-color=0,0,000
+inside-caps-lock-color=45,45,4500
+inside-ver-color=36,36,3600
+inside-wrong-color=45,45,4500
+key-hl-color=75,75,75
+layout-bg-color=0,0,000
+layout-border-color=0,0,000
+layout-text-color=157,157,157
+line-color=0,0,000
+line-clear-color=0,0,000
+line-caps-lock-color=0,0,000
+line-ver-color=0,0,000
+line-wrong-color=0,0,000
+ring-color=75,75,75
+ring-clear-color=0,0,0
+ring-caps-lock-color=45,45,45
+ring-ver-color=36,36,36
+ring-wrong-color=45,45,45
+separator-color=0,0,000
+text-color=157,157,157
+text-clear-color=157,157,157
+text-caps-lock-color=157,157,157
+text-ver-color=157,157,157
+text-wrong-color=157,157,157
