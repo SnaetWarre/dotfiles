@@ -4,7 +4,7 @@ show-failed-attempts
 font=JetBrainsMono Nerd Font
 
 # Appearance
-image=/home/warre/Pictures/wallpapers/black.jpg
+image=/home/warre/Pictures/wallpapers/15 - fgfG6Hl.jpg
 scaling=fill
 
 # Fade in the lockscreen
@@ -18,32 +18,32 @@ indicator-caps-lock
 indicator-idle-visible
 
 # Colors
-color=0,0,0
-bs-hl-color=45,45,45
-caps-lock-bs-hl-color=45,45,45
-caps-lock-key-hl-color=75,75,75
-inside-color=0,0,000
-inside-clear-color=0,0,000
-inside-caps-lock-color=45,45,4500
-inside-ver-color=36,36,3600
-inside-wrong-color=45,45,4500
-key-hl-color=75,75,75
-layout-bg-color=0,0,000
-layout-border-color=0,0,000
-layout-text-color=157,157,157
-line-color=0,0,000
-line-clear-color=0,0,000
-line-caps-lock-color=0,0,000
-line-ver-color=0,0,000
-line-wrong-color=0,0,000
-ring-color=75,75,75
-ring-clear-color=0,0,0
-ring-caps-lock-color=45,45,45
-ring-ver-color=36,36,36
-ring-wrong-color=45,45,45
-separator-color=0,0,000
-text-color=157,157,157
-text-clear-color=157,157,157
-text-caps-lock-color=157,157,157
-text-ver-color=157,157,157
-text-wrong-color=157,157,157
+color=26,20,24
+bs-hl-color=124,60,36
+caps-lock-bs-hl-color=124,60,36
+caps-lock-key-hl-color=177,92,65
+inside-color=26,20,2400
+inside-clear-color=51,46,5700
+inside-caps-lock-color=124,60,3600
+inside-ver-color=107,84,9100
+inside-wrong-color=124,60,3600
+key-hl-color=177,92,65
+layout-bg-color=26,20,2400
+layout-border-color=26,20,2400
+layout-text-color=239,226,197
+line-color=26,20,2400
+line-clear-color=26,20,2400
+line-caps-lock-color=26,20,2400
+line-ver-color=26,20,2400
+line-wrong-color=26,20,2400
+ring-color=177,92,65
+ring-clear-color=51,46,57
+ring-caps-lock-color=124,60,36
+ring-ver-color=107,84,91
+ring-wrong-color=124,60,36
+separator-color=26,20,2400
+text-color=239,226,197
+text-clear-color=239,226,197
+text-caps-lock-color=239,226,197
+text-ver-color=239,226,197
+text-wrong-color=239,226,197
