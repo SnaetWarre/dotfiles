@@ -4,11 +4,11 @@ return {
     require("fff.download").download_or_build_binary()
   end,
   lazy = false,
+  keys = {
+    { "ff", function() require('fff').find_files() end, desc = 'Find files' },
+    { "fg", function() require('fff').live_grep() end, desc = 'Live grep' },
+  },
   config = function()
-    require("fff").setup({
-      -- Use sensible defaults
-    })
-    -- Map <leader>f to open fff file finder
-    vim.keymap.set("n", "<leader>f", ":Fff<CR>", { noremap = true, silent = true })
+    require("fff").setup({})
   end,
 }
