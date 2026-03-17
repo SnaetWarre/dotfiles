@@ -32,6 +32,7 @@ This system provides dynamic theme switching using Pywal to generate colors from
     - Wlogout CSS (`~/.config/wlogout/style.css`)
     - Swaylock config (`~/.config/swaylock/config`)
     - Ghostty config (`~/.config/ghostty/config`)
+    - Kitty config (`~/.config/kitty/kitty.conf`)
     - Rofi colors (`~/.config/rofi/colors.rasi`)
     - Rofi wallpaper theme (`~/.config/rofi/wallpaper.rasi`)
     - eww CSS (`~/.config/eww/eww.scss`)
@@ -81,6 +82,7 @@ This system provides dynamic theme switching using Pywal to generate colors from
 - **Wlogout**: `~/.config/wlogout/style.css.template`
 - **Swaylock**: `~/.config/swaylock/config.template`
 - **Ghostty**: `~/.config/ghostty/config.template`
+- **Kitty**: `~/.config/kitty/kitty.conf.template`
 - **Rofi**: `~/.config/rofi/wallpaper.rasi.template`
 - **eww**: `~/.config/eww/eww.scss.template`
 
@@ -138,6 +140,11 @@ Uses `envsubst` with these color variables:
 #### Ghostty (Terminal)
 - Template: `~/.config/ghostty/config.template`
 - Output: `~/.config/ghostty/config`
+
+#### Kitty (Terminal)
+- Template: `~/.config/kitty/kitty.conf.template`
+- Output: `~/.config/kitty/kitty.conf`
+- Reload: `killall -SIGUSR1 kitty`
 
 ### 6. Additional Features
 
@@ -199,6 +206,9 @@ Uses `envsubst` with these color variables:
 ├── ghostty/
 │   ├── config.template
 │   └── config
+├── kitty/
+│   ├── kitty.conf.template
+│   └── kitty.conf
 ├── rofi/
 │   ├── wallpaper.rasi.template
 │   ├── wallpaper.rasi

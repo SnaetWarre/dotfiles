@@ -81,6 +81,10 @@ GHOSTTY_CONFIG_DIR="$CONFIG_DIR/ghostty"
 GHOSTTY_TEMPLATE="$GHOSTTY_CONFIG_DIR/config.template"
 GHOSTTY_OUTPUT_CONFIG="$GHOSTTY_CONFIG_DIR/config"
 
+KITTY_CONFIG_DIR="$CONFIG_DIR/kitty"
+KITTY_TEMPLATE="$KITTY_CONFIG_DIR/kitty.conf.template"
+KITTY_OUTPUT_CONFIG="$KITTY_CONFIG_DIR/kitty.conf"
+
 GTK3_DIR="$CONFIG_DIR/gtk-3.0"
 GTK3_TEMPLATE="$GTK3_DIR/gtk.css.template"
 GTK3_OUTPUT="$GTK3_DIR/gtk.css"
@@ -366,6 +370,24 @@ else
     log_step "ghostty-config" "$__t_ghostty"
 fi
 
+# --- Process Kitty Config ---
+echo "Processing Kitty template: $KITTY_TEMPLATE -> $KITTY_OUTPUT_CONFIG"
+__t_kitty=$(now_ms)
+KITTY_CHANGED=0
+if [ ! -f "$KITTY_TEMPLATE" ]; then
+    echo "Warning: Kitty template not found at $KITTY_TEMPLATE" >&2
+else
+    # Define vars needed by kitty template
+    KITTY_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}'
+    tmp_kitty=$(mktemp)
+    envsubst "$KITTY_VARS" < "$KITTY_TEMPLATE" > "$tmp_kitty"
+    KITTY_STATUS=$(write_if_changed "$tmp_kitty" "$KITTY_OUTPUT_CONFIG" || true)
+    if [ "$KITTY_STATUS" = "changed" ]; then
+        KITTY_CHANGED=1
+    fi
+    log_step "kitty-config" "$__t_kitty"
+fi
+
 # --- Process GTK-3.0 CSS ---
 echo "Processing GTK-3.0 template: $GTK3_TEMPLATE -> $GTK3_OUTPUT"
 __t_gtk3=$(now_ms)
@@ -473,6 +495,12 @@ fi
 if [ "$GHOSTTY_CHANGED" = 1 ] && pgrep ghostty >/dev/null; then
     echo "Reloading Ghostty due to config change..."
     reload_ghostty || echo "Warning: Ghostty reload failed." >&2
+fi
+
+# Reload Kitty if its config changed
+if [ "$KITTY_CHANGED" = 1 ] && pgrep -x kitty >/dev/null; then
+    echo "Reloading Kitty due to config change..."
+    killall -SIGUSR1 kitty || echo "Warning: Kitty reload failed." >&2
 fi
 
 # Reload waybar if its CSS changed (synchronous to guarantee pickup)
