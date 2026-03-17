@@ -41,17 +41,28 @@ require("lazy").setup({
     end,
   },
 
-  -- [[ FILE FINDER: fff.nvim ]]
+  -- [[ FUZZY FINDER: telescope.nvim ]]
   {
-    "dmtrKovalenko/fff.nvim",
-    build = function()
-      require("fff.download").download_or_build_binary()
-    end,
-    lazy = false,
+    "nvim-telescope/telescope.nvim",
+    branch = "0.1.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    },
     config = function()
-      require("fff").setup({})
-      -- Keybindings for freakin fast file finder
-      vim.keymap.set("n", "<leader>f", ":Fff<CR>", { noremap = true, silent = true, desc = "Fast file finder" })
+      local telescope = require("telescope")
+      telescope.setup({
+        defaults = {
+          file_ignore_patterns = { "node_modules", ".git/" },
+        },
+      })
+      -- Load fzf-native for faster sorting (silently fail if not compiled)
+      pcall(telescope.load_extension, "fzf")
+
+      local builtin = require("telescope.builtin")
+      vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
+      vim.keymap.set("n", "<leader>fs", builtin.current_buffer_fuzzy_find, { desc = "Search in current buffer" })
+      vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Global search (live grep)" })
     end,
   },
 

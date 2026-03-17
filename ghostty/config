@@ -53,3 +53,8 @@ palette = 15=#bdc1c9
 confirm-close-surface = false
 background-opacity = 0.88 
 background-blur = true
+
+# Cursor shaders (faded warp + ripple)
+custom-shader = shaders/cursor_warp.glsl
+custom-shader = shaders/ripple_cursor.glsl
+custom-shader-animation = always
