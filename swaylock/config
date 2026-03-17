@@ -4,7 +4,7 @@ show-failed-attempts
 font=JetBrainsMono Nerd Font
 
 # Appearance
-image=/home/warre/Pictures/wallpapers/a_pile_of_black_rocks.jpg
+image=/home/warre/Pictures/wallpapers/a_road_with_lights_on_the_side_of_a_body_of_water.jpg
 scaling=fill
 
 # Fade in the lockscreen
@@ -18,32 +18,32 @@ indicator-caps-lock
 indicator-idle-visible
 
 # Colors
-color=21,23,25
-bs-hl-color=99,99,110
-caps-lock-bs-hl-color=99,99,110
-caps-lock-key-hl-color=109,111,113
-inside-color=21,23,2500
-inside-clear-color=89,89,9100
-inside-caps-lock-color=99,99,11000
-inside-ver-color=98,109,10900
-inside-wrong-color=99,99,11000
-key-hl-color=109,111,113
-layout-bg-color=21,23,2500
-layout-border-color=21,23,2500
-layout-text-color=212,213,214
-line-color=21,23,2500
-line-clear-color=21,23,2500
-line-caps-lock-color=21,23,2500
-line-ver-color=21,23,2500
-line-wrong-color=21,23,2500
-ring-color=109,111,113
-ring-clear-color=89,89,91
-ring-caps-lock-color=99,99,110
-ring-ver-color=98,109,109
-ring-wrong-color=99,99,110
-separator-color=21,23,2500
-text-color=212,213,214
-text-clear-color=212,213,214
-text-caps-lock-color=212,213,214
-text-ver-color=212,213,214
-text-wrong-color=212,213,214
+color=28,27,24
+bs-hl-color=68,169,214
+caps-lock-bs-hl-color=68,169,214
+caps-lock-key-hl-color=76,164,230
+inside-color=28,27,2400
+inside-clear-color=36,148,21800
+inside-caps-lock-color=68,169,21400
+inside-ver-color=71,169,21400
+inside-wrong-color=68,169,21400
+key-hl-color=76,164,230
+layout-bg-color=28,27,2400
+layout-border-color=28,27,2400
+layout-text-color=248,226,208
+line-color=28,27,2400
+line-clear-color=28,27,2400
+line-caps-lock-color=28,27,2400
+line-ver-color=28,27,2400
+line-wrong-color=28,27,2400
+ring-color=76,164,230
+ring-clear-color=36,148,218
+ring-caps-lock-color=68,169,214
+ring-ver-color=71,169,214
+ring-wrong-color=68,169,214
+separator-color=28,27,2400
+text-color=248,226,208
+text-clear-color=248,226,208
+text-caps-lock-color=248,226,208
+text-ver-color=248,226,208
+text-wrong-color=248,226,208

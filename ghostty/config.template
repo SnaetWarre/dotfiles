@@ -1,6 +1,7 @@
 # Window padding
 window-padding-x = 12
 window-padding-y = 12
+window-padding-color = extend
 
 gtk-adwaita = true
 

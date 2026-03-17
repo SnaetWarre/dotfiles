@@ -28,6 +28,46 @@ vim.opt.termguicolors = true    -- True color support
 vim.opt.mouse = "a"             -- Enable mouse support
 vim.opt.signcolumn = "yes"      -- Always show signcolumn
 
+-- Window navigation: Ctrl+H = focus tree, Ctrl+L = focus editor
+vim.keymap.set("n", "<C-h>", "<cmd>Neotree focus<cr>", { desc = "Focus file tree" })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Focus editor" })
+
+-- ──────────────────────────────────────────────────────────────────────────────
+-- KITTY TERMINAL BACKGROUND SYNC
+-- Extends the editor background into Kitty's padding area via OSC 11.
+-- On colorscheme load: sets terminal bg to match Neovim's Normal bg.
+-- On exit: resets terminal bg to pywal's background color.
+-- ──────────────────────────────────────────────────────────────────────────────
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = function()
+    -- Small delay to ensure highlight groups are fully loaded
+    vim.defer_fn(function()
+      local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
+      if normal.bg then
+        local hex = string.format("#%06x", normal.bg)
+        io.stdout:write(string.format("\027]11;%s\027\\", hex))
+        io.stdout:flush()
+      end
+    end, 50)
+  end,
+})
+
+vim.api.nvim_create_autocmd("VimLeave", {
+  callback = function()
+    -- Read the pywal background color and reset the terminal
+    local handle = io.open(os.getenv("HOME") .. "/.cache/wal/colors.json", "r")
+    if handle then
+      local content = handle:read("*a")
+      handle:close()
+      local bg = content:match('"background"%s*:%s*"(#%x+)"')
+      if bg then
+        io.stdout:write(string.format("\027]11;%s\027\\", bg))
+        io.stdout:flush()
+      end
+    end
+  end,
+})
+
 -- Setup plugins via lazy.nvim
 require("lazy").setup({
   -- [[ THEME ]]
@@ -38,6 +78,57 @@ require("lazy").setup({
     priority = 1000,
     config = function()
       vim.cmd([[colorscheme kanagawa-dragon]])
+    end,
+  },
+
+  -- [[ FILE TREE: neo-tree.nvim ]]
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "MunifTanjim/nui.nvim",
+    },
+    keys = {
+      { "<leader>e", "<cmd>Neotree toggle<cr>", desc = "Toggle file tree" },
+    },
+    opts = {
+      filesystem = {
+        follow_current_file = { enabled = true },
+        hijack_netrw_behavior = "open_current",
+        filtered_items = {
+          hide_dotfiles = false,
+          hide_gitignored = false,
+        },
+      },
+      window = {
+        width = 30,
+      },
+    },
+  },
+
+  -- [[ WHICH-KEY: keybinding hints popup ]]
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {
+      delay = 300,
+      icons = {
+        separator = "➜",
+        group = " ",
+      },
+    },
+    config = function(_, opts)
+      local wk = require("which-key")
+      wk.setup(opts)
+      wk.add({
+        { "<leader>e", desc = "Toggle file tree" },
+        { "<leader>f", group = "Find" },
+        { "<leader>v", group = "LSP" },
+        { "<leader>vc", group = "Code" },
+        { "<leader>vr", group = "Refactor" },
+      })
     end,
   },
 
@@ -167,16 +258,16 @@ require("lazy").setup({
         callback = function(args)
           local bufnr = args.buf
           local opts = { buffer = bufnr, remap = false }
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-          vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-          vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
-          vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
-          vim.keymap.set("n", "[d", vim.diagnostic.goto_next, opts)
-          vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, opts)
-          vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, opts)
-          vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
-          vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
-          vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, remap = false, desc = "Go to definition" })
+          vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr, remap = false, desc = "Hover docs" })
+          vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, { buffer = bufnr, remap = false, desc = "Workspace symbols" })
+          vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, { buffer = bufnr, remap = false, desc = "Diagnostics (float)" })
+          vim.keymap.set("n", "[d", vim.diagnostic.goto_next, { buffer = bufnr, remap = false, desc = "Next diagnostic" })
+          vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, { buffer = bufnr, remap = false, desc = "Prev diagnostic" })
+          vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, { buffer = bufnr, remap = false, desc = "Code action" })
+          vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, { buffer = bufnr, remap = false, desc = "References" })
+          vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, { buffer = bufnr, remap = false, desc = "Rename symbol" })
+          vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, { buffer = bufnr, remap = false, desc = "Signature help" })
         end,
       })
 
