@@ -178,6 +178,17 @@ if [ -f "$CONFIG_DIR/ghostty/config.template" ]; then
     reload_ghostty || true
 fi
 
+# Apply to Kitty
+if [ -f "$CONFIG_DIR/kitty/kitty.conf.template" ]; then
+    echo "Applying theme to Kitty..."
+    envsubst < "$CONFIG_DIR/kitty/kitty.conf.template" > "$CONFIG_DIR/kitty/kitty.conf"
+    if pgrep kitty > /dev/null; then
+        killall -SIGUSR1 kitty
+    else
+        echo "  Kitty not running, theme will apply when it starts"
+    fi
+fi
+
 # Update Hyprland window border colors to match theme
 if command -v hyprctl &> /dev/null; then
     to_rgba_ff() {

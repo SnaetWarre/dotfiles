@@ -2,6 +2,8 @@
 window-padding-x = 12
 window-padding-y = 12
 
+gtk-adwaita = true
+
 # Font configuration
 font-size = 18.0
 
