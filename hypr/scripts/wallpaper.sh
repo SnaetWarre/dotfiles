@@ -22,7 +22,7 @@ WAL_BACKEND="${WAL_BACKEND:-wal}"
 WAL_SATURATE="${WAL_SATURATE:-}"
 
 run_wal() {
-    local wal_args=("$WAL_BIN" -i "$WALLPAPER" -q -n --backend "$WAL_BACKEND")
+    local wal_args=("$WAL_BIN" -i "$WALLPAPER" -q -W)
     if [ -n "$WAL_SATURATE" ]; then
         wal_args+=(--saturate "$WAL_SATURATE")
     fi

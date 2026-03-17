@@ -21,36 +21,36 @@ cursor-style = block
 # Note: Ghostty doesn't have separate vi_mode_style - it uses the same cursor style
 
 # Pywal Color Scheme - Generated automatically
-background = #121217
-foreground = #dfcdae
+background = #15202a
+foreground = #c1cafc
 
 # Selection colors
-selection-background = #292b3d
-selection-foreground = #121217
+selection-background = #384f98
+selection-foreground = #15202a
 
 # Cursor colors
-cursor-color = #dfcdae
-cursor-text = #121217
+cursor-color = #c1cafc
+cursor-text = #15202a
 
 # Normal colors (0-7)
-palette = 0=#121217
-palette = 1=#241c24
-palette = 2=#292b3d
-palette = 3=#3e405c
-palette = 4=#444c6a
-palette = 5=#695e8a
-palette = 6=#a480c2
-palette = 7=#dfcdae
+palette = 0=#15202a
+palette = 1=#324685
+palette = 2=#384f98
+palette = 3=#37509a
+palette = 4=#386684
+palette = 5=#4c63d7
+palette = 6=#4a60d7
+palette = 7=#c1cafc
 
 # Bright colors (8-15)
-palette = 8=#59595c
-palette = 9=#241c24
-palette = 10=#292b3d
-palette = 11=#3e405c
-palette = 12=#444c6a
-palette = 13=#695e8a
-palette = 14=#a480c2
-palette = 15=#dfcdae
+palette = 8=#294083
+palette = 9=#324685
+palette = 10=#384f98
+palette = 11=#37509a
+palette = 12=#386684
+palette = 13=#4c63d7
+palette = 14=#4a60d7
+palette = 15=#c1cafc
 
 confirm-close-surface = false
 background-opacity = 0.88 
