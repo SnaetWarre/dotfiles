@@ -35,8 +35,9 @@ vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Focus editor" })
 -- ──────────────────────────────────────────────────────────────────────────────
 -- KITTY TERMINAL BACKGROUND SYNC
 -- Extends the editor background into Kitty's padding area via OSC 11.
--- On colorscheme load: sets terminal bg to match Neovim's Normal bg.
--- On exit: resets terminal bg to pywal's background color.
+-- On colorscheme load: sets terminal bg to match Neovim's Normal bg, with 100% opacity.
+-- On exit: resets terminal bg to pywal's background color and resets opacity.
+-- Requires `allow_remote_control yes` in kitty.conf
 -- ──────────────────────────────────────────────────────────────────────────────
 vim.api.nvim_create_autocmd("ColorScheme", {
   callback = function()
@@ -44,9 +45,16 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     vim.defer_fn(function()
       local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
       if normal.bg then
+        -- Set standard background color via OSC 11 for both Kitty and Ghostty
         local hex = string.format("#%06x", normal.bg)
         io.stdout:write(string.format("\027]11;%s\027\\", hex))
         io.stdout:flush()
+        
+        -- If we are in Kitty, also fully remove transparency via remote control
+        if os.getenv("TERM") == "xterm-kitty" or os.getenv("KITTY_WINDOW_ID") then
+          -- Run kitty command to set opacity to 1.0 (requires allow_remote_control)
+          vim.fn.jobstart({ "kitty", "@", "set-background-opacity", "1.0" })
+        end
       end
     end, 50)
   end,
@@ -54,22 +62,59 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 
 vim.api.nvim_create_autocmd("VimLeave", {
   callback = function()
-    -- Read the pywal background color and reset the terminal
-    local handle = io.open(os.getenv("HOME") .. "/.cache/wal/colors.json", "r")
-    if handle then
-      local content = handle:read("*a")
-      handle:close()
-      local bg = content:match('"background"%s*:%s*"(#%x+)"')
-      if bg then
-        io.stdout:write(string.format("\027]11;%s\027\\", bg))
-        io.stdout:flush()
-      end
+    -- Reset background color via OSC 111
+    io.stdout:write("\027]111\027\\")
+    io.stdout:flush()
+    
+    -- If we are in Kitty, reset the opacity back to normal
+    if os.getenv("TERM") == "xterm-kitty" or os.getenv("KITTY_WINDOW_ID") then
+      vim.fn.jobstart({ "kitty", "@", "set-background-opacity", "default" })
     end
   end,
 })
 
 -- Setup plugins via lazy.nvim
 require("lazy").setup({
+  -- [[ DASHBOARD ]]
+  {
+    "nvimdev/dashboard-nvim",
+    event = "VimEnter",
+    dependencies = { { "nvim-tree/nvim-web-devicons" } },
+    config = function()
+      require("dashboard").setup({
+        theme = "doom",
+        config = {
+          header = {
+            "",
+            "",
+            "",
+            "",
+            " ██╗   ██╗ █████╗     ███╗   ███╗██╗   ██╗███╗   ███╗ ",
+            " ╚██╗ ██╔╝██╔══██╗    ████╗ ████║██║   ██║████╗ ████║ ",
+            "  ╚████╔╝ ███████║    ██╔████╔██║██║   ██║██╔████╔██║ ",
+            "   ╚██╔╝  ██╔══██║    ██║╚██╔╝██║██║   ██║██║╚██╔╝██║ ",
+            "    ██║   ██║  ██║    ██║ ╚═╝ ██║╚██████╔╝██║ ╚═╝ ██║ ",
+            "    ╚═╝   ╚═╝  ╚═╝    ╚═╝     ╚═╝ ╚═════╝ ╚═╝     ╚═╝ ",
+            "",
+            "",
+            "",
+          },
+          center = {
+            { action = "Telescope find_files", desc = " Find file", icon = " ", key = "f" },
+            { action = "Telescope oldfiles", desc = " Recent files", icon = " ", key = "r" },
+            { action = "Telescope live_grep", desc = " Find text", icon = " ", key = "g" },
+            { action = "Lazy", desc = " lazy.nvim", icon = "󰒲 ", key = "l" },
+            { action = "qa", desc = " Quit", icon = " ", key = "q" },
+          },
+          footer = function()
+            local stats = require("lazy").stats()
+            return { "alr lil bro why are we even reading this type shi fr" }
+          end,
+        },
+      })
+    end,
+  },
+
   -- [[ THEME ]]
   -- Optional: A clean and minimal theme (kanagawa is a solid default)
   {

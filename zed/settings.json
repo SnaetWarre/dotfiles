@@ -120,10 +120,10 @@
     "notify_when_agent_waiting": "all_screens",
     "default_profile": "write",
     "default_model": {
-      "effort": "medium",
-      "enable_thinking": true,
-      "provider": "zed.dev",
-      "model": "gpt-5.4"
+      "effort": "high",
+      "enable_thinking": false,
+      "provider": "copilot_chat",
+      "model": "gpt-5.3-codex"
     },
     "profiles": {
       "planner": {
