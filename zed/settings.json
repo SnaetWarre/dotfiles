@@ -120,10 +120,9 @@
     "notify_when_agent_waiting": "all_screens",
     "default_profile": "write",
     "default_model": {
-      "effort": "high",
       "enable_thinking": false,
       "provider": "copilot_chat",
-      "model": "gpt-5.3-codex"
+      "model": "gpt-4.1"
     },
     "profiles": {
       "planner": {

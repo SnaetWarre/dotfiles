@@ -209,7 +209,7 @@ tooltip {
   border: 1px solid $color12;
   border-radius: 4px;
   color: $color7;
-  padding: 8px;
+  padding: 14px 16px;
 }
 
 tooltip label {

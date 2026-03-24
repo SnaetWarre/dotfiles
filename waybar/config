@@ -54,10 +54,25 @@
 
   // ── Clock ────────────────────────────────────────────────────────
   "clock": {
-    "tooltip-format": "{calendar}",
+    "tooltip-format": "<span size='18pt' weight='bold'>{:%B %Y}</span>\n<tt><span size='15pt'>{calendar}</span></tt>",
     "format-alt": "{:%a, %d %b %Y}",
     "format": "{:%I:%M %p}",
-    "timezone": "UTC"
+    "timezone": "UTC",
+    "calendar": {
+      "iso8601": true,
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#bcd9d4'><b>{}</b></span>",
+        "weekdays": "<span color='#9ec8c5'><b>{}</b></span>",
+        "days": "<span color='#f3fffd'>{}</span>",
+        "today": "<span background='#9ec8c5' foreground='#18241b'><b> {} </b></span>"
+      }
+    },
+    "actions": {
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down",
+      "on-click-right": "mode"
+    }
   },
 
   // ── Network ──────────────────────────────────────────────────────
