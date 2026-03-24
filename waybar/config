@@ -57,6 +57,7 @@
     "tooltip-format": "<span size='18pt' weight='bold'>{:%B %Y}</span>\n<tt><span size='15pt'>{calendar}</span></tt>",
     "format-alt": "{:%a, %d %b %Y}",
     "format": "{:%I:%M %p}",
+    "on-click": "thunderbird -calendar",
     "timezone": "UTC",
     "calendar": {
       "iso8601": true,
