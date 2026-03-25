@@ -61,22 +61,22 @@ if [ "${WAL_FORCE_REGEN:-0}" = "1" ]; then
     rm -f "$HOME/.cache/wal/colors.sh" "$HOME/.cache/wal/colors.json" 2>/dev/null || true
 fi
 
-# Ensure swww-daemon is running
-if ! pgrep -x "swww-daemon" > /dev/null; then
-    echo "Starting swww-daemon..."
-    swww-daemon &
+# Ensure awww-daemon is running
+if ! pgrep -x "awww-daemon" > /dev/null; then
+    echo "Starting awww-daemon..."
+    awww-daemon &
     sleep 1
 fi
 
 # Start wallpaper transition immediately in parallel (doesn't depend on pywal)
 __t3=$(now_ms)
-swww img "$WALLPAPER" \
+awww img "$WALLPAPER" \
     --transition-type grow \
     --transition-angle 30 \
     --transition-duration 0.5 \
     --transition-fps 120 \
     --transition-bezier .2,1,.2,1 &
-log_step "swww-start" "$__t3"
+log_step "awww-start" "$__t3"
 
 # Generate colors (blocking) with the local pywal-rs build
 run_wal
@@ -148,8 +148,8 @@ else
 fi
 
 # Rofi update is now handled by apply_wal_outputs.sh
-# Set wallpaper with swww — smooth premium transition
-# swww already started above; if needed we could wait here, but keep parallel for speed
+# Set wallpaper with awww — smooth premium transition
+# awww already started above; if needed we could wait here, but keep parallel for speed
 
 # Waybar reload is handled inside apply_wal_outputs.sh when needed
 

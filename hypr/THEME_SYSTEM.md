@@ -16,7 +16,7 @@ This system provides dynamic theme switching using Pywal to generate colors from
   - Runs `wal -i` to generate colors from wallpaper
   - Calls `apply_wal_outputs.sh` to distribute colors
   - Updates wlogout colors separately
-  - Sets wallpaper with `swww img`
+  - Sets wallpaper with `awww img`
   - Reloads Waybar with `killall -SIGUSR2 waybar`
 
 #### `apply_wal_outputs.sh` - Color Distribution Engine
@@ -57,7 +57,7 @@ This system provides dynamic theme switching using Pywal to generate colors from
   - `SUPER + W`: Run wallpaper script (random)
   - `SUPER + SHIFT + W`: Open wallpaper selector
 - **Autostart**:
-  - `swww-daemon` for wallpaper management
+  - `awww-daemon` for wallpaper management
   - `swaync` for notifications
   - `eww` for widgets
   - Battery notification script
@@ -258,7 +258,7 @@ Uses `envsubst` with these color variables:
 
 #### Required Packages
 - `pywal` - Color generation
-- `swww` - Wallpaper management
+- `awww` - Wallpaper management
 - `waybar` - Status bar
 - `swaync` - Notifications
 - `eww` - Widgets

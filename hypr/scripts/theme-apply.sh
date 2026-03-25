@@ -227,21 +227,21 @@ echo "Applying theme to Neovim..."
 echo "$THEME_NAME" > "$CURRENT_THEME_FILE"
 echo "  Theme name saved for Neovim: $THEME_NAME"
 
-# Apply wallpaper if specified (swww only)
+# Apply wallpaper if specified (awww only)
 if [ ! -z "$wallpaper" ] && [ -f "$wallpaper" ]; then
-    echo "Setting wallpaper with swww..."
-    if command -v swww &> /dev/null; then
+    echo "Setting wallpaper with awww..."
+    if command -v awww &> /dev/null; then
         # Kill any rogue swaybg or hyprpaper processes first
         killall swaybg 2>/dev/null || true
         killall hyprpaper 2>/dev/null || true
-        swww img "$wallpaper" \
+        awww img "$wallpaper" \
           --transition-type grow \
           --transition-angle 30 \
           --transition-duration 0.5 \
           --transition-fps 120 \
-          --transition-bezier .2,1,.2,1 || echo "  Warning: Failed to set wallpaper with swww"
+          --transition-bezier .2,1,.2,1 || echo "  Warning: Failed to set wallpaper with awww"
     else
-        echo "  Error: swww not found! Please install swww."
+        echo "  Error: awww not found! Please install awww."
     fi
 
     # Run wal to refresh colors
