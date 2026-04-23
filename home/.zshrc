@@ -211,6 +211,7 @@ alias poweroff="shutdown now"
 roblox() {
   (setsid flatpak run org.vinegarhq.Sober > /dev/null 2>&1 &)
 }
+alias oc="opencode"
 
 alias vpnup="sudo wg-quick up wg0"
 alias vpndown="sudo wg-quick down wg0"
@@ -398,3 +399,7 @@ else
 fi
 unset __mamba_setup
 # <<< mamba initialize <<<
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
