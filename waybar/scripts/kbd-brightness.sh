@@ -28,7 +28,12 @@ else
 fi
 
 # Get current brightness from asusctl
-brightness=$(asusctl leds get | awk -F': ' '{print $2}')
+brightness=$(asusctl leds get 2>/dev/null | awk -F': ' '{print $2}')
+
+if [ -z "$brightness" ]; then
+    echo "{\"text\": \"<span foreground='$color_off'>󰌌 N/A</span>\", \"tooltip\": \"Keyboard Backlight: ASUS service unavailable\"}"
+    exit 0
+fi
 
 # Map brightness value to label and color
 case "$brightness" in

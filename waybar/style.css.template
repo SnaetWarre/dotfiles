@@ -76,7 +76,7 @@ window#waybar {
 #network,
 #custom-power,
 #custom-system-stats,
-#custom-battery,
+#battery,
 #custom-volume,
 #custom-brightness,
 #custom-asus-profile,
@@ -129,7 +129,7 @@ window#waybar {
 
 /* === Battery ============================================================= */
 
-#custom-battery {
+#battery {
   color: $color11;
 }
 

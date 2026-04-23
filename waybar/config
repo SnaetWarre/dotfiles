@@ -15,35 +15,23 @@
 
   // ── Modules Layout ───────────────────────────────────────────────
   "modules-left": [
-    "clock",
-    "custom/separator",
-    "custom/power",
+    "custom/asus-profile",
     "custom/separator",
     "network",
-    "custom/separator",
-    "custom/system-stats"
   ],
 
   "modules-center": [
-    "hyprland/workspaces"
+    "clock",
   ],
 
   "modules-right": [
     "custom/screenrecording-indicator",
     "custom/separator",
     "custom/display-mode",
-    "custom/separator",
-    "custom/kbd-brightness",
-    "custom/separator",
-    "custom/touchpad",
-    "custom/separator",
-    "custom/battery",
-    "custom/separator",
+    "custom/separator", 
     "custom/volume",
     "custom/separator",
-    "custom/brightness",
-    "custom/separator",
-    "custom/asus-profile"
+    "battery",
   ],
 
   // ── Separator ────────────────────────────────────────────────────
@@ -55,8 +43,8 @@
   // ── Clock ────────────────────────────────────────────────────────
   "clock": {
     "tooltip-format": "<span size='18pt' weight='bold'>{:%B %Y}</span>\n<tt><span size='15pt'>{calendar}</span></tt>",
-    "format-alt": "{:%a, %d %b %Y}",
-    "format": "{:%I:%M %p}",
+    "format-alt": "{:%I:%M %p}",
+    "format": "{:%a, %d %b  %I:%M %p}",
     "on-click": "thunderbird -calendar",
     "calendar": {
       "iso8601": true,
@@ -135,11 +123,23 @@
   },
 
   // ── Battery (scripted) ────────────────────────────────────────────
-  "custom/battery": {
-    "exec": "~/.config/waybar/scripts/battery.sh",
-    "return-type": "json",
-    "interval": 30,
-    "on-click": "xfce4-power-manager-settings"
+  "battery": {
+      "format": "{icon} {capacity}%",
+    "format-discharging": "{icon} {capacity}%",
+    "format-charging": "{icon} {capacity}%",
+    "format-plugged": "",
+    "format-icons": {
+      "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+      "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+    "format-full": "󰂅",
+    "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
+    "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
+    "interval": 5,
+    "states": {
+      "warning": 20,
+      "critical": 10
+    }
   },
 
   // ── Brightness ───────────────────────────────────────────────────

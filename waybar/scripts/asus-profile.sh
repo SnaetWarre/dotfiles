@@ -28,7 +28,12 @@ else
     color_fg="#ffffff"
 fi
 
-profile=$(asusctl profile get | awk '/Active profile/ {print $NF}')
+profile=$(asusctl profile get 2>/dev/null | awk '/Active profile/ {print $NF}')
+
+if [ -z "$profile" ]; then
+  echo "<span foreground='$color_fg'>ASUS N/A</span>"
+  exit 0
+fi
 
 case "$profile" in
   Performance)

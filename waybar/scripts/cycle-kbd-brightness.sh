@@ -6,4 +6,4 @@
 # ──────────────────────────────────────────────────────────
 
 # Cycle to next brightness level using asusctl built-in command
-asusctl leds next
+asusctl leds next >/dev/null 2>&1 || exit 0

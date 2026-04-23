@@ -6,4 +6,4 @@
 # ──────────────────────────────────────────────────────────  
 
 # Cycle to next profile using asusctl built-in command
-asusctl profile next
+asusctl profile next >/dev/null 2>&1 || exit 0
