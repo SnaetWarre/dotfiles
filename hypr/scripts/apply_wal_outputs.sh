@@ -100,6 +100,11 @@ EWW_CONFIG_DIR="$CONFIG_DIR/eww"
 EWW_TEMPLATE="$EWW_CONFIG_DIR/eww.scss.template"
 EWW_OUTPUT_CSS="$EWW_CONFIG_DIR/eww.scss"
 
+QUICKSHELL_CONFIG_DIR="$CONFIG_DIR/quickshell"
+QUICKSHELL_THEME_DIR="$QUICKSHELL_CONFIG_DIR/theme"
+QUICKSHELL_WAL_THEME="$QUICKSHELL_THEME_DIR/Wal.qml"
+QUICKSHELL_SCRIPT_DIR="$QUICKSHELL_CONFIG_DIR/scripts"
+
 # --- Load Pywal colors ---
 if [ -f "$COLORS_SH" ]; then
     echo "Sourcing Pywal colors from $COLORS_SH..."
@@ -221,6 +226,45 @@ color12_rgb=$(hex_to_rgb "$color12")
 color13_rgb=$(hex_to_rgb "$color13")
 color14_rgb=$(hex_to_rgb "$color14")
 color15_rgb=$(hex_to_rgb "$color15")
+
+# --- Generate QuickShell Wal singleton ---
+echo "Generating QuickShell Wal theme: $QUICKSHELL_WAL_THEME"
+__t_qs_theme=$(now_ms)
+mkdir -p "$QUICKSHELL_THEME_DIR"
+tmp_qs_theme=$(mktemp)
+cat > "$tmp_qs_theme" << EOF
+pragma Singleton
+import QtQuick
+
+QtObject {
+    readonly property string wallpaper: "$wallpaper"
+    readonly property color background: "$background"
+    readonly property color foreground: "$foreground"
+    readonly property color cursor: "$cursor"
+    readonly property color color0: "$color0"
+    readonly property color color1: "$color1"
+    readonly property color color2: "$color2"
+    readonly property color color3: "$color3"
+    readonly property color color4: "$color4"
+    readonly property color color5: "$color5"
+    readonly property color color6: "$color6"
+    readonly property color color7: "$color7"
+    readonly property color color8: "$color8"
+    readonly property color color9: "$color9"
+    readonly property color color10: "$color10"
+    readonly property color color11: "$color11"
+    readonly property color color12: "$color12"
+    readonly property color color13: "$color13"
+    readonly property color color14: "$color14"
+    readonly property color color15: "$color15"
+}
+EOF
+QS_THEME_STATUS=$(write_if_changed "$tmp_qs_theme" "$QUICKSHELL_WAL_THEME" || true)
+QUICKSHELL_CHANGED=0
+if [ "$QS_THEME_STATUS" = "changed" ]; then
+    QUICKSHELL_CHANGED=1
+fi
+log_step "quickshell-theme" "$__t_qs_theme"
 
 # --- Process Waybar CSS ---
 echo "Processing Waybar template: $WAYBAR_TEMPLATE -> $WAYBAR_OUTPUT_CSS"
@@ -507,6 +551,12 @@ fi
 if [ "$WAYBAR_CHANGED" = 1 ] && pgrep waybar >/dev/null; then
     echo "Reloading Waybar due to CSS change..."
     killall -SIGUSR2 waybar || true
+fi
+
+# QuickShell watches the config tree and reloads changed QML files itself. Avoid
+# killing the running shell here; doing that interrupts visible transitions.
+if [ "$QUICKSHELL_CHANGED" = 1 ]; then
+    "$QUICKSHELL_SCRIPT_DIR/qsctl" palette 2>/dev/null || true
 fi
 
 log_step "service-restarts" "$__t_restart"

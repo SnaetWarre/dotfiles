@@ -221,6 +221,47 @@ require("lazy").setup({
     },
   },
 
+  -- [[ MARKDOWN IMAGES + PREVIEW ]]
+  {
+    "iamcco/markdown-preview.nvim",
+    ft = { "markdown" },
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+    config = function()
+      vim.g.mkdp_auto_start = 0
+      vim.g.mkdp_auto_close = 1
+      vim.g.mkdp_refresh_slow = 0
+      vim.g.mkdp_open_to_the_world = 0
+      vim.g.mkdp_browser = ""
+
+      vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", { desc = "Toggle markdown preview" })
+    end,
+  },
+
+  -- [[ MARKDOWN IMAGES + PREVIEW ]]
+  {
+    "3rd/image.nvim",
+    ft = "markdown",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      backend = "kitty",
+      processor = "magick_cli",
+      integrations = {
+        markdown = {
+          enabled = true,
+          clear_in_insert_mode = false,
+          download_remote_images = true,
+          only_render_image_at_cursor = false,
+        },
+      },
+      max_width = 100,
+      max_height = 30,
+      window_overlap_clear_enabled = true,
+      window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "" },
+    },
+  },
+
   -- [[ AUTOCOMPLETION: nvim-cmp ]]
   {
     "hrsh7th/nvim-cmp",
