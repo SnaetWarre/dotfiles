@@ -4,7 +4,7 @@ show-failed-attempts
 font=JetBrainsMono Nerd Font
 
 # Appearance
-image=/home/warre/Pictures/wallpapers/a_car_in_a_parking_garage.jpg
+image=/home/warre/Pictures/wallpapers/a_road_with_lights_on_the_side_of_a_body_of_water.jpg
 scaling=fill
 
 # Fade in the lockscreen
@@ -18,32 +18,32 @@ indicator-caps-lock
 indicator-idle-visible
 
 # Colors
-color=0,0,0
-bs-hl-color=116,116,116
-caps-lock-bs-hl-color=116,116,116
-caps-lock-key-hl-color=132,132,132
-inside-color=0,0,000
-inside-clear-color=83,83,8300
-inside-caps-lock-color=116,116,11600
-inside-ver-color=124,124,12400
-inside-wrong-color=116,116,11600
-key-hl-color=132,132,132
-layout-bg-color=0,0,000
-layout-border-color=0,0,000
-layout-text-color=241,241,241
-line-color=0,0,000
-line-clear-color=0,0,000
-line-caps-lock-color=0,0,000
-line-ver-color=0,0,000
-line-wrong-color=0,0,000
-ring-color=132,132,132
-ring-clear-color=83,83,83
-ring-caps-lock-color=116,116,116
-ring-ver-color=124,124,124
-ring-wrong-color=116,116,116
-separator-color=0,0,000
-text-color=241,241,241
-text-clear-color=241,241,241
-text-caps-lock-color=241,241,241
-text-ver-color=241,241,241
-text-wrong-color=241,241,241
+color=28,27,24
+bs-hl-color=68,169,214
+caps-lock-bs-hl-color=68,169,214
+caps-lock-key-hl-color=76,164,230
+inside-color=28,27,2400
+inside-clear-color=36,148,21800
+inside-caps-lock-color=68,169,21400
+inside-ver-color=71,169,21400
+inside-wrong-color=68,169,21400
+key-hl-color=76,164,230
+layout-bg-color=28,27,2400
+layout-border-color=28,27,2400
+layout-text-color=248,226,208
+line-color=28,27,2400
+line-clear-color=28,27,2400
+line-caps-lock-color=28,27,2400
+line-ver-color=28,27,2400
+line-wrong-color=28,27,2400
+ring-color=76,164,230
+ring-clear-color=36,148,218
+ring-caps-lock-color=68,169,214
+ring-ver-color=71,169,214
+ring-wrong-color=68,169,214
+separator-color=28,27,2400
+text-color=248,226,208
+text-clear-color=248,226,208
+text-caps-lock-color=248,226,208
+text-ver-color=248,226,208
+text-wrong-color=248,226,208
