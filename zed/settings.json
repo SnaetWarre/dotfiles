@@ -143,14 +143,18 @@
       }
     }
   },
-  "icon_theme": "Zed (Default)",
+  "icon_theme": {
+    "mode": "light",
+    "light": "Zed (Default)",
+    "dark": "Zed (Default)"
+  },
   "ui_font_family": "JetBrains Mono",
   "buffer_font_family": "JetBrains Mono",
   "base_keymap": "VSCode",
   "theme": {
     "mode": "dark",
     "light": "Ayu Light",
-    "dark": "Wal System Theme"
+    "dark": "Ayu Dark"
   },
   "autosave": {
     "after_delay": { "milliseconds": 100 }
