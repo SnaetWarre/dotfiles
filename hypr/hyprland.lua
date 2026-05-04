@@ -7,6 +7,7 @@ local applauncher = 'rofi -show combi -modi drun,run,combi -combi-modi drun,run 
 local terminal = "kitty"
 local browser = "helium-browser"
 local capturing = 'grim -g "$(slurp)" - | swappy -f -'
+local xdg_data_dirs = "/home/warre/.local/share:/usr/local/share:/usr/share:/opt/t3code-bin/usr/share"
 
 local function load_wal_colors(path)
     local colors = {}
@@ -53,6 +54,7 @@ hl.env("PIPEWIRE_LATENCY", "128/48000")
 hl.env("PIPEWIRE_QUANTUM", "128/48000")
 hl.env("QT_CURSOR_THEME", "Bibata-Modern-Classic", true)
 hl.env("QT_CURSOR_SIZE", "24", true)
+hl.env("XDG_DATA_DIRS", xdg_data_dirs, true)
 
 -- Autostart
 hl.on("hyprland.start", function()
@@ -68,7 +70,6 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("swaync")
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
-    hl.exec_cmd("hyprswitch init --show-title --size-factor 5.5 --workspaces-per-row 5")
     hl.exec_cmd("systemctl --user enable --now pipewire pipewire-pulse wireplumber")
 end)
 
@@ -347,7 +348,6 @@ bind(mainMod .. " + ALT + SHIFT + F1", hl.dsp.window.move({ workspace = "special
 bind(mainMod .. " + SHIFT + F", hl.dsp.window.float(), desc("Toggle floating window"))
 bind(mainMod .. " + P", hl.dsp.window.pseudo(), desc("Toggle pseudo tiling"))
 
-bind("ALT + tab", hl.dsp.exec_cmd("hyprswitch gui --mod-key alt --key tab --max-switch-offset 9 --hide-active-window-border"))
 bind(mainMod .. " + C", hl.dsp.exec_cmd('bash -c "cliphist list | tofi --config ~/.config/hypr/tofi-dmenu.conf | cliphist decode | wl-copy"'), desc("Opens clipboard history"))
 bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client -t -sw"), desc("Opens notification center"))
 bind(mainMod .. " + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/wallpaper.sh"))
