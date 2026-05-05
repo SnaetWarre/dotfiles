@@ -36,9 +36,7 @@ local function rgba(name, alpha, fallback)
 end
 
 -- Monitors
-hl.monitor({ output = "eDP-2", mode = "2560x1440@165", position = "0x0", scale = "1.0" })
-hl.monitor({ output = "HDMI-A-1", mode = "preferred", position = "auto", scale = "1" })
-hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "1" })
+hl.monitor({ output = "eDP-1", mode = "2560x1440@165.00", position = "0x0", scale = 1 })
 
 -- Environment
 hl.env("GTK_THEME", "Flat-Remix-GTK-Blue-Darkest")

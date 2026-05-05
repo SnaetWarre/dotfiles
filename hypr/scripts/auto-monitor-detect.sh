@@ -12,7 +12,7 @@ is_hdmi_connected() {
 # Function to enable mirroring
 enable_mirror() {
     echo "[$(date)] HDMI detected - enabling mirror mode" >> ~/.config/hypr/logs/monitor.log
-    hyprctl keyword monitor HDMI-A-1, preferred, 0x0, 1, mirror, eDP-2
+    hyprctl keyword monitor HDMI-A-1, preferred, 0x0, 1, mirror, eDP-1
     notify-send -u low "External Monitor" "HDMI connected - Mirror mode enabled"
 }
 
