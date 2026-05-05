@@ -17,7 +17,8 @@
   "modules-left": [
     "custom/asus-profile",
     "custom/separator",
-    "network",
+    
+    "hyprland/workspaces"
   ],
 
   "modules-center": [
@@ -28,6 +29,8 @@
     "custom/screenrecording-indicator",
     "custom/separator",
     "custom/display-mode",
+    "custom/separator",
+    "network",
     "custom/separator", 
     "custom/volume",
     "custom/separator",
