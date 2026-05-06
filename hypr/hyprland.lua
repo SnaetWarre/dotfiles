@@ -74,12 +74,12 @@ end)
 hl.config({
     general = {
         allow_tearing = true,
-        gaps_in = 1,
-        gaps_out = 1,
+        gaps_in = 5,
+        gaps_out = 5,
         border_size = 1,
         col = {
-            active_border = rgb("color7", "e0cbd2"),
-            inactive_border = rgb("color8", "46485b"),
+            active_border = "rgb(f3ead0)",
+            inactive_border = "rgb(474231)",
         },
         layout = "dwindle",
         resize_on_border = true,
@@ -96,24 +96,28 @@ hl.config({
         active_opacity = 1.0,
         inactive_opacity = 1.0,
         fullscreen_opacity = 1.0,
-        rounding = 14,
-        rounding_power = 3.0,
+        rounding = 0,
+        rounding_power = 2.0,
         dim_inactive = false,
         blur = {
-            enabled = false,
-            size = 6,
+            enabled = true,
+            size = 5,
             passes = 2,
             new_optimizations = true,
             xray = true,
             ignore_opacity = true,
+            noise = 0.02,
+            brightness = 0.9,
+            contrast = 0.9,
+            vibrancy = 0.2,
         },
         shadow = {
-            enabled = false,
-            range = 3,
-            render_power = 2,
+            enabled = true,
+            range = 10,
+            render_power = 3,
             sharp = false,
-            color = rgba("color0", "ff", "13120f"),
-            color_inactive = rgba("color8", "ff", "46485b"),
+            color = "rgba(00000099)",
+            color_inactive = "rgba(00000066)",
             offset = { 0, 2 },
             scale = 1.0,
         },
@@ -362,6 +366,7 @@ bind(mainMod .. " + U", hl.dsp.exec_cmd("~/.config/waybar/waybar.sh"))
 
 -- Window rules
 hl.window_rule({ name = "windowrule-1", match = { class = ".*" }, suppress_event = "maximize" })
+hl.window_rule({ name = "mango-shadow-floating-only", match = { float = false }, no_shadow = true })
 hl.window_rule({ name = "windowrule-2", match = { class = "^(Rofi)$" }, float = true })
 hl.window_rule({ name = "windowrule-3", match = { class = "^(org.pulseaudio.pavucontrol)" }, float = true, size = { 1200, 800 }, center = true })
 hl.window_rule({ name = "windowrule-4", match = { class = "^()$", title = "^(Picture in picture)$" }, float = true })
@@ -380,14 +385,17 @@ hl.window_rule({ name = "windowrule-19", match = { title = "^(danmufloat)$" }, p
 hl.window_rule({ name = "windowrule-20", match = { class = "^(org.mozilla.firefox)$" }, no_blur = true })
 hl.window_rule({ name = "windowrule-21", match = { class = "^(Alacritty)$" }, no_blur = true })
 hl.window_rule({ name = "windowrule-22", match = { class = "^(gnome-calculator|Gnome-calculator)$" }, float = true })
+hl.window_rule({ name = "mango-media-float-mpv-imv", match = { class = "^(mpv|imv)$" }, float = true })
+hl.window_rule({ name = "mango-thunar-opacity", match = { class = "^(thunar|Thunar)$" }, opacity = "0.80 0.80" })
 hl.window_rule({ name = "kitty-tiling", match = { class = "^(kitty)$" }, float = false })
 hl.window_rule({ name = "allow-tearing", match = { class = "^(steam_app_.*)$" }, immediate = true })
 
 -- Workspace rules
-hl.workspace_rule({ workspace = "w[tv1-10]", gaps_out = 1, gaps_in = 1 })
-hl.workspace_rule({ workspace = "f[1]", gaps_out = 1, gaps_in = 1 })
+hl.workspace_rule({ workspace = "w[tv1-10]", gaps_out = 5, gaps_in = 5 })
+hl.workspace_rule({ workspace = "f[1]", gaps_out = 5, gaps_in = 5 })
 
 -- Layer rules
+hl.layer_rule({ name = "mango-selection-capture", match = { namespace = "selection" }, no_anim = true, blur = false })
 hl.layer_rule({ name = "layerrule-1", match = { namespace = "waybar" }, animation = "slide down", blur = true })
 hl.layer_rule({ name = "layerrule-2", match = { namespace = "wallpaper" }, animation = "fade 50%" })
 hl.layer_rule({ name = "layerrule-3", match = { namespace = "rofi" }, blur = true })

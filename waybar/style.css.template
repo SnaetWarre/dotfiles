@@ -16,7 +16,7 @@
 }
 
 window#waybar {
-  background: rgba($color0_rgb, 0.0);
+  background: #0C0A06;
   border-radius: 0;
   color: white;
   border: none;
