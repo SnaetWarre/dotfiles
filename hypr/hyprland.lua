@@ -69,6 +69,9 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
     hl.exec_cmd("systemctl --user enable --now pipewire pipewire-pulse wireplumber")
+    
+    -- Initialize the hyprswitch daemon
+    hl.exec_cmd("/home/warre/Projects/Rust/hyprtab/target/release/hyprswitch init --show-title &")
 end)
 
 hl.config({
@@ -401,3 +404,6 @@ hl.layer_rule({ name = "layerrule-2", match = { namespace = "wallpaper" }, anima
 hl.layer_rule({ name = "layerrule-3", match = { namespace = "rofi" }, blur = true })
 hl.layer_rule({ name = "layerrule-4", match = { namespace = "eww" }, blur = true })
 hl.layer_rule({ name = "layerrule-5", match = { namespace = "wlogout" }, blur = true })
+
+-- hyprswitch ALT + TAB binding
+hl.bind("ALT + Tab", hl.dsp.exec_cmd("/home/warre/Projects/Rust/hyprtab/target/release/hyprswitch gui --mod-key alt --key tab"))
