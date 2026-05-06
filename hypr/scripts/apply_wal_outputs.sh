@@ -176,6 +176,32 @@ hex_to_rgb() {
     echo "$r,$g,$b"
 }
 
+hex_luma() {
+    local hex=${1#"#"}
+    local r=$((16#${hex:0:2}))
+    local g=$((16#${hex:2:2}))
+    local b=$((16#${hex:4:2}))
+    echo $((299 * r + 587 * g + 114 * b))
+}
+
+darkest_wal_color() {
+    local darkest="$color0"
+    local darkest_luma
+    darkest_luma=$(hex_luma "$darkest")
+
+    local candidate candidate_luma
+    for candidate in "$background" "$color0" "$color1" "$color2" "$color3" "$color4" "$color5" "$color6" "$color7" "$color8" "$color9" "$color10" "$color11" "$color12" "$color13" "$color14" "$color15"; do
+        [ -n "$candidate" ] || continue
+        candidate_luma=$(hex_luma "$candidate")
+        if [ "$candidate_luma" -lt "$darkest_luma" ]; then
+            darkest="$candidate"
+            darkest_luma="$candidate_luma"
+        fi
+    done
+
+    echo "$darkest"
+}
+
 # --- Keyboard brightness helpers ---
 KBD_BRIGHTNESS_PATH="/sys/class/leds/asus::kbd_backlight/brightness"
 
@@ -226,6 +252,8 @@ color12_rgb=$(hex_to_rgb "$color12")
 color13_rgb=$(hex_to_rgb "$color13")
 color14_rgb=$(hex_to_rgb "$color14")
 color15_rgb=$(hex_to_rgb "$color15")
+waybar_background=$(darkest_wal_color)
+waybar_background_rgb=$(hex_to_rgb "$waybar_background")
 
 # --- Generate QuickShell Wal singleton ---
 echo "Generating QuickShell Wal theme: $QUICKSHELL_WAL_THEME"
@@ -275,12 +303,12 @@ if [ ! -f "$WAYBAR_TEMPLATE" ]; then
     exit 1
 fi
 
-# Export the calculated RGB vars so envsubst can find them
-export color0_rgb color1_rgb color2_rgb color3_rgb color4_rgb color5_rgb color6_rgb color7_rgb color8_rgb color9_rgb color10_rgb color11_rgb color12_rgb color13_rgb color14_rgb color15_rgb
+# Export the calculated vars so envsubst can find them
+export color0_rgb color1_rgb color2_rgb color3_rgb color4_rgb color5_rgb color6_rgb color7_rgb color8_rgb color9_rgb color10_rgb color11_rgb color12_rgb color13_rgb color14_rgb color15_rgb waybar_background waybar_background_rgb
 
 # Ensure the variables list for envsubst only contains valid shell variable names ($ or ${})
 # The previous list was okay, but this is slightly safer if variable names had dashes etc.
-WAYBAR_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}:${color9}:${color10}:${color11}:${color12}:${color13}:${color14}:${color15}:${color0_rgb}:${color1_rgb}:${color2_rgb}:${color3_rgb}:${color4_rgb}:${color5_rgb}:${color6_rgb}:${color7_rgb}:${color8_rgb}:${color9_rgb}:${color10_rgb}:${color11_rgb}:${color12_rgb}:${color13_rgb}:${color14_rgb}:${color15_rgb}:$HOME'
+WAYBAR_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}:${color9}:${color10}:${color11}:${color12}:${color13}:${color14}:${color15}:${color0_rgb}:${color1_rgb}:${color2_rgb}:${color3_rgb}:${color4_rgb}:${color5_rgb}:${color6_rgb}:${color7_rgb}:${color8_rgb}:${color9_rgb}:${color10_rgb}:${color11_rgb}:${color12_rgb}:${color13_rgb}:${color14_rgb}:${color15_rgb}:${waybar_background}:${waybar_background_rgb}:$HOME'
 
 tmp_waybar=$(mktemp)
 envsubst "$WAYBAR_VARS" < "$WAYBAR_TEMPLATE" > "$tmp_waybar"
@@ -595,19 +623,16 @@ echo "apply_wal_outputs.sh finished successfully."
 # --- Update Hyprland border colors dynamically ---
 __t_hyprctl=$(now_ms)
 if command -v hyprctl &> /dev/null; then
-    # Use active accent as a gradient and softened inactive border
-    # Convert hex like #aabbcc to 0xffaabbcc
-    to_rgba_ff() {
+    # Keep live borders in sync with hyprland.lua:
+    # color4 tracks the main wallpaper accent, color8 is a muted inactive edge.
+    to_hypr_rgb() {
         local hex=${1#"#"}
-        echo "0xff${hex}"
+        echo "rgb(${hex})"
     }
-    ACTIVE_A=$(to_rgba_ff "$color4")
-    ACTIVE_B=$(to_rgba_ff "$color1")
-    INACTIVE=$(to_rgba_ff "${color7#\#}")
+    ACTIVE_A=$(to_hypr_rgb "$color4")
+    INACTIVE=$(to_hypr_rgb "$color8")
 
-    # Apply unified solid color border
-    hyprctl keyword general:col.active_border "$ACTIVE_A" >/dev/null 2>&1 || true
-    hyprctl keyword general:col.inactive_border "$INACTIVE" >/dev/null 2>&1 || true
+    hyprctl eval "hl.config({ general = { col = { active_border = '$ACTIVE_A', inactive_border = '$INACTIVE' } } })" >/dev/null 2>&1 || true
 fi
 log_step "hyprctl-borders" "$__t_hyprctl"
 
@@ -619,7 +644,7 @@ if [ -f "$CONFIG_DIR/mango/config.conf" ]; then
         echo "0x${hex}ff"
     }
     MANGO_ACTIVE=$(to_rgba_mango "$color4")
-    MANGO_INACTIVE=$(to_rgba_mango "$color7")
+    MANGO_INACTIVE=$(to_rgba_mango "$color8")
     
     # Uncomment and replace the color properties
     sed -i -E "s/^[# \t]*focuscolor=.*/focuscolor=${MANGO_ACTIVE}/" "$CONFIG_DIR/mango/config.conf"

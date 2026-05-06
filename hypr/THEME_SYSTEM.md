@@ -38,6 +38,7 @@ This system provides dynamic theme switching using Pywal to generate colors from
     - eww CSS (`~/.config/eww/eww.scss`)
     - Zed theme (via separate script)
     - Perplexity SVG icon
+  - Applies live Hyprland/MangoWC border colors from the current wallpaper palette
   - Restarts services (eww, swaync)
   - Updates Firefox with `pywalfox update`
   - Sets keyboard color with `rogauracore`
@@ -52,7 +53,7 @@ This system provides dynamic theme switching using Pywal to generate colors from
 
 ### 2. Hyprland Configuration
 
-#### Main Config (`hyprland.conf`)
+#### Main Config (`hyprland.lua`)
 - **Keybinds**:
   - `SUPER + W`: Run wallpaper script (random)
   - `SUPER + SHIFT + W`: Open wallpaper selector
@@ -65,6 +66,11 @@ This system provides dynamic theme switching using Pywal to generate colors from
   - Floating windows for various apps
   - Opacity settings for specific apps
   - Rounding for terminal windows
+- **Adaptive Borders**:
+  - Persistent reload defaults are read from `~/.cache/wal/colors-hyprland.conf`
+  - Active border uses wal `color4` so it follows the wallpaper accent
+  - Inactive border uses wal `color8` for a muted edge
+  - `apply_wal_outputs.sh` also applies those same colors live with `hyprctl eval`
 
 #### Monitor Configuration (`monitors.conf`)
 - **Laptop**: `eDP-2, 2560x1440@165, 0x0, 1.0`
@@ -104,6 +110,7 @@ Uses `envsubst` with these color variables:
    - Converts hex to RGB
    - Replaces variables in templates
    - Generates final config files
+   - Applies live Hyprland border colors with `hyprctl eval`
 
 ### 5. Service Integration
 

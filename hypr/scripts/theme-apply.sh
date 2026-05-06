@@ -191,15 +191,13 @@ fi
 
 # Update Hyprland window border colors to match theme
 if command -v hyprctl &> /dev/null; then
-    to_rgba_ff() {
+    to_hypr_rgb() {
         local hex=${1#"#"}
-        echo "0xff${hex}"
+        echo "rgb(${hex})"
     }
-    ACTIVE_A=$(to_rgba_ff "$color4")
-    ACTIVE_B=$(to_rgba_ff "$color1")
-    INACTIVE=$(to_rgba_ff "$color7")
-    hyprctl keyword general:col.active_border "$ACTIVE_A" >/dev/null 2>&1 || true
-    hyprctl keyword general:col.inactive_border "$INACTIVE" >/dev/null 2>&1 || true
+    ACTIVE_A=$(to_hypr_rgb "$color4")
+    INACTIVE=$(to_hypr_rgb "$color8")
+    hyprctl eval "hl.config({ general = { col = { active_border = '$ACTIVE_A', inactive_border = '$INACTIVE' } } })" >/dev/null 2>&1 || true
 fi
 
 # Update MangoWC window border colors to match theme
@@ -209,7 +207,7 @@ if [ -f "$CONFIG_DIR/mango/config.conf" ]; then
         echo "0x${hex}ff"
     }
     MANGO_ACTIVE=$(to_rgba_mango "$color4")
-    MANGO_INACTIVE=$(to_rgba_mango "$color7")
+    MANGO_INACTIVE=$(to_rgba_mango "$color8")
     
     # Uncomment and replace the color properties
     sed -i -E "s/^[# \t]*focuscolor=.*/focuscolor=${MANGO_ACTIVE}/" "$CONFIG_DIR/mango/config.conf"

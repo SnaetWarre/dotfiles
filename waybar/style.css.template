@@ -16,7 +16,7 @@
 }
 
 window#waybar {
-  background: #0C0A06;
+  background: $waybar_background;
   border-radius: 0;
   color: white;
   border: none;
