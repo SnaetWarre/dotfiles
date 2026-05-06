@@ -4,7 +4,7 @@ show-failed-attempts
 font=JetBrainsMono Nerd Font
 
 # Appearance
-image=/home/warre/Pictures/wallpapers/kittensgame.jpg
+image=/home/warre/Pictures/wallpapers/wallpapersden.com_abstract-wave-grey-duotone_2560x1435.jpg
 scaling=fill
 
 # Fade in the lockscreen
@@ -18,32 +18,32 @@ indicator-caps-lock
 indicator-idle-visible
 
 # Colors
-color=24,21,14
-bs-hl-color=135,124,72
-caps-lock-bs-hl-color=135,124,72
-caps-lock-key-hl-color=140,128,76
-inside-color=24,21,1400
-inside-clear-color=109,105,6300
-inside-caps-lock-color=135,124,7200
-inside-ver-color=172,104,7100
-inside-wrong-color=135,124,7200
-key-hl-color=140,128,76
-layout-bg-color=24,21,1400
-layout-border-color=24,21,1400
-layout-text-color=219,222,212
-line-color=24,21,1400
-line-clear-color=24,21,1400
-line-caps-lock-color=24,21,1400
-line-ver-color=24,21,1400
-line-wrong-color=24,21,1400
-ring-color=140,128,76
-ring-clear-color=109,105,63
-ring-caps-lock-color=135,124,72
-ring-ver-color=172,104,71
-ring-wrong-color=135,124,72
-separator-color=24,21,1400
-text-color=219,222,212
-text-clear-color=219,222,212
-text-caps-lock-color=219,222,212
-text-ver-color=219,222,212
-text-wrong-color=219,222,212
+color=0,10,24
+bs-hl-color=114,159,179
+caps-lock-bs-hl-color=114,159,179
+caps-lock-key-hl-color=129,170,189
+inside-color=0,10,2400
+inside-clear-color=107,156,18100
+inside-caps-lock-color=114,159,17900
+inside-ver-color=129,170,18800
+inside-wrong-color=114,159,17900
+key-hl-color=129,170,189
+layout-bg-color=0,10,2400
+layout-border-color=0,10,2400
+layout-text-color=228,240,245
+line-color=0,10,2400
+line-clear-color=0,10,2400
+line-caps-lock-color=0,10,2400
+line-ver-color=0,10,2400
+line-wrong-color=0,10,2400
+ring-color=129,170,189
+ring-clear-color=107,156,181
+ring-caps-lock-color=114,159,179
+ring-ver-color=129,170,188
+ring-wrong-color=114,159,179
+separator-color=0,10,2400
+text-color=228,240,245
+text-clear-color=228,240,245
+text-caps-lock-color=228,240,245
+text-ver-color=228,240,245
+text-wrong-color=228,240,245

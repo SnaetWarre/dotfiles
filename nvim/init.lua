@@ -27,6 +27,118 @@ vim.opt.cursorline = true       -- Highlight current line
 vim.opt.termguicolors = true    -- True color support
 vim.opt.mouse = "a"             -- Enable mouse support
 vim.opt.signcolumn = "yes"      -- Always show signcolumn
+vim.opt.laststatus = 2          -- Compact local statusline like the reference
+vim.opt.showmode = false        -- Statusline owns mode display
+vim.opt.fillchars = {
+  eob = " ",
+  fold = " ",
+  foldopen = " ",
+  foldsep = " ",
+  foldclose = " ",
+  horiz = "─",
+  horizup = "┴",
+  horizdown = "┬",
+  vert = "│",
+  vertleft = "┤",
+  vertright = "├",
+  verthoriz = "┼",
+}
+
+if vim.fn.has("nvim-0.11") == 1 then
+  vim.opt.winborder = "single"
+end
+
+vim.diagnostic.config({
+  virtual_text = false,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+  float = {
+    border = "single",
+    source = "if_many",
+  },
+})
+
+local function apply_retro_ui(colors)
+  colors = colors or {}
+
+  local bg = colors.bg_statusline or colors.bg_dark or colors.bg or "#16161e"
+  local fg = colors.fg or "#c0caf5"
+  local muted = colors.fg_gutter or colors.dark5 or "#3b4261"
+  local border = colors.border or colors.bg_highlight or "#292e42"
+  local accent = colors.blue or "#7aa2f7"
+
+  -- Keep the compact reference-style statusline, but let the active theme own
+  -- the actual palette. Do not override Normal/LineNr/CursorLine here.
+  vim.api.nvim_set_hl(0, "FloatBorder", { bg = colors.bg_float or bg, fg = border })
+  vim.api.nvim_set_hl(0, "WinSeparator", { fg = border })
+  vim.api.nvim_set_hl(0, "StatusLine", { bg = bg, fg = fg })
+  vim.api.nvim_set_hl(0, "StatusLineNC", { bg = bg, fg = muted })
+  vim.api.nvim_set_hl(0, "RetroMode", { bg = accent, fg = colors.bg_dark1 or bg, bold = true })
+  vim.api.nvim_set_hl(0, "RetroFile", { bg = bg, fg = fg, bold = true })
+  vim.api.nvim_set_hl(0, "RetroMeta", { bg = bg, fg = muted })
+  vim.api.nvim_set_hl(0, "RetroPos", { bg = accent, fg = colors.bg_dark1 or bg, bold = true })
+end
+
+local modes = {
+  n = "NORMAL",
+  no = "OP",
+  nov = "OP",
+  noV = "OP",
+  ["no\22"] = "OP",
+  niI = "NORMAL",
+  niR = "NORMAL",
+  niV = "NORMAL",
+  nt = "NORMAL",
+  v = "VISUAL",
+  vs = "VISUAL",
+  V = "V-LINE",
+  ["\22"] = "V-BLOCK",
+  s = "SELECT",
+  S = "S-LINE",
+  ["\19"] = "S-BLOCK",
+  i = "INSERT",
+  ic = "INSERT",
+  ix = "INSERT",
+  R = "REPLACE",
+  Rc = "REPLACE",
+  Rx = "REPLACE",
+  Rv = "V-REPLACE",
+  c = "COMMAND",
+  cv = "EX",
+  ce = "EX",
+  r = "PROMPT",
+  rm = "MORE",
+  ["r?"] = "CONFIRM",
+  ["!"] = "SHELL",
+  t = "TERM",
+}
+
+function _G.retro_mode()
+  return modes[vim.api.nvim_get_mode().mode] or "NORMAL"
+end
+
+function _G.retro_diagnostics()
+  local counts = vim.diagnostic.count(0)
+  local total = 0
+  for _, count in pairs(counts) do
+    total = total + count
+  end
+  return total > 0 and ("   " .. total) or ""
+end
+
+local function setup_retro_statusline()
+  vim.o.statusline = table.concat({
+    "%#RetroMode# %{v:lua.retro_mode()} ",
+    "%#RetroFile# %t%m",
+    "%=",
+    "%#RetroMeta# %{&fileencoding != '' ? &fileencoding : &encoding}",
+    "%{v:lua.retro_diagnostics()}",
+    "  %y  %p%% ",
+    "%#RetroPos# %l:%c ",
+  })
+end
 
 -- Window navigation: Ctrl+H = focus tree, Ctrl+L = focus editor
 vim.keymap.set("n", "<C-h>", "<cmd>Neotree focus<cr>", { desc = "Focus file tree" })
@@ -116,13 +228,28 @@ require("lazy").setup({
   },
 
   -- [[ THEME ]]
-  -- Optional: A clean and minimal theme (kanagawa is a solid default)
   {
-    "rebelot/kanagawa.nvim",
+    "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
-    config = function()
-      vim.cmd([[colorscheme kanagawa-dragon]])
+    opts = {
+      style = "night",
+      transparent = false,
+      terminal_colors = true,
+      styles = {
+        comments = { italic = true },
+        keywords = { italic = false },
+        sidebars = "dark",
+        floats = "dark",
+      },
+    },
+    config = function(_, opts)
+      require("tokyonight").setup(opts)
+      vim.o.background = "dark"
+      vim.cmd.colorscheme("tokyonight-night")
+      local colors = require("tokyonight.colors").setup(opts)
+      apply_retro_ui(colors)
+      setup_retro_statusline()
     end,
   },
 
