@@ -21,11 +21,11 @@ fi
 source "${ZINIT_HOME}/zinit.zsh"
 
 # ============================================================================
-# ZINIT ANNEXES (optional optimizations)
+# ZINIT ANNEXES
 # ============================================================================
-zinit light-mode for \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl
+# Keep annexes out of the hot path. The active plugins below are local git
+# plugins, so these download/build helpers are only needed for manual zinit
+# maintenance, not for every new terminal.
 
 # ============================================================================
 # THEME - Custom Liquidprompt-style
@@ -56,6 +56,10 @@ zinit light zsh-users/zsh-history-substring-search
 # COMPLETION SYSTEM - Optimized
 # ============================================================================
 autoload -Uz compinit
+
+# Let compinit autoload bun completions on demand instead of sourcing the
+# 38K completion file during every shell startup.
+[[ -d "$HOME/.bun" ]] && fpath=("$HOME/.bun" $fpath)
 
 # Only regenerate compdump once per day
 setopt EXTENDEDGLOB
@@ -113,8 +117,8 @@ export PATH="$HOME/.dotnet:$HOME/.dotnet/tools:$PATH"
 export PATH="/home/warre/.opencode/bin:$PATH"
 
 # Fix Belgian (AZERTY) keyboard layout
-if command -v setxkbmap &>/dev/null; then
-  setxkbmap be 2>/dev/null
+if [[ -n "$DISPLAY" ]] && command -v setxkbmap &>/dev/null; then
+  setxkbmap be >/dev/null 2>&1 &!
 fi
 
 # LS_COLORS - Enhanced file type colors for ls and completion
@@ -165,7 +169,7 @@ npm() { _nvm_lazy_load; npm "$@"; }
 npx() { _nvm_lazy_load; npx "$@"; }
 yarn() { _nvm_lazy_load; yarn "$@"; }
 
-# --- Mamba is initialized at the bottom of this file ---
+# --- Mamba is lazy-loaded below ---
 # Use 'mamba activate DL' to activate the Deep Learning environment
 
 # --- Thefuck Lazy Loading (cached) ---
@@ -183,8 +187,7 @@ if command -v zoxide &>/dev/null; then
   eval "$(zoxide init zsh)"
 fi
 
-# --- Bun completions (lazy loaded) ---
-[ -s "/home/warre/.bun/_bun" ] && source "/home/warre/.bun/_bun"
+# --- Bun completions are autoloaded through fpath before compinit ---
 
 # --- Cargo environment (lazy loaded) ---
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
@@ -356,15 +359,14 @@ autoload -U colors && colors
 
 # Git info function
 function git_prompt_info() {
-  local git_status git_branch git_dirty
+  local git_branch git_dirty
   
   # Check if in git repo
-  git_branch=$(git symbolic-ref --short HEAD 2>/dev/null || git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)
+  git_branch=$(command git symbolic-ref --short HEAD 2>/dev/null || command git describe --tags --exact-match 2>/dev/null || command git rev-parse --short HEAD 2>/dev/null)
   
   if [[ -n $git_branch ]]; then
-    # Check for dirty state
-    git_status=$(git status --porcelain 2>/dev/null)
-    if [[ -n $git_status ]]; then
+    if ! command git diff --quiet --ignore-submodules --cached 2>/dev/null ||
+       ! command git diff --quiet --ignore-submodules 2>/dev/null; then
       git_dirty="±"
     fi
     
@@ -388,16 +390,21 @@ precmd_functions+=(set_prompt)
 set_prompt
 
 # >>> mamba initialize >>>
-# !! Contents within this block are managed by 'mamba shell init' !!
+# Lazy replacement for the generated 'mamba shell init' block.
 export MAMBA_EXE='/home/warre/miniforge3/bin/mamba';
 export MAMBA_ROOT_PREFIX='/home/warre/miniforge3';
-__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__mamba_setup"
-else
-    alias mamba="$MAMBA_EXE"  # Fallback on help from mamba activate
-fi
-unset __mamba_setup
+__mamba_lazy_load() {
+    unset -f mamba conda __mamba_lazy_load
+    local __mamba_setup
+    __mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+    if [[ $? -eq 0 ]]; then
+        eval "$__mamba_setup"
+    else
+        alias mamba="$MAMBA_EXE"
+    fi
+}
+mamba() { __mamba_lazy_load; mamba "$@"; }
+conda() { __mamba_lazy_load; conda "$@"; }
 # <<< mamba initialize <<<
 
 # bun
