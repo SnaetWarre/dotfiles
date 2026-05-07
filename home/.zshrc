@@ -215,6 +215,7 @@ roblox() {
   (setsid flatpak run org.vinegarhq.Sober > /dev/null 2>&1 &)
 }
 alias oc="opencode"
+alias emacs="emacs-kitty"
 
 alias vpnup="sudo wg-quick up wg0"
 alias vpndown="sudo wg-quick down wg0"
