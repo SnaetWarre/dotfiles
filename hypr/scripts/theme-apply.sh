@@ -213,8 +213,9 @@ if [ -f "$CONFIG_DIR/mango/config.conf" ]; then
     sed -i -E "s/^[# \t]*focuscolor=.*/focuscolor=${MANGO_ACTIVE}/" "$CONFIG_DIR/mango/config.conf"
     sed -i -E "s/^[# \t]*bordercolor=.*/bordercolor=${MANGO_INACTIVE}/" "$CONFIG_DIR/mango/config.conf"
     
-    # Send reload signal via MangoWC's IPC
-    if command -v mmsg &> /dev/null; then
+    # Send reload signal via MangoWC's IPC only when Mango is running.
+    # mmsg currently dumps core if called without a live Mango IPC target.
+    if command -v mmsg &> /dev/null && pgrep -x mango >/dev/null 2>&1; then
         mmsg -s -d reload_config >/dev/null 2>&1 || true
     fi
 fi
