@@ -84,7 +84,7 @@ hl.config({
             active_border = rgb("color4", "7d5a73"),
             inactive_border = rgb("color8", "433859"),
         },
-        layout = "dwindle",
+        layout = "master",
         resize_on_border = true,
         extend_border_grab_area = 25,
         snap = {
@@ -97,10 +97,10 @@ hl.config({
 
     decoration = {
         active_opacity = 1.0,
-        inactive_opacity = 1.0,
+        inactive_opacity = 0.8,
         fullscreen_opacity = 1.0,
-        rounding = 0,
-        rounding_power = 2.0,
+        rounding = 4,
+        rounding_power = 3.0,
         dim_inactive = false,
         blur = {
             enabled = true,
