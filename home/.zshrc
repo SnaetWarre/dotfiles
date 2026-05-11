@@ -201,7 +201,7 @@ fi
 # ALIASES
 # ============================================================================
 alias c="clear"
-alias ff="fastfetch"
+alias ff="clear && fastfetch"
 alias off="poweroff"
 alias kys="poweroff"
 alias houjekankerbek="poweroff"

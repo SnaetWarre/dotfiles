@@ -84,7 +84,7 @@ hl.config({
             active_border = rgb("color4", "7d5a73"),
             inactive_border = rgb("color8", "433859"),
         },
-        layout = "master",
+        layout = "dwindle",
         resize_on_border = true,
         extend_border_grab_area = 25,
         snap = {
@@ -223,7 +223,7 @@ hl.config({
     master = {
         new_status = "master",
         special_scale_factor = 0.8,
-        smart_resizing = false,
+        smart_resizing = true,
         drop_at_cursor = true,
     },
 })
