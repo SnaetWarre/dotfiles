@@ -201,7 +201,7 @@ fi
 # ALIASES
 # ============================================================================
 alias c="clear"
-alias ff="clear && fastfetch"
+alias ff="clear && printf '\n\n' && fastfetch && printf '\n\n'"
 alias off="poweroff"
 alias kys="poweroff"
 alias houjekankerbek="poweroff"
