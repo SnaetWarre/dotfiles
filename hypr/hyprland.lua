@@ -370,6 +370,21 @@ bind(mainMod .. " + U", hl.dsp.exec_cmd("~/.config/waybar/waybar.sh"))
 -- Window rules
 hl.window_rule({ name = "windowrule-1", match = { class = ".*" }, suppress_event = "maximize" })
 hl.window_rule({ name = "mango-shadow-floating-only", match = { float = false }, no_shadow = true })
+hl.window_rule({
+    name = "fullscreen-browser-clean-edges",
+    match = {
+        class = "^(helium-browser|Helium|org.mozilla.firefox|firefox|LibreWolf|Chromium|chromium|google-chrome|Brave-browser|brave-browser|zen|zen-browser)$",
+        fullscreen = true,
+    },
+    decorate = false,
+    rounding = 0,
+    border_size = 0,
+    no_blur = true,
+    no_shadow = true,
+    no_vrr = true,
+    opaque = true,
+    force_rgbx = true,
+})
 hl.window_rule({ name = "windowrule-2", match = { class = "^(Rofi)$" }, float = true })
 hl.window_rule({ name = "windowrule-3", match = { class = "^(org.pulseaudio.pavucontrol)" }, float = true, size = { 1200, 800 }, center = true })
 hl.window_rule({ name = "windowrule-4", match = { class = "^()$", title = "^(Picture in picture)$" }, float = true })
