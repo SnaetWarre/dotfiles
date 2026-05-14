@@ -6,7 +6,7 @@
 
 {
   "layer": "top",
-  "position": "top",
+  "position": "up",
   "height": 37,
   "margin-top": 0,
   "margin-bottom": 0,
@@ -16,8 +16,7 @@
   // ── Modules Layout ───────────────────────────────────────────────
   "modules-left": [
     "custom/asus-profile",
-    "custom/separator",
-    
+    "custom/separator",    
     "hyprland/workspaces"
   ],
 
