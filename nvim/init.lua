@@ -462,6 +462,7 @@ require("lazy").setup({
           "html",           -- HTML
           "svelte",         -- Svelte
           "ts_ls",          -- TypeScript / JS
+          "lua_ls",         -- Lua, including Hyprland's Lua config stubs
           -- Note: 'ty' is not in Mason by default, it relies on global system installation.
         },
       })
@@ -496,6 +497,30 @@ require("lazy").setup({
       -- Specifix overrides:
       vim.lsp.config("gopls", {
         settings = { gopls = { analyses = { unusedparams = true }, staticcheck = true } },
+      })
+
+      local hypr_stubs = "/usr/share/hypr/stubs"
+      local lua_workspace_library = {
+        vim.env.VIMRUNTIME,
+        vim.fn.stdpath("config") .. "/lua",
+      }
+
+      if vim.uv.fs_stat(hypr_stubs) then
+        table.insert(lua_workspace_library, hypr_stubs)
+      end
+
+      vim.lsp.config("lua_ls", {
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { "hl", "vim" },
+            },
+            workspace = {
+              checkThirdParty = false,
+              library = lua_workspace_library,
+            },
+          },
+        },
       })
 
       -- Explicitly configure the 'ty' python LSP (Astral typechecker), because it's not managed by Mason

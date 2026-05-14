@@ -77,8 +77,8 @@ end)
 hl.config({
     general = {
         allow_tearing = true,
-        gaps_in = 5,
-        gaps_out = 5,
+        gaps_in = 2,
+        gaps_out = 2,
         border_size = 1,
         col = {
             active_border = rgb("color4", "7d5a73"),
@@ -182,8 +182,8 @@ hl.config({
     },
 
     binds = {
-        allow_workspace_cycles = true,
-        workspace_back_and_forth = true,
+        allow_workspace_cycles = false,
+        workspace_back_and_forth = false,
         workspace_center_on = 1,
         movefocus_cycles_fullscreen = true,
         window_direction_monitor_fallback = true,
@@ -196,7 +196,7 @@ hl.config({
     },
 
     opengl = {
-        nvidia_anti_flicker = false,
+        nvidia_anti_flicker = true,
     },
 
     render = {
@@ -386,7 +386,6 @@ hl.window_rule({
     force_rgbx = true,
 })
 hl.window_rule({ name = "windowrule-2", match = { class = "^(Rofi)$" }, float = true })
-hl.window_rule({ name = "windowrule-3", match = { class = "^(org.pulseaudio.pavucontrol)" }, float = true, size = { 1200, 800 }, center = true })
 hl.window_rule({ name = "windowrule-4", match = { class = "^()$", title = "^(Picture in picture)$" }, float = true })
 hl.window_rule({ name = "windowrule-5", match = { class = "^()$", title = "^(Save File)$" }, float = true })
 hl.window_rule({ name = "windowrule-6", match = { class = "^()$", title = "^(Open File)$" }, float = true })
@@ -407,10 +406,7 @@ hl.window_rule({ name = "mango-media-float-mpv-imv", match = { class = "^(mpv|im
 hl.window_rule({ name = "mango-thunar-opacity", match = { class = "^(thunar|Thunar)$" }, opacity = "0.80 0.80" })
 hl.window_rule({ name = "kitty-tiling", match = { class = "^(kitty)$" }, float = false })
 hl.window_rule({ name = "allow-tearing", match = { class = "^(steam_app_.*)$" }, immediate = true })
-
--- Workspace rules
-hl.workspace_rule({ workspace = "w[tv1-10]", gaps_out = 5, gaps_in = 5 })
-hl.workspace_rule({ workspace = "f[1]", gaps_out = 5, gaps_in = 5 })
+hl.window_rule({ name = "equibop-on-ws3", match = { class = "^(equibop)$" }, workspace = "3 silent" })
 
 -- Layer rules
 hl.layer_rule({ name = "mango-selection-capture", match = { namespace = "selection" }, no_anim = true, blur = false })
@@ -422,3 +418,6 @@ hl.layer_rule({ name = "layerrule-5", match = { namespace = "wlogout" }, blur = 
 
 -- hyprswitch ALT + TAB binding
 hl.bind("ALT + Tab", hl.dsp.exec_cmd("/home/warre/Projects/Rust/hyprtab/target/release/hyprswitch gui --mod-key alt --key tab"))
+
+
+
