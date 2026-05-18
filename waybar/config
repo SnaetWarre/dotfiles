@@ -16,8 +16,7 @@
   // ── Modules Layout ───────────────────────────────────────────────
   "modules-left": [
     "custom/asus-profile",
-    "custom/separator",    
-    "hyprland/workspaces"
+    "custom/kb-layout"
   ],
 
   "modules-center": [
@@ -44,6 +43,7 @@
 
   // ── Clock ────────────────────────────────────────────────────────
   "clock": {
+    "locale": "en_US.UTF-8",
     "tooltip-format": "<span size='18pt' weight='bold'>{:%B %Y}</span>\n<tt><span size='15pt'>{calendar}</span></tt>",
     "format-alt": "{:%I:%M %p}",
     "format": "{:%a, %d %b  %I:%M %p}",
@@ -90,6 +90,17 @@
     "on-click": "~/.config/waybar/scripts/cycle-asus-profile.sh"
   },
 
+  // ── Keyboard Layout ──────────────────────────────────────────────
+  "custom/kb-layout": {
+    "exec": "~/.config/waybar/scripts/kb-layout.sh",
+    "return-type": "json",
+    "interval": 2,
+    "signal": 13,
+    "format": "{}",
+    "tooltip": true,
+    "on-click": "~/.config/waybar/scripts/toggle-kb-layout.sh"
+  },
+
   // ── Screen Recording ───────────────────────────────────────────────
   "custom/screenrecording-indicator": {
     "on-click": "~/.config/waybar/modules/toggle-screenrecord.sh",
@@ -124,17 +135,17 @@
     "signal": 12
   },
 
-  // ── Battery (scripted) ────────────────────────────────────────────
+  // ── Battery ───────────────────────────────────────────────────────
   "battery": {
-      "format": "{icon} {capacity}%",
+    "format": "{icon} {capacity}%",
     "format-discharging": "{icon} {capacity}%",
     "format-charging": "{icon} {capacity}%",
-    "format-plugged": "",
+    "format-plugged": " {capacity}%",
     "format-icons": {
       "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
       "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
     },
-    "format-full": "󰂅",
+    "format-full": "󰂅 {capacity}%",
     "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
     "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
     "interval": 5,
@@ -154,11 +165,11 @@
     "on-scroll-down": "brightnessctl set 5%-"
   },
 
-  // ── Workspaces (native hyprland module) ──────────────────────────
-  "hyprland/workspaces": {
+  // ── Workspaces (generic ext-workspace protocol module) ───────────
+  "ext/workspaces": {
     "format": "{id}",
     "on-click": "activate",
-    "sort-by-number": true,
+    "sort-by-id": true,
     "persistent-workspaces": {
       "*": 5
     }

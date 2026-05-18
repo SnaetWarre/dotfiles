@@ -80,6 +80,7 @@ window#waybar {
 #custom-volume,
 #custom-brightness,
 #custom-asus-profile,
+#custom-kb-layout,
 #custom-screenrecording-indicator,
 #custom-display-mode,
 #custom-kbd-brightness {

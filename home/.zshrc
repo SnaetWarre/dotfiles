@@ -200,6 +200,7 @@ fi
 # ============================================================================
 # ALIASES
 # ============================================================================
+alias lg="lazygit"
 alias c="clear"
 alias ff="clear && printf '\n\n' && fastfetch && printf '\n\n'"
 alias off="poweroff"

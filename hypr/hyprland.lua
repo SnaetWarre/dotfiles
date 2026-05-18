@@ -2,7 +2,7 @@
 -- Keep hyprland.conf as a rollback path: Hyprland prefers this file only when it exists.
 
 local mainMod = "SUPER"
-local filemanager = "thunar"
+local filemanager = "dolphin --platformtheme qt6ct"
 local applauncher = 'rofi -show combi -modi drun,run,combi -combi-modi drun,run -combi-hide-mode-prefix true -display-combi "" -theme ~/.config/rofi/config.rasi'
 local terminal = "kitty"
 local browser = "helium-browser"
@@ -69,9 +69,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
     hl.exec_cmd("systemctl --user enable --now pipewire pipewire-pulse wireplumber")
-    
-    -- Initialize the hyprswitch daemon
-    hl.exec_cmd("/home/warre/Projects/Rust/hyprtab/target/release/hyprswitch init --show-title &")
+    hl.exec_cmd("hyprshell -c /home/warre/.config/hyprshell/config.json5 run")
 end)
 
 hl.config({
@@ -129,7 +127,7 @@ hl.config({
     animations = { enabled = true },
 
     input = {
-        kb_layout = "be",
+        kb_layout = "be,us",
         kb_model = "",
         kb_rules = "",
         follow_mouse = 1,
@@ -183,7 +181,7 @@ hl.config({
 
     binds = {
         allow_workspace_cycles = false,
-        workspace_back_and_forth = false,
+        workspace_back_and_forth = true,
         workspace_center_on = 1,
         movefocus_cycles_fullscreen = true,
         window_direction_monitor_fallback = true,
@@ -415,9 +413,3 @@ hl.layer_rule({ name = "layerrule-2", match = { namespace = "wallpaper" }, anima
 hl.layer_rule({ name = "layerrule-3", match = { namespace = "rofi" }, blur = true })
 hl.layer_rule({ name = "layerrule-4", match = { namespace = "eww" }, blur = true })
 hl.layer_rule({ name = "layerrule-5", match = { namespace = "wlogout" }, blur = true })
-
--- hyprswitch ALT + TAB binding
-hl.bind("ALT + Tab", hl.dsp.exec_cmd("/home/warre/Projects/Rust/hyprtab/target/release/hyprswitch gui --mod-key alt --key tab"))
-
-
-
