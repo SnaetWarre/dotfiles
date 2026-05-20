@@ -74,7 +74,7 @@ end)
 
 hl.config({
     general = {
-        allow_tearing = true,
+        allow_tearing = false,
         gaps_in = 2,
         gaps_out = 2,
         border_size = 1,
@@ -138,6 +138,7 @@ hl.config({
             natural_scroll = true,
             scroll_factor = 1.0,
             tap_to_click = true,
+            disable_while_typing = true,
         },
     },
 
@@ -173,7 +174,7 @@ hl.config({
         always_follow_on_dnd = true,
         layers_hog_keyboard_focus = true,
         animate_manual_resizes = false,
-        vrr = 2,
+        vrr = 0,
         mouse_move_enables_dpms = true,
         key_press_enables_dpms = true,
         disable_hyprland_guiutils_check = false,
@@ -198,7 +199,7 @@ hl.config({
     },
 
     render = {
-        direct_scanout = true,
+        direct_scanout = false,
         expand_undersized_textures = true,
     },
 
@@ -357,6 +358,7 @@ bind(mainMod .. " + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/wallpaper.sh"))
 bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/wallpaper-select.sh"))
 bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("~/.config/hypr/scripts/theme-select.sh"))
 bind(mainMod .. " + G", hl.dsp.exec_cmd("~/.config/hypr/scripts/gamemode.sh"), desc("Toggle game mode (Performance + disable rofi)"))
+bind(mainMod .. " + SHIFT + G", hl.dsp.exec_cmd("~/.config/hypr/scripts/hypr-gravity.sh"), desc("Black-hole window gravity"))
 bind(mainMod .. " + SHIFT + P", hl.dsp.submap("passthrough"))
 hl.define_submap("passthrough", function()
     bind(mainMod .. " + SHIFT + P", hl.dsp.submap("reset"))
@@ -368,21 +370,6 @@ bind(mainMod .. " + U", hl.dsp.exec_cmd("~/.config/waybar/waybar.sh"))
 -- Window rules
 hl.window_rule({ name = "windowrule-1", match = { class = ".*" }, suppress_event = "maximize" })
 hl.window_rule({ name = "mango-shadow-floating-only", match = { float = false }, no_shadow = true })
-hl.window_rule({
-    name = "fullscreen-browser-clean-edges",
-    match = {
-        class = "^(helium-browser|Helium|org.mozilla.firefox|firefox|LibreWolf|Chromium|chromium|google-chrome|Brave-browser|brave-browser|zen|zen-browser)$",
-        fullscreen = true,
-    },
-    decorate = false,
-    rounding = 0,
-    border_size = 0,
-    no_blur = true,
-    no_shadow = true,
-    no_vrr = true,
-    opaque = true,
-    force_rgbx = true,
-})
 hl.window_rule({ name = "windowrule-2", match = { class = "^(Rofi)$" }, float = true })
 hl.window_rule({ name = "windowrule-4", match = { class = "^()$", title = "^(Picture in picture)$" }, float = true })
 hl.window_rule({ name = "windowrule-5", match = { class = "^()$", title = "^(Save File)$" }, float = true })
@@ -403,7 +390,6 @@ hl.window_rule({ name = "windowrule-22", match = { class = "^(gnome-calculator|G
 hl.window_rule({ name = "mango-media-float-mpv-imv", match = { class = "^(mpv|imv)$" }, float = true })
 hl.window_rule({ name = "mango-thunar-opacity", match = { class = "^(thunar|Thunar)$" }, opacity = "0.80 0.80" })
 hl.window_rule({ name = "kitty-tiling", match = { class = "^(kitty)$" }, float = false })
-hl.window_rule({ name = "allow-tearing", match = { class = "^(steam_app_.*)$" }, immediate = true })
 hl.window_rule({ name = "equibop-on-ws3", match = { class = "^(equibop)$" }, workspace = "3 silent" })
 
 -- Layer rules
