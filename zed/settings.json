@@ -80,7 +80,7 @@
       "enterprise_uri": null,
     },
   },
-  "vim_mode": true,
+  "vim_mode": false,
   "agent": {
     "button": true,
     "dock": "right",
@@ -137,7 +137,7 @@
   "theme": {
     "mode": "dark",
     "light": "Ayu Light",
-    "dark": "Zed Legacy: Rosé Pine",
+    "dark": "Zed Legacy: Ayu Dark",
   },
   "autosave": {
     "after_delay": { "milliseconds": 100 },

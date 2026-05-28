@@ -26,6 +26,7 @@ vim.opt.wrap = false            -- Disable line wrapping
 vim.opt.cursorline = true       -- Highlight current line
 vim.opt.termguicolors = true    -- True color support
 vim.opt.mouse = "a"             -- Enable mouse support
+vim.opt.clipboard = "unnamedplus" -- Use the system clipboard by default
 vim.opt.signcolumn = "yes"      -- Always show signcolumn
 vim.opt.laststatus = 2          -- Compact local statusline like the reference
 vim.opt.showmode = false        -- Statusline owns mode display
