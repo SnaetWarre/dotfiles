@@ -392,7 +392,7 @@ hl.window_rule({ name = "windowrule-22", match = { class = "^(gnome-calculator|G
 hl.window_rule({ name = "mango-media-float-mpv-imv", match = { class = "^(mpv|imv)$" }, float = true })
 hl.window_rule({ name = "mango-thunar-opacity", match = { class = "^(thunar|Thunar)$" }, opacity = "0.80 0.80" })
 hl.window_rule({ name = "kitty-tiling", match = { class = "^(kitty)$" }, float = false })
-hl.window_rule({ name = "discord-on-ws3", match = { class = "^(legcord)$" }, workspace = "3 silent" })
+hl.window_rule({ name = "discord-on-ws3", match = { class = "^(legcord)$" }, workspace = "4 silent" })
 
 -- Layer rules
 hl.layer_rule({ name = "mango-selection-capture", match = { namespace = "selection" }, no_anim = true, blur = false })
