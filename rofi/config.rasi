@@ -1,2 +1,7 @@
+configuration {
+    show-icons: false;
+    drun-display-format: "{name}";
+}
+
 @import "colors.rasi"
 @import "pywal-theme.rasi"

@@ -22,4 +22,4 @@ case "$active_keymap" in
     ;;
 esac
 
-printf '{"text":"󰌌 %s","tooltip":"%s"}\n' "$label" "$tooltip"
+printf '{"text":"KB %s","tooltip":"%s"}\n' "$label" "$tooltip"

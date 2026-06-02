@@ -14,7 +14,7 @@ fi
 
 # Check current mode by looking for "mirror" in the HDMI line
 if grep -q "mirror, eDP-2" "$MONITORS_CONF"; then
-    echo '{"text":"󰍹","tooltip":"Mirroring - Click to extend","class":"mirror"}'
+    echo '{"text":"DISP mirror","tooltip":"Mirroring - Click to extend","class":"mirror"}'
 else
-    echo '{"text":"󰍺","tooltip":"Extended - Click to mirror","class":"extend"}'
+    echo '{"text":"DISP extend","tooltip":"Extended - Click to mirror","class":"extend"}'
 fi

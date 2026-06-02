@@ -31,34 +31,34 @@ fi
 brightness=$(asusctl leds get 2>/dev/null | awk -F': ' '{print $2}')
 
 if [ -z "$brightness" ]; then
-    echo "{\"text\": \"<span foreground='$color_off'>󰌌 N/A</span>\", \"tooltip\": \"Keyboard Backlight: ASUS service unavailable\"}"
+    echo "{\"text\": \"<span foreground='$color_off'>KEY N/A</span>\", \"tooltip\": \"Keyboard Backlight: ASUS service unavailable\"}"
     exit 0
 fi
 
 # Map brightness value to label and color
 case "$brightness" in
     Off)
-        text="󰌌 OFF"
+        text="KEY OFF"
         fg="$color_off"
         tooltip="Keyboard Backlight: Off"
         ;;
     Low)
-        text="󰌌 LOW"
+        text="KEY LOW"
         fg="$color_low"
         tooltip="Keyboard Backlight: Low"
         ;;
     Med)
-        text="󰌌 MED"
+        text="KEY MED"
         fg="$color_med"
         tooltip="Keyboard Backlight: Medium"
         ;;
     High)
-        text="󰌌 HIGH"
+        text="KEY HIGH"
         fg="$color_high"
         tooltip="Keyboard Backlight: High"
         ;;
     *)
-        text="󰌌 ??"
+        text="KEY ??"
         fg="$color_off"
         tooltip="Keyboard Backlight: Unknown"
         ;;

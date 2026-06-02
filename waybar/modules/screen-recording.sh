@@ -12,9 +12,9 @@ session_pid() {
 }
 
 if PID=$(session_pid) && kill -0 "$PID" 2>/dev/null; then
-    echo '{"text": "󰑊", "tooltip": "Stop recording", "class": "recording"}'
+    echo '{"text": "REC", "tooltip": "Stop recording", "class": "recording"}'
 else
     # Clean up stale session file if the process is gone
     rm -f "$SESSION_FILE"
-    echo '{"text": "󰑊", "tooltip": "Start recording", "class": "idle"}'
+    echo '{"text": "REC", "tooltip": "Start recording", "class": "idle"}'
 fi

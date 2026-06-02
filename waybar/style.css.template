@@ -1,76 +1,29 @@
-/* ──────────────────────────────────────────────────────────────────────────
-   °˖* ૮(  • ᴗ ｡)っ🍸  pewdiepie/archdaemon/dionysh  shhheersh
-   Waybar CSS styling (pywal-compatible template) - Minimal Edition
-   vers. 2.0.0
-   ────────────────────────────────────────────────────────────────────────── */
-
-/* === Base Waybar Styling ================================================= */
+/* Pywal-compatible retro Waybar template. */
 
 * {
   border: none;
   border-radius: 0;
+  box-shadow: none;
   min-height: 0;
-  font-family: "JetBrainsMono Nerd Font", "JetBrainsMonoNL Nerd Font Propo", "JetBrainsMono";
-  font-size: 15px;
+  font-family: "Bitstream Vera Sans Mono", "Noto Sans Mono", "monospace";
+  font-size: 12px;
   font-weight: normal;
+  text-shadow: none;
+  transition: none;
 }
 
 window#waybar {
   background: $waybar_background;
-  border-radius: 0;
-  color: white;
-  border: none;
-  border-bottom: 0px solid $color4;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  margin-top: 0px;
-  margin-bottom: 0px;
+  color: $color7;
+  border-bottom: 1px solid $color8;
 }
-
-/* === Separator =========================================================== */
 
 #custom-separator {
-  color: #ffffff;
+  color: $color8;
   background: transparent;
-  padding: 0 4px;
+  padding: 0 5px;
   margin: 0;
-  font-size: 14px;
 }
-
-/* === Workspaces ========================================================== */
-
-#workspaces {
-  background: transparent;
-  padding: 0;
-  margin: 4px 0;
-}
-
-#workspaces button {
-  background: transparent;
-  color: #ffffff;
-  opacity: 0.35;
-  padding: 2px 7px;
-  margin: 0 2px;
-  border: none;
-  border-radius: 12px;
-  font-size: 15px;
-  font-weight: normal;
-  transition: all 0.2s ease-in-out;
-}
-
-#workspaces button.active {
-  background: rgba($color12_rgb, 0.18);
-  color: #ffffff;
-  opacity: 1;
-  font-weight: bold;
-}
-
-#workspaces button:hover {
-  background: rgba($color12_rgb, 0.10);
-  color: #ffffff;
-  opacity: 0.8;
-}
-
-/* === All Modules - Clean Minimal Styling ================================= */
 
 #clock,
 #network,
@@ -85,134 +38,71 @@ window#waybar {
 #custom-display-mode,
 #custom-kbd-brightness {
   background: transparent;
-  color: #ffffff;
-  padding: 0 8px;
+  color: $color7;
+  padding: 0 7px;
   margin: 0;
-  border: none;
-  border-radius: 0;
 }
-
-/* === Clock =============================================================== */
 
 #clock {
-  color: #ffffff;
-  font-weight: 500;
+  color: $color4;
 }
 
-/* === Power =============================================================== */
-
-#custom-power {
-  color: #ffffff;
-  font-size: 16px;
-}
-
-#custom-power:hover {
-  color: #ffffff;
-  transition: color 0.2s ease-in-out;
-}
-
-/* === Network ============================================================= */
-
-#network {
-  color: #ffffff;
-}
-
-#network.disconnected {
-  color: #ffffff;
-}
-
-/* === System Stats ======================================================== */
-
-#custom-system-stats {
-  color: #ffffff;
-  font-size: 14px;
-}
-
-/* === Battery ============================================================= */
-
-#battery {
-  color: #ffffff;
-}
-
-/* === Volume ============================================================== */
-
-#custom-volume {
-  color: #ffffff;
-}
-
-/* === Brightness ========================================================== */
-
-#custom-brightness {
-  color: #ffffff;
-}
-
-/* === Asus Profile ======================================================== */
-
-#custom-asus-profile {
-  color: #ffffff;
-  font-weight: 500;
-  padding: 0 12px;
-}
-
-/* === Screen Recording ==================================================== */
-
-#custom-screenrecording-indicator {
-  color: #ffffff;
-  padding: 0 8px;
-}
-
-#custom-screenrecording-indicator.recording {
-  color: #ffffff;
-  animation-name: recording-blink;
-  animation-duration: 0.8s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-}
-
-@keyframes recording-blink {
-  to {
-    color: alpha(#ffffff, 0.4);
-  }
-}
-
-/* === Display Mode ======================================================== */
-
+#custom-asus-profile,
+#custom-kb-layout,
 #custom-display-mode {
-  color: #ffffff;
-  padding: 0 8px;
+  color: $color6;
 }
 
-/* === Keyboard Brightness ================================================= */
-
-#custom-kbd-brightness {
-  color: #ffffff;
+#network,
+#custom-volume,
+#battery {
+  color: $color7;
 }
 
-/* === Hover Effects ======================================================= */
-
-#clock:hover,
-#network:hover,
-#custom-battery:hover,
-#custom-volume:hover,
-#custom-brightness:hover,
-#custom-asus-profile:hover,
-#custom-display-mode:hover,
-#custom-kbd-brightness:hover {
-  color: #ffffff;
-  transition: color 0.2s ease-in-out;
+#network.disconnected,
+#custom-volume.muted,
+#battery.warning {
+  color: $color3;
 }
 
-/* === Tooltips ============================================================ */
+#battery.critical,
+#custom-screenrecording-indicator.recording {
+  color: $color1;
+  font-weight: bold;
+}
+
+#workspaces {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+#workspaces button {
+  background: transparent;
+  color: $color8;
+  padding: 0 5px;
+  margin: 0;
+  border: none;
+}
+
+#workspaces button.active {
+  color: $color0;
+  background: $color4;
+}
+
+#workspaces button:hover {
+  color: $color7;
+  background: $color8;
+}
 
 tooltip {
-  background: rgba($color0_rgb, 0.95);
-  border: 1px solid $color12;
-  border-radius: 4px;
-  color: #ffffff;
-  padding: 14px 16px;
+  background: $color0;
+  border: 1px solid $color8;
+  border-radius: 0;
+  color: $color7;
+  padding: 8px 10px;
 }
 
 tooltip label {
-  color: #ffffff;
+  color: $color7;
 }

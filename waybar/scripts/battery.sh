@@ -1,6 +1,6 @@
 #!/bin/bash
 # ── battery.sh ─────────────────────────────────────────────
-# Description: Shows battery % with icon (minimal)
+# Description: Shows battery % with a text label.
 # Usage: Waybar `custom/battery` every 10s
 # Dependencies: upower, awk
 #  ──────────────────────────────────────────────────────────
@@ -25,19 +25,12 @@ else
     IFS='|' read -r time_to_empty time_to_full < "$upower_cache" 2>/dev/null
 fi
 
-# Icons
-charging_icons=(󰢜 󰂆 󰂇 󰂈 󰢝 󰂉 󰢞 󰂊 󰂋 󰂅)
-default_icons=(󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰂁 󰂂 󰁹)
-
-index=$((capacity / 10))
-[ $index -ge 10 ] && index=9
-
 if [[ "$status" == "Charging" ]]; then
-    icon=${charging_icons[$index]}
+    label="AC"
 elif [[ "$status" == "Full" ]]; then
-    icon="󰂅"
+    label="BAT"
 else
-    icon=${default_icons[$index]}
+    label="BAT"
 fi
 
 # Fast color cache (updated only if colors file changed)
@@ -83,4 +76,4 @@ else
 fi
 
 # JSON output
-echo "{\"text\":\"<span foreground='$fg'>$icon $capacity%</span>\",\"tooltip\":\"$tooltip\"}"
+echo "{\"text\":\"<span foreground='$fg'>$label $capacity%</span>\",\"tooltip\":\"$tooltip\"}"

@@ -33,11 +33,11 @@ else
 fi
 
 if [ "$ENABLED" = "1" ]; then
-    text="󰇽 ON"
+    text="TP ON"
     fg="$color_on"
     tooltip="Touchpad: Enabled - Click to disable"
 else
-    text="󰇽 OFF"
+    text="TP OFF"
     fg="$color_off"
     tooltip="Touchpad: Disabled - Click to enable"
 fi

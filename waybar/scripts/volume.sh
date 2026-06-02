@@ -12,7 +12,6 @@ vol_output=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null)
 # Check mute and extract volume
 if [[ "$vol_output" == *"MUTED"* ]]; then
     vol=0
-    icon="󰖁"
     muted=true
 else
     muted=false
@@ -22,18 +21,11 @@ else
     # Convert to percentage
     vol=$(awk -v v="$vol_raw" 'BEGIN { printf "%.0f", v * 100 }')
 
-    if (( vol == 0 )); then
-        icon="󰕿"
-    elif (( vol < 50 )); then
-        icon="󰖀"
-    else
-        icon="󰕾"
-    fi
 fi
 
 # Output JSON
 if [[ "$muted" == true ]]; then
-    printf '{"text":"%s %s%%","tooltip":"Muted","class":"muted"}\n' "$icon" "$vol"
+    printf '{"text":"VOL mute","tooltip":"Muted","class":"muted"}\n'
 else
-    printf '{"text":"%s %s%%","tooltip":"Volume: %s%%","class":"vol%s"}\n' "$icon" "$vol" "$vol" "$(( (vol / 25) * 25 ))"
+    printf '{"text":"VOL %s%%","tooltip":"Volume: %s%%","class":"vol%s"}\n' "$vol" "$vol" "$(( (vol / 25) * 25 ))"
 fi

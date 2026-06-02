@@ -4,7 +4,7 @@ show-failed-attempts
 font=JetBrainsMono Nerd Font
 
 # Appearance
-image=/home/warre/Pictures/wallpapers/a_mountain_with_snow_and_clouds_01.jpg
+image=/home/warre/Pictures/wallpapers/a_large_canyon_with_a_sunset_with_Badlands_National_Park_in_the_background.jpg
 scaling=fill
 
 # Fade in the lockscreen
@@ -18,32 +18,32 @@ indicator-caps-lock
 indicator-idle-visible
 
 # Colors
-color=22,25,24
-bs-hl-color=121,119,125
-caps-lock-bs-hl-color=121,119,125
-caps-lock-key-hl-color=160,138,138
-inside-color=22,25,2400
-inside-clear-color=114,112,11800
-inside-caps-lock-color=121,119,12500
-inside-ver-color=143,143,15000
-inside-wrong-color=121,119,12500
-key-hl-color=160,138,138
-layout-bg-color=22,25,2400
-layout-border-color=22,25,2400
-layout-text-color=228,224,226
-line-color=22,25,2400
-line-clear-color=22,25,2400
-line-caps-lock-color=22,25,2400
-line-ver-color=22,25,2400
-line-wrong-color=22,25,2400
-ring-color=160,138,138
-ring-clear-color=114,112,118
-ring-caps-lock-color=121,119,125
-ring-ver-color=143,143,150
-ring-wrong-color=121,119,125
-separator-color=22,25,2400
-text-color=228,224,226
-text-clear-color=228,224,226
-text-caps-lock-color=228,224,226
-text-ver-color=228,224,226
-text-wrong-color=228,224,226
+color=25,18,28
+bs-hl-color=157,112,99
+caps-lock-bs-hl-color=157,112,99
+caps-lock-key-hl-color=130,125,149
+inside-color=25,18,2800
+inside-clear-color=203,91,6900
+inside-caps-lock-color=157,112,9900
+inside-ver-color=216,101,5400
+inside-wrong-color=157,112,9900
+key-hl-color=130,125,149
+layout-bg-color=25,18,2800
+layout-border-color=25,18,2800
+layout-text-color=231,225,229
+line-color=25,18,2800
+line-clear-color=25,18,2800
+line-caps-lock-color=25,18,2800
+line-ver-color=25,18,2800
+line-wrong-color=25,18,2800
+ring-color=130,125,149
+ring-clear-color=203,91,69
+ring-caps-lock-color=157,112,99
+ring-ver-color=216,101,54
+ring-wrong-color=157,112,99
+separator-color=25,18,2800
+text-color=231,225,229
+text-clear-color=231,225,229
+text-caps-lock-color=231,225,229
+text-ver-color=231,225,229
+text-wrong-color=231,225,229

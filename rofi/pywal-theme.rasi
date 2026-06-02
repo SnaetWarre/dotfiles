@@ -1,23 +1,23 @@
 * {
-    font-family: "JetBrainsMono Nerd Font Medium";
-    font-size: 18px;
+    font-family: "Bitstream Vera Sans Mono";
+    font-size: 10px;
 }
 
 window {
     transparency:                   "real";
     background-color:               @background;
     text-color:                    @foreground;
-    border:                        2px;
+    border:                        1px;
     border-color:                  @selected;
-    border-radius:                 5px;
-    width:                         28%;
+    border-radius:                 0px;
+    width:                         30%;
     location:                      center;
     anchor:                        center;
 }
 
 prompt {
     enabled:                       true;
-    padding:                       4px 4px 7px 7px;
+    padding:                       2px 4px 2px 4px;
     background-color:              @background;
     text-color:                   @foreground;
     cursor:                      pointer;
@@ -28,7 +28,7 @@ textbox-prompt-colon {
     str:                          "";
     background-color:              @background;
     text-color:                   @foreground;
-    padding:                       4px 0px 0px 9px;
+    padding:                       2px 0px 2px 4px;
 }
 
 entry {
@@ -40,7 +40,7 @@ entry {
     placeholder:                  "Search...";
     blink:                       true;
     border:                       0px;
-    padding:                      4px 0px 0px 9px;
+    padding:                      2px 0px 2px 4px;
     cursor:                      text;
     enabled:                     true;
 }
@@ -51,7 +51,7 @@ inputbar {
     text-color:                   @foreground;
     expand:                       false;
     margin:                       0px;
-    padding:                      9px;
+    padding:                      6px;
 }
 
 listview {
@@ -59,7 +59,7 @@ listview {
     padding:                       0px;
     columns:                       1;
     lines:                        7;
-    spacing:                      4px;
+    spacing:                      0px;
     cycle:                        true;
     dynamic:                      true;
     layout:                       vertical;
@@ -68,17 +68,17 @@ listview {
 mainbox {
     background-color:              @background;
     children:                      [ inputbar, listview ];
-    spacing:                      13px;
-    padding:                      13px;
+    spacing:                      6px;
+    padding:                      8px;
 }
 
 element {
     background-color:              @background;
     text-color:                   @foreground;
     orientation:                   horizontal;
-    border-radius:                4px;
-    padding:                      4px;
-    children:                     [ element-icon, element-text ];
+    border-radius:                0px;
+    padding:                      2px 4px;
+    children:                     [ element-text ];
 }
 
 element-icon {
@@ -86,7 +86,7 @@ element-icon {
     text-color:                   inherit;
     horizontal-align:              0.5;
     vertical-align:                0.5;
-    size:                         36px;
+    size:                         0px;
     border:                       0px;
 }
 
@@ -96,26 +96,26 @@ element-text {
     expand:                       true;
     horizontal-align:             0;
     vertical-align:               0.5;
-    margin:                       2px 0px 2px 9px;
+    margin:                       1px 0px;
 }
 
 element selected {
     background-color:              @selected;
     text-color:                   @background;
     border:                       0px;
-    border-radius:                8px;
+    border-radius:                0px;
 }
 
 element.active,
 element.selected.active {
     background-color:              @active;
     text-color:                   @background;
-    border-radius:                8px;
+    border-radius:                0px;
 }
 
 element.urgent,
 element.selected.urgent {
     background-color:              @urgent;
     text-color:                   @background;
-    border-radius:                8px;
-} 
+    border-radius:                0px;
+}

@@ -1,6 +1,6 @@
 #!/bin/bash
 # ── brightness.sh ─────────────────────────────────────────
-# Description: Shows current brightness percentage (minimal)
+# Description: Shows current brightness percentage.
 # Usage: Waybar `custom/brightness` every 2s
 # Dependencies: brightnessctl
 #  ─────────────────────────────────────────────────────────
@@ -34,9 +34,6 @@ else
     color_cyan="#56b6c2"
 fi
 
-# Icon
-icon="󰛨"
-
 # Color thresholds
 if [ "$percent" -lt 20 ]; then
     fg="$color_red"
@@ -68,4 +65,4 @@ fi
 tooltip="Brightness: $percent%\nDevice: $device"
 
 # JSON output
-echo "{\"text\":\"<span foreground='$fg'>$icon $percent%</span>\",\"tooltip\":\"$tooltip\"}"
+echo "{\"text\":\"<span foreground='$fg'>BRI $percent%</span>\",\"tooltip\":\"$tooltip\"}"

@@ -1,19 +1,12 @@
-// ──────────────────────────────────────────────────────────────────────────
-//  °˖* ૮(  • ᴗ ｡)っ🍸  pewdiepie/archdaemon/dionysh shhheersh
-//  Waybar config - Minimal Edition
-//  vers. 2.0.0
-// ──────────────────────────────────────────────────────────────────────────
-
 {
   "layer": "top",
   "position": "up",
-  "height": 37,
+  "height": 24,
   "margin-top": 0,
   "margin-bottom": 0,
   "margin-left": 0,
   "margin-right": 0,
 
-  // ── Modules Layout ───────────────────────────────────────────────
   "modules-left": [
     "custom/asus-profile",
     "custom/kb-layout"
@@ -35,27 +28,25 @@
     "battery",
   ],
 
-  // ── Separator ────────────────────────────────────────────────────
   "custom/separator": {
     "format": "|",
     "tooltip": false
   },
 
-  // ── Clock ────────────────────────────────────────────────────────
   "clock": {
     "locale": "en_US.UTF-8",
-    "tooltip-format": "<span size='18pt' weight='bold'>{:%B %Y}</span>\n<tt><span size='15pt'>{calendar}</span></tt>",
-    "format-alt": "{:%I:%M %p}",
-    "format": "{:%a, %d %b  %I:%M %p}",
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "format-alt": "{:%H:%M:%S}",
+    "format": "DATE {:%a %d %b} | TIME {:%H:%M}",
     "on-click": "thunderbird -calendar",
     "calendar": {
       "iso8601": true,
       "on-scroll": 1,
       "format": {
-        "months": "<span color='#bcd9d4'><b>{}</b></span>",
-        "weekdays": "<span color='#9ec8c5'><b>{}</b></span>",
-        "days": "<span color='#f3fffd'>{}</span>",
-        "today": "<span background='#9ec8c5' foreground='#18241b'><b> {} </b></span>"
+        "months": "<b>{}</b>",
+        "weekdays": "<b>{}</b>",
+        "days": "{}",
+        "today": "<b>[{}]</b>"
       }
     },
     "actions": {
@@ -65,22 +56,19 @@
     }
   },
 
-  // ── Network ──────────────────────────────────────────────────────
   "network": {
-    "format-wifi": "{icon}",
-    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
-    "format-ethernet": "󰀂",
-    "format-alt": "󱛇",
-    "format-disconnected": "󰖪",
-    "tooltip-format-wifi": "{icon} {essid}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
-    "tooltip-format-ethernet": "󰀂  {ifname}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "format-wifi": "NET {essid}",
+    "format-ethernet": "NET eth",
+    "format-alt": "NET",
+    "format-disconnected": "NET down",
+    "tooltip-format-wifi": "{essid}\ndown {bandwidthDownBytes} up {bandwidthUpBytes}",
+    "tooltip-format-ethernet": "{ifname}\ndown {bandwidthDownBytes} up {bandwidthUpBytes}",
     "tooltip-format-disconnected": "Disconnected",
     "on-click": "alacritty -e nmtui",
     "interval": 5,
     "nospacing": 1
   },
 
-  // ── Asus Profile ─────────────────────────────────────────────────
   "custom/asus-profile": {
     "exec": "~/.config/waybar/scripts/asus-profile.sh",
     "interval": 10,
@@ -90,7 +78,6 @@
     "on-click": "~/.config/waybar/scripts/cycle-asus-profile.sh"
   },
 
-  // ── Keyboard Layout ──────────────────────────────────────────────
   "custom/kb-layout": {
     "exec": "~/.config/waybar/scripts/kb-layout.sh",
     "return-type": "json",
@@ -101,7 +88,6 @@
     "on-click": "~/.config/waybar/scripts/toggle-kb-layout.sh"
   },
 
-  // ── Screen Recording ───────────────────────────────────────────────
   "custom/screenrecording-indicator": {
     "on-click": "~/.config/waybar/modules/toggle-screenrecord.sh",
     "exec": "~/.config/waybar/modules/screen-recording.sh",
@@ -109,7 +95,6 @@
     "return-type": "json"
   },
 
-  // ── Display Mode (Mirror/Extend) ───────────────────────────────────
   "custom/display-mode": {
     "exec": "~/.config/waybar/scripts/display-mode.sh",
     "return-type": "json",
@@ -118,7 +103,6 @@
     "signal": 11
   },
 
-  // ── Keyboard Brightness ────────────────────────────────────────────
   "custom/kbd-brightness": {
     "exec": "~/.config/waybar/scripts/kbd-brightness.sh",
     "return-type": "json",
@@ -126,7 +110,6 @@
     "on-click": "~/.config/waybar/scripts/cycle-kbd-brightness.sh"
   },
 
-  // ── Touchpad ──────────────────────────────────────────────────────
   "custom/touchpad": {
     "exec": "~/.config/waybar/scripts/touchpad.sh",
     "return-type": "json",
@@ -135,19 +118,14 @@
     "signal": 12
   },
 
-  // ── Battery ───────────────────────────────────────────────────────
   "battery": {
-    "format": "{icon} {capacity}%",
-    "format-discharging": "{icon} {capacity}%",
-    "format-charging": "{icon} {capacity}%",
-    "format-plugged": " {capacity}%",
-    "format-icons": {
-      "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
-      "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
-    },
-    "format-full": "󰂅 {capacity}%",
-    "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
-    "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
+    "format": "BAT {capacity}%",
+    "format-discharging": "BAT {capacity}%",
+    "format-charging": "AC {capacity}%",
+    "format-plugged": "AC {capacity}%",
+    "format-full": "BAT full",
+    "tooltip-format-discharging": "{power:>1.0f}W down {capacity}%",
+    "tooltip-format-charging": "{power:>1.0f}W up {capacity}%",
     "interval": 5,
     "states": {
       "warning": 20,
@@ -155,7 +133,6 @@
     }
   },
 
-  // ── Brightness ───────────────────────────────────────────────────
   "custom/brightness": {
     "exec": "~/.config/waybar/scripts/brightness.sh",
     "return-type": "json",
@@ -165,7 +142,6 @@
     "on-scroll-down": "brightnessctl set 5%-"
   },
 
-  // ── Workspaces (generic ext-workspace protocol module) ───────────
   "ext/workspaces": {
     "format": "{id}",
     "on-click": "activate",
@@ -175,7 +151,6 @@
     }
   },
 
-  // ── Volume ───────────────────────────────────────────────────────
   "custom/volume": {
     "exec": "~/.config/waybar/scripts/volume.sh",
     "return-type": "json",
@@ -187,16 +162,14 @@
     "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%- && pkill -RTMIN+10 waybar"
   },
 
-  // ── System Stats (CPU/RAM/VRAM) ───────────────────────────────────
   "custom/system-stats": {
     "exec": "~/.config/waybar/scripts/system-stats.sh",
     "return-type": "json",
     "interval": 2
   },
 
-  // ── Power ────────────────────────────────────────────────────────
   "custom/power": {
-    "format": "󰤆",
+    "format": "PWR",
     "tooltip": true,
     "tooltip-format": "Power Menu",
     "on-click": "wlogout"

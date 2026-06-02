@@ -4,10 +4,10 @@ configuration {
 }
 
 * {
-    background: rgba(22,25,24, 0.90);       /* Was COLOR_BG */
-    foreground: #e4e0e2;       /* Was COLOR_FG */
-    selected: #a08a8a;         /* Was COLOR_SELECTED */
-    background-alt: rgba(114,112,118, 0.90);   /* Was COLOR_BG_ALT */
+    background: rgba(25,18,28, 1.00);       /* Was COLOR_BG */
+    foreground: #e7e1e5;       /* Was COLOR_FG */
+    selected: #827d95;         /* Was COLOR_SELECTED */
+    background-alt: rgba(203,91,69, 1.00);   /* Was COLOR_BG_ALT */
 
     border: 0;
     margin: 0;
@@ -15,14 +15,14 @@ configuration {
     spacing: 0;
 
     background-color: @background;
-    font: "JetBrainsMono Nerd Font 11";
+    font: "Bitstream Vera Sans Mono 10";
 }
 
 window {
     width: 60%;
     height: 65%;
     background-color: @background;
-    border-radius: 12px;
+    border-radius: 0px;
 }
 
 mainbox {
@@ -35,7 +35,7 @@ inputbar {
     background-color: @background;
     padding: 6px 8px;
     margin: 0px 0px 8px 0px;
-    border-radius: 10px;
+    border-radius: 0px;
 }
 
 prompt {
@@ -53,7 +53,7 @@ entry {
     horizontal-align: 0;
     placeholder: "Type to search...";
     padding: 6px 8px;
-    border-radius: 8px;
+    border-radius: 0px;
 }
 
 listview {
@@ -71,7 +71,7 @@ listview {
 element {
     orientation: vertical;
     padding: 3px;
-    border-radius: 8px;
+    border-radius: 0px;
 }
 
 element normal.normal {
@@ -88,7 +88,7 @@ element-icon {
     size: 140px;
     horizontal-align: 0.5;
     vertical-align: 0.5;
-    border-radius: 8px;
+    border-radius: 0px;
 }
 
 element-text {
@@ -96,6 +96,6 @@ element-text {
     vertical-align: 0.5;
     text-color: @foreground;
     background-color: transparent;
-    font: "JetBrainsMono Nerd Font 9";
+    font: "Bitstream Vera Sans Mono 9";
     padding: 4px 0 0 0;
-} 
+}

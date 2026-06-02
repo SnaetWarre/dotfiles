@@ -96,11 +96,11 @@ hl.config({
         active_opacity = 1.0,
         inactive_opacity = 1.0,
         fullscreen_opacity = 1.0,
-        rounding = 4,
-        rounding_power = 3.0,
+        rounding = 0,
+        rounding_power = 1.0,
         dim_inactive = false,
         blur = {
-            enabled = true,
+            enabled = false,
             size = 5,
             passes = 2,
             new_optimizations = true,
@@ -112,7 +112,7 @@ hl.config({
             vibrancy = 0.2,
         },
         shadow = {
-            enabled = true,
+            enabled = false,
             range = 10,
             render_power = 3,
             sharp = false,
@@ -123,7 +123,7 @@ hl.config({
         },
     },
 
-    animations = { enabled = true },
+    animations = { enabled = false },
 
     input = {
         kb_layout = "be,us",
@@ -157,11 +157,11 @@ hl.config({
         focus_removed_window = true,
         groupbar = {
             enabled = true,
-            font_family = "JetBrainsMono Nerd Font",
-            font_size = 8,
+            font_family = "Bitstream Vera Sans Mono",
+            font_size = 9,
             text_color = 0x00000000,
             height = 10,
-            gradients = true,
+            gradients = false,
             render_titles = false,
         },
     },
@@ -236,16 +236,16 @@ hl.curve("mangoTag", { type = "bezier", points = { { 0.46, 1.0 }, { 0.29, 1 } } 
 hl.curve("mangoFade", { type = "bezier", points = { { 0.46, 1.0 }, { 0.29, 1 } } })
 hl.curve("delayedFadeOut", { type = "bezier", points = { { 0.25, 0 }, { 0.5, 1 } } })
 
-hl.animation({ leaf = "windowsIn", enabled = true, speed = 0.9, bezier = "mangoOpen", style = "popin 70%" })
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 3, bezier = "mangoClose", style = "slide bottom right" })
-hl.animation({ leaf = "fadeOut", enabled = true, speed = 3, bezier = "delayedFadeOut" })
-hl.animation({ leaf = "windowsMove", enabled = true, speed = 0.9, bezier = "mangoMove", style = "slide" })
-hl.animation({ leaf = "windows", enabled = true, speed = 0.9, bezier = "mangoOpen" })
-hl.animation({ leaf = "fade", enabled = true, speed = 0.9, bezier = "mangoFade" })
-hl.animation({ leaf = "border", enabled = true, speed = 0.9, bezier = "mangoOpen" })
-hl.animation({ leaf = "workspaces", enabled = true, speed = 0.25, bezier = "mangoFade", style = "fade" })
-hl.animation({ leaf = "workspacesIn", enabled = true, speed = 0.25, bezier = "mangoFade", style = "fade" })
-hl.animation({ leaf = "workspacesOut", enabled = true, speed = 0.25, bezier = "mangoFade", style = "fade" })
+hl.animation({ leaf = "windowsIn", enabled = false, speed = 0.9, bezier = "mangoOpen", style = "popin 70%" })
+hl.animation({ leaf = "windowsOut", enabled = false, speed = 3, bezier = "mangoClose", style = "slide bottom right" })
+hl.animation({ leaf = "fadeOut", enabled = false, speed = 3, bezier = "delayedFadeOut" })
+hl.animation({ leaf = "windowsMove", enabled = false, speed = 0.9, bezier = "mangoMove", style = "slide" })
+hl.animation({ leaf = "windows", enabled = false, speed = 0.9, bezier = "mangoOpen" })
+hl.animation({ leaf = "fade", enabled = false, speed = 0.9, bezier = "mangoFade" })
+hl.animation({ leaf = "border", enabled = false, speed = 0.9, bezier = "mangoOpen" })
+hl.animation({ leaf = "workspaces", enabled = false, speed = 0.25, bezier = "mangoFade", style = "fade" })
+hl.animation({ leaf = "workspacesIn", enabled = false, speed = 0.25, bezier = "mangoFade", style = "fade" })
+hl.animation({ leaf = "workspacesOut", enabled = false, speed = 0.25, bezier = "mangoFade", style = "fade" })
 
 hl.gesture({ fingers = 4, direction = "horizontal", action = "workspace" })
 
@@ -395,8 +395,8 @@ hl.window_rule({ name = "discord-on-ws3", match = { class = "^(legcord)$" }, wor
 
 -- Layer rules
 hl.layer_rule({ name = "mango-selection-capture", match = { namespace = "selection" }, no_anim = true, blur = false })
-hl.layer_rule({ name = "layerrule-1", match = { namespace = "waybar" }, animation = "slide down", blur = true })
-hl.layer_rule({ name = "layerrule-2", match = { namespace = "wallpaper" }, animation = "fade 50%" })
-hl.layer_rule({ name = "layerrule-3", match = { namespace = "rofi" }, blur = true })
-hl.layer_rule({ name = "layerrule-4", match = { namespace = "eww" }, blur = true })
-hl.layer_rule({ name = "layerrule-5", match = { namespace = "wlogout" }, blur = true })
+hl.layer_rule({ name = "layerrule-1", match = { namespace = "waybar" }, no_anim = true, blur = false })
+hl.layer_rule({ name = "layerrule-2", match = { namespace = "wallpaper" }, no_anim = true, blur = false })
+hl.layer_rule({ name = "layerrule-3", match = { namespace = "rofi" }, no_anim = true, blur = false })
+hl.layer_rule({ name = "layerrule-4", match = { namespace = "eww" }, no_anim = true, blur = false })
+hl.layer_rule({ name = "layerrule-5", match = { namespace = "wlogout" }, no_anim = true, blur = false })
