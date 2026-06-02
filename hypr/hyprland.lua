@@ -353,7 +353,7 @@ bind(mainMod .. " + ALT + SHIFT + F1", hl.dsp.window.move({ workspace = "special
 bind(mainMod .. " + SHIFT + F", hl.dsp.window.float(), desc("Toggle floating window"))
 bind(mainMod .. " + P", hl.dsp.window.pseudo(), desc("Toggle pseudo tiling"))
 
-bind(mainMod .. " + C", hl.dsp.exec_cmd('bash -c "cliphist list | tofi --config ~/.config/hypr/tofi-dmenu.conf | cliphist decode | wl-copy"'), desc("Opens clipboard history"))
+bind(mainMod .. " + C", hl.dsp.exec_cmd("~/.config/hypr/scripts/clipboard-history.sh"), desc("Opens clipboard history"))
 bind(mainMod .. " + N", hl.dsp.exec_cmd("~/.config/mako/toggle-dnd.sh"), desc("Toggle notification do not disturb"))
 bind(mainMod .. " + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/wallpaper.sh"))
 bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/wallpaper-select.sh"))

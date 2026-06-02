@@ -24,7 +24,7 @@ vim.opt.expandtab = true        -- Use spaces instead of tabs
 vim.opt.smartindent = true      -- Smart autoindenting
 vim.opt.wrap = false            -- Disable line wrapping
 vim.opt.cursorline = true       -- Highlight current line
-vim.opt.termguicolors = true    -- True color support
+vim.opt.termguicolors = false   -- Let Neovim use the terminal's palette
 vim.opt.mouse = "a"             -- Enable mouse support
 vim.opt.clipboard = "unnamedplus" -- Use the system clipboard by default
 vim.opt.signcolumn = "yes"      -- Always show signcolumn
@@ -61,25 +61,54 @@ vim.diagnostic.config({
   },
 })
 
-local function apply_retro_ui(colors)
-  colors = colors or {}
+local function set_hl(group, opts)
+  opts = vim.tbl_extend("force", { fg = "NONE", bg = "NONE" }, opts or {})
+  vim.api.nvim_set_hl(0, group, opts)
+end
 
-  local bg = colors.bg_statusline or colors.bg_dark or colors.bg or "#16161e"
-  local fg = colors.fg or "#c0caf5"
-  local muted = colors.fg_gutter or colors.dark5 or "#3b4261"
-  local border = colors.border or colors.bg_highlight or "#292e42"
-  local accent = colors.blue or "#7aa2f7"
+local function apply_terminal_retro_ui()
+  vim.o.background = "dark"
+  vim.cmd.colorscheme("default")
 
-  -- Keep the compact reference-style statusline, but let the active theme own
-  -- the actual palette. Do not override Normal/LineNr/CursorLine here.
-  vim.api.nvim_set_hl(0, "FloatBorder", { bg = colors.bg_float or bg, fg = border })
-  vim.api.nvim_set_hl(0, "WinSeparator", { fg = border })
-  vim.api.nvim_set_hl(0, "StatusLine", { bg = bg, fg = fg })
-  vim.api.nvim_set_hl(0, "StatusLineNC", { bg = bg, fg = muted })
-  vim.api.nvim_set_hl(0, "RetroMode", { bg = accent, fg = colors.bg_dark1 or bg, bold = true })
-  vim.api.nvim_set_hl(0, "RetroFile", { bg = bg, fg = fg, bold = true })
-  vim.api.nvim_set_hl(0, "RetroMeta", { bg = bg, fg = muted })
-  vim.api.nvim_set_hl(0, "RetroPos", { bg = accent, fg = colors.bg_dark1 or bg, bold = true })
+  set_hl("Normal", {})
+  set_hl("NormalNC", {})
+  set_hl("EndOfBuffer", {})
+  set_hl("SignColumn", {})
+  set_hl("LineNr", { ctermfg = 8 })
+  set_hl("CursorLine", { ctermbg = 0 })
+  set_hl("CursorLineNr", { ctermfg = 15, bold = true })
+  set_hl("Visual", { ctermbg = 8 })
+  set_hl("Search", { ctermfg = 0, ctermbg = 11, bold = true })
+  set_hl("IncSearch", { ctermfg = 0, ctermbg = 3, bold = true })
+  set_hl("Pmenu", { ctermfg = 7, ctermbg = 0 })
+  set_hl("PmenuSel", { ctermfg = 0, ctermbg = 6, bold = true })
+  set_hl("FloatBorder", { ctermfg = 8 })
+  set_hl("WinSeparator", { ctermfg = 8 })
+
+  set_hl("Comment", { ctermfg = 8, italic = true })
+  set_hl("String", { ctermfg = 2 })
+  set_hl("Character", { ctermfg = 2 })
+  set_hl("Number", { ctermfg = 3 })
+  set_hl("Boolean", { ctermfg = 3 })
+  set_hl("Identifier", { ctermfg = 6 })
+  set_hl("Function", { ctermfg = 4, bold = true })
+  set_hl("Statement", { ctermfg = 5, bold = true })
+  set_hl("Keyword", { ctermfg = 5, bold = true })
+  set_hl("Type", { ctermfg = 6 })
+  set_hl("Special", { ctermfg = 13 })
+  set_hl("Error", { ctermfg = 1, bold = true })
+  set_hl("WarningMsg", { ctermfg = 3, bold = true })
+  set_hl("DiagnosticError", { ctermfg = 1 })
+  set_hl("DiagnosticWarn", { ctermfg = 3 })
+  set_hl("DiagnosticInfo", { ctermfg = 4 })
+  set_hl("DiagnosticHint", { ctermfg = 6 })
+
+  set_hl("StatusLine", { ctermfg = 7, ctermbg = 0 })
+  set_hl("StatusLineNC", { ctermfg = 8, ctermbg = 0 })
+  set_hl("RetroMode", { ctermfg = 0, ctermbg = 6, bold = true })
+  set_hl("RetroFile", { ctermfg = 15, ctermbg = 0, bold = true })
+  set_hl("RetroMeta", { ctermfg = 8, ctermbg = 0 })
+  set_hl("RetroPos", { ctermfg = 0, ctermbg = 6, bold = true })
 end
 
 local modes = {
@@ -141,50 +170,12 @@ local function setup_retro_statusline()
   })
 end
 
+apply_terminal_retro_ui()
+setup_retro_statusline()
+
 -- Window navigation: Ctrl+H = focus tree, Ctrl+L = focus editor
 vim.keymap.set("n", "<C-h>", "<cmd>Neotree focus<cr>", { desc = "Focus file tree" })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Focus editor" })
-
--- ──────────────────────────────────────────────────────────────────────────────
--- KITTY TERMINAL BACKGROUND SYNC
--- Extends the editor background into Kitty's padding area via OSC 11.
--- On colorscheme load: sets terminal bg to match Neovim's Normal bg, with 100% opacity.
--- On exit: resets terminal bg to pywal's background color and resets opacity.
--- Requires `allow_remote_control yes` in kitty.conf
--- ──────────────────────────────────────────────────────────────────────────────
-vim.api.nvim_create_autocmd("ColorScheme", {
-  callback = function()
-    -- Small delay to ensure highlight groups are fully loaded
-    vim.defer_fn(function()
-      local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
-      if normal.bg then
-        -- Set standard background color via OSC 11 for both Kitty and Ghostty
-        local hex = string.format("#%06x", normal.bg)
-        io.stdout:write(string.format("\027]11;%s\027\\", hex))
-        io.stdout:flush()
-        
-        -- If we are in Kitty, also fully remove transparency via remote control
-        if os.getenv("TERM") == "xterm-kitty" or os.getenv("KITTY_WINDOW_ID") then
-          -- Run kitty command to set opacity to 1.0 (requires allow_remote_control)
-          vim.fn.jobstart({ "kitty", "@", "set-background-opacity", "1.0" })
-        end
-      end
-    end, 50)
-  end,
-})
-
-vim.api.nvim_create_autocmd("VimLeave", {
-  callback = function()
-    -- Reset background color via OSC 111
-    io.stdout:write("\027]111\027\\")
-    io.stdout:flush()
-    
-    -- If we are in Kitty, reset the opacity back to normal
-    if os.getenv("TERM") == "xterm-kitty" or os.getenv("KITTY_WINDOW_ID") then
-      vim.fn.jobstart({ "kitty", "@", "set-background-opacity", "default" })
-    end
-  end,
-})
 
 -- Setup plugins via lazy.nvim
 require("lazy").setup({
@@ -225,32 +216,6 @@ require("lazy").setup({
           end,
         },
       })
-    end,
-  },
-
-  -- [[ THEME ]]
-  {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      style = "night",
-      transparent = false,
-      terminal_colors = true,
-      styles = {
-        comments = { italic = true },
-        keywords = { italic = false },
-        sidebars = "dark",
-        floats = "dark",
-      },
-    },
-    config = function(_, opts)
-      require("tokyonight").setup(opts)
-      vim.o.background = "dark"
-      vim.cmd.colorscheme("tokyonight-night")
-      local colors = require("tokyonight.colors").setup(opts)
-      apply_retro_ui(colors)
-      setup_retro_statusline()
     end,
   },
 

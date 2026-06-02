@@ -314,7 +314,7 @@
 
     "custom/clipboard": {
         "format": "",
-        "on-click": "cliphist list | rofi -dmenu -theme ~/.config/rofi/config.rasi | cliphist decode | wl-copy",
+        "on-click": "~/.config/hypr/scripts/clipboard-history.sh",
         "tooltip": false
     },
 
