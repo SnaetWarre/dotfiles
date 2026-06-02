@@ -1,7 +1,7 @@
 # Hyprland + Pywal Theme System Documentation
 
 ## Overview
-This system provides dynamic theme switching using Pywal to generate colors from wallpapers, then applies those colors across the entire desktop environment including Hyprland, Waybar, Rofi, Swaync, and other components.
+This system provides dynamic theme switching using Pywal to generate colors from wallpapers, then applies those colors across the entire desktop environment including Hyprland, Waybar, Rofi, Mako, and other components.
 
 ## Core Components
 
@@ -28,7 +28,7 @@ This system provides dynamic theme switching using Pywal to generate colors from
   - Uses `envsubst` to replace variables in templates
   - Generates/updates files for:
     - Waybar CSS (`~/.config/waybar/style.css`)
-    - Swaync CSS (`~/.config/swaync/style.css`)
+    - Mako config (`~/.config/mako/config`)
     - Wlogout CSS (`~/.config/wlogout/style.css`)
     - Swaylock config (`~/.config/swaylock/config`)
     - Ghostty config (`~/.config/ghostty/config`)
@@ -39,7 +39,7 @@ This system provides dynamic theme switching using Pywal to generate colors from
     - Zed theme (via separate script)
     - Perplexity SVG icon
   - Applies live Hyprland/MangoWC border colors from the current wallpaper palette
-  - Restarts services (eww, swaync)
+  - Restarts or reloads services (eww, mako)
   - Updates Firefox with `pywalfox update`
   - Sets keyboard color with `rogauracore`
 
@@ -59,7 +59,7 @@ This system provides dynamic theme switching using Pywal to generate colors from
   - `SUPER + SHIFT + W`: Open wallpaper selector
 - **Autostart**:
   - `awww-daemon` for wallpaper management
-  - `swaync` for notifications
+  - `mako` for notifications
   - `eww` for widgets
   - Battery notification script
 - **Window Rules**:
@@ -84,7 +84,7 @@ This system provides dynamic theme switching using Pywal to generate colors from
 
 #### Template Files (`.template` extension)
 - **Waybar**: `~/.config/waybar/style.css.template`
-- **Swaync**: `~/.config/swaync/style.css.template`
+- **Mako**: `~/.config/mako/config.template`
 - **Wlogout**: `~/.config/wlogout/style.css.template`
 - **Swaylock**: `~/.config/swaylock/config.template`
 - **Ghostty**: `~/.config/ghostty/config.template`
@@ -119,10 +119,11 @@ Uses `envsubst` with these color variables:
 - Output: `~/.config/waybar/style.css`
 - Reload: `killall -SIGUSR2 waybar`
 
-#### Swaync (Notifications)
-- Template: `~/.config/swaync/style.css.template`
-- Output: `~/.config/swaync/style.css`
-- Reload: `swaync-client -rs`
+#### Mako (Notifications)
+- Template: `~/.config/mako/config.template`
+- Output: `~/.config/mako/config`
+- Reload: `makoctl reload`
+- `SUPER + N`: Toggles Mako's `do-not-disturb` mode via `~/.config/mako/toggle-dnd.sh`
 
 #### eww (Widgets)
 - Template: `~/.config/eww/eww.scss.template`
@@ -200,9 +201,10 @@ Uses `envsubst` with these color variables:
 ├── waybar/
 │   ├── style.css.template
 │   └── style.css
-├── swaync/
-│   ├── style.css.template
-│   └── style.css
+├── mako/
+│   ├── config.template
+│   ├── config
+│   └── toggle-dnd.sh
 ├── wlogout/
 │   ├── style.css.template
 │   ├── style.css
@@ -267,7 +269,7 @@ Uses `envsubst` with these color variables:
 - `pywal` - Color generation
 - `awww` - Wallpaper management
 - `waybar` - Status bar
-- `swaync` - Notifications
+- `mako` - Notifications
 - `eww` - Widgets
 - `rofi` - Application launcher
 - `swaylock` - Screen lock

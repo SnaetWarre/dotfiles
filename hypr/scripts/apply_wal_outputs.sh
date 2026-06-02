@@ -63,9 +63,9 @@ ROFI_COLORS_RASI="$ROFI_CONFIG_DIR/colors.rasi"                 # For config.ras
 ROFI_WALLPAPER_TEMPLATE="$ROFI_CONFIG_DIR/wallpaper.rasi.template" # Wallpaper theme template
 ROFI_WALLPAPER_OUTPUT="$ROFI_CONFIG_DIR/wallpaper.rasi"         # Wallpaper theme output
 
-SWAYNC_CONFIG_DIR="$CONFIG_DIR/swaync"
-SWAYNC_TEMPLATE="$SWAYNC_CONFIG_DIR/style.css.template"
-SWAYNC_OUTPUT_CSS="$SWAYNC_CONFIG_DIR/style.css"
+MAKO_CONFIG_DIR="$CONFIG_DIR/mako"
+MAKO_TEMPLATE="$MAKO_CONFIG_DIR/config.template"
+MAKO_OUTPUT_CONFIG="$MAKO_CONFIG_DIR/config"
 
 WLOGOUT_CONFIG_DIR="$CONFIG_DIR/wlogout"
 WLOGOUT_TEMPLATE="$WLOGOUT_CONFIG_DIR/style.css.template"
@@ -319,23 +319,22 @@ fi
 echo "[waybar-css] changed=$WAYBAR_CHANGED"
 log_step "waybar-css" "$__t_waybar"
 
-# --- Process Swaync CSS ---
-echo "Processing Swaync template: $SWAYNC_TEMPLATE -> $SWAYNC_OUTPUT_CSS"
-__t_swaync=$(now_ms)
-SWAYNC_CHANGED=0
-if [ ! -f "$SWAYNC_TEMPLATE" ]; then
-    echo "Error: Swaync template not found at $SWAYNC_TEMPLATE" >&2
-    # Don't exit, maybe user doesn't have swaync
+# --- Process Mako config ---
+echo "Processing Mako template: $MAKO_TEMPLATE -> $MAKO_OUTPUT_CONFIG"
+__t_mako=$(now_ms)
+MAKO_CHANGED=0
+if [ ! -f "$MAKO_TEMPLATE" ]; then
+    echo "Warning: Mako template not found at $MAKO_TEMPLATE" >&2
 else
-    # Define vars needed by swaync template
-    SWAYNC_VARS='${color0_rgb}:${color2_rgb}:${color7_rgb}:${color8_rgb}'
-    tmp_swaync=$(mktemp)
-    envsubst "$SWAYNC_VARS" < "$SWAYNC_TEMPLATE" > "$tmp_swaync"
-    SWAYNC_STATUS=$(write_if_changed "$tmp_swaync" "$SWAYNC_OUTPUT_CSS" || true)
-    if [ "$SWAYNC_STATUS" = "changed" ]; then
-        SWAYNC_CHANGED=1
+    MAKO_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}'
+    mkdir -p "$MAKO_CONFIG_DIR"
+    tmp_mako=$(mktemp)
+    envsubst "$MAKO_VARS" < "$MAKO_TEMPLATE" > "$tmp_mako"
+    MAKO_STATUS=$(write_if_changed "$tmp_mako" "$MAKO_OUTPUT_CONFIG" || true)
+    if [ "$MAKO_STATUS" = "changed" ]; then
+        MAKO_CHANGED=1
     fi
-    log_step "swaync-css" "$__t_swaync"
+    log_step "mako-config" "$__t_mako"
 fi
 
 # --- Process Wlogout CSS ---
@@ -557,10 +556,10 @@ if [ "$EWW_CHANGED" = 1 ] && command -v eww &> /dev/null; then
     ( eww reload || echo "Warning: eww reload failed." ) &
 fi
 
-# Restart swaync if the template was processed
-if [ "$SWAYNC_CHANGED" = 1 ] && command -v swaync-client &> /dev/null; then
-    echo "Restarting swaync (async)..."
-    ( swaync-client -rs || echo "Warning: swaync-client -rs failed." ) &
+# Reload Mako if its config changed
+if [ "$MAKO_CHANGED" = 1 ] && command -v makoctl &> /dev/null && pgrep -x mako >/dev/null; then
+    echo "Reloading Mako due to config change..."
+    makoctl reload || echo "Warning: Mako reload failed." >&2
 fi
 
 # Reload Ghostty if its config changed

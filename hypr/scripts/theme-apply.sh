@@ -115,14 +115,16 @@ if [ -f "$CONFIG_DIR/waybar/style.css.template" ]; then
     fi
 fi
 
-# Apply to Swaync
-if [ -f "$CONFIG_DIR/swaync/style.css.template" ]; then
-    echo "Applying theme to Swaync..."
-    envsubst < "$CONFIG_DIR/swaync/style.css.template" > "$CONFIG_DIR/swaync/style.css"
-    if pgrep swaync > /dev/null; then
-        swaync-client -rs
+# Apply to Mako
+if [ -f "$CONFIG_DIR/mako/config.template" ]; then
+    echo "Applying theme to Mako..."
+    mkdir -p "$CONFIG_DIR/mako"
+    MAKO_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}'
+    envsubst "$MAKO_VARS" < "$CONFIG_DIR/mako/config.template" > "$CONFIG_DIR/mako/config"
+    if pgrep -x mako > /dev/null && command -v makoctl >/dev/null 2>&1; then
+        makoctl reload || echo "  Warning: Failed to reload Mako"
     else
-        echo "  Swaync not running, theme will apply when it starts"
+        echo "  Mako not running, theme will apply when it starts"
     fi
 fi
 

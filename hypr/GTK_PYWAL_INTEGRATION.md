@@ -79,7 +79,7 @@ A two-layer approach was implemented:
 
 ## Design Aesthetic
 
-The styling matches the existing pywal-themed components (waybar, rofi, swaync):
+The styling matches the existing pywal-themed components (waybar, rofi, mako):
 - **Rounded corners**: 6-12px border-radius for modern look
 - **Transparency**: rgba() colors with 85-98% opacity
 - **Smooth transitions**: 150-200ms ease transitions
@@ -102,7 +102,7 @@ The styling matches the existing pywal-themed components (waybar, rofi, swaync):
 6. xdg-desktop-portal respects new styling when opened
 
 ### No Service Restart Required
-Unlike waybar or swaync, GTK CSS changes are picked up automatically by GTK applications when they start. The xdg-desktop-portal screen picker will use the new theme the next time it's opened.
+Unlike waybar or mako, GTK CSS changes are picked up automatically by GTK applications when they start. The xdg-desktop-portal screen picker will use the new theme the next time it's opened.
 
 ## Testing
 
@@ -217,7 +217,7 @@ The following variables are substituted in templates:
 ### Processing Order
 GTK CSS processing occurs in this order within `apply_wal_outputs.sh`:
 1. Waybar CSS
-2. Swaync CSS
+2. Mako config
 3. Wlogout CSS
 4. Swaylock config
 5. Rofi themes

@@ -169,25 +169,10 @@ npm() { _nvm_lazy_load; npm "$@"; }
 npx() { _nvm_lazy_load; npx "$@"; }
 yarn() { _nvm_lazy_load; yarn "$@"; }
 
-# --- Mamba is lazy-loaded below ---
-# Use 'mamba activate DL' to activate the Deep Learning environment
-
-# --- Thefuck Lazy Loading (cached) ---
-THEFUCK_CACHE="$HOME/.cache/thefuck_alias.zsh"
-if command -v thefuck &>/dev/null; then
-  if [[ ! -f "$THEFUCK_CACHE" ]] || [[ $(command -v thefuck) -nt "$THEFUCK_CACHE" ]]; then
-    mkdir -p "$(dirname "$THEFUCK_CACHE")"
-    thefuck --alias > "$THEFUCK_CACHE" 2>/dev/null
-  fi
-  source "$THEFUCK_CACHE"
-fi
-
 # --- Zoxide (lazy loaded in background) ---
 if command -v zoxide &>/dev/null; then
   eval "$(zoxide init zsh)"
 fi
-
-# --- Bun completions are autoloaded through fpath before compinit ---
 
 # --- Cargo environment (lazy loaded) ---
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
@@ -235,8 +220,6 @@ alias cler="clear"
 alias clar="clear"
 alias celar="clear"
 
-# ls typos (the infamous 'sl' train!)
-alias sl="ls"
 alias ks="ls"
 alias lss="ls"
 alias s="ls"
@@ -313,14 +296,7 @@ mkcd() {
   mkdir -p "$1" && cd "$1"
 }
 
-# Open new terminal in current directory
-n() {
-  if command -v ghostty &>/dev/null; then
-    ghostty --working-directory="$(pwd)" &>/dev/null &!
-  else
-    echo "No supported terminal emulator found"
-  fi
-}
+
 
 # ============================================================================
 # KEY BINDINGS
@@ -382,7 +358,7 @@ function set_prompt() {
   local full_path="%F{white}%~%f"
   
   # Build the prompt: [user@host:~/full/path] branch status
-  PROMPT="[%F{green}&%f] [$user_host:$full_path]$(git_prompt_info) %F{green}>%f "
+  PROMPT="[$user_host:$full_path]$(git_prompt_info) %F{green}>%f "
 }
 
 # Update prompt before each command

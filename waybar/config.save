@@ -158,7 +158,7 @@
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "today-format": "<b>{}</b>",
         "on-click": "calcurse",
-        "on-click-right": "swaync-client -t -sw"
+        "on-click-right": "~/.config/mako/toggle-dnd.sh"
     },
 
     "custom/gammastep": {
@@ -305,10 +305,10 @@
             "inhibited-none": "<span foreground='#414868'>󰂛</span>" 
         },
         "return-type": "json",
-        "exec-if": "which swaync-client",
-        "exec": "swaync-client -swb",
-        "on-click": "swaync-client -t -sw",
-        "on-click-right": "swaync-client -d -sw",
+        "exec-if": "which makoctl",
+        "exec": "makoctl mode | grep -Fxq do-not-disturb && printf '{\"text\":\"󰪑\",\"class\":\"dnd-none\"}\\n' || printf '{\"text\":\"󰂚\",\"class\":\"none\"}\\n'",
+        "on-click": "~/.config/mako/toggle-dnd.sh",
+        "on-click-right": "makoctl dismiss --all",
         "escape": true
     },
 
