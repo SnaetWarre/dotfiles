@@ -1,0 +1,39 @@
+include ~/.cache/wal/colors-kitty.conf
+allow_remote_control yes
+
+font_family Bitstream Vera Sans Mono
+bold_font Bitstream Vera Sans Mono Bold
+italic_font Bitstream Vera Sans Mono Oblique
+bold_italic_font Bitstream Vera Sans Mono Bold Oblique
+font_size 18.0
+
+adjust_line_height 0
+adjust_baseline 0
+
+window_padding_width 4
+remember_window_size yes
+initial_window_width 140c
+initial_window_height 40c
+confirm_os_window_close 0
+
+background_opacity 0.8
+background_blur 64
+
+scrollback_lines 100000
+wheel_scroll_multiplier 3.0
+
+cursor_shape block
+cursor_blink_interval 0
+cursor_stop_blinking_after 0
+
+enable_audio_bell no
+visual_bell_duration 0.08
+
+open_url_with helium-browser
+copy_on_select yes
+
+map ctrl+shift+o kitten hints --type url --program helium-browser
+map ctrl+shift+n new_window
+map ctrl+plus change_font_size all +1.0
+map ctrl+minus change_font_size all -1.0
+map ctrl+0 change_font_size all 0

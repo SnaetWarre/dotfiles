@@ -27,6 +27,8 @@
 !eww/**/*
 
 # Terminal & Shell
+!kitty/
+!kitty/**/**
 !alacritty/
 !alacritty/**/*
 !ghostty/
