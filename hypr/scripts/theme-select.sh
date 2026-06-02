@@ -8,6 +8,7 @@ THEMES=$(find "$THEMES_DIR" -maxdepth 1 -type d -name "*" | grep -v "^$THEMES_DI
 
 # Create a temporary file for the theme menu
 TEMP_FILE=$(mktemp)
+trap 'rm -f "$TEMP_FILE" "${BG_TEMP_FILE:-}"' EXIT
 
 # For each theme, create a menu entry with background preview
 while IFS= read -r theme; do
@@ -20,18 +21,15 @@ while IFS= read -r theme; do
         
         # Create menu entry with theme name and background
         if [ -n "$background" ]; then
-            echo -e "$theme\0icon\x1f$background" >> "$TEMP_FILE"
+            printf '%s\0icon\x1f%s\0display\x1f%s\n' "$theme" "$background" "$theme" >> "$TEMP_FILE"
         else
-            echo -e "$theme" >> "$TEMP_FILE"
+            printf '%s\n' "$theme" >> "$TEMP_FILE"
         fi
     fi
 done <<< "$THEMES"
 
 # Show rofi menu with theme selection
 SELECTED=$(cat "$TEMP_FILE" | rofi -dmenu -i -p "Select Theme" -theme ~/.config/rofi/wallpaper.rasi -show-icons -icon-theme "Papirus" -modi "icons" -show icons)
-
-# Clean up temp file
-rm "$TEMP_FILE"
 
 # If a theme was selected
 if [ -n "$SELECTED" ]; then
@@ -50,18 +48,15 @@ if [ -n "$SELECTED" ]; then
             BG_TEMP_FILE=$(mktemp)
             for bg in "${BG_LIST[@]}"; do
                 fname=$(basename "$bg")
-                echo -e "$fname\0icon\x1f$bg" >> "$BG_TEMP_FILE"
+                printf '%s\0icon\x1f%s\0display\x1f%s\n' "$bg" "$bg" "$fname" >> "$BG_TEMP_FILE"
             done
 
             BG_SELECTED=$(cat "$BG_TEMP_FILE" | rofi -dmenu -i -p "Select Background" -theme ~/.config/rofi/wallpaper.rasi -show-icons -icon-theme "Papirus" -modi "icons" -show icons)
-            rm "$BG_TEMP_FILE"
 
             if [ -n "$BG_SELECTED" ]; then
-                # Resolve the full path (handles duplicate names poorly, but ok for typical setups)
-                BG_PATH=$(find "$BG_DIR" -type f -name "$BG_SELECTED" | head -n 1)
-                if [ -n "$BG_PATH" ] && [ -f "$BG_PATH" ]; then
-                    echo "Applying theme: $SELECTED with background: $BG_PATH"
-                    wallpaper="$BG_PATH" ~/.config/hypr/scripts/theme-apply.sh "$SELECTED"
+                if [ -f "$BG_SELECTED" ]; then
+                    echo "Applying theme: $SELECTED with background: $BG_SELECTED"
+                    wallpaper="$BG_SELECTED" ~/.config/hypr/scripts/theme-apply.sh "$SELECTED"
                     exit $?
                 fi
             fi

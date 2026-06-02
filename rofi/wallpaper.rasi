@@ -4,10 +4,10 @@ configuration {
 }
 
 * {
-    background: rgba(25,18,28, 1.00);       /* Was COLOR_BG */
-    foreground: #e7e1e5;       /* Was COLOR_FG */
-    selected: #827d95;         /* Was COLOR_SELECTED */
-    background-alt: rgba(203,91,69, 1.00);   /* Was COLOR_BG_ALT */
+    background: rgba(23,31,38, 1.00);
+    foreground: #d2d8df;
+    selected: #626b73;
+    background-alt: rgba(75,109,131, 1.00);
 
     border: 0;
     margin: 0;
@@ -19,15 +19,15 @@ configuration {
 }
 
 window {
-    width: 60%;
-    height: 65%;
+    width: 48%;
+    height: 60%;
     background-color: @background;
     border-radius: 0px;
 }
 
 mainbox {
     children: [ inputbar, listview ];
-    padding: 10px;
+    padding: 8px;
 }
 
 inputbar {
@@ -57,20 +57,20 @@ entry {
 }
 
 listview {
-    columns: 7;
-    lines: 3;
+    columns: 5;
+    lines: 4;
     cycle: false;
     dynamic: true;
     layout: vertical;
     scrollbar: false;
-    spacing: 10px;
+    spacing: 6px;
     fixed-height: true;
     fixed-columns: true;
 }
 
 element {
     orientation: vertical;
-    padding: 3px;
+    padding: 2px;
     border-radius: 0px;
 }
 
@@ -85,7 +85,7 @@ element selected.normal {
 }
 
 element-icon {
-    size: 140px;
+    size: 96px;
     horizontal-align: 0.5;
     vertical-align: 0.5;
     border-radius: 0px;

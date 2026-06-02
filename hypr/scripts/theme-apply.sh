@@ -128,17 +128,6 @@ if [ -f "$CONFIG_DIR/mako/config.template" ]; then
     fi
 fi
 
-# Apply to eww
-if [ -f "$CONFIG_DIR/eww/eww.scss.template" ]; then
-    echo "Applying theme to eww..."
-    envsubst < "$CONFIG_DIR/eww/eww.scss.template" > "$CONFIG_DIR/eww/eww.scss"
-    if pgrep eww > /dev/null; then
-        eww reload
-    else
-        echo "  eww not running, theme will apply when it starts"
-    fi
-fi
-
 # Apply to Rofi
 if [ -f "$CONFIG_DIR/rofi/wallpaper.rasi.template" ]; then
     echo "Applying theme to Rofi..."
@@ -165,12 +154,6 @@ fi
 if [ -f "$CONFIG_DIR/swaylock/config.template" ]; then
     echo "Applying theme to Swaylock..."
     envsubst < "$CONFIG_DIR/swaylock/config.template" > "$CONFIG_DIR/swaylock/config"
-fi
-
-# Apply to Wlogout
-if [ -f "$CONFIG_DIR/wlogout/style.css.template" ]; then
-    echo "Applying theme to Wlogout..."
-    envsubst < "$CONFIG_DIR/wlogout/style.css.template" > "$CONFIG_DIR/wlogout/style.css"
 fi
 
 # Apply to Ghostty

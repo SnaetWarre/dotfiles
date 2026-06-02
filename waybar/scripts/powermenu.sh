@@ -1,21 +1,18 @@
 #!/usr/bin/env bash
-# ─────────────────────────────────────────────────────────────────────────────
-#  Rofi Power Menu
-#  Provides a simple system power menu integrated with Waybar.
-#  Example:
-#      ./powermenu.sh
-#      # Opens a Rofi menu with power options
-# ─────────────────────────────────────────────────────────────────────────────
 
-rofi_command="rofi -dmenu -p Power"
+rofi_command=(rofi -dmenu -i -theme "$HOME/.config/rofi/config.rasi" -p PWR)
 
-options="Shutdown\nReboot\nLogout\nSuspend\nLock"
-
-chosen="$(echo -e "$options" | $rofi_command)"
-case $chosen in
-    Shutdown) systemctl poweroff ;;
-    Reboot) systemctl reboot ;;
-    Logout) hyprctl dispatch exit ;;
-    Suspend) systemctl suspend ;;
-    Lock) ~/.config/hyprlock/lock.sh ;;
+chosen="$(printf '%s\n' shutdown reboot logout suspend lock | "${rofi_command[@]}")"
+case "$chosen" in
+    shutdown) systemctl poweroff ;;
+    reboot) systemctl reboot ;;
+    logout)
+        if [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ] && command -v hyprctl >/dev/null 2>&1; then
+            hyprctl dispatch exit
+        else
+            loginctl terminate-user "$USER"
+        fi
+        ;;
+    suspend) systemctl suspend ;;
+    lock) swaylock --config "$HOME/.config/swaylock/config" ;;
 esac

@@ -1,19 +1,19 @@
 # General
 ignore-empty-password
 show-failed-attempts
-font=JetBrainsMono Nerd Font
+font=Bitstream Vera Sans Mono
 
 # Appearance
 image=${wallpaper}
 scaling=fill
 
 # Fade in the lockscreen
-fade-in=0.2
+fade-in=0
 
 # Indicator
 indicator
-indicator-radius=100
-indicator-thickness=7
+indicator-radius=56
+indicator-thickness=1
 indicator-caps-lock
 indicator-idle-visible
 

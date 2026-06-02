@@ -150,7 +150,7 @@
     "custom/power": {
         "format": "⏻",
         "tooltip": false,
-        "on-click": "wlogout"
+        "on-click": "~/.config/waybar/scripts/powermenu.sh"
     },
 
     "clock#date": {

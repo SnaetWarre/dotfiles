@@ -10,9 +10,10 @@ window {
     border:                        1px;
     border-color:                  @selected;
     border-radius:                 0px;
-    width:                         30%;
-    location:                      center;
-    anchor:                        center;
+    width:                         100%;
+    location:                      north;
+    anchor:                        north;
+    y-offset:                      0px;
 }
 
 prompt {
@@ -58,7 +59,7 @@ listview {
     background-color:              @background;
     padding:                       0px;
     columns:                       1;
-    lines:                        7;
+    lines:                        10;
     spacing:                      0px;
     cycle:                        true;
     dynamic:                      true;

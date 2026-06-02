@@ -290,7 +290,7 @@ bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("~/.config/quickshell/scripts/osd-br
 bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("~/.config/quickshell/scripts/osd-brightness-down.sh"), { repeating = true })
 bind("F7", hl.dsp.exec_cmd("~/.config/quickshell/scripts/osd-brightness-down.sh"), { repeating = true })
 bind("F8", hl.dsp.exec_cmd("~/.config/quickshell/scripts/osd-brightness-up.sh"), { repeating = true })
-bind(mainMod .. " + SHIFT + O", hl.dsp.exec_cmd("swaylock-fancy -e -K -p 10"), desc("Lock the screen"))
+bind(mainMod .. " + SHIFT + O", hl.dsp.exec_cmd("swaylock --config ~/.config/swaylock/config"), desc("Lock the screen"))
 bind(mainMod .. " + D", hl.dsp.exec_cmd("~/.config/waybar/scripts/touchpad-toggle.sh"), desc("Toggle touchpad"))
 
 bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), desc("Move the window towards a direction", { mouse = true }))
@@ -398,5 +398,3 @@ hl.layer_rule({ name = "mango-selection-capture", match = { namespace = "selecti
 hl.layer_rule({ name = "layerrule-1", match = { namespace = "waybar" }, no_anim = true, blur = false })
 hl.layer_rule({ name = "layerrule-2", match = { namespace = "wallpaper" }, no_anim = true, blur = false })
 hl.layer_rule({ name = "layerrule-3", match = { namespace = "rofi" }, no_anim = true, blur = false })
-hl.layer_rule({ name = "layerrule-4", match = { namespace = "eww" }, no_anim = true, blur = false })
-hl.layer_rule({ name = "layerrule-5", match = { namespace = "wlogout" }, no_anim = true, blur = false })

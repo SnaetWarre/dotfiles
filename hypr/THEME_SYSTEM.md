@@ -1,201 +1,87 @@
-# Hyprland + Pywal Theme System Documentation
+# Hyprland + Pywal Theme System
 
 ## Overview
-This system provides dynamic theme switching using Pywal to generate colors from wallpapers, then applies those colors across the entire desktop environment including Hyprland, Waybar, Rofi, Mako, and other components.
+This setup uses Pywal colors from the active wallpaper or selected static theme and distributes them across the desktop components that are currently in use: Hyprland, Waybar, Rofi, Mako, Swaylock, Kitty, Ghostty, QuickShell, and Zed.
 
-## Core Components
+Legacy logout-menu and widget-panel components are intentionally not part of the active theme pipeline.
 
-### 1. Main Theme Scripts
+## Main Scripts
 
-#### `wallpaper.sh` - Primary Theme Switcher
-- **Location**: `~/.config/hypr/scripts/wallpaper.sh`
-- **Purpose**: Main entry point for theme switching
-- **Functionality**:
-  - Accepts optional wallpaper path as argument
-  - Randomly selects wallpaper from `~/Pictures/wallpapers/` if no argument
-  - Runs `wal -i` to generate colors from wallpaper
-  - Calls `apply_wal_outputs.sh` to distribute colors
-  - Updates wlogout colors separately
-  - Sets wallpaper with `awww img`
-  - Reloads Waybar with `killall -SIGUSR2 waybar`
+### `wallpaper.sh`
+- Location: `~/.config/hypr/scripts/wallpaper.sh`
+- Accepts an optional wallpaper path.
+- Randomly selects from `~/Pictures/wallpapers/` when no path is given.
+- Runs `wal -i` and writes `~/.cache/wal/wallpaper`.
+- Starts the wallpaper transition with `awww`.
+- Calls `apply_wal_outputs.sh` to regenerate themed outputs.
 
-#### `apply_wal_outputs.sh` - Color Distribution Engine
-- **Location**: `~/.config/hypr/scripts/apply_wal_outputs.sh`
-- **Purpose**: Distributes Pywal colors to all applications
-- **Processes**:
-  - Sources colors from `~/.cache/wal/colors.sh`
-  - Converts hex colors to RGB format
-  - Uses `envsubst` to replace variables in templates
-  - Generates/updates files for:
-    - Waybar CSS (`~/.config/waybar/style.css`)
-    - Mako config (`~/.config/mako/config`)
-    - Wlogout CSS (`~/.config/wlogout/style.css`)
-    - Swaylock config (`~/.config/swaylock/config`)
-    - Ghostty config (`~/.config/ghostty/config`)
-    - Kitty config (`~/.config/kitty/kitty.conf`)
-    - Rofi colors (`~/.config/rofi/colors.rasi`)
-    - Rofi wallpaper theme (`~/.config/rofi/wallpaper.rasi`)
-    - eww CSS (`~/.config/eww/eww.scss`)
-    - Zed theme (via separate script)
-    - Perplexity SVG icon
-  - Applies live Hyprland/MangoWC border colors from the current wallpaper palette
-  - Restarts or reloads services (eww, mako)
-  - Updates Firefox with `pywalfox update`
-  - Sets keyboard color with `rogauracore`
+### `apply_wal_outputs.sh`
+- Location: `~/.config/hypr/scripts/apply_wal_outputs.sh`
+- Sources `~/.cache/wal/colors.sh`, falling back to `colors.json`.
+- Converts hex colors to RGB for CSS/config templates.
+- Generates or updates:
+  - `~/.config/waybar/style.css`
+  - `~/.config/mako/config`
+  - `~/.config/swaylock/config`
+  - `~/.config/rofi/colors.rasi`
+  - `~/.config/rofi/wallpaper.rasi`
+  - `~/.config/kitty/kitty.conf`
+  - `~/.config/ghostty/config` when its template exists
+  - `~/.config/quickshell/theme/Wal.qml`
+  - `~/.config/zed/themes/wal-system.json`
+- Reloads running services where supported:
+  - Waybar: `killall -SIGUSR2 waybar`
+  - Mako: `makoctl reload`
+  - Kitty: `killall -SIGUSR1 kitty`
+  - Ghostty: D-Bus reload when available
+- Applies live Hyprland and Mango border colors when those compositors are reachable.
 
-#### `wallpaper-select.sh` - GUI Wallpaper Selector
-- **Location**: `~/.config/hypr/scripts/wallpaper-select.sh`
-- **Purpose**: Provides GUI for wallpaper selection
-- **Functionality**:
-  - Scans `~/Pictures/wallpapers/` for images
-  - Creates Rofi menu with image previews
-  - Calls `wallpaper.sh` with selected wallpaper
+### `theme-apply.sh`
+- Location: `~/.config/hypr/scripts/theme-apply.sh`
+- Applies static themes from `~/.config/hypr/themes/<theme>/colors.sh`.
+- Uses the same active outputs as `apply_wal_outputs.sh`.
+- Preserves a selected wallpaper passed through the `wallpaper` environment variable.
 
-### 2. Hyprland Configuration
+### Selectors
+- `wallpaper-select.sh` opens a Rofi thumbnail grid for images in `~/Pictures/wallpapers/`.
+- `theme-select.sh` opens a Rofi thumbnail grid for static themes and theme backgrounds.
+- Both selectors keep image previews while returning full image paths for safer duplicate-filename handling.
 
-#### Main Config (`hyprland.lua`)
-- **Keybinds**:
-  - `SUPER + W`: Run wallpaper script (random)
-  - `SUPER + SHIFT + W`: Open wallpaper selector
-- **Autostart**:
-  - `awww-daemon` for wallpaper management
-  - `mako` for notifications
-  - `eww` for widgets
-  - Battery notification script
-- **Window Rules**:
-  - Floating windows for various apps
-  - Opacity settings for specific apps
-  - Rounding for terminal windows
-- **Adaptive Borders**:
-  - Persistent reload defaults are read from `~/.cache/wal/colors-hyprland.conf`
-  - Active border uses wal `color4` so it follows the wallpaper accent
-  - Inactive border uses wal `color8` for a muted edge
-  - `apply_wal_outputs.sh` also applies those same colors live with `hyprctl eval`
+## Keybinds
+- `SUPER + W`: random wallpaper/theme refresh.
+- `SUPER + SHIFT + W`: wallpaper selector.
+- `SUPER + SHIFT + T`: static theme selector.
+- `SUPER + SHIFT + O`: lock screen with `swaylock --config ~/.config/swaylock/config`.
+- `SUPER + N`: toggle Mako do-not-disturb with `~/.config/mako/toggle-dnd.sh`.
 
-#### Monitor Configuration (`monitors.conf`)
-- **Laptop**: `eDP-2, 2560x1440@165, 0x0, 1.0`
-- **External**: `HDMI-A-1, 1920x1080@60, -1920x0, 1.0`
+## Templates
+- Waybar: `~/.config/waybar/style.css.template -> ~/.config/waybar/style.css`
+- Mako: `~/.config/mako/config.template -> ~/.config/mako/config`
+- Swaylock: `~/.config/swaylock/config.template -> ~/.config/swaylock/config`
+- Rofi wallpaper picker: `~/.config/rofi/wallpaper.rasi.template -> ~/.config/rofi/wallpaper.rasi`
+- Kitty: `~/.config/kitty/kitty.conf.template -> ~/.config/kitty/kitty.conf`
+- Ghostty: `~/.config/ghostty/config.template -> ~/.config/ghostty/config`
 
-#### Workspace Configuration (`workspaces.conf`)
-- Workspaces 1,2,4,5,6,7,8,9,10: Laptop monitor
-- Workspace 3: External monitor
+Rofi launcher styling is static in `~/.config/rofi/pywal-theme.rasi`; its colors come from generated `~/.config/rofi/colors.rasi`.
 
-### 3. Template System
+## Generated Color Variables
+- `color0` through `color15`: hex colors.
+- `color0_rgb` through `color15_rgb`: `R,G,B` values.
+- `wallpaper`: current wallpaper path.
+- `waybar_background`: darkest available palette color for the Waybar background.
 
-#### Template Files (`.template` extension)
-- **Waybar**: `~/.config/waybar/style.css.template`
-- **Mako**: `~/.config/mako/config.template`
-- **Wlogout**: `~/.config/wlogout/style.css.template`
-- **Swaylock**: `~/.config/swaylock/config.template`
-- **Ghostty**: `~/.config/ghostty/config.template`
-- **Kitty**: `~/.config/kitty/kitty.conf.template`
-- **Rofi**: `~/.config/rofi/wallpaper.rasi.template`
-- **eww**: `~/.config/eww/eww.scss.template`
+## File Layout
 
-#### Variable Replacement
-Uses `envsubst` with these color variables:
-- `color0` through `color15`: Hex colors
-- `color0_rgb` through `color15_rgb`: RGB format
-- `wallpaper`: Path to current wallpaper
-
-### 4. Color Generation Process
-
-1. **Pywal Generation**: `wal -i wallpaper.jpg` creates:
-   - `~/.cache/wal/colors.sh` (shell variables)
-   - `~/.cache/wal/colors-*.json` (JSON formats)
-   - `~/.cache/wal/wallpaper` (current wallpaper path)
-
-2. **Color Distribution**: `apply_wal_outputs.sh`:
-   - Sources `colors.sh`
-   - Converts hex to RGB
-   - Replaces variables in templates
-   - Generates final config files
-   - Applies live Hyprland border colors with `hyprctl eval`
-
-### 5. Service Integration
-
-#### Waybar
-- Template: `~/.config/waybar/style.css.template`
-- Output: `~/.config/waybar/style.css`
-- Reload: `killall -SIGUSR2 waybar`
-
-#### Mako (Notifications)
-- Template: `~/.config/mako/config.template`
-- Output: `~/.config/mako/config`
-- Reload: `makoctl reload`
-- `SUPER + N`: Toggles Mako's `do-not-disturb` mode via `~/.config/mako/toggle-dnd.sh`
-
-#### eww (Widgets)
-- Template: `~/.config/eww/eww.scss.template`
-- Output: `~/.config/eww/eww.scss`
-- Reload: `eww reload`
-
-#### Rofi
-- Colors: `~/.config/rofi/colors.rasi`
-- Wallpaper theme: `~/.config/rofi/wallpaper.rasi`
-- Used by: `$applauncher` variable in Hyprland config
-
-#### Swaylock (Screen Lock)
-- Template: `~/.config/swaylock/config.template`
-- Output: `~/.config/swaylock/config`
-- Uses wallpaper as background
-
-#### Wlogout (Logout Menu)
-- Template: `~/.config/wlogout/style.css.template`
-- Output: `~/.config/wlogout/style.css`
-- Icons: Generated in `~/.config/wlogout/icons/`
-
-#### Ghostty (Terminal)
-- Template: `~/.config/ghostty/config.template`
-- Output: `~/.config/ghostty/config`
-
-#### Kitty (Terminal)
-- Template: `~/.config/kitty/kitty.conf.template`
-- Output: `~/.config/kitty/kitty.conf`
-- Reload: `killall -SIGUSR1 kitty`
-
-### 6. Additional Features
-
-#### Battery Notifications (`battery-notify.sh`)
-- Monitors battery level
-- Sends critical notifications at 10% and 20%
-- Logs to `~/.cache/battery-notify.log`
-
-#### Screenshot Scripts
-- `screenshot_full`: Full screen capture
-- `screenshot_area`: Area selection capture
-- `screenshot`: Selection to clipboard
-
-#### Keyboard RGB Control
-- Uses `rogauracore` to set keyboard color
-- Sets to `color4` (accent color)
-- Requires proper udev rules
-
-#### Firefox Integration
-- `pywalfox update` updates Firefox theme
-- Integrates with Pywal color scheme
-
-### 7. File Structure
-
-```
+```text
 ~/.config/hypr/
-├── hyprland.conf          # Main Hyprland config
-├── monitors.conf          # Monitor configuration
-├── workspaces.conf        # Workspace assignments
+├── hyprland.lua
 ├── scripts/
-│   ├── wallpaper.sh       # Main theme switcher
-│   ├── wallpaper-select.sh # GUI wallpaper selector
-│   ├── apply_wal_outputs.sh # Color distribution
-│   ├── battery-notify.sh  # Battery monitoring
-│   ├── screenshot_full    # Full screenshot
-│   ├── screenshot_area    # Area screenshot
-│   └── screenshot         # Selection screenshot
-└── THEME_SYSTEM.md       # This documentation
-
-~/.cache/wal/
-├── colors.sh             # Pywal color variables
-├── colors-*.json         # JSON color formats
-└── wallpaper             # Current wallpaper path
+│   ├── wallpaper.sh
+│   ├── wallpaper-select.sh
+│   ├── theme-select.sh
+│   ├── theme-apply.sh
+│   └── apply_wal_outputs.sh
+└── THEME_SYSTEM.md
 
 ~/.config/
 ├── waybar/
@@ -205,83 +91,29 @@ Uses `envsubst` with these color variables:
 │   ├── config.template
 │   ├── config
 │   └── toggle-dnd.sh
-├── wlogout/
-│   ├── style.css.template
-│   ├── style.css
-│   └── icons/
 ├── swaylock/
-│   ├── config.template
-│   └── config
-├── ghostty/
 │   ├── config.template
 │   └── config
 ├── kitty/
 │   ├── kitty.conf.template
 │   └── kitty.conf
-├── rofi/
-│   ├── wallpaper.rasi.template
-│   ├── wallpaper.rasi
-│   └── colors.rasi
-└── eww/
-    ├── eww.scss.template
-    └── eww.scss
+└── rofi/
+    ├── config.rasi
+    ├── pywal-theme.rasi
+    ├── wallpaper.rasi.template
+    ├── wallpaper.rasi
+    └── colors.rasi
 ```
 
-### 8. Usage Patterns
+## Dependencies
+- `wal` / Pywal-compatible color generator
+- `awww`
+- `waybar`
+- `mako`
+- `rofi`
+- `swaylock`
+- `kitty`
+- `envsubst`
+- `grim`, `slurp`, `wl-copy` for screenshot workflows
 
-#### Manual Theme Switching
-```bash
-# Random wallpaper
-~/.config/hypr/scripts/wallpaper.sh
-
-# Specific wallpaper
-~/.config/hypr/scripts/wallpaper.sh /path/to/wallpaper.jpg
-
-# GUI selection
-~/.config/hypr/scripts/wallpaper-select.sh
-```
-
-#### Keybind Access
-- `SUPER + W`: Random wallpaper
-- `SUPER + SHIFT + W`: Wallpaper selector
-
-#### Automatic Integration
-- Scripts are called from Hyprland autostart
-- Services auto-reload when colors change
-- Battery notifications run continuously
-
-### 9. Troubleshooting
-
-#### Common Issues
-1. **Colors not updating**: Check if `~/.cache/wal/colors.sh` exists
-2. **Services not reloading**: Verify service processes are running
-3. **Template errors**: Ensure all template files exist
-4. **Permission issues**: Check script executability
-
-#### Debug Mode
-- Add `set -x` to scripts for verbose output
-- Check log files in `~/.cache/`
-- Verify Pywal installation and configuration
-
-### 10. Dependencies
-
-#### Required Packages
-- `pywal` - Color generation
-- `awww` - Wallpaper management
-- `waybar` - Status bar
-- `mako` - Notifications
-- `eww` - Widgets
-- `rofi` - Application launcher
-- `swaylock` - Screen lock
-- `wlogout` - Logout menu
-- `ghostty` - Terminal
-- `rogauracore` - Keyboard RGB
-- `pywalfox` - Firefox integration
-
-#### Optional Packages
-- `zed-theme-wal` - Zed editor theme
-- `grimblast` - Screenshot tool
-- `slurp` - Selection tool
-- `wl-copy` - Clipboard tool
-
-This system provides a complete, automated theme switching solution that maintains consistency across all desktop components while allowing for easy customization and extension.
+Optional integrations include Ghostty, QuickShell, Zed theme generation, and ASUS keyboard color control.

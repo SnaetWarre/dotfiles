@@ -136,17 +136,6 @@ else
     echo "Warning: Master script apply_wal_outputs.sh not found or not executable." >&2
 fi
 
-# Update wlogout colors (Still needs separate script for now)
-echo "Updating wlogout colors..."
-WLOGOUT_SCRIPT="$HOME/.config/wlogout/scripts/update-colors.sh"
-if [ -x "$WLOGOUT_SCRIPT" ]; then
-    __t2=$(now_ms)
-    ( "$WLOGOUT_SCRIPT" >/dev/null 2>&1 ) &
-    log_step "wlogout-colors-start" "$__t2"
-else
-    echo "Warning: wlogout update script not found or not executable: $WLOGOUT_SCRIPT" >&2
-fi
-
 # Rofi update is now handled by apply_wal_outputs.sh
 # Set wallpaper with awww — smooth premium transition
 # awww already started above; if needed we could wait here, but keep parallel for speed

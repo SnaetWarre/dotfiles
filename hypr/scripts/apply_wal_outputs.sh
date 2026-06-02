@@ -67,12 +67,6 @@ MAKO_CONFIG_DIR="$CONFIG_DIR/mako"
 MAKO_TEMPLATE="$MAKO_CONFIG_DIR/config.template"
 MAKO_OUTPUT_CONFIG="$MAKO_CONFIG_DIR/config"
 
-WLOGOUT_CONFIG_DIR="$CONFIG_DIR/wlogout"
-WLOGOUT_TEMPLATE="$WLOGOUT_CONFIG_DIR/style.css.template"
-WLOGOUT_OUTPUT_CSS="$WLOGOUT_CONFIG_DIR/style.css"
-WLOGOUT_ICONS_DIR="$WLOGOUT_CONFIG_DIR/icons"
-WLOGOUT_ASSETS_DIR="/usr/share/wlogout/assets" # Source for original icons
-
 SWAYLOCK_CONFIG_DIR="$CONFIG_DIR/swaylock"
 SWAYLOCK_TEMPLATE="$SWAYLOCK_CONFIG_DIR/config.template"
 SWAYLOCK_OUTPUT_CONFIG="$SWAYLOCK_CONFIG_DIR/config"
@@ -95,10 +89,6 @@ GTK4_OUTPUT="$GTK4_DIR/gtk.css"
 
 ZED_THEME_WAL_DIR="$CONFIG_DIR/zed-theme-wal"
 ZED_GENERATE_THEME_SCRIPT="$ZED_THEME_WAL_DIR/generate_theme"
-
-EWW_CONFIG_DIR="$CONFIG_DIR/eww"
-EWW_TEMPLATE="$EWW_CONFIG_DIR/eww.scss.template"
-EWW_OUTPUT_CSS="$EWW_CONFIG_DIR/eww.scss"
 
 QUICKSHELL_CONFIG_DIR="$CONFIG_DIR/quickshell"
 QUICKSHELL_THEME_DIR="$QUICKSHELL_CONFIG_DIR/theme"
@@ -337,44 +327,6 @@ else
     log_step "mako-config" "$__t_mako"
 fi
 
-# --- Process Wlogout CSS ---
-echo "Processing Wlogout template: $WLOGOUT_TEMPLATE -> $WLOGOUT_OUTPUT_CSS"
-__t_wlogout_css=$(now_ms)
-if [ ! -f "$WLOGOUT_TEMPLATE" ]; then
-    echo "Warning: Wlogout template not found at $WLOGOUT_TEMPLATE" >&2
-else
-    # Define vars needed by wlogout template (includes HOME for icon path)
-    WLOGOUT_VARS='${color0_rgb}:${color2_rgb}:${color7_rgb}:$HOME'
-    tmp_wlogout=$(mktemp)
-    envsubst "$WLOGOUT_VARS" < "$WLOGOUT_TEMPLATE" > "$tmp_wlogout"
-    write_if_changed "$tmp_wlogout" "$WLOGOUT_OUTPUT_CSS" >/dev/null || true
-    log_step "wlogout-css" "$__t_wlogout_css"
-fi
-
-# --- Generate Wlogout Icons ---
-echo "Generating Wlogout icons in $WLOGOUT_ICONS_DIR"
-__t_wlogout_icns=$(now_ms)
-mkdir -p "$WLOGOUT_ICONS_DIR"
-wlogout_icons="lock logout suspend hibernate shutdown reboot"
-for icon in $wlogout_icons; do
-    src_icon="$WLOGOUT_ASSETS_DIR/${icon}.svg"
-    dest_icon="$WLOGOUT_ICONS_DIR/${icon}.svg"
-    if [ -f "$src_icon" ]; then
-        echo "  Generating ${icon}.svg..."
-        # Replace black/grayscale with color2, preserve others
-        sed -e "s/\#000000/${color2}/g" \
-            -e "s/\#000/${color2}/g" \
-            -e "s/black/${color2}/g" \
-            -e "s/\#808080/${color8}/g" \
-            -e "s/grey/${color8}/g" \
-            -e "s/gray/${color8}/g" \
-            "$src_icon" > "$dest_icon"
-    else
-        echo "  Warning: Source icon not found: $src_icon" >&2
-    fi
-done
-log_step "wlogout-icons" "$__t_wlogout_icns"
-
 # --- Process Swaylock Config ---
 echo "Processing Swaylock template: $SWAYLOCK_TEMPLATE -> $SWAYLOCK_OUTPUT_CONFIG"
 __t_swaylock=$(now_ms)
@@ -487,58 +439,6 @@ else
     echo "Warning: GTK-4.0 template not found at $GTK4_TEMPLATE" >&2
 fi
 
-# --- Process eww CSS ---
-echo "Processing eww template: $EWW_TEMPLATE -> $EWW_OUTPUT_CSS"
-__t_eww=$(now_ms)
-EWW_CHANGED=0
-if [ -f "$EWW_TEMPLATE" ]; then
-    # We need to export all color variables including extended colors for eww
-    # eww template uses color9-color15 for hover states
-    export color9 color10 color11 color12 color13 color14 color15
-
-    # Calculate RGB for extended colors if they exist
-    if [ -n "$color9" ]; then
-        color9_rgb=$(hex_to_rgb "$color9")
-        export color9_rgb
-    fi
-    if [ -n "$color10" ]; then
-        color10_rgb=$(hex_to_rgb "$color10")
-        export color10_rgb
-    fi
-    if [ -n "$color11" ]; then
-        color11_rgb=$(hex_to_rgb "$color11")
-        export color11_rgb
-    fi
-    if [ -n "$color12" ]; then
-        color12_rgb=$(hex_to_rgb "$color12")
-        export color12_rgb
-    fi
-    if [ -n "$color13" ]; then
-        color13_rgb=$(hex_to_rgb "$color13")
-        export color13_rgb
-    fi
-    if [ -n "$color14" ]; then
-        color14_rgb=$(hex_to_rgb "$color14")
-        export color14_rgb
-    fi
-    if [ -n "$color15" ]; then
-        color15_rgb=$(hex_to_rgb "$color15")
-        export color15_rgb
-    fi
-
-    # Define vars needed by eww template
-    EWW_VARS='${color0}:${color1}:${color2}:${color3}:${color4}:${color5}:${color6}:${color7}:${color8}:${color9}:${color10}:${color11}:${color12}:${color13}:${color14}:${color15}:${color0_rgb}:${color1_rgb}:${color2_rgb}:${color3_rgb}:${color4_rgb}:${color5_rgb}:${color6_rgb}:${color7_rgb}:${color8_rgb}:${color9_rgb}:${color10_rgb}:${color11_rgb}:${color12_rgb}:${color13_rgb}:${color14_rgb}:${color15_rgb}'
-    tmp_eww=$(mktemp)
-    envsubst "$EWW_VARS" < "$EWW_TEMPLATE" > "$tmp_eww"
-    EWW_STATUS=$(write_if_changed "$tmp_eww" "$EWW_OUTPUT_CSS" || true)
-    if [ "$EWW_STATUS" = "changed" ]; then
-        EWW_CHANGED=1
-    fi
-    log_step "eww-css" "$__t_eww"
-else
-    echo "Warning: eww template not found at $EWW_TEMPLATE" >&2
-fi
-
 # Zed theme generation removed by user request
 echo "updating zed theme"
 bash ~/.config/zed/themes/generate-wal-theme.sh 
@@ -549,12 +449,6 @@ bash ~/.config/zed/themes/generate-wal-theme.sh
 
 echo "Applying changes that require service restarts..."
 __t_restart=$(now_ms)
-
-# Restart eww if the template was processed
-if [ "$EWW_CHANGED" = 1 ] && command -v eww &> /dev/null; then
-    echo "Restarting eww (async)..."
-    ( eww reload || echo "Warning: eww reload failed." ) &
-fi
 
 # Reload Mako if its config changed
 if [ "$MAKO_CHANGED" = 1 ] && command -v makoctl &> /dev/null && pgrep -x mako >/dev/null; then
