@@ -1,6 +1,6 @@
 {
   "layer": "top",
-  "position": "up",
+  "position": "top",
   "height": 24,
   "margin-top": 0,
   "margin-bottom": 0,
@@ -9,6 +9,9 @@
 
   "modules-left": [
     "custom/asus-profile",
+    "custom/separator",
+    "hyprland/workspaces",
+    "custom/separator",
     "custom/kb-layout"
   ],
 
@@ -35,23 +38,12 @@
 
   "clock": {
     "locale": "en_US.UTF-8",
-    "tooltip-format": "<tt>{calendar}</tt>",
-    "format-alt": "{:%H:%M:%S}",
-    "format": "DATE {:%a %d %b} | TIME {:%H:%M}",
-    "on-click": "thunderbird -calendar",
-    "calendar": {
-      "iso8601": true,
-      "on-scroll": 1,
-      "format": {
-        "months": "<b>{}</b>",
-        "weekdays": "<b>{}</b>",
-        "days": "{}",
-        "today": "<b>[{}]</b>"
-      }
-    },
+    "format": "{0:%a %d} | {0:%H:%M}",
+    "format-alt": "TIME {0:%H:%M:%S}",
+    "tooltip": true,
+    "tooltip-format": "{:%Y-%m-%d %H:%M:%S}",
+    "on-click": "",
     "actions": {
-      "on-scroll-up": "shift_up",
-      "on-scroll-down": "shift_down",
       "on-click-right": "mode"
     }
   },
@@ -142,9 +134,13 @@
     "on-scroll-down": "brightnessctl set 5%-"
   },
 
-  "ext/workspaces": {
+  "hyprland/workspaces": {
     "format": "{id}",
+    "format-active": "[{id}]",
+    "format-urgent": "!{id}!",
     "on-click": "activate",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
     "sort-by-id": true,
     "persistent-workspaces": {
       "*": 5

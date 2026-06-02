@@ -4,10 +4,10 @@ configuration {
 }
 
 * {
-    background: rgba(19,18,15, 1.00);
-    foreground: #e0cbd2;
-    selected: #73735d;
-    background-alt: rgba(82,86,77, 1.00);
+    background: rgba(18,28,25, 1.00);
+    foreground: #ccd6d6;
+    selected: #9a6240;
+    background-alt: rgba(67,91,90, 1.00);
 
     border: 0;
     margin: 0;
