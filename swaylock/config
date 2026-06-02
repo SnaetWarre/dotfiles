@@ -4,7 +4,7 @@ show-failed-attempts
 font=Bitstream Vera Sans Mono
 
 # Appearance
-image=/home/warre/Pictures/wallpapers/13 - Gb6xVGP.jpg
+image=/home/warre/Pictures/wallpapers/japan-city-night-with-people-street.jpg
 scaling=fill
 
 # Fade in the lockscreen
@@ -18,32 +18,32 @@ indicator-caps-lock
 indicator-idle-visible
 
 # Colors
-color=5,5,15
-bs-hl-color=0,88,168
-caps-lock-bs-hl-color=0,88,168
-caps-lock-key-hl-color=54,78,103
-inside-color=5,5,1500
-inside-clear-color=0,77,15700
-inside-caps-lock-color=0,88,16800
-inside-ver-color=0,95,17600
-inside-wrong-color=0,88,16800
-key-hl-color=54,78,103
-layout-bg-color=5,5,1500
-layout-border-color=5,5,1500
-layout-text-color=182,203,217
-line-color=5,5,1500
-line-clear-color=5,5,1500
-line-caps-lock-color=5,5,1500
-line-ver-color=5,5,1500
-line-wrong-color=5,5,1500
-ring-color=54,78,103
-ring-clear-color=0,77,157
-ring-caps-lock-color=0,88,168
-ring-ver-color=0,95,176
-ring-wrong-color=0,88,168
-separator-color=5,5,1500
-text-color=182,203,217
-text-clear-color=182,203,217
-text-caps-lock-color=182,203,217
-text-ver-color=182,203,217
-text-wrong-color=182,203,217
+color=19,18,15
+bs-hl-color=112,92,68
+caps-lock-bs-hl-color=112,92,68
+caps-lock-key-hl-color=115,115,93
+inside-color=19,18,1500
+inside-clear-color=82,86,7700
+inside-caps-lock-color=112,92,6800
+inside-ver-color=124,95,6800
+inside-wrong-color=112,92,6800
+key-hl-color=115,115,93
+layout-bg-color=19,18,1500
+layout-border-color=19,18,1500
+layout-text-color=224,203,210
+line-color=19,18,1500
+line-clear-color=19,18,1500
+line-caps-lock-color=19,18,1500
+line-ver-color=19,18,1500
+line-wrong-color=19,18,1500
+ring-color=115,115,93
+ring-clear-color=82,86,77
+ring-caps-lock-color=112,92,68
+ring-ver-color=124,95,68
+ring-wrong-color=112,92,68
+separator-color=19,18,1500
+text-color=224,203,210
+text-clear-color=224,203,210
+text-caps-lock-color=224,203,210
+text-ver-color=224,203,210
+text-wrong-color=224,203,210
