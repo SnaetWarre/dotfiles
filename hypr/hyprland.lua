@@ -129,7 +129,7 @@ hl.config({
         kb_layout = "be,us",
         kb_model = "",
         kb_rules = "",
-        accel_profile = flat,
+        accel_profile = "flat",
         force_no_accel = true,
         follow_mouse = 1,
         float_switch_override_focus = 2,

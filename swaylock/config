@@ -4,7 +4,7 @@ show-failed-attempts
 font=Bitstream Vera Sans Mono
 
 # Appearance
-image=/home/warre/Pictures/wallpapers/a_body_of_water_with_rocks_and_a_cliff.jpg
+image=/home/warre/Pictures/wallpapers/kittensgame.jpg
 scaling=fill
 
 # Fade in the lockscreen
@@ -18,32 +18,32 @@ indicator-caps-lock
 indicator-idle-visible
 
 # Colors
-color=18,28,25
-bs-hl-color=93,94,89
-caps-lock-bs-hl-color=93,94,89
-caps-lock-key-hl-color=154,98,64
-inside-color=18,28,2500
-inside-clear-color=67,91,9000
-inside-caps-lock-color=93,94,8900
-inside-ver-color=107,92,7900
-inside-wrong-color=93,94,8900
-key-hl-color=154,98,64
-layout-bg-color=18,28,2500
-layout-border-color=18,28,2500
-layout-text-color=204,214,214
-line-color=18,28,2500
-line-clear-color=18,28,2500
-line-caps-lock-color=18,28,2500
-line-ver-color=18,28,2500
-line-wrong-color=18,28,2500
-ring-color=154,98,64
-ring-clear-color=67,91,90
-ring-caps-lock-color=93,94,89
-ring-ver-color=107,92,79
-ring-wrong-color=93,94,89
-separator-color=18,28,2500
-text-color=204,214,214
-text-clear-color=204,214,214
-text-caps-lock-color=204,214,214
-text-ver-color=204,214,214
-text-wrong-color=204,214,214
+color=24,21,14
+bs-hl-color=135,124,72
+caps-lock-bs-hl-color=135,124,72
+caps-lock-key-hl-color=140,128,76
+inside-color=24,21,1400
+inside-clear-color=109,105,6300
+inside-caps-lock-color=135,124,7200
+inside-ver-color=172,104,7100
+inside-wrong-color=135,124,7200
+key-hl-color=140,128,76
+layout-bg-color=24,21,1400
+layout-border-color=24,21,1400
+layout-text-color=219,222,212
+line-color=24,21,1400
+line-clear-color=24,21,1400
+line-caps-lock-color=24,21,1400
+line-ver-color=24,21,1400
+line-wrong-color=24,21,1400
+ring-color=140,128,76
+ring-clear-color=109,105,63
+ring-caps-lock-color=135,124,72
+ring-ver-color=172,104,71
+ring-wrong-color=135,124,72
+separator-color=24,21,1400
+text-color=219,222,212
+text-clear-color=219,222,212
+text-caps-lock-color=219,222,212
+text-ver-color=219,222,212
+text-wrong-color=219,222,212
