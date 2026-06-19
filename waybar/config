@@ -37,7 +37,8 @@
   },
 
   "clock": {
-    "locale": "en_US.UTF-8",
+    "locale": "en_US.utf8",
+    "timezone": "Europe/Brussels",
     "format": "{0:%a %d} | {0:%H:%M}",
     "format-alt": "TIME {0:%H:%M:%S}",
     "tooltip": true,

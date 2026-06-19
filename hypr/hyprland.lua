@@ -56,11 +56,11 @@ hl.env("XDG_DATA_DIRS", xdg_data_dirs, true)
 
 -- Autostart
 hl.on("hyprland.start", function()
-    hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP GTK_THEME QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE XCURSOR_THEME XCURSOR_SIZE && systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP GTK_THEME QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE XCURSOR_THEME XCURSOR_SIZE")
+    hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE HYPRLAND_INSTANCE_SIGNATURE GTK_THEME QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE XCURSOR_THEME XCURSOR_SIZE && systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE HYPRLAND_INSTANCE_SIGNATURE GTK_THEME QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE XCURSOR_THEME XCURSOR_SIZE && systemctl --user start hyprland-session.target && systemctl --user start xdg-desktop-portal.service")
     hl.exec_cmd("waybar")
     hl.exec_cmd("asusctl -k off")
     hl.exec_cmd("awww-daemon")
-    hl.exec_cmd("~/.config/hypr/scripts/auto-monitor-detect.sh")
+    hl.exec_cmd("~/.config/hypr/scripts/display-manager.sh watch")
     hl.exec_cmd("nm-applet --indicator")
     hl.exec_cmd("/usr/lib/polkit-gnome-authentication-agent-1")
     hl.exec_cmd("mako")
@@ -69,6 +69,10 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
     hl.exec_cmd("systemctl --user enable --now pipewire pipewire-pulse wireplumber")
     hl.exec_cmd("hyprshell -c /home/warre/.config/hyprshell/config.json5 run")
+end)
+
+hl.on("hyprland.shutdown", function()
+    hl.exec_cmd("systemctl --user stop hyprland-session.target")
 end)
 
 hl.config({
@@ -205,7 +209,7 @@ hl.config({
     },
 
     cursor = {
-        no_hardware_cursors = false,
+        no_hardware_cursors = true,
         enable_hyprcursor = true,
         hide_on_touch = true,
         sync_gsettings_theme = true,
@@ -288,6 +292,7 @@ bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), desc("Next track"))
 bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), desc("Previous track"))
 bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("~/.config/quickshell/scripts/osd-brightness-up.sh"), { repeating = true })
 bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("~/.config/quickshell/scripts/osd-brightness-down.sh"), { repeating = true })
+bind("XF86Display", hl.dsp.exec_cmd("~/.config/hypr/scripts/display-manager.sh choose"), desc("Choose display mode"))
 bind("F7", hl.dsp.exec_cmd("~/.config/quickshell/scripts/osd-brightness-down.sh"), { repeating = true })
 bind("F8", hl.dsp.exec_cmd("~/.config/quickshell/scripts/osd-brightness-up.sh"), { repeating = true })
 bind(mainMod .. " + SHIFT + O", hl.dsp.exec_cmd("swaylock --config ~/.config/swaylock/config"), desc("Lock the screen"))
@@ -391,7 +396,7 @@ hl.window_rule({ name = "windowrule-22", match = { class = "^(gnome-calculator|G
 hl.window_rule({ name = "mango-media-float-mpv-imv", match = { class = "^(mpv|imv)$" }, float = true })
 hl.window_rule({ name = "mango-thunar-opacity", match = { class = "^(thunar|Thunar)$" }, opacity = "0.80 0.80" })
 hl.window_rule({ name = "kitty-tiling", match = { class = "^(kitty)$" }, float = false })
-hl.window_rule({ name = "discord-on-ws3", match = { class = "^(legcord)$" }, workspace = "4 silent" })
+hl.window_rule({ name = "discord-on-ws3", match = { class = "^(legcord)$" }, workspace = "3 silent" })
 
 -- Layer rules
 hl.layer_rule({ name = "mango-selection-capture", match = { namespace = "selection" }, no_anim = true, blur = false })
