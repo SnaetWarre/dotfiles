@@ -36,6 +36,7 @@ window#waybar {
 #custom-kb-layout,
 #custom-screenrecording-indicator,
 #custom-display-mode,
+#custom-tray-toggle,
 #custom-kbd-brightness {
   background: transparent;
   color: $color7;
@@ -51,6 +52,30 @@ window#waybar {
 #custom-kb-layout,
 #custom-display-mode {
   color: $color6;
+}
+
+#custom-tray-toggle {
+  color: $color6;
+  padding: 0 7px;
+}
+
+#custom-tray-toggle:hover {
+  color: $color7;
+  background: $color8;
+}
+
+#tray {
+  background: transparent;
+  padding: 0 7px 0 2px;
+  margin: 0;
+}
+
+#tray > .passive {
+  opacity: 0.65;
+}
+
+#tray > .needs-attention {
+  background: $color8;
 }
 
 #network,

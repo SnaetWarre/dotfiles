@@ -208,13 +208,7 @@
   {
     "context": "vim_mode == literal",
     "unbind": {
-      "ctrl-g": [
-        "vim::Literal",
-        [
-          "ctrl-g",
-          "\u0007",
-        ],
-      ],
+      "ctrl-g": ["vim::Literal", ["ctrl-g", "\u0007"]],
     },
   },
   {
@@ -238,13 +232,7 @@
   {
     "context": "vim_mode == literal",
     "unbind": {
-      "ctrl-t": [
-        "vim::Literal",
-        [
-          "ctrl-t",
-          "\u0014",
-        ],
-      ],
+      "ctrl-t": ["vim::Literal", ["ctrl-t", "\u0014"]],
     },
   },
   {

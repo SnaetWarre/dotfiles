@@ -12,7 +12,9 @@
     "custom/separator",
     "hyprland/workspaces",
     "custom/separator",
-    "custom/kb-layout"
+    "custom/kb-layout",
+    "custom/separator",
+    "group/tray-drawer"
   ],
 
   "modules-center": [
@@ -34,6 +36,30 @@
   "custom/separator": {
     "format": "|",
     "tooltip": false
+  },
+
+  "group/tray-drawer": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 150,
+      "children-class": "tray-hidden",
+      "transition-left-to-right": true
+    },
+    "modules": [
+      "custom/tray-toggle",
+      "tray"
+    ]
+  },
+
+  "custom/tray-toggle": {
+    "format": ">",
+    "tooltip": false
+  },
+
+  "tray": {
+    "icon-size": 16,
+    "spacing": 6,
+    "show-passive-items": true
   },
 
   "clock": {
