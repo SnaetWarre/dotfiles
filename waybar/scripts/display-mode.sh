@@ -1,3 +1,3 @@
 #!/bin/bash
 # Report the active display mode for Waybar.
-exec "$HOME/.config/hypr/scripts/display-manager.sh" status-json
+"$HOME/.config/hypr/scripts/display-manager.sh" status-json | awk '/^[[:space:]]*\{/ { print; exit }'

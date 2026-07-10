@@ -56,7 +56,10 @@ hl.env("XDG_DATA_DIRS", xdg_data_dirs, true)
 
 -- Autostart
 hl.on("hyprland.start", function()
-    hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE HYPRLAND_INSTANCE_SIGNATURE GTK_THEME QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE XCURSOR_THEME XCURSOR_SIZE && systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE HYPRLAND_INSTANCE_SIGNATURE GTK_THEME QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE XCURSOR_THEME XCURSOR_SIZE && systemctl --user start hyprland-session.target && systemctl --user start xdg-desktop-portal.service")
+    -- Explicitly replace any Plasma values retained by the user D-Bus/systemd
+    -- manager after switching sessions. In particular, KDE_FULL_SESSION=true
+    -- would allow kded6 to activate inside Hyprland.
+    hl.exec_cmd("export XDG_CURRENT_DESKTOP=Hyprland XDG_SESSION_DESKTOP=Hyprland DESKTOP_SESSION=hyprland KDE_FULL_SESSION=false; dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP DESKTOP_SESSION KDE_FULL_SESSION XDG_SESSION_TYPE HYPRLAND_INSTANCE_SIGNATURE GTK_THEME QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE XCURSOR_THEME XCURSOR_SIZE && systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP DESKTOP_SESSION KDE_FULL_SESSION XDG_SESSION_TYPE HYPRLAND_INSTANCE_SIGNATURE GTK_THEME QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE XCURSOR_THEME XCURSOR_SIZE && systemctl --user start hyprland-session.target && systemctl --user start xdg-desktop-portal.service")
     hl.exec_cmd("waybar")
     hl.exec_cmd("asusctl -k off")
     hl.exec_cmd("awww-daemon")
@@ -65,7 +68,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("/usr/lib/polkit-kde-authentication-agent-1")
     hl.exec_cmd("blueman-applet")
     hl.exec_cmd("udiskie --tray")
-    hl.exec_cmd("mako")
+    hl.exec_cmd("systemctl --user start mako.service")
     hl.exec_cmd("~/.config/hypr/scripts/battery-notify.sh")
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")

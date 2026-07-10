@@ -27,7 +27,7 @@
     "custom/display-mode",
     "custom/separator",
     "network",
-    "custom/separator", 
+    "custom/separator",
     "custom/volume",
     "custom/separator",
     "battery",
@@ -165,10 +165,13 @@
     "format": "{id}",
     "format-active": "[{id}]",
     "format-urgent": "!{id}!",
-    "on-click": "activate",
+    "all-outputs": true,
+    "show-special": false,
+    "move-to-monitor": true,
+    "on-click": "hyprctl dispatch workspace {id}",
     "on-scroll-up": "hyprctl dispatch workspace e+1",
     "on-scroll-down": "hyprctl dispatch workspace e-1",
-    "sort-by-id": true,
+    "sort-by": "id",
     "persistent-workspaces": {
       "*": 5
     }
