@@ -106,7 +106,7 @@
       "enterprise_uri": null,
     },
   },
-  "vim_mode": true,
+  "vim_mode": false,
   "agent": {
     "button": true,
     "dock": "right",

@@ -20,13 +20,46 @@ WALLPAPER_DIR="$HOME/Pictures/wallpapers"
 WAL_BIN="${WAL_BIN:-$HOME/.local/bin/wal}"
 WAL_BACKEND="${WAL_BACKEND:-wal}"
 WAL_SATURATE="${WAL_SATURATE:-}"
+WAL_USED_NORMALIZED=0
 
 run_wal() {
-    local wal_args=("$WAL_BIN" -i "$WALLPAPER" -q -W)
+    local wal_input="$WALLPAPER"
+    local normalized_image=""
+    local wal_status=0
+    local wal_args=()
+
+    wal_args=("$WAL_BIN" -i "$wal_input" -q -W)
     if [ -n "$WAL_SATURATE" ]; then
         wal_args+=(--saturate "$WAL_SATURATE")
     fi
-    "${wal_args[@]}"
+    if "${wal_args[@]}"; then
+        return 0
+    fi
+
+    # Some otherwise displayable JPEGs contain truncated data that walrs
+    # rejects. Normalize only the palette input and leave the wallpaper itself
+    # untouched.
+    if ! command -v magick >/dev/null 2>&1; then
+        return 1
+    fi
+
+    normalized_image=$(mktemp --suffix=.png)
+    echo "wal could not decode the wallpaper; retrying with a normalized palette image..." >&2
+    if ! magick "$WALLPAPER" -auto-orient "$normalized_image"; then
+        rm -f "$normalized_image"
+        return 1
+    fi
+
+    wal_args=("$WAL_BIN" -i "$normalized_image" -q -W)
+    if [ -n "$WAL_SATURATE" ]; then
+        wal_args+=(--saturate "$WAL_SATURATE")
+    fi
+    "${wal_args[@]}" || wal_status=$?
+    if [ "$wal_status" -eq 0 ]; then
+        WAL_USED_NORMALIZED=1
+    fi
+    rm -f "$normalized_image"
+    return "$wal_status"
 }
 
 # If a specific wallpaper is provided as an argument, use it
@@ -34,7 +67,7 @@ if [ -n "$1" ]; then
     WALLPAPER="$1"
 else
     # Otherwise, select a random wallpaper
-    WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" \) | shuf -n 1)
+    WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" -o -iname "*.gif" \) | shuf -n 1)
 fi
 
 echo "Selected wallpaper: $WALLPAPER"
@@ -50,8 +83,14 @@ if [ ! -x "$WAL_BIN" ]; then
     exit 1
 fi
 
-# If the selected wallpaper differs from last colors.sh entry, force regeneration
-PREV_WALL_FROM_COLORS=$(grep -E "^wallpaper='" "$HOME/.cache/wal/colors.sh" 2>/dev/null | sed -E "s/^wallpaper='(.*)'$/\1/")
+# If the selected wallpaper differs from the last colors.sh entry, force
+# regeneration. walrs has emitted both single- and double-quoted paths.
+PREV_WALL_FROM_COLORS=$(grep -m1 -E "^wallpaper=" "$HOME/.cache/wal/colors.sh" 2>/dev/null || true)
+PREV_WALL_FROM_COLORS=${PREV_WALL_FROM_COLORS#wallpaper=}
+PREV_WALL_FROM_COLORS=${PREV_WALL_FROM_COLORS#\'}
+PREV_WALL_FROM_COLORS=${PREV_WALL_FROM_COLORS%\'}
+PREV_WALL_FROM_COLORS=${PREV_WALL_FROM_COLORS#\"}
+PREV_WALL_FROM_COLORS=${PREV_WALL_FROM_COLORS%\"}
 if [ -n "$PREV_WALL_FROM_COLORS" ] && [ "$PREV_WALL_FROM_COLORS" != "$WALLPAPER" ]; then
     WAL_FORCE_REGEN=1
 fi
@@ -79,7 +118,41 @@ awww img "$WALLPAPER" \
 log_step "awww-start" "$__t3"
 
 # Generate colors (blocking) with the local pywal-rs build
-run_wal
+if ! run_wal; then
+    echo "Error: wal could not generate a palette for $WALLPAPER." >&2
+    exit 1
+fi
+
+# wal records its input path in the generated cache. When a normalized image
+# was needed, replace that temporary path with the real wallpaper path before
+# any theme consumer reads it.
+if [ "$WAL_USED_NORMALIZED" = "1" ]; then
+    WALLPAPER_PATH="$WALLPAPER" /usr/bin/env python3 - <<'PY'
+import json
+import os
+from pathlib import Path
+
+cache_dir = Path.home() / ".cache" / "wal"
+wallpaper = os.environ["WALLPAPER_PATH"]
+colors_sh = cache_dir / "colors.sh"
+colors_json = cache_dir / "colors.json"
+
+if colors_sh.exists():
+    lines = colors_sh.read_text().splitlines()
+    shell_quoted_wallpaper = wallpaper.replace("'", "'\"'\"'")
+    replacement = f"wallpaper='{shell_quoted_wallpaper}'"
+    lines = [
+        replacement if line.startswith("wallpaper=") else line
+        for line in lines
+    ]
+    colors_sh.write_text("\n".join(lines) + "\n")
+
+if colors_json.exists():
+    data = json.loads(colors_json.read_text())
+    data["wallpaper"] = wallpaper
+    colors_json.write_text(json.dumps(data, indent=4) + "\n")
+PY
+fi
 
 # Ensure cache wallpaper path exists for consumers expecting it
 printf '%s' "$WALLPAPER" > "$HOME/.cache/wal/wallpaper" 2>/dev/null || true
@@ -117,11 +190,6 @@ PY
     chmod 0644 "$HOME/.cache/wal/colors.sh" || true
 fi
 log_step "wal" "$__t0"
-if [ $? -ne 0 ]; then
-    echo "Error: wal command failed." >&2
-    # Decide if you want to exit or continue with potentially old colors
-    # exit 1
-fi
 
 # Removed pywalfox integration
 

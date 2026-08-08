@@ -226,6 +226,9 @@ bindings = [
   { key = "Minus", mods = "Control", action = "DecreaseFontSize" },
   { key = "0", mods = "Control", action = "ResetFontSize" },
 
+  # Delete the previous word
+  { key = "Backspace", mods = "Control", chars = "\u0017" },
+
   # Vi mode toggle
   { key = "Space", mods = "Control|Shift", action = "ToggleViMode" },
 

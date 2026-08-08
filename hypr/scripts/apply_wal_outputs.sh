@@ -203,7 +203,7 @@ get_kbd_brightness() {
 
 set_kbd_brightness() {
     local level="$1"
-    # Map numeric to asusctl modes; fallback to writing sysfs directly
+    # Map numeric to asusctl brightness levels; fallback to writing sysfs directly
     local mode=""
     case "$level" in
         0) mode="off" ;;
@@ -213,7 +213,7 @@ set_kbd_brightness() {
     esac
 
     if [ -n "$mode" ] && command -v asusctl >/dev/null 2>&1; then
-        asusctl --kbd-bright "$mode" >/dev/null 2>&1 && return 0
+        asusctl leds set "$mode" >/dev/null 2>&1 && return 0
     fi
 
     if [ -n "$level" ] && [ -w "$KBD_BRIGHTNESS_PATH" ]; then
@@ -484,28 +484,32 @@ log_step "service-restarts" "$__t_restart"
 
 # Removed pywalfox update step
 
-# Set keyboard color (prefer asusctl, fallback to rogauracore)
+# Match the keyboard to the same main wallpaper accent used by the window
+# borders. Preserve the user's current keyboard brightness while changing the
+# Aura effect.
 KB_COLOR="${color4#\#}"
 ORIG_KBD_BRIGHT=$(get_kbd_brightness)
 if command -v asusctl &> /dev/null; then
     __t_asusctl=$(now_ms)
-    echo "Setting keyboard color using asusctl (async)..."
-    (
-        asusctl aura static -c "$KB_COLOR" >/dev/null 2>&1 && echo "Successfully set keyboard color to ${color4} via asusctl" || echo "Warning: Failed to set keyboard color via asusctl."
-        if [ -n "$ORIG_KBD_BRIGHT" ]; then
-            set_kbd_brightness "$ORIG_KBD_BRIGHT" || true
-        fi
-    ) &
+    echo "Setting keyboard color to wallpaper accent ${color4}..."
+    if asusctl aura effect static -c "$KB_COLOR" >/dev/null 2>&1; then
+        echo "Successfully set keyboard color to ${color4} via asusctl"
+    else
+        echo "Warning: Failed to set keyboard color via asusctl." >&2
+    fi
+    if [ -n "$ORIG_KBD_BRIGHT" ]; then
+        set_kbd_brightness "$ORIG_KBD_BRIGHT" || true
+    fi
     log_step "asusctl" "$__t_asusctl"
 elif command -v rogauracore &> /dev/null; then
     __t_roga=$(now_ms)
-    echo "Setting keyboard color using rogauracore (async)..."
-    (
-        rogauracore single_static "$KB_COLOR" >/dev/null 2>&1 && echo "Successfully set keyboard color to ${color4}" || echo "Warning: Failed to set keyboard color."
-        if [ -n "$ORIG_KBD_BRIGHT" ]; then
-            set_kbd_brightness "$ORIG_KBD_BRIGHT" || true
-        fi
-    ) &
+    echo "Setting keyboard color to wallpaper accent ${color4}..."
+    rogauracore single_static "$KB_COLOR" >/dev/null 2>&1 \
+        && echo "Successfully set keyboard color to ${color4}" \
+        || echo "Warning: Failed to set keyboard color." >&2
+    if [ -n "$ORIG_KBD_BRIGHT" ]; then
+        set_kbd_brightness "$ORIG_KBD_BRIGHT" || true
+    fi
     log_step "rogauracore" "$__t_roga"
 else
     echo "Warning: asusctl or rogauracore not found, skipping keyboard color update"

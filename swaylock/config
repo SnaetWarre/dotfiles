@@ -4,7 +4,7 @@ show-failed-attempts
 font=Bitstream Vera Sans Mono
 
 # Appearance
-image=/home/warre/Pictures/wallpapers/a_mountain_with_snow_and_clouds_01.jpg
+image=/home/warre/Pictures/wallpapers/binbows.png
 scaling=fill
 
 # Fade in the lockscreen
@@ -18,32 +18,32 @@ indicator-caps-lock
 indicator-idle-visible
 
 # Colors
-color=22,25,24
-bs-hl-color=121,119,125
-caps-lock-bs-hl-color=121,119,125
-caps-lock-key-hl-color=160,138,138
-inside-color=22,25,2400
-inside-clear-color=114,112,11800
-inside-caps-lock-color=121,119,12500
-inside-ver-color=143,143,15000
-inside-wrong-color=121,119,12500
-key-hl-color=160,138,138
-layout-bg-color=22,25,2400
-layout-border-color=22,25,2400
-layout-text-color=228,224,226
-line-color=22,25,2400
-line-clear-color=22,25,2400
-line-caps-lock-color=22,25,2400
-line-ver-color=22,25,2400
-line-wrong-color=22,25,2400
-ring-color=160,138,138
-ring-clear-color=114,112,118
-ring-caps-lock-color=121,119,125
-ring-ver-color=143,143,150
-ring-wrong-color=121,119,125
-separator-color=22,25,2400
-text-color=228,224,226
-text-clear-color=228,224,226
-text-caps-lock-color=228,224,226
-text-ver-color=228,224,226
-text-wrong-color=228,224,226
+color=12,11,12
+bs-hl-color=219,212,43
+caps-lock-bs-hl-color=219,212,43
+caps-lock-key-hl-color=219,177,179
+inside-color=12,11,1200
+inside-clear-color=222,151,12400
+inside-caps-lock-color=219,212,4300
+inside-ver-color=212,192,12200
+inside-wrong-color=219,212,4300
+key-hl-color=219,177,179
+layout-bg-color=12,11,1200
+layout-border-color=12,11,1200
+layout-text-color=251,255,233
+line-color=12,11,1200
+line-clear-color=12,11,1200
+line-caps-lock-color=12,11,1200
+line-ver-color=12,11,1200
+line-wrong-color=12,11,1200
+ring-color=219,177,179
+ring-clear-color=222,151,124
+ring-caps-lock-color=219,212,43
+ring-ver-color=212,192,122
+ring-wrong-color=219,212,43
+separator-color=12,11,1200
+text-color=251,255,233
+text-clear-color=251,255,233
+text-caps-lock-color=251,255,233
+text-ver-color=251,255,233
+text-wrong-color=251,255,233

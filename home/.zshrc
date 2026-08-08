@@ -305,6 +305,11 @@ bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey '^T' n
 
+# st emits Ctrl+Backspace as Ctrl+H while ordinary Backspace remains Delete.
+if [[ "$TERM" == st* ]]; then
+  bindkey '^H' backward-kill-word
+fi
+
 # ============================================================================
 # ZSH OPTIONS
 # ============================================================================
@@ -388,3 +393,13 @@ conda() { __mamba_lazy_load; conda "$@"; }
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Stage, commit, and push the current repository in one command.
+yeet() {
+    if (( $# == 0 )); then
+        echo 'Usage: yeet "commit message"' >&2
+        return 2
+    fi
+
+    git add . && git commit -m "$*" && git push
+}

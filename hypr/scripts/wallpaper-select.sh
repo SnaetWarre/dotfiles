@@ -8,7 +8,7 @@ TEMP_FILE=$(mktemp)
 trap 'rm -f "$TEMP_FILE"' EXIT
 
 # For each wallpaper, create a preview entry
-find "$WALLPAPER_DIR" -maxdepth 1 -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" -o -name "*.gif" \) | sort | while IFS= read -r wallpaper; do
+find "$WALLPAPER_DIR" -maxdepth 1 -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" -o -iname "*.gif" \) | sort | while IFS= read -r wallpaper; do
     # Get the filename without path
     filename=$(basename "$wallpaper")
     # Keep the selected value as the full path, but show the basename.
