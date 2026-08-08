@@ -33,6 +33,7 @@ window#waybar {
 #custom-volume,
 #custom-brightness,
 #custom-asus-profile,
+#custom-reactor,
 #custom-kb-layout,
 #custom-screenrecording-indicator,
 #custom-display-mode,
@@ -52,6 +53,44 @@ window#waybar {
 #custom-kb-layout,
 #custom-display-mode {
   color: #d0daa6;
+}
+
+#custom-reactor {
+  color: #d0daa6;
+  font-family: "Bitstream Vera Sans Mono", "Noto Sans Mono", monospace;
+  font-weight: bold;
+  padding: 0 4px;
+}
+
+#custom-reactor.sleeping {
+  color: #f0844f;
+  opacity: 0.62;
+}
+
+#custom-reactor.awake {
+  color: #d0daa6;
+}
+
+#custom-reactor.dancing {
+  color: #dbb1b3;
+}
+
+#custom-reactor.celebrating {
+  color: #dbd42b;
+}
+
+#custom-reactor.overheating {
+  color: #d4c07a;
+}
+
+#custom-reactor.radioactive {
+  color: #0c0b0c;
+  background: #dbd42b;
+}
+
+#custom-reactor.panicking {
+  color: #0c0b0c;
+  background: #de977c;
 }
 
 #custom-tray-toggle {

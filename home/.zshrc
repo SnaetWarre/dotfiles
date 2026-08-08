@@ -337,6 +337,12 @@ skip_global_compinit=1
 # CUSTOM PROMPT - Liquidprompt Style with Full Paths
 # ============================================================================
 
+reactor_build_celebration_hook="$HOME/.config/waybar/scripts/reactor-build-celebration.zsh"
+if [[ -r "$reactor_build_celebration_hook" ]]; then
+  source "$reactor_build_celebration_hook"
+fi
+unset reactor_build_celebration_hook
+
 # Enable colors
 autoload -U colors && colors
 
@@ -359,8 +365,13 @@ function git_prompt_info() {
 
 # Main prompt function
 function set_prompt() {
+  local finished_command_exit_code=$?
   local user_host="%F{red}%n%f%F{white}@%f%F{yellow}%m%f"
   local full_path="%F{white}%~%f"
+
+  if (( $+functions[reactor_celebrate_finished_build] )); then
+    reactor_celebrate_finished_build "$finished_command_exit_code"
+  fi
   
   # Build the prompt: [user@host:~/full/path] branch status
   PROMPT="[$user_host:$full_path]$(git_prompt_info) %F{green}>%f "
