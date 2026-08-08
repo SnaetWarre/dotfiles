@@ -10,9 +10,9 @@ window {
     border:                        1px;
     border-color:                  @selected;
     border-radius:                 0px;
-    width:                         100%;
-    location:                      north;
-    anchor:                        north;
+    width:                         34%;
+    location:                      center;
+    anchor:                        center;
     y-offset:                      0px;
 }
 
@@ -59,7 +59,7 @@ listview {
     background-color:              @background;
     padding:                       0px;
     columns:                       1;
-    lines:                        10;
+    lines:                         8;
     spacing:                      0px;
     cycle:                        true;
     dynamic:                      true;
