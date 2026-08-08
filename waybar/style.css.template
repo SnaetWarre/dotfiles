@@ -34,6 +34,8 @@ window#waybar {
 #custom-brightness,
 #custom-asus-profile,
 #custom-reactor,
+#custom-gooning-directory,
+#custom-useless-internet-protocol,
 #custom-kb-layout,
 #custom-screenrecording-indicator,
 #custom-display-mode,
@@ -91,6 +93,14 @@ window#waybar {
 #custom-reactor.panicking {
   color: $color0;
   background: $color1;
+}
+
+#custom-gooning-directory {
+  color: $color1;
+}
+
+#custom-useless-internet-protocol {
+  color: $color5;
 }
 
 #custom-tray-toggle {

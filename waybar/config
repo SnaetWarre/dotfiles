@@ -23,6 +23,10 @@
   ],
 
   "modules-right": [
+    "custom/gooning-directory",
+    "custom/separator",
+    "custom/useless-internet-protocol",
+    "custom/separator",
     "custom/screenrecording-indicator",
     "custom/separator",
     "custom/display-mode",
@@ -104,6 +108,17 @@
     "interval": 1,
     "signal": 14,
     "tooltip": true
+  },
+
+  "custom/gooning-directory": {
+    "format": "Gooning directory almost full 98% 0_0",
+    "tooltip": false
+  },
+
+  "custom/useless-internet-protocol": {
+    "exec": "~/.config/waybar/scripts/useless-internet-protocol.sh",
+    "interval": 5,
+    "tooltip": false
   },
 
   "custom/kb-layout": {
