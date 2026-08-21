@@ -14,15 +14,25 @@ chmod 700 "$reactor_runtime_directory" 2>/dev/null || true
 build_celebration_deadline_file="$reactor_runtime_directory/build-celebration-deadline"
 cpu_sample_file="$reactor_runtime_directory/cpu-sample"
 low_activity_sample_count_file="$reactor_runtime_directory/low-activity-sample-count"
+reactor_watcher_pid_file="$reactor_runtime_directory/watcher.pid"
+reactor_wakeup_pipe="$reactor_runtime_directory/wakeup.pipe"
 
-current_epoch_seconds=$(date +%s)
+current_epoch_seconds=$EPOCHSECONDS
 
 if [[ "${1:-}" == "celebrate-build" ]]; then
     build_celebration_deadline=$((current_epoch_seconds + 12))
     temporary_deadline_file="$build_celebration_deadline_file.$$"
     printf '%s\n' "$build_celebration_deadline" > "$temporary_deadline_file"
     mv -f "$temporary_deadline_file" "$build_celebration_deadline_file"
-    pkill -RTMIN+14 waybar 2>/dev/null || true
+    reactor_watcher_pid=0
+    if [[ -r "$reactor_watcher_pid_file" ]]; then
+        read -r reactor_watcher_pid < "$reactor_watcher_pid_file" || reactor_watcher_pid=0
+    fi
+    if [[ "$reactor_watcher_pid" =~ ^[1-9][0-9]*$ ]] &&
+       kill -0 "$reactor_watcher_pid" 2>/dev/null &&
+       [[ -p "$reactor_wakeup_pipe" ]]; then
+        printf '\n' > "$reactor_wakeup_pipe"
+    fi
     exit 0
 fi
 
@@ -58,12 +68,8 @@ read_cpu_usage_percent() {
 find_playing_track() {
     local player_name player_playback_status playing_track_metadata
 
-    while IFS= read -r player_name; do
-        [[ -n "$player_name" ]] || continue
-        player_playback_status=$(playerctl --player="$player_name" status 2>/dev/null || true)
+    while IFS=$'\t' read -r player_name player_playback_status playing_track_metadata; do
         if [[ "$player_playback_status" == "Playing" ]]; then
-            playing_track_metadata=$(playerctl --player="$player_name" metadata \
-                --format '{{artist}} — {{title}}' 2>/dev/null || true)
             if [[ -n "$playing_track_metadata" ]]; then
                 printf '%s\n' "$playing_track_metadata"
             else
@@ -71,14 +77,25 @@ find_playing_track() {
             fi
             return 0
         fi
-    done < <(playerctl --list-all 2>/dev/null)
+    done < <(playerctl --all-players metadata \
+        --format $'{{playerName}}\t{{status}}\t{{artist}} — {{title}}' 2>/dev/null)
 
     return 1
 }
 
+print_reactor_status() {
+current_epoch_seconds=$EPOCHSECONDS
 cpu_usage_percent=${REACTOR_CPU_USAGE_PERCENT_OVERRIDE:-$(read_cpu_usage_percent)}
-battery_capacity_percent=${REACTOR_BATTERY_CAPACITY_PERCENT_OVERRIDE:-$(cat /sys/class/power_supply/BAT0/capacity 2>/dev/null || printf '100')}
-battery_charge_status=${REACTOR_BATTERY_CHARGE_STATUS_OVERRIDE:-$(cat /sys/class/power_supply/BAT0/status 2>/dev/null || printf 'Unknown')}
+if [[ -n "${REACTOR_BATTERY_CAPACITY_PERCENT_OVERRIDE:-}" ]]; then
+    battery_capacity_percent=$REACTOR_BATTERY_CAPACITY_PERCENT_OVERRIDE
+elif ! read -r battery_capacity_percent < /sys/class/power_supply/BAT0/capacity 2>/dev/null; then
+    battery_capacity_percent=100
+fi
+if [[ -n "${REACTOR_BATTERY_CHARGE_STATUS_OVERRIDE:-}" ]]; then
+    battery_charge_status=$REACTOR_BATTERY_CHARGE_STATUS_OVERRIDE
+elif ! read -r battery_charge_status < /sys/class/power_supply/BAT0/status 2>/dev/null; then
+    battery_charge_status=Unknown
+fi
 
 if [[ -n "${REACTOR_PLAYING_TRACK_OVERRIDE:-}" ]]; then
     playing_track="$REACTOR_PLAYING_TRACK_OVERRIDE"
@@ -95,14 +112,20 @@ fi
 if [[ -n "${REACTOR_LOW_ACTIVITY_SAMPLE_COUNT_OVERRIDE:-}" ]]; then
     low_activity_sample_count=$REACTOR_LOW_ACTIVITY_SAMPLE_COUNT_OVERRIDE
 elif ((cpu_usage_percent < 10)) && [[ "$music_is_playing" == false ]]; then
-    low_activity_sample_count=$(cat "$low_activity_sample_count_file" 2>/dev/null || printf '0')
+    low_activity_sample_count=0
+    if [[ -r "$low_activity_sample_count_file" ]]; then
+        read -r low_activity_sample_count < "$low_activity_sample_count_file" || low_activity_sample_count=0
+    fi
     low_activity_sample_count=$((low_activity_sample_count + 1))
 else
     low_activity_sample_count=0
 fi
 printf '%s\n' "$low_activity_sample_count" > "$low_activity_sample_count_file"
 
-build_celebration_deadline=$(cat "$build_celebration_deadline_file" 2>/dev/null || printf '0')
+build_celebration_deadline=0
+if [[ -r "$build_celebration_deadline_file" ]]; then
+    read -r build_celebration_deadline < "$build_celebration_deadline_file" || build_celebration_deadline=0
+fi
 animation_frame=$((current_epoch_seconds % 2))
 
 if ((battery_capacity_percent <= 15)) && [[ "$battery_charge_status" == "Discharging" ]]; then
@@ -140,8 +163,46 @@ if [[ "$music_is_playing" == true ]]; then
     reactor_tooltip+="\nPlaying: $playing_track"
 fi
 
-jq --compact-output --null-input \
-    --arg text "$reactor_face" \
-    --arg tooltip "$reactor_tooltip" \
-    --arg class "$reactor_state" \
-    '{text: $text, tooltip: $tooltip, class: $class}'
+json_escape() {
+    local escaped_text=$1
+
+    escaped_text=${escaped_text//\\/\\\\}
+    escaped_text=${escaped_text//\"/\\\"}
+    escaped_text=${escaped_text//$'\n'/\\n}
+    escaped_text=${escaped_text//$'\r'/\\r}
+    escaped_text=${escaped_text//$'\t'/\\t}
+    printf '%s' "$escaped_text"
+}
+
+printf '{"text":"%s","tooltip":"%s","class":"%s"}\n' \
+    "$(json_escape "$reactor_face")" \
+    "$(json_escape "$reactor_tooltip")" \
+    "$(json_escape "$reactor_state")"
+}
+
+if [[ "${1:-}" == "--watch" ]]; then
+    rm -f "$reactor_wakeup_pipe"
+    mkfifo -m 600 "$reactor_wakeup_pipe"
+    printf '%s\n' "$$" > "$reactor_watcher_pid_file"
+    exec {reactor_wakeup_file_descriptor}<>"$reactor_wakeup_pipe"
+
+    cleanup_reactor_watcher() {
+        local recorded_watcher_pid=0
+
+        if [[ -r "$reactor_watcher_pid_file" ]]; then
+            read -r recorded_watcher_pid < "$reactor_watcher_pid_file" || recorded_watcher_pid=0
+        fi
+        if [[ "$recorded_watcher_pid" == "$$" ]]; then
+            rm -f "$reactor_watcher_pid_file" "$reactor_wakeup_pipe"
+        fi
+    }
+    trap cleanup_reactor_watcher EXIT
+    trap 'exit 0' INT TERM
+
+    while true; do
+        print_reactor_status
+        IFS= read -r -t 1 -u "$reactor_wakeup_file_descriptor" _ || true
+    done
+else
+    print_reactor_status
+fi

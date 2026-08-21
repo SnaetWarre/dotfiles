@@ -4,7 +4,7 @@ show-failed-attempts
 font=Bitstream Vera Sans Mono
 
 # Appearance
-image=/home/warre/Pictures/wallpapers/binbows.png
+image=/home/warre/Pictures/wallpapers/a_black_sand_with_white_foamy_waves.png
 scaling=fill
 
 # Fade in the lockscreen
@@ -18,32 +18,32 @@ indicator-caps-lock
 indicator-idle-visible
 
 # Colors
-color=12,11,12
-bs-hl-color=219,212,43
-caps-lock-bs-hl-color=219,212,43
-caps-lock-key-hl-color=219,177,179
-inside-color=12,11,1200
-inside-clear-color=222,151,12400
-inside-caps-lock-color=219,212,4300
-inside-ver-color=212,192,12200
-inside-wrong-color=219,212,4300
-key-hl-color=219,177,179
-layout-bg-color=12,11,1200
-layout-border-color=12,11,1200
-layout-text-color=251,255,233
-line-color=12,11,1200
-line-clear-color=12,11,1200
-line-caps-lock-color=12,11,1200
-line-ver-color=12,11,1200
-line-wrong-color=12,11,1200
-ring-color=219,177,179
-ring-clear-color=222,151,124
-ring-caps-lock-color=219,212,43
-ring-ver-color=212,192,122
-ring-wrong-color=219,212,43
-separator-color=12,11,1200
-text-color=251,255,233
-text-clear-color=251,255,233
-text-caps-lock-color=251,255,233
-text-ver-color=251,255,233
-text-wrong-color=251,255,233
+color=11,14,13
+bs-hl-color=149,138,149
+caps-lock-bs-hl-color=149,138,149
+caps-lock-key-hl-color=165,154,165
+inside-color=11,14,1300
+inside-clear-color=133,135,13700
+inside-caps-lock-color=149,138,14900
+inside-ver-color=145,147,14900
+inside-wrong-color=149,138,14900
+key-hl-color=165,154,165
+layout-bg-color=11,14,1300
+layout-border-color=11,14,1300
+layout-text-color=244,245,245
+line-color=11,14,1300
+line-clear-color=11,14,1300
+line-caps-lock-color=11,14,1300
+line-ver-color=11,14,1300
+line-wrong-color=11,14,1300
+ring-color=165,154,165
+ring-clear-color=133,135,137
+ring-caps-lock-color=149,138,149
+ring-ver-color=145,147,149
+ring-wrong-color=149,138,149
+separator-color=11,14,1300
+text-color=244,245,245
+text-clear-color=244,245,245
+text-caps-lock-color=244,245,245
+text-ver-color=244,245,245
+text-wrong-color=244,245,245

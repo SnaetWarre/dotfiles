@@ -23,8 +23,8 @@
   ],
 
   "modules-right": [
-    "custom/gooning-directory",
-    "custom/separator",
+  //  "custom/gooning-directory",
+  //  "custom/separator",
     "custom/useless-internet-protocol",
     "custom/separator",
     "custom/screenrecording-indicator",
@@ -94,8 +94,8 @@
   },
 
   "custom/asus-profile": {
-    "exec": "~/.config/waybar/scripts/asus-profile.sh",
-    "interval": 10,
+    "exec": "~/.config/waybar/scripts/asus-profile.sh --watch",
+    "restart-interval": 2,
     "format": "{}",
     "tooltip": true,
     "tooltip-format": "Click to cycle ASUS profile",
@@ -103,10 +103,9 @@
   },
 
   "custom/reactor": {
-    "exec": "~/.config/waybar/scripts/reactor-status.sh",
+    "exec": "~/.config/waybar/scripts/reactor-status.sh --watch",
     "return-type": "json",
-    "interval": 1,
-    "signal": 14,
+    "restart-interval": 2,
     "tooltip": true
   },
 
@@ -116,15 +115,14 @@
   },
 
   "custom/useless-internet-protocol": {
-    "exec": "~/.config/waybar/scripts/useless-internet-protocol.sh",
-    "interval": 5,
+    "exec": "~/.config/waybar/scripts/useless-internet-protocol.sh --watch",
+    "restart-interval": 2,
     "tooltip": false
   },
 
   "custom/kb-layout": {
     "exec": "~/.config/waybar/scripts/kb-layout.sh",
     "return-type": "json",
-    "interval": 2,
     "signal": 13,
     "format": "{}",
     "tooltip": true,
@@ -141,7 +139,6 @@
   "custom/display-mode": {
     "exec": "~/.config/waybar/scripts/display-mode.sh",
     "return-type": "json",
-    "interval": 5,
     "on-click": "~/.config/waybar/scripts/display-toggle.sh",
     "signal": 11
   },

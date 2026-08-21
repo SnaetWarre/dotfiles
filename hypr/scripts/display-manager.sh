@@ -37,8 +37,12 @@ notify() {
     notify-send -u low "$1" "$2" -t 2500
 }
 
-refresh_waybar() {
+refresh_waybar_display_mode() {
     pkill -RTMIN+11 waybar 2>/dev/null || true
+}
+
+refresh_waybar_keyboard_layout() {
+    pkill -RTMIN+13 waybar 2>/dev/null || true
 }
 
 valid_json() {
@@ -245,7 +249,7 @@ apply_mode() {
             ;;
     esac
 
-    refresh_waybar
+    refresh_waybar_display_mode
 }
 
 choose_mode() {
@@ -687,7 +691,7 @@ remove_network_output() {
         rm -f "$EXTERNAL_FILE"
     fi
     remove_sunshine_conf_key output_name
-    refresh_waybar
+    refresh_waybar_display_mode
 }
 
 network_prepare() {
@@ -700,7 +704,7 @@ network_prepare() {
     map_sunshine_output "$output" || return 1
     restart_sunshine || return 1
     notify "Network Display" "Prepared $output. Pick '$SUNSHINE_APP_NAME' from Moonlight."
-    refresh_waybar
+    refresh_waybar_display_mode
 }
 
 valid_dimension() {
@@ -728,7 +732,7 @@ network_client_start() {
     hypr_monitor "$output,${width}x${height}@${fps},auto-right,$NETWORK_SCALE" || return 1
     printf '%sx%s@%s\n' "$width" "$height" "$fps" > "$NETWORK_MODE_FILE"
     notify "Network Display" "Streaming ${width}x${height}@${fps} on $output"
-    refresh_waybar
+    refresh_waybar_display_mode
 }
 
 network_client_stop() {
@@ -818,6 +822,9 @@ watch_events() {
                 monitorremoved*">>"*)
                     output="$(event_output_name "${line#*>>}")"
                     handle_removed "$output"
+                    ;;
+                activelayout*">>"*)
+                    refresh_waybar_keyboard_layout
                     ;;
             esac
         done

@@ -28,30 +28,48 @@ else
     color_fg="#ffffff"
 fi
 
-profile=$(asusctl profile get 2>/dev/null | awk '/Active profile/ {print $NF}')
+print_asus_profile() {
+    local active_profile profile_label profile_color
 
-if [ -z "$profile" ]; then
-  echo "<span foreground='$color_fg'>ASUS N/A</span>"
-  exit 0
+    active_profile=$(asusctl profile get 2>/dev/null | awk '/Active profile/ {print $NF}')
+
+    if [ -z "$active_profile" ]; then
+        printf "<span foreground='%s'>ASUS N/A</span>\n" "$color_fg"
+        return
+    fi
+
+    case "$active_profile" in
+        Performance)
+            profile_label="REACTOR ON"
+            profile_color="$color_red"
+            ;;
+        Balanced)
+            profile_label="STABILIZATION"
+            profile_color="$color_orange"
+            ;;
+        Quiet|LowPower)
+            profile_label="REACTOR OFF"
+            profile_color="$color_cyan"
+            ;;
+        *)
+            profile_label="ASUS ??"
+            profile_color="$color_fg"
+            ;;
+    esac
+
+    printf "<span foreground='%s'>%s</span>\n" "$profile_color" "$profile_label"
+}
+
+print_asus_profile
+
+if [ "${1:-}" = "--watch" ]; then
+    while IFS= read -r asusd_event; do
+        case "$asusd_event" in
+            *PlatformProfile*) print_asus_profile ;;
+        esac
+    done < <(
+        gdbus monitor --system \
+            --dest xyz.ljones.Asusd \
+            --object-path /xyz/ljones 2>/dev/null
+    )
 fi
-
-case "$profile" in
-  Performance)
-    text="REACTOR ON"
-    fg="$color_red"
-    ;;
-  Balanced)
-    text="STABILIZATION"
-    fg="$color_orange"
-    ;;
-  Quiet|LowPower)
-    text="REACTOR OFF"
-    fg="$color_cyan"
-    ;;
-  *)
-    text="ASUS ??"
-    fg="$color_fg"
-    ;;
-esac
-
-echo "<span foreground='$fg'>$text</span>"

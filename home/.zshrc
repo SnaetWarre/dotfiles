@@ -115,11 +115,8 @@ export PATH="$HOME/.local/bin:$PATH"
 export DOTNET_ROOT="$HOME/.dotnet"
 export PATH="$HOME/.dotnet:$HOME/.dotnet/tools:$PATH"
 export PATH="/home/warre/.opencode/bin:$PATH"
-
-# Fix Belgian (AZERTY) keyboard layout
-if [[ -n "$DISPLAY" ]] && command -v setxkbmap &>/dev/null; then
-  setxkbmap be >/dev/null 2>&1 &!
-fi
+# Keep inherited and subsequently-added path entries unique while preserving order.
+typeset -U path PATH
 
 # LS_COLORS - Enhanced file type colors for ls and completion
 # Use walrs colors if available, otherwise use vivid or fallback
@@ -146,28 +143,25 @@ fi
 # LAZY-LOADED TOOLS
 # ============================================================================
 
-# --- NVM Lazy Loading (saves ~340ms) ---
+# --- NVM Lazy Loading ---
 export NVM_DIR="$HOME/.nvm"
-# Add current node version to PATH immediately without loading NVM
+# Put the most recently installed Node version on PATH without loading NVM.
 if [[ -d "$NVM_DIR/versions/node" ]]; then
-  NODE_LATEST=$(command ls -1 "$NVM_DIR/versions/node" 2>/dev/null | tail -1)
-  if [[ -n "$NODE_LATEST" ]]; then
-    export PATH="$NVM_DIR/versions/node/$NODE_LATEST/bin:$PATH"
+  node_installation_directories=("$NVM_DIR"/versions/node/*(N/om))
+  if (( ${#node_installation_directories} )); then
+    path=("$node_installation_directories[1]/bin" $path)
   fi
+  unset node_installation_directories
 fi
 
-# Lazy load NVM only when needed
+# Load NVM only for NVM operations. node/npm/npx/yarn execute directly from PATH.
 _nvm_lazy_load() {
-  unset -f nvm node npm npx yarn
+  unset -f nvm
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 }
 
 nvm() { _nvm_lazy_load; nvm "$@"; }
-node() { _nvm_lazy_load; node "$@"; }
-npm() { _nvm_lazy_load; npm "$@"; }
-npx() { _nvm_lazy_load; npx "$@"; }
-yarn() { _nvm_lazy_load; yarn "$@"; }
 
 # --- Zoxide (lazy loaded in background) ---
 if command -v zoxide &>/dev/null; then
@@ -268,7 +262,7 @@ alias udpate="update"
 # Eza (modern ls replacement) - colorful and feature-rich
 if command -v eza &>/dev/null; then
   # Force color output and use walrs colors via EXA_COLORS
-  alias ls="eza --icons=always --color=always --group-directories-first"
+  alias ls="eza --icons=always --color=always --group-directories-first -l"
   alias ll="eza --icons=always --color=always --group-directories-first -lh"
   alias la="eza --icons=always --color=always --group-directories-first -lha"
   alias lt="eza --icons=always --color=always --group-directories-first --tree --level=2"
@@ -348,19 +342,33 @@ autoload -U colors && colors
 
 # Git info function
 function git_prompt_info() {
-  local git_branch git_dirty
-  
-  # Check if in git repo
-  git_branch=$(command git symbolic-ref --short HEAD 2>/dev/null || command git describe --tags --exact-match 2>/dev/null || command git rev-parse --short HEAD 2>/dev/null)
-  
-  if [[ -n $git_branch ]]; then
-    if ! command git diff --quiet --ignore-submodules --cached 2>/dev/null ||
-       ! command git diff --quiet --ignore-submodules 2>/dev/null; then
-      git_dirty="±"
-    fi
-    
-    echo " %F{green}$git_branch%F{red}$git_dirty%f"
+  local git_branch git_commit_oid git_dirty git_status_line git_status_snapshot
+  local repository_directory_probe=$PWD
+
+  # Avoid starting Git at all for directories that cannot be inside a worktree.
+  while [[ "$repository_directory_probe" != / && ! -e "$repository_directory_probe/.git" ]]; do
+    repository_directory_probe=${repository_directory_probe:h}
+  done
+  [[ -e "$repository_directory_probe/.git" ]] || return
+
+  # One status call covers repository detection, branch name, and tracked changes.
+  git_status_snapshot=$(command git status --porcelain=v2 --branch \
+    --untracked-files=no --ignore-submodules=all 2>/dev/null) || return
+
+  while IFS= read -r git_status_line; do
+    case "$git_status_line" in
+      '# branch.head '*) git_branch=${git_status_line#\# branch.head } ;;
+      '# branch.oid '*) git_commit_oid=${git_status_line#\# branch.oid } ;;
+      1\ *|2\ *|u\ *) git_dirty="±" ;;
+    esac
+  done <<< "$git_status_snapshot"
+
+  if [[ "$git_branch" == "(detached)" ]]; then
+    git_branch=$(command git describe --tags --exact-match 2>/dev/null) ||
+      git_branch=${git_commit_oid[1,7]}
   fi
+
+  [[ -n "$git_branch" ]] && echo " %F{green}$git_branch%F{red}$git_dirty%f"
 }
 
 # Main prompt function

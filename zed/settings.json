@@ -179,7 +179,7 @@
     "starts_open": false,
   },
   "git_panel": {
-    "button": false,
+    "button": true,
     "dock": "left",
   },
   "outline_panel": {
