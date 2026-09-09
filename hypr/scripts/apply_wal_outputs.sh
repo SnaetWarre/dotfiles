@@ -520,16 +520,12 @@ echo "apply_wal_outputs.sh finished successfully."
 # --- Update Hyprland border colors dynamically ---
 __t_hyprctl=$(now_ms)
 if command -v hyprctl &> /dev/null; then
-    # Keep live borders in sync with hyprland.lua:
-    # color4 tracks the main wallpaper accent, color8 is a muted inactive edge.
-    to_hypr_rgb() {
-        local hex=${1#"#"}
-        echo "rgb(${hex})"
-    }
-    ACTIVE_A=$(to_hypr_rgb "$color4")
-    INACTIVE=$(to_hypr_rgb "$color8")
+    # Match the translucent light edges in hyprland.lua after wallpaper changes.
+    border_tint=${color7#"#"}
+    active_border="rgba(${border_tint}66)"
+    inactive_border="rgba(${border_tint}22)"
 
-    hyprctl eval "hl.config({ general = { col = { active_border = '$ACTIVE_A', inactive_border = '$INACTIVE' } } })" >/dev/null 2>&1 || true
+    hyprctl eval "hl.config({ general = { col = { active_border = '$active_border', inactive_border = '$inactive_border' } } })" >/dev/null 2>&1 || true
 fi
 log_step "hyprctl-borders" "$__t_hyprctl"
 

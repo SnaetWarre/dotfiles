@@ -28,9 +28,6 @@ local function load_wal_colors(path)
 end
 
 local wal = load_wal_colors(os.getenv("HOME") .. "/.cache/wal/colors-hyprland.conf")
-local function rgb(name, fallback)
-    return "rgb(" .. (wal[name] or fallback) .. ")"
-end
 local function rgba(name, alpha, fallback)
     return "rgba(" .. (wal[name] or fallback) .. alpha .. ")"
 end
@@ -87,8 +84,8 @@ hl.config({
         gaps_out = 2,
         border_size = 1,
         col = {
-            active_border = rgb("color4", "7d5a73"),
-            inactive_border = rgb("color8", "433859"),
+            active_border = rgba("color7", "66", "d8dee9"),
+            inactive_border = rgba("color7", "22", "d8dee9"),
         },
         layout = "dwindle",
         resize_on_border = true,
@@ -105,8 +102,8 @@ hl.config({
         active_opacity = 1.0,
         inactive_opacity = 1.0,
         fullscreen_opacity = 1.0,
-        rounding = 0,
-        rounding_power = 1.0,
+        rounding = 10,
+        rounding_power = 2.0,
         dim_inactive = false,
         blur = {
             enabled = false,
@@ -121,13 +118,13 @@ hl.config({
             vibrancy = 0.2,
         },
         shadow = {
-            enabled = false,
-            range = 10,
+            enabled = true,
+            range = 28,
             render_power = 3,
             sharp = false,
-            color = "rgba(00000099)",
-            color_inactive = "rgba(00000066)",
-            offset = { 0, 2 },
+            color = "rgba(00000070)",
+            color_inactive = "rgba(00000040)",
+            offset = { 0, 6 },
             scale = 1.0,
         },
     },
@@ -138,16 +135,20 @@ hl.config({
         kb_layout = "be,us",
         kb_model = "",
         kb_rules = "",
-        accel_profile = "flat",
-        force_no_accel = true,
+        accel_profile = "adaptive",
+        force_no_accel = false,
         follow_mouse = 1,
         float_switch_override_focus = 2,
         sensitivity = 0,
         kb_options = "caps:escape",
         touchpad = {
             natural_scroll = true,
-            scroll_factor = 1.0,
+            scroll_factor = 0.8,
             tap_to_click = true,
+            tap_and_drag = true,
+            drag_lock = 1,
+            clickfinger_behavior = true,
+            tap_button_map = "lrm",
             disable_while_typing = true,
         },
     },
@@ -260,7 +261,13 @@ hl.gesture({ fingers = 4, direction = "horizontal", action = "workspace" })
 
 hl.device({
     name = "asue120a:00-04f3:319b-touchpad",
-    sensitivity = 0.35,
+    sensitivity = 0.15,
+    accel_profile = "adaptive",
+})
+
+hl.device({
+    name = "logitech-pro-2-mouse-1",
+    sensitivity = 0,
     accel_profile = "flat",
 })
 
@@ -390,7 +397,6 @@ bind(mainMod .. " + U", hl.dsp.exec_cmd("~/.config/waybar/waybar.sh"))
 
 -- Window rules
 hl.window_rule({ name = "windowrule-1", match = { class = ".*" }, suppress_event = "maximize" })
-hl.window_rule({ name = "mango-shadow-floating-only", match = { float = false }, no_shadow = true })
 hl.window_rule({ name = "windowrule-2", match = { class = "^(Rofi)$" }, float = true })
 hl.window_rule({ name = "windowrule-4", match = { class = "^()$", title = "^(Picture in picture)$" }, float = true })
 hl.window_rule({ name = "windowrule-5", match = { class = "^()$", title = "^(Save File)$" }, float = true })

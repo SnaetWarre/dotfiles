@@ -13,13 +13,13 @@
 }
 
 window#waybar {
-  background: #0b0e0d;
-  color: #f4f5f5;
-  border-bottom: 1px solid #676a6c;
+  background: #122026;
+  color: #dce0e3;
+  border-bottom: 1px solid #515d5a;
 }
 
 #custom-separator {
-  color: #676a6c;
+  color: #515d5a;
   background: transparent;
   padding: 0 5px;
   margin: 0;
@@ -42,75 +42,75 @@ window#waybar {
 #custom-tray-toggle,
 #custom-kbd-brightness {
   background: transparent;
-  color: #f4f5f5;
+  color: #dce0e3;
   padding: 0 7px;
   margin: 0;
 }
 
 #clock {
-  color: #a59aa5;
+  color: #988184;
 }
 
 #custom-asus-profile,
 #custom-kb-layout,
 #custom-display-mode {
-  color: #bfc1c2;
+  color: #89949a;
 }
 
 #custom-reactor {
-  color: #bfc1c2;
+  color: #89949a;
   font-family: "Bitstream Vera Sans Mono", "Noto Sans Mono", monospace;
   font-weight: bold;
   padding: 0 4px;
 }
 
 #custom-reactor.sleeping {
-  color: #676a6c;
+  color: #515d5a;
   opacity: 0.62;
 }
 
 #custom-reactor.awake {
-  color: #bfc1c2;
+  color: #89949a;
 }
 
 #custom-reactor.dancing {
-  color: #a59aa5;
+  color: #988184;
 }
 
 #custom-reactor.celebrating {
-  color: #958a95;
+  color: #837e79;
 }
 
 #custom-reactor.overheating {
-  color: #919395;
+  color: #98827c;
 }
 
 #custom-reactor.radioactive {
-  color: #0b0e0d;
-  background: #958a95;
+  color: #122026;
+  background: #837e79;
 }
 
 #custom-reactor.panicking {
-  color: #0b0e0d;
-  background: #858789;
+  color: #122026;
+  background: #737270;
 }
 
 #custom-gooning-directory {
-  color: #858789;
+  color: #737270;
 }
 
 #custom-useless-internet-protocol {
-  color: #c7c7c8;
+  color: #88949f;
 }
 
 #custom-tray-toggle {
-  color: #bfc1c2;
+  color: #89949a;
   padding: 0 7px;
 }
 
 #custom-tray-toggle:hover {
-  color: #f4f5f5;
-  background: #676a6c;
+  color: #dce0e3;
+  background: #515d5a;
 }
 
 #tray {
@@ -124,24 +124,24 @@ window#waybar {
 }
 
 #tray > .needs-attention {
-  background: #676a6c;
+  background: #515d5a;
 }
 
 #network,
 #custom-volume,
 #battery {
-  color: #f4f5f5;
+  color: #dce0e3;
 }
 
 #network.disconnected,
 #custom-volume.muted,
 #battery.warning {
-  color: #919395;
+  color: #98827c;
 }
 
 #battery.critical,
 #custom-screenrecording-indicator.recording {
-  color: #858789;
+  color: #737270;
   font-weight: bold;
 }
 
@@ -153,30 +153,30 @@ window#waybar {
 
 #workspaces button {
   background: transparent;
-  color: #676a6c;
+  color: #515d5a;
   padding: 0 5px;
   margin: 0;
   border: none;
 }
 
 #workspaces button.active {
-  color: #0b0e0d;
-  background: #a59aa5;
+  color: #122026;
+  background: #988184;
 }
 
 #workspaces button:hover {
-  color: #f4f5f5;
-  background: #676a6c;
+  color: #dce0e3;
+  background: #515d5a;
 }
 
 tooltip {
-  background: #0b0e0d;
-  border: 1px solid #676a6c;
+  background: #122026;
+  border: 1px solid #515d5a;
   border-radius: 0;
-  color: #f4f5f5;
+  color: #dce0e3;
   padding: 8px 10px;
 }
 
 tooltip label {
-  color: #f4f5f5;
+  color: #dce0e3;
 }

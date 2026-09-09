@@ -1,11 +1,3 @@
-// Zed settings
-//
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run `zed: open default settings` from the
-// command palette (cmd-shift-p / ctrl-shift-p)
 {
   "current_line_highlight": "all",
   "text_rendering_mode": "subpixel",
@@ -13,6 +5,7 @@
   "diff_view_style": "unified",
   "cli_default_open_behavior": "existing_window",
   "diagnostics": {
+    "button": true,
     "inline": {
       "enabled": true,
     },
@@ -39,12 +32,20 @@
       "show_avatar": false,
     },
   },
-  "agent_ui_font_size": 20.0,
-  "ui_font_weight": 600.0,
-  "ui_font_size": 18.0,
-  "buffer_line_height": "standard",
-  "buffer_font_weight": 500.0,
-  "buffer_font_size": 20.0,
+  "agent_ui_font_family": "Bitstream Vera Sans Mono",
+  "agent_ui_font_size": 16.0,
+  "agent_buffer_font_family": "Bitstream Vera Sans Mono",
+  "agent_buffer_font_size": 17.0,
+  "ui_font_family": "Bitstream Vera Sans Mono",
+  "ui_font_weight": 400.0,
+  "ui_font_size": 16.0,
+  "buffer_font_family": "Bitstream Vera Sans Mono",
+  "buffer_font_fallbacks": ["JetBrainsMono Nerd Font"],
+  "buffer_line_height": {
+    "custom": 1.45,
+  },
+  "buffer_font_weight": 400.0,
+  "buffer_font_size": 17.0,
   "session": {
     "trust_all_worktrees": true,
   },
@@ -61,15 +62,28 @@
     "file_icons": true,
     "show_close_button": "hover",
   },
+  "preview_tabs": {
+    "enabled": true,
+    "enable_preview_from_file_finder": true,
+    "enable_keep_preview_on_code_navigation": false,
+  },
   "title_bar": {
     "show_menus": false,
+    "show_branch_status_icon": true,
+    "show_branch_name": true,
+    "show_worktree_name": true,
+    "show_project_items": true,
+    "show_onboarding_banner": false,
+    "show_user_picture": false,
+    "show_user_menu": false,
+    "show_sign_in": false,
   },
   "toolbar": {
-    "breadcrumbs": false,
+    "breadcrumbs": true,
     "quick_actions": false,
     "selections_menu": false,
-    "agent_review": false,
-    "code_actions": false,
+    "agent_review": true,
+    "code_actions": true,
   },
   "status_bar": {
     "active_language_button": true,
@@ -79,6 +93,9 @@
   "global_lsp_settings": {
     "button": false,
   },
+  "search": {
+    "button": false,
+  },
   "prettier": {
     "allowed": true,
   },
@@ -86,10 +103,24 @@
     "thumb": "hover",
     "show": "never",
   },
+  "scrollbar": {
+    "show": "auto",
+    "git_diff": true,
+    "search_results": true,
+    "selected_text": true,
+    "selected_symbol": true,
+    "diagnostics": "all",
+  },
+  "indent_guides": {
+    "enabled": true,
+    "line_width": 1,
+    "active_line_width": 2,
+    "coloring": "fixed",
+    "background_coloring": "disabled",
+  },
   "inline_code_actions": false,
   "relative_line_numbers": "disabled",
-  "cursor_shape": "block",
-  "agent_buffer_font_size": 20.0,
+  "cursor_shape": "bar",
   "auto_update_extensions": {
     "*": true,
   },
@@ -153,12 +184,10 @@
     },
   },
   "icon_theme": {
-    "mode": "light",
+    "mode": "dark",
     "light": "Zed (Default)",
     "dark": "Zed (Default)",
   },
-  "ui_font_family": "JetBrains Mono",
-  "buffer_font_family": "JetBrainsMono Nerd Font",
   "base_keymap": "VSCode",
   "theme": {
     "mode": "dark",
@@ -166,38 +195,55 @@
     "dark": "Cursor Dark Midnight",
   },
   "autosave": {
-    "after_delay": { "milliseconds": 100 },
+    "after_delay": { "milliseconds": 500 },
   },
   "collaboration_panel": {
-    "button": true,
-    "dock": "left",
+    "button": false,
+    "dock": "right",
   },
   "project_panel": {
     "entry_spacing": "standard",
     "button": true,
     "dock": "left",
     "starts_open": false,
+    "default_width": 280.0,
+    "auto_reveal_entries": true,
+    "sort_mode": "directories_first",
   },
   "git_panel": {
     "button": true,
     "dock": "left",
+    "default_width": 360.0,
+    "status_style": "icon",
+    "group_by": "status",
+    "starts_open": false,
   },
   "outline_panel": {
     "dock": "right",
-    "button": false,
+    "button": true,
+    "default_width": 320.0,
+    "file_icons": true,
+    "folder_icons": true,
+    "git_status": true,
   },
   "terminal": {
     "toolbar": {
-      "breadcrumbs": false,
+      "breadcrumbs": true,
     },
     "shell": "system",
+    "dock": "bottom",
+    "font_family": "Bitstream Vera Sans Mono",
+    "font_size": 16.0,
+    "font_weight": 400.0,
+    "line_height": "standard",
     "max_scroll_history_lines": 10032,
-    "default_height": 300.0,
+    "default_height": 320.0,
     "copy_on_select": true,
     "button": true,
   },
   "debugger": {
     "button": true,
+    "dock": "bottom",
   },
   "languages": {
     "Python": {

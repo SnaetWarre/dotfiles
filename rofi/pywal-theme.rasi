@@ -17,8 +17,8 @@ window {
 }
 
 prompt {
-    enabled:                       true;
-    padding:                       2px 4px 2px 4px;
+    enabled:                       false;
+    padding:                       0px;
     background-color:              @background;
     text-color:                   @foreground;
     cursor:                      pointer;
@@ -52,7 +52,7 @@ inputbar {
     text-color:                   @foreground;
     expand:                       false;
     margin:                       0px;
-    padding:                      6px;
+    padding:                      6px 0px;
 }
 
 listview {
@@ -79,7 +79,7 @@ element {
     orientation:                   horizontal;
     border-radius:                0px;
     padding:                      2px 4px;
-    children:                     [ element-text ];
+    children:                     [ element-icon, element-text ];
 }
 
 element-icon {
@@ -87,7 +87,8 @@ element-icon {
     text-color:                   inherit;
     horizontal-align:              0.5;
     vertical-align:                0.5;
-    size:                         0px;
+    size:                         20px;
+    margin:                       0px 8px 0px 0px;
     border:                       0px;
 }
 

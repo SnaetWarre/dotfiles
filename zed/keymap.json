@@ -133,8 +133,8 @@
       "x": "project_panel::Cut",
       "c": "project_panel::Copy",
       "p": "project_panel::Paste",
-      "q": "workspace::ToggleRightDock",
-      "space e": "workspace::ToggleRightDock",
+      "q": "workspace::ToggleLeftDock",
+      "space e": "workspace::ToggleLeftDock",
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-k": "workspace::ActivatePaneUp",
@@ -183,19 +183,8 @@
   },
   {
     "context": "Workspace",
-    "unbind": {
-      "ctrl-b": "workspace::ToggleLeftDock",
-    },
-  },
-  {
-    "context": "Workspace",
     "bindings": {
-      "ctrl-b": "workspace::ToggleRightDock",
-    },
-  },
-  {
-    "context": "Workspace",
-    "unbind": {
+      "ctrl-b": "workspace::ToggleLeftDock",
       "ctrl-alt-b": "workspace::ToggleRightDock",
     },
   },

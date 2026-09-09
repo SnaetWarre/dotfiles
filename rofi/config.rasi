@@ -1,5 +1,6 @@
 configuration {
-    show-icons: false;
+    show-icons: true;
+    icon-theme: "breeze-dark";
     drun-display-format: "{name}";
 }
 
