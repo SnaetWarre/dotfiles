@@ -36,11 +36,32 @@ if [[ "${1:-}" == "celebrate-build" ]]; then
     exit 0
 fi
 
-read_cpu_usage_percent() {
+# Everything below runs once per second in --watch mode, so it sticks to bash builtins:
+# no command substitutions, and playerctl only runs when a player actually changes.
+
+previous_cpu_total=""
+previous_cpu_idle_total=""
+low_activity_sample_count=0
+playing_track=""
+
+load_reactor_state() {
+    if [[ -r "$cpu_sample_file" ]]; then
+        read -r previous_cpu_total previous_cpu_idle_total < "$cpu_sample_file" || previous_cpu_total=""
+    fi
+    if [[ -r "$low_activity_sample_count_file" ]]; then
+        read -r low_activity_sample_count < "$low_activity_sample_count_file" || low_activity_sample_count=0
+    fi
+}
+
+save_reactor_state() {
+    printf '%s %s\n' "$previous_cpu_total" "$previous_cpu_idle_total" > "$cpu_sample_file"
+    printf '%s\n' "$low_activity_sample_count" > "$low_activity_sample_count_file"
+}
+
+update_cpu_usage_percent() {
     local cpu_label cpu_user cpu_nice cpu_system cpu_idle cpu_iowait
     local cpu_irq cpu_softirq cpu_steal cpu_guest cpu_guest_nice
-    local cpu_total cpu_idle_total previous_cpu_total previous_cpu_idle_total
-    local cpu_total_delta cpu_idle_delta
+    local cpu_total cpu_idle_total cpu_total_delta cpu_idle_delta
 
     read -r cpu_label cpu_user cpu_nice cpu_system cpu_idle cpu_iowait \
         cpu_irq cpu_softirq cpu_steal cpu_guest cpu_guest_nice < /proc/stat
@@ -48,44 +69,51 @@ read_cpu_usage_percent() {
     cpu_total=$((cpu_user + cpu_nice + cpu_system + cpu_idle + cpu_iowait + cpu_irq + cpu_softirq + cpu_steal))
     cpu_idle_total=$((cpu_idle + cpu_iowait))
 
-    if [[ -r "$cpu_sample_file" ]] &&
-       read -r previous_cpu_total previous_cpu_idle_total < "$cpu_sample_file"; then
+    cpu_usage_percent=0
+    if [[ "$previous_cpu_total" =~ ^[0-9]+$ && "$previous_cpu_idle_total" =~ ^[0-9]+$ ]]; then
         cpu_total_delta=$((cpu_total - previous_cpu_total))
         cpu_idle_delta=$((cpu_idle_total - previous_cpu_idle_total))
-
         if ((cpu_total_delta > 0)); then
-            printf '%d\n' "$(((cpu_total_delta - cpu_idle_delta) * 100 / cpu_total_delta))"
-        else
-            printf '0\n'
+            cpu_usage_percent=$(((cpu_total_delta - cpu_idle_delta) * 100 / cpu_total_delta))
         fi
-    else
-        printf '0\n'
     fi
 
-    printf '%s %s\n' "$cpu_total" "$cpu_idle_total" > "$cpu_sample_file"
+    previous_cpu_total=$cpu_total
+    previous_cpu_idle_total=$cpu_idle_total
 }
 
-find_playing_track() {
+update_playing_track() {
     local player_name player_playback_status playing_track_metadata
 
+    playing_track=""
     while IFS=$'\t' read -r player_name player_playback_status playing_track_metadata; do
         if [[ "$player_playback_status" == "Playing" ]]; then
-            if [[ -n "$playing_track_metadata" ]]; then
-                printf '%s\n' "$playing_track_metadata"
-            else
-                printf '%s\n' "$player_name"
-            fi
-            return 0
+            playing_track=${playing_track_metadata:-$player_name}
+            break
         fi
     done < <(playerctl --all-players metadata \
         --format $'{{playerName}}\t{{status}}\t{{artist}} — {{title}}' 2>/dev/null)
+}
 
-    return 1
+json_escape_into() {
+    local -n escaped_text_target=$1
+    local escaped_text=$2
+
+    escaped_text=${escaped_text//\\/\\\\}
+    escaped_text=${escaped_text//\"/\\\"}
+    escaped_text=${escaped_text//$'\n'/\\n}
+    escaped_text=${escaped_text//$'\r'/\\r}
+    escaped_text=${escaped_text//$'\t'/\\t}
+    escaped_text_target=$escaped_text
 }
 
 print_reactor_status() {
 current_epoch_seconds=$EPOCHSECONDS
-cpu_usage_percent=${REACTOR_CPU_USAGE_PERCENT_OVERRIDE:-$(read_cpu_usage_percent)}
+if [[ -n "${REACTOR_CPU_USAGE_PERCENT_OVERRIDE:-}" ]]; then
+    cpu_usage_percent=$REACTOR_CPU_USAGE_PERCENT_OVERRIDE
+else
+    update_cpu_usage_percent
+fi
 if [[ -n "${REACTOR_BATTERY_CAPACITY_PERCENT_OVERRIDE:-}" ]]; then
     battery_capacity_percent=$REACTOR_BATTERY_CAPACITY_PERCENT_OVERRIDE
 elif ! read -r battery_capacity_percent < /sys/class/power_supply/BAT0/capacity 2>/dev/null; then
@@ -99,8 +127,6 @@ fi
 
 if [[ -n "${REACTOR_PLAYING_TRACK_OVERRIDE:-}" ]]; then
     playing_track="$REACTOR_PLAYING_TRACK_OVERRIDE"
-else
-    playing_track=$(find_playing_track || true)
 fi
 
 if [[ -n "$playing_track" ]]; then
@@ -112,15 +138,10 @@ fi
 if [[ -n "${REACTOR_LOW_ACTIVITY_SAMPLE_COUNT_OVERRIDE:-}" ]]; then
     low_activity_sample_count=$REACTOR_LOW_ACTIVITY_SAMPLE_COUNT_OVERRIDE
 elif ((cpu_usage_percent < 10)) && [[ "$music_is_playing" == false ]]; then
-    low_activity_sample_count=0
-    if [[ -r "$low_activity_sample_count_file" ]]; then
-        read -r low_activity_sample_count < "$low_activity_sample_count_file" || low_activity_sample_count=0
-    fi
     low_activity_sample_count=$((low_activity_sample_count + 1))
 else
     low_activity_sample_count=0
 fi
-printf '%s\n' "$low_activity_sample_count" > "$low_activity_sample_count_file"
 
 build_celebration_deadline=0
 if [[ -r "$build_celebration_deadline_file" ]]; then
@@ -163,21 +184,11 @@ if [[ "$music_is_playing" == true ]]; then
     reactor_tooltip+="\nPlaying: $playing_track"
 fi
 
-json_escape() {
-    local escaped_text=$1
-
-    escaped_text=${escaped_text//\\/\\\\}
-    escaped_text=${escaped_text//\"/\\\"}
-    escaped_text=${escaped_text//$'\n'/\\n}
-    escaped_text=${escaped_text//$'\r'/\\r}
-    escaped_text=${escaped_text//$'\t'/\\t}
-    printf '%s' "$escaped_text"
-}
-
+json_escape_into escaped_reactor_face "$reactor_face"
+json_escape_into escaped_reactor_tooltip "$reactor_tooltip"
+json_escape_into escaped_reactor_state "$reactor_state"
 printf '{"text":"%s","tooltip":"%s","class":"%s"}\n' \
-    "$(json_escape "$reactor_face")" \
-    "$(json_escape "$reactor_tooltip")" \
-    "$(json_escape "$reactor_state")"
+    "$escaped_reactor_face" "$escaped_reactor_tooltip" "$escaped_reactor_state"
 }
 
 if [[ "${1:-}" == "--watch" ]]; then
@@ -186,9 +197,23 @@ if [[ "${1:-}" == "--watch" ]]; then
     printf '%s\n' "$$" > "$reactor_watcher_pid_file"
     exec {reactor_wakeup_file_descriptor}<>"$reactor_wakeup_pipe"
 
+    load_reactor_state
+
+    # One long-lived playerctl prints a line whenever any player appears, changes or quits.
+    coproc player_events {
+        exec playerctl --all-players --follow metadata \
+            --format $'{{playerName}}\t{{status}}\t{{artist}} — {{title}}' 2>/dev/null
+    }
+    player_events_pid=$player_events_PID
+    # Keep our own copy: bash unsets the coproc array once playerctl exits.
+    exec {player_events_file_descriptor}<&"${player_events[0]}"
+    player_events_active=true
+
     cleanup_reactor_watcher() {
         local recorded_watcher_pid=0
 
+        kill "$player_events_pid" 2>/dev/null
+        save_reactor_state
         if [[ -r "$reactor_watcher_pid_file" ]]; then
             read -r recorded_watcher_pid < "$reactor_watcher_pid_file" || recorded_watcher_pid=0
         fi
@@ -199,10 +224,31 @@ if [[ "${1:-}" == "--watch" ]]; then
     trap cleanup_reactor_watcher EXIT
     trap 'exit 0' INT TERM
 
+    update_playing_track
     while true; do
+        if [[ "$player_events_active" == true ]]; then
+            player_state_changed=false
+            while read -r -t 0 -u "$player_events_file_descriptor"; do
+                if IFS= read -r -u "$player_events_file_descriptor" _; then
+                    player_state_changed=true
+                else
+                    # playerctl went away; fall back to polling every tick.
+                    player_events_active=false
+                    exec {player_events_file_descriptor}<&-
+                    break
+                fi
+            done
+            [[ "$player_state_changed" == true ]] && update_playing_track
+        else
+            update_playing_track
+        fi
+
         print_reactor_status
         IFS= read -r -t 1 -u "$reactor_wakeup_file_descriptor" _ || true
     done
 else
+    load_reactor_state
+    update_playing_track
     print_reactor_status
+    save_reactor_state
 fi

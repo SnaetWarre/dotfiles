@@ -68,7 +68,8 @@ if [ "${1:-}" = "--watch" ]; then
             *PlatformProfile*) print_asus_profile ;;
         esac
     done < <(
-        gdbus monitor --system \
+        # Die with this script, so restarting the bar never leaves monitors behind.
+        setpriv --pdeathsig TERM gdbus monitor --system \
             --dest xyz.ljones.Asusd \
             --object-path /xyz/ljones 2>/dev/null
     )
