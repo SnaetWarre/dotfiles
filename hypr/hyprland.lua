@@ -56,13 +56,15 @@ hl.on("hyprland.start", function()
     -- Explicitly replace any Plasma values retained by the user D-Bus/systemd
     -- manager after switching sessions. In particular, KDE_FULL_SESSION=true
     -- would allow kded6 to activate inside Hyprland.
-    hl.exec_cmd("export XDG_CURRENT_DESKTOP=Hyprland XDG_SESSION_DESKTOP=Hyprland DESKTOP_SESSION=hyprland KDE_FULL_SESSION=false; dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP DESKTOP_SESSION KDE_FULL_SESSION XDG_SESSION_TYPE HYPRLAND_INSTANCE_SIGNATURE GTK_THEME QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE XCURSOR_THEME XCURSOR_SIZE && systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP DESKTOP_SESSION KDE_FULL_SESSION XDG_SESSION_TYPE HYPRLAND_INSTANCE_SIGNATURE GTK_THEME QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE XCURSOR_THEME XCURSOR_SIZE && systemctl --user start hyprland-session.target && systemctl --user start xdg-desktop-portal.service")
+    -- The polkit agent (password prompts for pkexec) runs as a systemd user
+    -- service so it restarts after a crash and only starts once the session
+    -- environment has been imported.
+    hl.exec_cmd("export XDG_CURRENT_DESKTOP=Hyprland XDG_SESSION_DESKTOP=Hyprland DESKTOP_SESSION=hyprland KDE_FULL_SESSION=false; dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP DESKTOP_SESSION KDE_FULL_SESSION XDG_SESSION_TYPE HYPRLAND_INSTANCE_SIGNATURE GTK_THEME QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE XCURSOR_THEME XCURSOR_SIZE && systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP DESKTOP_SESSION KDE_FULL_SESSION XDG_SESSION_TYPE HYPRLAND_INSTANCE_SIGNATURE GTK_THEME QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE XCURSOR_THEME XCURSOR_SIZE && systemctl --user start hyprland-session.target && systemctl --user start xdg-desktop-portal.service && systemctl --user start plasma-polkit-agent.service")
     hl.exec_cmd("systemctl --user start waybar.service")
     hl.exec_cmd("asusctl leds set off")
     hl.exec_cmd("awww-daemon")
     hl.exec_cmd("~/.config/hypr/scripts/display-manager.sh watch")
     hl.exec_cmd("nm-applet --indicator")
-    hl.exec_cmd("/usr/lib/polkit-kde-authentication-agent-1")
     hl.exec_cmd("blueman-applet")
     hl.exec_cmd("udiskie --tray")
     hl.exec_cmd("systemctl --user start mako.service")
@@ -129,7 +131,7 @@ hl.config({
         },
     },
 
-    animations = { enabled = false },
+    animations = { enabled = true }, -- Toggle all animations: true = on, false = off.
 
     input = {
         kb_layout = "be,us",
@@ -246,16 +248,16 @@ hl.curve("mangoTag", { type = "bezier", points = { { 0.46, 1.0 }, { 0.29, 1 } } 
 hl.curve("mangoFade", { type = "bezier", points = { { 0.46, 1.0 }, { 0.29, 1 } } })
 hl.curve("delayedFadeOut", { type = "bezier", points = { { 0.25, 0 }, { 0.5, 1 } } })
 
-hl.animation({ leaf = "windowsIn", enabled = false, speed = 0.9, bezier = "mangoOpen", style = "popin 70%" })
-hl.animation({ leaf = "windowsOut", enabled = false, speed = 3, bezier = "mangoClose", style = "slide bottom right" })
-hl.animation({ leaf = "fadeOut", enabled = false, speed = 3, bezier = "delayedFadeOut" })
-hl.animation({ leaf = "windowsMove", enabled = false, speed = 0.9, bezier = "mangoMove", style = "slide" })
-hl.animation({ leaf = "windows", enabled = false, speed = 0.9, bezier = "mangoOpen" })
-hl.animation({ leaf = "fade", enabled = false, speed = 0.9, bezier = "mangoFade" })
-hl.animation({ leaf = "border", enabled = false, speed = 0.9, bezier = "mangoOpen" })
-hl.animation({ leaf = "workspaces", enabled = false, speed = 0.25, bezier = "mangoFade", style = "fade" })
-hl.animation({ leaf = "workspacesIn", enabled = false, speed = 0.25, bezier = "mangoFade", style = "fade" })
-hl.animation({ leaf = "workspacesOut", enabled = false, speed = 0.25, bezier = "mangoFade", style = "fade" })
+hl.animation({ leaf = "windowsIn", enabled = true, speed = 0.9, bezier = "mangoOpen", style = "popin 70%" })
+hl.animation({ leaf = "windowsOut", enabled = true, speed = 3, bezier = "mangoClose", style = "slide bottom right" })
+hl.animation({ leaf = "fadeOut", enabled = true, speed = 3, bezier = "delayedFadeOut" })
+hl.animation({ leaf = "windowsMove", enabled = true, speed = 0.9, bezier = "mangoMove", style = "slide" })
+hl.animation({ leaf = "windows", enabled = true, speed = 0.9, bezier = "mangoOpen" })
+hl.animation({ leaf = "fade", enabled = true, speed = 0.9, bezier = "mangoFade" })
+hl.animation({ leaf = "border", enabled = true, speed = 0.9, bezier = "mangoOpen" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 0.25, bezier = "mangoFade", style = "fade" })
+hl.animation({ leaf = "workspacesIn", enabled = true, speed = 0.25, bezier = "mangoFade", style = "fade" })
+hl.animation({ leaf = "workspacesOut", enabled = true, speed = 0.25, bezier = "mangoFade", style = "fade" })
 
 hl.gesture({ fingers = 4, direction = "horizontal", action = "workspace" })
 
