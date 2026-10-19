@@ -4,13 +4,13 @@ Turns a fresh MacBook into the same setup as the Hyprland laptop: AeroSpace for 
 
 ## Moving over
 
-1. On the Linux laptop, pack the settings that aren't in this repo:
+1. On the Linux laptop, pack the settings that aren't in this repo. Do this on your last day with the old laptop, so it has your newest history and settings:
 
    ```bash
    ~/.config/macos/export-from-linux.sh
    ```
 
-   This writes `~/mac-migration.tar.gz`. It holds shell history, Claude Code skills and settings, Codex settings, and T3 Code settings. It has no passwords or logins, but keep it off GitHub anyway.
+   This writes `~/mac-migration.tar.gz`. It holds shell history, Claude Code skills and settings, Codex settings, and T3 Code settings. It has no passwords or logins, but keep it off GitHub anyway, because this repo is public.
 
 2. Send that file to the Mac with LocalSend or a USB stick, and put it in the Mac's home folder.
 
@@ -22,7 +22,31 @@ Turns a fresh MacBook into the same setup as the Hyprland laptop: AeroSpace for 
 
    It asks for your Mac password (Homebrew), a work email for git, and a GitHub login in the browser. Everything else runs on its own. You can run it again any time and it skips what's already done.
 
-4. Finish the four manual steps it prints at the end (permissions, Tinycast hotkeys, one logout, sign-ins).
+4. Do the steps macOS only allows by hand. The script prints them at the end too:
+   1. System Settings > Privacy & Security > Accessibility: allow AeroSpace and Tinycast.
+   2. Tinycast settings: set the main hotkey to Cmd+Space and clipboard history to Cmd+Shift+V.
+   3. Log out and back in once, for the display and Spotlight settings.
+   4. Open kitty and check the font and colors. Sign in to Helium, T3 Code, Claude Code and Codex.
+
+Before you start, ask IT what the company's device management allows. Some companies block apps that control windows (AeroSpace) or remap keys (the Caps Lock login item).
+
+## Not tested yet
+
+This was written on the Linux laptop before the Mac arrived, so nothing has run on a real Mac yet. Checked on Linux: the AeroSpace config file is valid, kitty reads the Mac settings, stow links the right files, and the settings bundle builds and unpacks. Watch these on the first run:
+
+- AeroSpace shortcuts on the Belgian keyboard. The config points Q, A, Z, W and M at their AZERTY keys. If Cmd+Q or Cmd+number hits the wrong key, fix the `key-mapping` block in `aerospace/aerospace.toml`.
+- Spotlight's Cmd+Space being turned off. If it still opens, turn it off by hand in System Settings > Keyboard > Keyboard Shortcuts > Spotlight.
+- Tinycast's `brew trust --tap` step. If brew complains, follow the install steps on Tinycast's GitHub page.
+
+## Why these choices
+
+- **macOS, not Linux.** Asahi Linux only runs on M1 and M2 Macs. An M5 won't be supported for years, if ever.
+- **AeroSpace, not yabai.** yabai's best features need macOS security turned off, which a work laptop usually won't allow. AeroSpace works without that.
+- **Tinycast, not Raycast.** Tinycast is small, free, open source, and needs no account. Raycast is still an option if Tinycast falls short.
+- **Cmd as Super.** It's in the same spot as Super on the old laptop, so muscle memory carries over. The price is that some binds had to move (see below).
+- **OrbStack, not Docker Desktop.** It's lighter and runs the same Docker commands.
+- **nvm and rustup from their own installers.** That keeps `~/.nvm` and `~/.cargo` in the same place as on Linux, so `.zshrc` needs no changes.
+- **Personal settings in a separate file.** This repo is public, so anything personal travels by LocalSend or USB instead.
 
 ## What goes where
 
