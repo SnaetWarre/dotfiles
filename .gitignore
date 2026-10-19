@@ -23,6 +23,12 @@
 # Window Manager / Compositor
 !hypr/
 !hypr/**/*
+!aerospace/
+!aerospace/**/*
+
+# macOS setup (see macos/README.md)
+!macos/
+!macos/**/*
 !eww/
 !eww/**/*
 

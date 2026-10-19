@@ -1,10 +1,10 @@
 include ~/.cache/wal/colors-kitty.conf
 allow_remote_control yes
 
-font_family Bitstream Vera Sans Mono
-bold_font Bitstream Vera Sans Mono Bold
-italic_font Bitstream Vera Sans Mono Oblique
-bold_italic_font Bitstream Vera Sans Mono Bold Oblique
+font_family JetBrainsMono Nerd Font
+bold_font auto
+italic_font auto
+bold_italic_font auto
 font_size 13.0
 
 adjust_line_height 0
@@ -25,6 +25,7 @@ wheel_scroll_multiplier 3.0
 cursor_shape block
 cursor_blink_interval 0
 cursor_stop_blinking_after 0
+shell_integration no-cursor
 
 enable_audio_bell no
 visual_bell_duration 0.08
@@ -38,3 +39,6 @@ map ctrl+plus change_font_size all +1.0
 map ctrl+minus change_font_size all -1.0
 map ctrl+0 change_font_size all 0
 map ctrl+backspace send_text all \x17
+
+# Per-OS overrides: macos.conf on a Mac, nothing on Linux.
+globinclude ${KITTY_OS}.conf

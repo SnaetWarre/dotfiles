@@ -11,3 +11,7 @@
 	defaultBranch = master
 [core]
 	editor = nvim
+
+# Machine-specific overrides, e.g. a work email on the Mac (see macos/install.sh).
+[include]
+	path = ~/.gitconfig.local

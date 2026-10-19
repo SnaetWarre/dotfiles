@@ -1,0 +1,112 @@
+# AeroSpace config, ported from hypr/hyprland.lua.
+# Cmd plays the role of Super. Binds that would break everyday Mac shortcuts
+# (copy, paste, find, address bar, cursor movement) moved; see macos/README.md.
+
+config-version = 2
+
+start-at-login = true
+auto-reload-config = true
+
+# Thin borders like Hyprland's 1px border (color7 at 0x66 / 0x22 alpha).
+after-startup-command = [
+    'exec-and-forget /opt/homebrew/bin/borders active_color=0x66e0cbd2 inactive_color=0x22e0cbd2 width=2.0 style=round',
+]
+
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+automatically-unhide-macos-hidden-apps = true
+
+# follow_mouse = 1
+focus-follows-mouse.enabled = true
+
+# gaps_in = 2, gaps_out = 2
+gaps.inner.horizontal = 2
+gaps.inner.vertical = 2
+gaps.outer.left = 2
+gaps.outer.bottom = 2
+gaps.outer.top = 2
+gaps.outer.right = 2
+
+# Belgian AZERTY. AeroSpace binds by physical key and assumes QWERTY, so the
+# letters that sit elsewhere on AZERTY are pointed at their real keys.
+key-mapping.preset = 'qwerty'
+[key-mapping.key-notation-to-key-code]
+    a = 'q'
+    q = 'a'
+    z = 'w'
+    w = 'z'
+    m = 'semicolon'
+
+[mode.main.binding]
+    # Apps
+    cmd-enter = 'exec-and-forget open -na kitty'
+    cmd-b = 'exec-and-forget open -na Helium --args --new-window'
+    cmd-e = 'exec-and-forget open ~'
+
+    # Windows
+    cmd-q = 'close --quit-if-last-window'
+    cmd-shift-f = 'layout floating tiling'
+    cmd-ctrl-f = 'fullscreen'
+
+    cmd-alt-h = 'focus left'
+    cmd-alt-j = 'focus down'
+    cmd-alt-k = 'focus up'
+    cmd-alt-l = 'focus right'
+
+    cmd-shift-h = 'move left'
+    cmd-shift-j = 'move down'
+    cmd-shift-k = 'move up'
+    cmd-shift-l = 'move right'
+
+    cmd-ctrl-shift-h = 'resize width -50'
+    cmd-ctrl-shift-l = 'resize width +50'
+    cmd-ctrl-shift-k = 'resize height -50'
+    cmd-ctrl-shift-j = 'resize height +50'
+
+    # Workspaces. Pressing the current one jumps back (workspace_back_and_forth).
+    cmd-1 = 'workspace --auto-back-and-forth 1'
+    cmd-2 = 'workspace --auto-back-and-forth 2'
+    cmd-3 = 'workspace --auto-back-and-forth 3'
+    cmd-4 = 'workspace --auto-back-and-forth 4'
+    cmd-5 = 'workspace --auto-back-and-forth 5'
+    cmd-6 = 'workspace --auto-back-and-forth 6'
+    cmd-7 = 'workspace --auto-back-and-forth 7'
+    cmd-8 = 'workspace --auto-back-and-forth 8'
+    cmd-9 = 'workspace --auto-back-and-forth 9'
+    cmd-0 = 'workspace --auto-back-and-forth 10'
+
+    # Move silently (Super+Shift+N)
+    cmd-shift-1 = 'move-node-to-workspace 1'
+    cmd-shift-2 = 'move-node-to-workspace 2'
+    cmd-shift-3 = 'move-node-to-workspace 3'
+    cmd-shift-4 = 'move-node-to-workspace 4'
+    cmd-shift-5 = 'move-node-to-workspace 5'
+    cmd-shift-6 = 'move-node-to-workspace 6'
+    cmd-shift-7 = 'move-node-to-workspace 7'
+    cmd-shift-8 = 'move-node-to-workspace 8'
+    cmd-shift-9 = 'move-node-to-workspace 9'
+    cmd-shift-0 = 'move-node-to-workspace 10'
+
+    # Move and follow (Super+Ctrl+N)
+    cmd-ctrl-1 = 'move-node-to-workspace --focus-follows-window 1'
+    cmd-ctrl-2 = 'move-node-to-workspace --focus-follows-window 2'
+    cmd-ctrl-3 = 'move-node-to-workspace --focus-follows-window 3'
+    cmd-ctrl-4 = 'move-node-to-workspace --focus-follows-window 4'
+    cmd-ctrl-5 = 'move-node-to-workspace --focus-follows-window 5'
+    cmd-ctrl-6 = 'move-node-to-workspace --focus-follows-window 6'
+    cmd-ctrl-7 = 'move-node-to-workspace --focus-follows-window 7'
+    cmd-ctrl-8 = 'move-node-to-workspace --focus-follows-window 8'
+    cmd-ctrl-9 = 'move-node-to-workspace --focus-follows-window 9'
+    cmd-ctrl-0 = 'move-node-to-workspace --focus-follows-window 10'
+
+# Dialog-style apps float, like the portal/zenity rules in Hyprland.
+[[on-window-detected]]
+    if.app-id = 'com.apple.systempreferences'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.calculator'
+    run = 'layout floating'

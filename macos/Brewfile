@@ -1,0 +1,70 @@
+# Everything from the Linux laptop that has a Mac version.
+# Install with: brew bundle --file ~/.config/macos/Brewfile
+
+tap "nikitabobko/tap"
+tap "FelixKratz/formulae"
+tap "oven-sh/bun"
+tap "abue-ammar/tinycast"
+
+# Desktop
+cask "nikitabobko/tap/aerospace"   # tiling, replaces Hyprland
+brew "FelixKratz/formulae/borders" # window borders
+cask "abue-ammar/tinycast/tinycast" # launcher + clipboard history, replaces tofi/cliphist
+cask "kitty"
+cask "helium-browser"
+cask "t3-code@nightly"
+cask "font-jetbrains-mono-nerd-font"
+
+# Shell and CLI
+brew "git"
+brew "git-lfs"
+brew "gh"
+brew "git-delta"
+brew "lazygit"
+brew "neovim"
+brew "tmux"
+brew "stow"
+brew "zoxide"
+brew "eza"
+brew "bat"
+brew "fd"
+brew "fzf"
+brew "ripgrep"
+brew "jq"
+brew "yazi"
+brew "btop"
+brew "fastfetch"
+brew "tree"
+brew "wget"
+brew "rsync"
+brew "pandoc"
+brew "rclone"
+brew "micro"
+
+# Languages and runtimes (nvm and rustup come from their own installers in install.sh,
+# so ~/.nvm and ~/.cargo match the Linux setup)
+brew "pnpm"
+brew "oven-sh/bun/bun"
+brew "uv"
+brew "zig"
+
+# Containers and Kubernetes
+cask "orbstack" # Docker without Docker Desktop
+brew "kubernetes-cli"
+brew "helm"
+brew "k3d"
+
+# AI tools
+cask "claude-code"
+cask "codex"
+brew "opencode"
+
+# Editors
+cask "visual-studio-code"
+cask "zed"
+cask "cursor"
+
+# Everyday apps
+cask "spotify"
+cask "localsend"
+cask "iina" # mpv-based video player

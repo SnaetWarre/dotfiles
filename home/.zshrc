@@ -114,7 +114,7 @@ setopt APPEND_HISTORY
 export PATH="$HOME/.local/bin:$PATH"
 export DOTNET_ROOT="$HOME/.dotnet"
 export PATH="$HOME/.dotnet:$HOME/.dotnet/tools:$PATH"
-export PATH="/home/warre/.opencode/bin:$PATH"
+export PATH="$HOME/.opencode/bin:$PATH"
 # Keep inherited and subsequently-added path entries unique while preserving order.
 typeset -U path PATH
 
@@ -422,3 +422,19 @@ yeet() {
 
     git add . && git commit -m "$*" && git push
 }
+
+# Vite+ bin (https://viteplus.dev)
+[[ -f "$HOME/.config/vite-plus/env" ]] && . "$HOME/.config/vite-plus/env"
+
+# pnpm
+export PNPM_HOME="$HOME/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
+
+# Mac-only aliases and paths
+if [[ "$OSTYPE" == darwin* ]]; then
+  source "$HOME/.config/macos/zshrc-macos.zsh"
+fi
