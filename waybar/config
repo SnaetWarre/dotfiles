@@ -198,6 +198,14 @@
     }
   },
 
+  // Used instead of hyprland/workspaces under mango (see launch.sh).
+  "ext/workspaces": {
+    "format": "{name}",
+    "on-click": "activate",
+    "all-outputs": true,
+    "sort-by-id": true
+  },
+
   "custom/volume": {
     "exec": "~/.config/waybar/scripts/volume.sh",
     "return-type": "json",
