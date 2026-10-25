@@ -192,7 +192,7 @@
   "theme": {
     "mode": "dark",
     "light": "Ayu Light",
-    "dark": "Cursor Dark Midnight",
+    "dark": "Gruvbox Dark Soft",
   },
   "autosave": {
     "after_delay": { "milliseconds": 500 },
