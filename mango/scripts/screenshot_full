@@ -1,0 +1,15 @@
+#!/usr/bin/bash
+# Mango version of hypr/scripts/screenshot_full: grimblast needs hyprctl, so
+# capture the focused output with grim and copy it to the clipboard.
+
+TARGET_DIR="/tmp/images/screenshots"
+mkdir -p "$TARGET_DIR"
+FILENAME="$TARGET_DIR/screenshot_$(date +'%Y%m%d_%H%M%S').png"
+
+OUTPUT=$(mmsg get all-monitors | jq -r '.. | objects | select(.active == true) | .name' | head -n 1)
+
+if grim ${OUTPUT:+-o "$OUTPUT"} "$FILENAME" && wl-copy --type image/png < "$FILENAME"; then
+    notify-send "Screenshot Saved" "Saved to $FILENAME" -i "$FILENAME"
+else
+    notify-send "Screenshot Failed" "Could not save screenshot" -u critical
+fi

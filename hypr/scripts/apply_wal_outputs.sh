@@ -532,22 +532,11 @@ log_step "hyprctl-borders" "$__t_hyprctl"
 # --- Update MangoWC window border colors dynamically ---
 __t_mangowc=$(now_ms)
 if [ -f "$CONFIG_DIR/mango/config.conf" ]; then
-    to_rgba_mango() {
-        local hex=${1#"#"}
-        echo "0x${hex}ff"
-    }
-    MANGO_ACTIVE=$(to_rgba_mango "$color4")
-    MANGO_INACTIVE=$(to_rgba_mango "$color8")
-    
-    # Uncomment and replace the color properties
-    sed -i -E "s/^[# \t]*focuscolor=.*/focuscolor=${MANGO_ACTIVE}/" "$CONFIG_DIR/mango/config.conf"
-    sed -i -E "s/^[# \t]*bordercolor=.*/bordercolor=${MANGO_INACTIVE}/" "$CONFIG_DIR/mango/config.conf"
-    
-    # Send reload signal via MangoWC's IPC only when Mango is running.
-    # mmsg currently dumps core if called without a live Mango IPC target.
-    if command -v mmsg &> /dev/null && pgrep -x mango >/dev/null 2>&1; then
-        mmsg -s -d reload_config >/dev/null 2>&1 || true
-    fi
+    # Same translucent color7 edges as Hyprland. Mango reloads the config on
+    # file change (auto_reload_config), so no IPC call is needed.
+    mango_tint=${color7#"#"}
+    sed -i -E "s/^[# \t]*focus_color=.*/focus_color=0x${mango_tint}66/" "$CONFIG_DIR/mango/config.conf"
+    sed -i -E "s/^[# \t]*border_color=.*/border_color=0x${mango_tint}22/" "$CONFIG_DIR/mango/config.conf"
 fi
 log_step "mangowc-borders" "$__t_mangowc"
 
