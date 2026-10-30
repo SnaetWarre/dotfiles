@@ -3,7 +3,7 @@ vim.g.mapleader = " "
 
 -- Bootstrapping lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -17,17 +17,17 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Basic Neovim settings for a clean experience
 vim.opt.number = true           -- Show line numbers
-vim.opt.relativenumber = true   -- Show relative line numbers
+vim.opt.relativenumber = true  -- Absolute numbers like the reference (set true for hybrid)
 vim.opt.tabstop = 4             -- 4 spaces for a tab
 vim.opt.shiftwidth = 4          -- 4 spaces per indentation level
 vim.opt.expandtab = true        -- Use spaces instead of tabs
 vim.opt.smartindent = true      -- Smart autoindenting
 vim.opt.wrap = false            -- Disable line wrapping
 vim.opt.cursorline = true       -- Highlight current line
-vim.opt.termguicolors = false   -- Let Neovim use the terminal's palette
+vim.opt.termguicolors = true    -- Needed for coloured undercurls and exact colours
 vim.opt.mouse = "a"             -- Enable mouse support
 vim.opt.clipboard = "unnamedplus" -- Use the system clipboard by default
-vim.opt.signcolumn = "yes"      -- Always show signcolumn
+vim.opt.signcolumn = "yes:2"    -- Two sign columns: git bar + diagnostic dot
 vim.opt.laststatus = 2          -- Compact local statusline like the reference
 vim.opt.showmode = false        -- Statusline owns mode display
 vim.opt.fillchars = {
@@ -49,9 +49,17 @@ if vim.fn.has("nvim-0.11") == 1 then
   vim.opt.winborder = "single"
 end
 
+-- Diagnostics: no virtual text, a ● in the gutter, coloured undercurl in the text
 vim.diagnostic.config({
   virtual_text = false,
-  signs = true,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "●",
+      [vim.diagnostic.severity.WARN] = "●",
+      [vim.diagnostic.severity.INFO] = "●",
+      [vim.diagnostic.severity.HINT] = "●",
+    },
+  },
   underline = true,
   update_in_insert = false,
   severity_sort = true,
@@ -61,116 +69,144 @@ vim.diagnostic.config({
   },
 })
 
-local function set_hl(group, opts)
-  opts = vim.tbl_extend("force", { fg = "NONE", bg = "NONE" }, opts or {})
+-- Palette (eyeballed from the screenshot -- tweak freely)
+local p = {
+  fg     = "#d0d3da",
+  bg     = "#1b1d23", -- editor background (solid, independent of your terminal)
+  panel  = "#2a2d35", -- cursorline + statusline background
+  dim    = "#5f6572", -- comments, line numbers, separators
+  sel    = "#3b404b",
+  red    = "#e06c75",
+  orange = "#e8a35a",
+  yellow = "#e5c07b",
+  green  = "#98c379",
+  cyan   = "#56b6c2",
+  blue   = "#61afef",
+  purple = "#c678dd",
+}
+
+local function hl(group, opts)
   vim.api.nvim_set_hl(0, group, opts)
 end
 
-local function apply_terminal_retro_ui()
+local function apply_retro_ui()
   vim.o.background = "dark"
   vim.cmd.colorscheme("default")
 
-  set_hl("Normal", {})
-  set_hl("NormalNC", {})
-  set_hl("EndOfBuffer", {})
-  set_hl("SignColumn", {})
-  set_hl("LineNr", { ctermfg = 8 })
-  set_hl("CursorLine", { ctermbg = 0 })
-  set_hl("CursorLineNr", { ctermfg = 15, bold = true })
-  set_hl("Visual", { ctermbg = 8 })
-  set_hl("Search", { ctermfg = 0, ctermbg = 11, bold = true })
-  set_hl("IncSearch", { ctermfg = 0, ctermbg = 3, bold = true })
-  set_hl("Pmenu", { ctermfg = 7, ctermbg = 0 })
-  set_hl("PmenuSel", { ctermfg = 0, ctermbg = 6, bold = true })
-  set_hl("FloatBorder", { ctermfg = 8 })
-  set_hl("WinSeparator", { ctermfg = 8 })
+  -- Solid background, only inside nvim
+  hl("Normal", { fg = p.fg, bg = p.bg })
+  hl("NormalNC", { fg = p.fg, bg = p.bg })
+  hl("NormalFloat", { fg = p.fg, bg = p.bg })
+  hl("EndOfBuffer", { fg = p.bg, bg = p.bg })
+  hl("SignColumn", { bg = p.bg })
+  hl("FoldColumn", { fg = p.dim, bg = p.bg })
+  hl("LineNr", { fg = p.dim, bg = p.bg })
+  hl("CursorLine", { bg = p.panel })
+  hl("CursorLineNr", { fg = p.yellow, bg = p.panel, bold = true })
+  hl("Visual", { bg = p.sel })
+  hl("Search", { fg = "#000000", bg = p.yellow, bold = true })
+  hl("IncSearch", { fg = "#000000", bg = p.orange, bold = true })
+  hl("Pmenu", { fg = p.fg, bg = p.panel })
+  hl("PmenuSel", { fg = "#000000", bg = p.cyan, bold = true })
+  hl("FloatBorder", { fg = p.dim, bg = p.bg })
+  hl("WinSeparator", { fg = p.dim, bg = p.bg })
 
-  set_hl("Comment", { ctermfg = 8, italic = true })
-  set_hl("String", { ctermfg = 2 })
-  set_hl("Character", { ctermfg = 2 })
-  set_hl("Number", { ctermfg = 3 })
-  set_hl("Boolean", { ctermfg = 3 })
-  set_hl("Identifier", { ctermfg = 6 })
-  set_hl("Function", { ctermfg = 4, bold = true })
-  set_hl("Statement", { ctermfg = 5, bold = true })
-  set_hl("Keyword", { ctermfg = 5, bold = true })
-  set_hl("Type", { ctermfg = 6 })
-  set_hl("Special", { ctermfg = 13 })
-  set_hl("Error", { ctermfg = 1, bold = true })
-  set_hl("WarningMsg", { ctermfg = 3, bold = true })
-  set_hl("DiagnosticError", { ctermfg = 1 })
-  set_hl("DiagnosticWarn", { ctermfg = 3 })
-  set_hl("DiagnosticInfo", { ctermfg = 4 })
-  set_hl("DiagnosticHint", { ctermfg = 6 })
+  -- Syntax
+  hl("Comment", { fg = p.dim, italic = true })
+  hl("String", { fg = p.green })
+  hl("Character", { fg = p.green })
+  hl("Number", { fg = p.orange })
+  hl("Boolean", { fg = p.orange })
+  hl("Identifier", { fg = p.fg })
+  hl("Function", { fg = p.blue, bold = true })
+  hl("Statement", { fg = p.purple, bold = true })
+  hl("Keyword", { fg = p.purple, bold = true })
+  hl("Type", { fg = p.yellow })
+  hl("Special", { fg = p.cyan })
+  hl("Error", { fg = p.red, bold = true })
+  hl("WarningMsg", { fg = p.yellow, bold = true })
 
-  set_hl("StatusLine", { ctermfg = 7, ctermbg = 0 })
-  set_hl("StatusLineNC", { ctermfg = 8, ctermbg = 0 })
-  set_hl("RetroMode", { ctermfg = 0, ctermbg = 6, bold = true })
-  set_hl("RetroFile", { ctermfg = 15, ctermbg = 0, bold = true })
-  set_hl("RetroMeta", { ctermfg = 8, ctermbg = 0 })
-  set_hl("RetroPos", { ctermfg = 0, ctermbg = 6, bold = true })
+  -- Diagnostics: coloured text for signs, curly coloured underline in the buffer
+  hl("DiagnosticError", { fg = p.red })
+  hl("DiagnosticWarn", { fg = p.yellow })
+  hl("DiagnosticInfo", { fg = p.blue })
+  hl("DiagnosticHint", { fg = p.cyan })
+  hl("DiagnosticUnderlineError", { undercurl = true, sp = p.red })
+  hl("DiagnosticUnderlineWarn", { undercurl = true, sp = p.yellow })
+  hl("DiagnosticUnderlineInfo", { undercurl = true, sp = p.blue })
+  hl("DiagnosticUnderlineHint", { undercurl = true, sp = p.cyan })
+
+  -- Git gutter bars (gitsigns)
+  hl("GitSignsAdd", { fg = p.green, bg = p.bg })
+  hl("GitSignsChange", { fg = p.yellow, bg = p.bg })
+  hl("GitSignsDelete", { fg = p.red, bg = p.bg })
+
+  -- Statusline
+  hl("StatusLine", { fg = p.fg, bg = p.panel })
+  hl("StatusLineNC", { fg = p.dim, bg = p.panel })
+  hl("RetroMode", { fg = p.fg, bg = p.panel, bold = true })
+  hl("RetroFile", { fg = p.fg, bg = p.panel })
+  hl("RetroMeta", { fg = p.dim, bg = p.panel })
+  hl("RetroWarn", { fg = p.yellow, bg = p.panel })
+  hl("RetroErr", { fg = p.red, bg = p.panel })
+  hl("RetroPos", { fg = p.fg, bg = p.panel })
 end
 
-local modes = {
-  n = "NORMAL",
-  no = "OP",
-  nov = "OP",
-  noV = "OP",
-  ["no\22"] = "OP",
-  niI = "NORMAL",
-  niR = "NORMAL",
-  niV = "NORMAL",
-  nt = "NORMAL",
-  v = "VISUAL",
-  vs = "VISUAL",
-  V = "V-LINE",
-  ["\22"] = "V-BLOCK",
-  s = "SELECT",
-  S = "S-LINE",
-  ["\19"] = "S-BLOCK",
-  i = "INSERT",
-  ic = "INSERT",
-  ix = "INSERT",
-  R = "REPLACE",
-  Rc = "REPLACE",
-  Rx = "REPLACE",
-  Rv = "V-REPLACE",
-  c = "COMMAND",
-  cv = "EX",
-  ce = "EX",
-  r = "PROMPT",
-  rm = "MORE",
-  ["r?"] = "CONFIRM",
-  ["!"] = "SHELL",
+-- Three-letter mode names, Helix style
+local short_modes = {
+  n = "NOR",
+  i = "INS",
+  v = "SEL",
+  V = "SEL",
+  ["\22"] = "SEL",
+  s = "SEL",
+  S = "SEL",
+  ["\19"] = "SEL",
+  R = "REP",
+  c = "CMD",
+  r = "PRM",
+  ["!"] = "SHL",
   t = "TERM",
 }
 
 function _G.retro_mode()
-  return modes[vim.api.nvim_get_mode().mode] or "NORMAL"
+  local m = vim.api.nvim_get_mode().mode:sub(1, 1)
+  return short_modes[m] or "NOR"
 end
 
-function _G.retro_diagnostics()
+-- "● 2 ● 1" (warnings then errors), coloured per severity
+function _G.retro_diag()
   local counts = vim.diagnostic.count(0)
-  local total = 0
-  for _, count in pairs(counts) do
-    total = total + count
+  local warn = counts[vim.diagnostic.severity.WARN] or 0
+  local err = counts[vim.diagnostic.severity.ERROR] or 0
+  local out = ""
+  if warn > 0 then out = out .. "%#RetroWarn# ● " .. warn end
+  if err > 0 then out = out .. "%#RetroErr# ● " .. err end
+  return out
+end
+
+-- Number of selected lines while in a visual mode
+function _G.retro_sel()
+  local m = vim.api.nvim_get_mode().mode:sub(1, 1)
+  if m == "v" or m == "V" or m == "\22" then
+    return (math.abs(vim.fn.line("v") - vim.fn.line(".")) + 1) .. " sel "
   end
-  return total > 0 and ("   " .. total) or ""
+  return ""
 end
 
 local function setup_retro_statusline()
   vim.o.statusline = table.concat({
     "%#RetroMode# %{v:lua.retro_mode()} ",
-    "%#RetroFile# %t%m",
-    "%=",
-    "%#RetroMeta# %{&fileencoding != '' ? &fileencoding : &encoding}",
-    "%{v:lua.retro_diagnostics()}",
-    "  %y  %p%% ",
+    "%#RetroMeta#⣿ ",
+    "%#RetroFile#%f%m",
+    "%#StatusLine#%=",
+    "%{%v:lua.retro_diag()%}",
+    "%#RetroMeta#  %{v:lua.retro_sel()}",
     "%#RetroPos# %l:%c ",
   })
 end
 
-apply_terminal_retro_ui()
+apply_retro_ui()
 setup_retro_statusline()
 
 -- Window navigation: Ctrl+H = focus tree, Ctrl+L = focus editor
@@ -193,30 +229,42 @@ require("lazy").setup({
             "",
             "",
             "",
-            " ██╗   ██╗ █████╗     ███╗   ███╗██╗   ██╗███╗   ███╗ ",
-            " ╚██╗ ██╔╝██╔══██╗    ████╗ ████║██║   ██║████╗ ████║ ",
-            "  ╚████╔╝ ███████║    ██╔████╔██║██║   ██║██╔████╔██║ ",
-            "   ╚██╔╝  ██╔══██║    ██║╚██╔╝██║██║   ██║██║╚██╔╝██║ ",
-            "    ██║   ██║  ██║    ██║ ╚═╝ ██║╚██████╔╝██║ ╚═╝ ██║ ",
-            "    ╚═╝   ╚═╝  ╚═╝    ╚═╝     ╚═╝ ╚═════╝ ╚═╝     ╚═╝ ",
             "",
             "",
+            "",
+            "",
+            "you didn't open a file..........",
             "",
           },
           center = {
-            { action = "Telescope find_files", desc = " Find file", icon = " ", key = "f" },
-            { action = "Telescope oldfiles", desc = " Recent files", icon = " ", key = "r" },
-            { action = "Telescope live_grep", desc = " Find text", icon = " ", key = "g" },
-            { action = "Lazy", desc = " lazy.nvim", icon = "󰒲 ", key = "l" },
-            { action = "qa", desc = " Quit", icon = " ", key = "q" },
+            { action = "Telescope find_files", desc = " Find file", icon = " ", key = "f" },
+            { action = "Telescope oldfiles", desc = " Recent files", icon = " ", key = "r" },
+            { action = "Telescope live_grep", desc = " Find text", icon = " ", key = "g" },
+            { action = "Lazy", desc = " lazy.nvim", icon = " ", key = "l" },
+            { action = "qa", desc = " Quit", icon = " ", key = "q" },
           },
           footer = function()
-            local stats = require("lazy").stats()
             return { "alr lil bro why are we even reading this type shi fr" }
           end,
         },
       })
     end,
+  },
+
+  -- [[ GIT GUTTER: the coloured bars left of the line numbers ]]
+  {
+    "lewis6991/gitsigns.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {
+      signs = {
+        add = { text = "▎" },
+        change = { text = "▎" },
+        delete = { text = "▁" },
+        topdelete = { text = "▔" },
+        changedelete = { text = "▎" },
+        untracked = { text = "▎" },
+      },
+    },
   },
 
   -- [[ FILE TREE: neo-tree.nvim ]]
@@ -302,9 +350,9 @@ require("lazy").setup({
     build = ":TSUpdate",
     main = "nvim-treesitter.configs",
     opts = {
-      ensure_installed = { 
-        "c", "cpp", "go", "lua", "python", "rust", 
-        "c_sharp", "html", "svelte", "typescript", "javascript" 
+      ensure_installed = {
+        "c", "cpp", "go", "lua", "python", "rust",
+        "c_sharp", "html", "svelte", "typescript", "javascript"
       },
       auto_install = true,
       highlight = {
@@ -314,7 +362,7 @@ require("lazy").setup({
     },
   },
 
-  -- [[ MARKDOWN IMAGES + PREVIEW ]]
+  -- [[ MARKDOWN PREVIEW ]]
   {
     "iamcco/markdown-preview.nvim",
     ft = { "markdown" },
@@ -332,7 +380,7 @@ require("lazy").setup({
     end,
   },
 
-  -- [[ MARKDOWN IMAGES + PREVIEW ]]
+  -- [[ MARKDOWN IMAGES ]]
   {
     "3rd/image.nvim",
     ft = "markdown",
@@ -378,7 +426,7 @@ require("lazy").setup({
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-e>'] = cmp.mapping.abort(),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
           ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
@@ -411,8 +459,8 @@ require("lazy").setup({
     "neovim/nvim-lspconfig",
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
+      "mason-org/mason.nvim",
+      "mason-org/mason-lspconfig.nvim",
     },
     config = function()
       -- Setup mason so it can manage external tooling
@@ -433,21 +481,24 @@ require("lazy").setup({
         },
       })
 
-      -- Setup keybinds seamlessly for all attached LSPs using native autocommands
+      -- Keybinds for all attached LSPs
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
           local bufnr = args.buf
-          local opts = { buffer = bufnr, remap = false }
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, remap = false, desc = "Go to definition" })
-          vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr, remap = false, desc = "Hover docs" })
-          vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, { buffer = bufnr, remap = false, desc = "Workspace symbols" })
-          vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, { buffer = bufnr, remap = false, desc = "Diagnostics (float)" })
-          vim.keymap.set("n", "[d", vim.diagnostic.goto_next, { buffer = bufnr, remap = false, desc = "Next diagnostic" })
-          vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, { buffer = bufnr, remap = false, desc = "Prev diagnostic" })
-          vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, { buffer = bufnr, remap = false, desc = "Code action" })
-          vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, { buffer = bufnr, remap = false, desc = "References" })
-          vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, { buffer = bufnr, remap = false, desc = "Rename symbol" })
-          vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, { buffer = bufnr, remap = false, desc = "Signature help" })
+          local function map(mode, lhs, rhs, desc)
+            vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, remap = false, desc = desc })
+          end
+          map("n", "gd", vim.lsp.buf.definition, "Go to definition")
+          map("n", "K", vim.lsp.buf.hover, "Hover docs")
+          map("n", "<leader>vws", vim.lsp.buf.workspace_symbol, "Workspace symbols")
+          map("n", "<leader>vd", vim.diagnostic.open_float, "Diagnostics (float)")
+          -- NOTE: your original had these two swapped ([d went to next)
+          map("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, "Prev diagnostic")
+          map("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, "Next diagnostic")
+          map("n", "<leader>vca", vim.lsp.buf.code_action, "Code action")
+          map("n", "<leader>vrr", vim.lsp.buf.references, "References")
+          map("n", "<leader>vrn", vim.lsp.buf.rename, "Rename symbol")
+          map("i", "<C-h>", vim.lsp.buf.signature_help, "Signature help")
         end,
       })
 
@@ -459,8 +510,8 @@ require("lazy").setup({
       vim.lsp.config("*", {
         capabilities = capabilities,
       })
-      
-      -- Specifix overrides:
+
+      -- Specific overrides:
       vim.lsp.config("gopls", {
         settings = { gopls = { analyses = { unusedparams = true }, staticcheck = true } },
       })
@@ -490,7 +541,6 @@ require("lazy").setup({
       })
 
       -- Explicitly configure the 'ty' python LSP (Astral typechecker), because it's not managed by Mason
-      -- Neovim 0.11 makes custom LSP configuration extremely straightforward:
       vim.lsp.config("ty", {
         cmd = { "ty", "lsp" },
         filetypes = { "python" },

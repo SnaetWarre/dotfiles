@@ -13,13 +13,13 @@
 }
 
 window#waybar {
-  background: #13120f;
-  color: #e0cbd2;
-  border-bottom: 1px solid #46485b;
+  background: #06131d;
+  color: #d1bec0;
+  border-bottom: 1px solid #343434;
 }
 
 #custom-separator {
-  color: #46485b;
+  color: #343434;
   background: transparent;
   padding: 0 5px;
   margin: 0;
@@ -39,78 +39,92 @@ window#waybar {
 #custom-kb-layout,
 #custom-screenrecording-indicator,
 #custom-display-mode,
+#custom-airdrop,
 #custom-tray-toggle,
 #custom-kbd-brightness {
   background: transparent;
-  color: #e0cbd2;
+  color: #d1bec0;
   padding: 0 7px;
   margin: 0;
 }
 
 #clock {
-  color: #73735d;
+  color: #5d4850;
 }
 
 #custom-asus-profile,
 #custom-kb-layout,
 #custom-display-mode {
-  color: #956274;
+  color: #74474b;
 }
 
 #custom-reactor {
-  color: #956274;
+  color: #74474b;
   font-family: "Bitstream Vera Sans Mono", "Noto Sans Mono", monospace;
   font-weight: bold;
   padding: 0 4px;
 }
 
 #custom-reactor.sleeping {
-  color: #46485b;
+  color: #343434;
   opacity: 0.62;
 }
 
 #custom-reactor.awake {
-  color: #956274;
+  color: #74474b;
 }
 
 #custom-reactor.dancing {
-  color: #73735d;
+  color: #5d4850;
 }
 
 #custom-reactor.celebrating {
-  color: #705c44;
+  color: #503e47;
 }
 
 #custom-reactor.overheating {
-  color: #7c5f44;
+  color: #763e3e;
 }
 
 #custom-reactor.radioactive {
-  color: #13120f;
-  background: #705c44;
+  color: #06131d;
+  background: #503e47;
 }
 
 #custom-reactor.panicking {
-  color: #13120f;
-  background: #52564d;
+  color: #06131d;
+  background: #4d3c45;
 }
 
 #custom-gooning-directory {
-  color: #52564d;
+  color: #4d3c45;
+}
+
+#custom-airdrop.off {
+  color: #343434;
+}
+
+#custom-airdrop.starting {
+  color: #74474b;
+}
+
+#custom-airdrop.visible {
+  color: #06131d;
+  background: #5d4850;
 }
 
 #custom-useless-internet-protocol {
-  color: #5e879d;
+  color: #655157;
 }
 
 #custom-tray-toggle {
-  color: #956274;
+  color: #74474b;
   padding: 0 7px;
 }
 
 #custom-tray-toggle:hover {
-  color: #e0cbd2;
-  background: #46485b;
+  color: #d1bec0;
+  background: #343434;
 }
 
 #tray {
@@ -124,24 +138,24 @@ window#waybar {
 }
 
 #tray > .needs-attention {
-  background: #46485b;
+  background: #343434;
 }
 
 #network,
 #custom-volume,
 #battery {
-  color: #e0cbd2;
+  color: #d1bec0;
 }
 
 #network.disconnected,
 #custom-volume.muted,
 #battery.warning {
-  color: #7c5f44;
+  color: #763e3e;
 }
 
 #battery.critical,
 #custom-screenrecording-indicator.recording {
-  color: #52564d;
+  color: #4d3c45;
   font-weight: bold;
 }
 
@@ -153,30 +167,30 @@ window#waybar {
 
 #workspaces button {
   background: transparent;
-  color: #46485b;
+  color: #343434;
   padding: 0 5px;
   margin: 0;
   border: none;
 }
 
 #workspaces button.active {
-  color: #13120f;
-  background: #73735d;
+  color: #06131d;
+  background: #5d4850;
 }
 
 #workspaces button:hover {
-  color: #e0cbd2;
-  background: #46485b;
+  color: #d1bec0;
+  background: #343434;
 }
 
 tooltip {
-  background: #13120f;
-  border: 1px solid #46485b;
+  background: #06131d;
+  border: 1px solid #343434;
   border-radius: 0;
-  color: #e0cbd2;
+  color: #d1bec0;
   padding: 8px 10px;
 }
 
 tooltip label {
-  color: #e0cbd2;
+  color: #d1bec0;
 }

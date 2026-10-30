@@ -104,7 +104,7 @@ hl.config({
         active_opacity = 1.0,
         inactive_opacity = 1.0,
         fullscreen_opacity = 1.0,
-        rounding = 10,
+        rounding = 2,
         rounding_power = 2.0,
         dim_inactive = false,
         blur = {
@@ -137,15 +137,13 @@ hl.config({
         kb_layout = "be,us",
         kb_model = "",
         kb_rules = "",
-        accel_profile = "adaptive",
-        force_no_accel = false,
         follow_mouse = 1,
         float_switch_override_focus = 2,
         sensitivity = 0,
         kb_options = "caps:escape",
         touchpad = {
             natural_scroll = true,
-            scroll_factor = 0.8,
+            scroll_factor = 0.7,
             tap_to_click = true,
             tap_and_drag = true,
             drag_lock = 1,
@@ -421,6 +419,8 @@ hl.window_rule({ name = "codex-background-tests", match = { class = "^(codex-bac
 hl.window_rule({ name = "mango-thunar-opacity", match = { class = "^(thunar|Thunar)$" }, opacity = "0.80 0.80" })
 hl.window_rule({ name = "kitty-tiling", match = { class = "^(kitty)$" }, float = false })
 hl.window_rule({ name = "discord-on-ws3", match = { class = "^(legcord)$" }, workspace = "3 silent" })
+-- owly-drop (AirDrop): a small window under its DROP button in the bar
+hl.window_rule({ name = "owly-drop", match = { class = "^(owly-drop)$" }, float = true, size = { 380, 480 }, move = "monitor_w-587 32" })
 
 -- Layer rules
 hl.layer_rule({ name = "mango-selection-capture", match = { namespace = "selection" }, no_anim = true, blur = false })

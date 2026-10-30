@@ -39,6 +39,7 @@ window#waybar {
 #custom-kb-layout,
 #custom-screenrecording-indicator,
 #custom-display-mode,
+#custom-airdrop,
 #custom-tray-toggle,
 #custom-kbd-brightness {
   background: transparent;
@@ -97,6 +98,19 @@ window#waybar {
 
 #custom-gooning-directory {
   color: $color1;
+}
+
+#custom-airdrop.off {
+  color: $color8;
+}
+
+#custom-airdrop.starting {
+  color: $color6;
+}
+
+#custom-airdrop.visible {
+  color: $color0;
+  background: $color4;
 }
 
 #custom-useless-internet-protocol {

@@ -1,7 +1,7 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 24,
+  "height": 20,
   "margin-top": 0,
   "margin-bottom": 0,
   "margin-left": 0,
@@ -141,6 +141,16 @@
     "return-type": "json",
     "on-click": "~/.config/waybar/scripts/display-toggle.sh",
     "signal": 11
+  },
+
+  "custom/airdrop": {
+    "exec": "~/.config/waybar/scripts/airdrop.sh",
+    "return-type": "json",
+    "interval": 30,
+    "signal": 14,
+    "on-click": "~/.config/waybar/scripts/airdrop.sh window",
+    "on-click-right": "~/.config/waybar/scripts/airdrop.sh toggle",
+    "on-click-middle": "xdg-open ~/Downloads"
   },
 
   "custom/kbd-brightness": {
